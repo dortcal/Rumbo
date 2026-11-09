@@ -1,0 +1,14 @@
+{
+  "name": "rumbo",
+  "version": "1.0.0",
+  "description": "RUMBO - videojuego educativo de pensamiento computacional para Educación Infantil y Primaria (3-12 años)",
+  "private": true,
+  "scripts": {
+    "build": "node tools/build.js",
+    "test": "node --test pruebas/*.test.mjs",
+    "e2e": "node pruebas/e2e/chrome.e2e.cjs"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}
