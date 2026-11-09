@@ -216,7 +216,7 @@
     }
 
     function guardarReto() {
-      var inp = h('input.campo', { type: 'text', maxlength: '30', placeholder: 'Nombre del reto', value: reto.nombre || '', 'aria-label': 'Nombre del reto' });
+      var inp = h('input.campo', { type: 'text', maxlength: '30', placeholder: 'Nombre del reto (sin nombres de personas)', value: reto.nombre || '', 'aria-label': 'Nombre del reto' });
       var msg = h('div.msg-error', { role: 'alert' });
       var m = modal('¡Tu reto tiene solución!', h('div', { style: { display: 'contents' } }, h('p', 'Ponle un nombre para guardarlo.'), inp, msg));
       m.caja.appendChild(h('div.res-acciones',

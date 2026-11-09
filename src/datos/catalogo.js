@@ -57,6 +57,13 @@
     { mundo: 1, estrellas: 50 }, { mundo: 2, estrellas: 50 }, { mundo: 3, estrellas: 50 }, { mundo: 4, estrellas: 8 }
   ];
 
+  // Último reto de la aventura de cada curso: al superarlo, el alumnado ve el final de la historia a su nivel.
+  var FINAL_CURSO = {
+    inf3: ITINERARIOS[3][ITINERARIOS[3].length - 1], inf4: ITINERARIOS[4][ITINERARIOS[4].length - 1], inf5: ITINERARIOS[5][ITINERARIOS[5].length - 1],
+    p1: 'm1-25', p2: 'm1-25', p3: 'm2-25', p4: 'm2-25', p5: 'f-03', p6: 'f-03'
+  };
+  function finalDe(cursoId) { return FINAL_CURSO[cursoId] || 'f-03'; }
+
   function cursoDe(id) {
     for (var i = 0; i < CURSOS.length; i++) if (CURSOS[i].id === id) return CURSOS[i];
     return null;
@@ -115,7 +122,7 @@
     MUNDOS: MUNDOS, TODOS: TODOS, SECRETOS: SECRETOS, POR_ID: POR_ID,
     SEC_INFANTIL: SEC_INFANTIL, SEC_PRIMARIA: SEC_PRIMARIA, ITINERARIOS: ITINERARIOS,
     CURSOS: CURSOS, REQUISITO_SECRETO: REQUISITO_SECRETO,
-    cursoDe: cursoDe, mundoDe: mundoDe, posicion: posicion, siguiente: siguiente,
+    cursoDe: cursoDe, finalDe: finalDe, FINAL_CURSO: FINAL_CURSO, mundoDe: mundoDe, posicion: posicion, siguiente: siguiente,
     cartasNuevas: cartasNuevas, registrarVoces: registrarVoces, total: total, DSL: DSL
   };
 });

@@ -29,7 +29,9 @@ test('los niveles se abren de uno en uno', () => {
 test('el curso abre los mundos que le corresponden', () => {
   assert.equal(P.estaDesbloqueado(P.crearPerfil({ curso: 'p3' }), 'm2-01'), true);
   assert.equal(P.estaDesbloqueado(P.crearPerfil({ curso: 'p3' }), 'm3-01'), false);
-  assert.equal(P.estaDesbloqueado(P.crearPerfil({ curso: 'p5' }), 'm3-01'), true);
+  assert.equal(P.estaDesbloqueado(P.crearPerfil({ curso: 'p5' }), 'm3-p1'), true);
+  assert.equal(P.estaDesbloqueado(P.crearPerfil({ curso: 'p5' }), 'm3-p2'), false);
+  assert.equal(P.estaDesbloqueado(P.crearPerfil({ curso: 'p5' }), 'm3-01'), true, 'el calentamiento no bloquea');
   assert.equal(P.estaDesbloqueado(P.crearPerfil({ curso: 'p5' }), 'f-01'), false);
 });
 
@@ -194,4 +196,16 @@ test('anotarPistas guarda el máximo de pistas pedidas sin contar como intento',
   PR.anotarPistas(p, 'm1-01', 2); PR.anotarPistas(p, 'm1-01', 1);
   assert.equal(p.niveles['m1-01'].pistas, 2);
   assert.equal(p.niveles['m1-01'].intentos, 0);
+});
+
+test('cada curso tiene su propio final y puede terminar la aventura', async () => {
+  const { createRequire } = await import('node:module');
+  const C = createRequire(import.meta.url)('../src/datos/catalogo.js');
+  const esperado = { inf3: 'i3-', inf4: 'i4-', inf5: 'i5-', p1: 'm1-25', p2: 'm1-25', p3: 'm2-25', p4: 'm2-25', p5: 'f-03', p6: 'f-03' };
+  for (const [curso, f] of Object.entries(esperado)) {
+    const id = C.finalDe(curso);
+    assert.ok(C.POR_ID[id] && id.startsWith(f), curso + ' → ' + id);
+    const p = P.crearPerfil({ curso });
+    assert.equal(P.finalHecho(p), false);
+  }
 });

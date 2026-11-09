@@ -25,6 +25,27 @@
     'mientras': dm('jardin', ['....G'], 0, 0, 'E', [D.mientras(D.no(D.MA), [A])]),
     'receta': dm('jardin', ['......G'], 0, 0, 'E', D.P([D.rec('A'), D.rec('A')], { A: [A, A, A] }))
   };
+  // Explicaciones por pasos para las tarjetas de control: primero el problema, después la herramienta.
+  var R = D.R;
+  var PASOS = {
+    'repetir': [
+      { texto: 'Fíjate: para llegar tengo que dar el mismo paso una y otra vez. ¡Qué pesado!', demo: dm('jardin', ['......G'], 0, 0, 'E', [A, A, A, A, A, A]) },
+      { texto: 'Con Repetir lo escribo una sola vez. El número dice cuántas veces; lo que pones dentro de la caja es lo que se repite.', demo: dm('jardin', ['......G'], 0, 0, 'E', [D.rep(6, A)]) },
+      { texto: 'Truco: busca qué grupo de tarjetas se repite y cuántas veces. Aquí se repite «avanzar, recoger, avanzar» tres veces.', demo: dm('jardin', ['.o.o.o.G'], 0, 0, 'E', [D.rep(3, A, R, A), A]) }
+    ],
+    'si': [
+      { texto: 'A veces el camino cambia: en unas casillas hay una luz y en otras no. Con Si, Lumo mira y recoge solo si hay luz.', demo: dm('jardin', ['.o.G'], 0, 0, 'E', [D.rep(4, D.si(D.OA, [R], []), A)]) },
+      { texto: 'Si tiene dos partes: lo que hace si se cumple y lo que hace si no. Aquí: si hay agua delante, salta; si no, avanza.', demo: dm('jardin', ['..~..G'], 0, 0, 'E', [D.rep(4, D.si(D.AG, [D.S], [A]))]) }
+    ],
+    'mientras': [
+      { texto: 'Repetir necesita un número. Pero ¿y si no sé cuántos pasos hay? Entonces uso Mientras.', demo: dm('jardin', ['....G'], 0, 0, 'E', [D.mientras(D.no(D.MA), [A])]) },
+      { texto: 'Mientras mira la condición antes de cada vuelta. Aquí: mientras no haya un muro delante, avanzar. Cuando hay muro, para.', demo: dm('jardin', ['....G#'], 0, 0, 'E', [D.mientras(D.no(D.OB), [A])]) }
+    ],
+    'receta': [
+      { texto: 'Mira: escribo el mismo grupo de tarjetas dos veces. Si el grupo fuera más largo, sería un lío.', demo: dm('jardin', ['......G'], 0, 0, 'E', [A, A, A, A, A, A]) },
+      { texto: 'Una receta guarda un grupo de tarjetas con una letra. Cada vez que uso la letra, Lumo hace todo el grupo.', demo: dm('jardin', ['......G'], 0, 0, 'E', D.P([D.rec('A'), D.rec('A')], { A: [A, A, A] })) }
+    ]
+  };
   var TEXTOS = {
     'avanzar': 'Avanzar: Lumo da un paso hacia donde mira.',
     'retroceder': 'Retroceder: Lumo da un paso hacia atrás sin girarse.',
@@ -48,5 +69,5 @@
     'recoger': 'Esta tarjeta me deja coger cosas. ¡Mira!',
     'esperar': 'Esta tarjeta me hace esperar. ¡Mira!'
   };
-  return { DEMOS: DEMOS, TEXTOS: TEXTOS, VOZ_INFANTIL: VOZ_INFANTIL };
+  return { DEMOS: DEMOS, PASOS: PASOS, TEXTOS: TEXTOS, VOZ_INFANTIL: VOZ_INFANTIL };
 });

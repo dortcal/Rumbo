@@ -7,10 +7,11 @@ import VOCES from '../src/datos/voces-es.js';
 
 test('hay 15 retos de Infantil y 25 niveles por ciclo, más el Faro y los secretos', () => {
   assert.equal(C.MUNDOS[0].niveles.length, 15);
-  [1, 2, 3].forEach(m => assert.equal(C.MUNDOS[m].niveles.length, 25));
+  [1, 2].forEach(m => assert.equal(C.MUNDOS[m].niveles.length, 25));
+  assert.equal(C.MUNDOS[3].niveles.length, 30);   // 5 de calentamiento + 25
   assert.equal(C.MUNDOS[4].niveles.length, 3);
   assert.equal(C.SECRETOS.length, 4);
-  assert.equal(C.TODOS.length, 97);
+  assert.equal(C.TODOS.length, 102);
 });
 
 test('los identificadores son únicos', () => {

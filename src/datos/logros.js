@@ -39,6 +39,7 @@
     { id: 'mundo-1', nombre: 'Primer programador', icono: 'brujula', desc: 'Termina el Mundo 1.', ok: function (P) { return P.mundoCompleto(1); } },
     { id: 'mundo-2', nombre: 'Maestro del código', icono: 'brujula', desc: 'Termina el Mundo 2.', ok: function (P) { return P.mundoCompleto(2); } },
     { id: 'mundo-3', nombre: 'Experto en algoritmos', icono: 'brujula', desc: 'Termina el Mundo 3.', ok: function (P) { return P.mundoCompleto(3); } },
+    { id: 'final', nombre: 'Final de la aventura', icono: 'faro', desc: 'Termina la aventura de tu curso y vuelve a casa con Lumo.', ok: function (P) { return P.finalHecho(); } },
     { id: 'faro', nombre: 'La luz de Lumo', icono: 'faro', desc: 'Enciende el Faro Mayor.', ok: function (P) { return P.todos(['f-03']); } },
     { id: 'secretos', nombre: 'Explorador de secretos', icono: 'llave', desc: 'Resuelve los cuatro retos secretos.', ok: function (P) { return P.todos(['sec-1', 'sec-2', 'sec-3', 'sec-4']); } },
     { id: 'creador', nombre: 'Creador de retos', icono: 'lab', desc: 'Crea y comprueba tu primer reto en el Laboratorio.', ok: function (P) { return P.retosCreados() >= 1; } }
@@ -52,7 +53,7 @@
     { id: 4, nombre: 'Casco de buceo', desc: 'Supera 10 retos del Mundo 2.', ok: function (P) { return P.completadosMundo(2) >= 10; } },
     { id: 5, nombre: 'Gafas de soldador', desc: 'Termina el Mundo 2.', ok: function (P) { return P.mundoCompleto(2); } },
     { id: 6, nombre: 'Antena de Bit', desc: 'Supera 10 retos del Mundo 3.', ok: function (P) { return P.completadosMundo(3) >= 10; } },
-    { id: 7, nombre: 'Corona del Faro', desc: 'Enciende el Faro Mayor.', ok: function (P) { return P.todos(['f-03']); } }
+    { id: 7, nombre: 'Corona del Faro', desc: 'Termina la aventura de tu curso.', ok: function (P) { return P.finalHecho(); } }
   ];
 
   return { INSIGNIAS: INSIGNIAS, DISFRACES: DISFRACES };

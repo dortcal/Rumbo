@@ -204,7 +204,7 @@
         h('button.btn-txt.peligro', { type: 'button', on: { click: function () { if (!confirm('¿Eliminar a ' + pp.nombre + ' del equipo?')) return; datos.perfiles.splice(datos.perfiles.indexOf(pp), 1); if (datos.activo === pp.id) { datos.activo = null; App.estado.perfil = null; } App.guardar(); App.ir('docente'); } } }, 'Eliminar')));
     });
     c.appendChild(gj);
-    c.appendChild(h('section.doc-caja', h('h2', 'Privacidad'), h('p', 'RUMBO no envía datos a ningún servidor ni usa cuentas. Los nombres y el progreso se guardan solo en este navegador. Conviene usar apodos en lugar de nombres completos.'),
+    c.appendChild(h('section.doc-caja', h('h2', 'Privacidad'), h('p', 'RUMBO no envía datos a ningún servidor ni usa cuentas. El juego no pide ningún nombre: cada jugador aparece como «Jugador N» con un dibujo, y el progreso se guarda solo en este navegador. Si anotas quién es cada número, hazlo fuera del juego. Los retos del Laboratorio tampoco deben llevar nombres de personas.'),
       h('div.doc-fila', h('button.btn-txt.peligro', { type: 'button', on: { click: function () { if (!confirm('¿Borrar TODOS los datos de RUMBO de este navegador?')) return; G.reiniciarTodo(); App.estado.datos = G.cargar(); App.estado.perfil = null; D.abierto = false; App.ir('portada'); } } }, 'Borrar todos los datos de este navegador'))));
   }
 })(typeof self !== 'undefined' ? self : this);

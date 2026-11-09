@@ -25,6 +25,7 @@
     Object.keys(DEM.TEXTOS).forEach(function (c) {
       VOCES.lineas['nc_' + c] = { quien: 'Lumo', texto: DEM.TEXTOS[c].replace(/^[^:]+:\s*/, '') };
     });
+    Object.keys(DEM.PASOS || {}).forEach(function (c) { DEM.PASOS[c].forEach(function (p, i) { VOCES.lineas['ncp_' + c + '_' + i] = { quien: 'Lumo', texto: p.texto }; }); });
     Object.keys(DEM.VOZ_INFANTIL).forEach(function (c) { VOCES.lineas['nci_' + c] = { quien: 'Lumo', texto: DEM.VOZ_INFANTIL[c] }; });
     App.raiz = raiz;
     raiz.innerHTML = Ar.defs();
@@ -89,7 +90,7 @@
     var der = h('div.cab-der');
     if (p && opciones.perfil !== false) {
       var tot = PR.estrellasTotales(p);
-      der.appendChild(h('div.chip-perfil', lumoAvatar('mini', 'feliz'), h('span.nom', p.nombre), PR.esInfantil(p) ? null : h('span.est', UI.svgEl(Ar.estrella(true, 18), ''), String(tot))));
+      der.appendChild(h('div.chip-perfil', lumoAvatar('mini', 'feliz'), dibujoJugador(p), h('span.nom', p.nombre), PR.esInfantil(p) ? null : h('span.est', UI.svgEl(Ar.estrella(true, 18), ''), String(tot))));
     }
     (opciones.extra || []).forEach(function (e) { der.appendChild(e); });
     return h('header.cabecera', izq, der);
@@ -126,6 +127,17 @@
     UI.Sonido.musica('mapa');
   });
 
+  // Protección de datos: no se pide ningún nombre. Cada jugador es «Jugador N» y se distingue por un dibujo.
+  function perfilAnonimo(curso) {
+    var ps = datos().perfiles, mayor = 0, usados = {};
+    ps.forEach(function (q) { var m = /^Jugador (\d+)$/.exec(q.nombre || ''); if (m) mayor = Math.max(mayor, +m[1]); if (q.picto != null) usados[q.picto] = true; });
+    var picto = 0; for (var k = 0; k < 12; k++) if (!usados[k]) { picto = k; break; }
+    if (ps.length >= 12) picto = ps.length % 12;
+    var p = PR.crearPerfil({ nombre: 'Jugador ' + (mayor + 1), curso: curso });
+    p.picto = picto; return p;
+  }
+  function dibujoJugador(p, tam) { return p && p.picto != null ? h('span.picto-jug', { 'aria-hidden': 'true' }, UI.svgEl(Ar.picto(p.picto), '')) : null; }
+
   // ---------------------------------------------------------------- jugadores
   registrar('jugadores', function (cont) {
     nubes(cont);
@@ -135,7 +147,7 @@
       var curso = CAT.cursoDe(p.curso);
       lista.appendChild(h('button.tarjeta-jugador', { type: 'button', on: { click: function () {
         UI.Sonido.sfx('toque'); App.estado.perfil = p; datos().activo = p.id; guardar(); ir('mapa'); } } },
-        lumoAvatar('med', 'feliz', p.disfraz), h('span.nom', p.nombre), h('span.cur', curso ? curso.nombre : ''),
+        lumoAvatar('med', 'feliz', p.disfraz), dibujoJugador(p), h('span.nom', p.nombre), h('span.cur', curso ? curso.nombre : ''),
         PR.esInfantil(p) ? null : h('span.est', UI.svgEl(Ar.estrella(true, 16), ''), String(PR.estrellasTotales(p)))));
     });
     lista.appendChild(h('button.tarjeta-jugador.nuevo', { type: 'button', on: { click: function () { UI.Sonido.sfx('toque'); ir('nuevo-jugador'); } } },
@@ -147,7 +159,6 @@
   registrar('nuevo-jugador', function (cont) {
     nubes(cont);
     cont.appendChild(cabecera('Nuevo jugador', { atras: function () { ir('jugadores'); }, perfil: false }));
-    var nombre = h('input.campo', { type: 'text', maxlength: '16', placeholder: 'Tu nombre o apodo', 'aria-label': 'Nombre', autocomplete: 'off' });
     var cursoSel = 'p1';
     var chips = h('div.cursos');
     function pintar() {
@@ -162,16 +173,14 @@
       });
     }
     pintar();
-    var form = h('div.formulario', h('label', h('span.etq', '¿Cómo te llamas?'), nombre), chips,
+    var form = h('div.formulario', h('p.aviso-datos', 'No hace falta escribir ningún nombre: tu partida se guarda solo en este navegador.'), h('div.etq.grande', '¿En qué curso estás?'), chips,
       boton('¡Vamos!', 'principal', function () {
-        var n = nombre.value.trim() || 'Jugador';
-        var p = PR.crearPerfil({ nombre: n, curso: cursoSel });
+        var p = perfilAnonimo(cursoSel);
         datos().perfiles.push(p); datos().activo = p.id; App.estado.perfil = p; guardar();
         if (UI.Sonido) UI.Sonido.sfx('desbloqueo');
         ir('mapa');
       }));
     cont.appendChild(form);
-    setTimeout(function () { nombre.focus(); }, 50);
   });
 
   // ---------------------------------------------------------------- continuar con un código
@@ -182,12 +191,10 @@
     var cuerpo = h('div.formulario.codigo');
     function pintar() {
       cuerpo.innerHTML = '';
-      var nombre = h('input.campo', { type: 'text', maxlength: '16', placeholder: 'Tu nombre', 'aria-label': 'Nombre', autocomplete: 'off', value: nombre_ || '' });
       var msg = h('div.msg-error', { role: 'alert' });
       cuerpo.appendChild(h('div.tabs',
         h('button.tab' + (modo === 'texto' ? '.sel' : ''), { type: 'button', on: { click: function () { modo = 'texto'; pintar(); } } }, 'Con letras y números'),
         h('button.tab' + (modo === 'dibujos' ? '.sel' : ''), { type: 'button', on: { click: function () { modo = 'dibujos'; pintar(); } } }, 'Con dibujos')));
-      cuerpo.appendChild(h('label', h('span.etq', 'Nombre del jugador'), nombre));
       var recoger;
       if (modo === 'texto') {
         var cod = h('textarea.campo.codigo-texto', { rows: '2', placeholder: 'Pega o escribe el código', 'aria-label': 'Código', spellcheck: 'false', autocapitalize: 'characters' });
@@ -210,14 +217,13 @@
       }
       cuerpo.appendChild(msg);
       cuerpo.appendChild(boton('Recuperar mi partida', 'principal', function () {
-        nombre_ = nombre.value;
-        var r = PR.desdeCodigo(recoger(), nombre.value.trim() || 'Jugador');
+        var r = PR.desdeCodigo(recoger(), 'Jugador');
         if (!r.ok) { msg.textContent = 'Ese código no es válido. Revisa que no falte ni sobre ningún símbolo.'; UI.Sonido.sfx('choque'); return; }
+        var an = perfilAnonimo(r.perfil.curso); r.perfil.nombre = an.nombre; r.perfil.picto = an.picto;
         datos().perfiles.push(r.perfil); datos().activo = r.perfil.id; App.estado.perfil = r.perfil; guardar();
         UI.Sonido.sfx('desbloqueo'); toast('¡Partida recuperada!'); ir('mapa');
       }));
     }
-    var nombre_ = '';
     pintar(); cont.appendChild(cuerpo);
   });
 
@@ -238,7 +244,7 @@
     if (App.estado.docente && App.estado.docente.todo) return true;
     if (p.desbloqueo && p.desbloqueo.lab) return true;
     if (PR.esInfantil(p)) { var k = p.curso === 'inf3' ? 3 : p.curso === 'inf4' ? 4 : 5; return PR.itinerarioCompleto(p, k); }
-    return PR.hecho(p, 'f-03');
+    return PR.finalHecho(p);
   }
   registrar('mapa', function (cont) {
     var p = perfil(); if (!p) { ir('jugadores'); return; }
@@ -416,16 +422,20 @@
     if ((x = primero(M[3].niveles, function (n) { return n.zona === 'espacio'; }))) { antes(x.id, 'C3-03'); antes(x.id, 'C3-04'); }
     despues(M[3].niveles[M[3].niveles.length - 1].id, 'C3-05');
     antes(M[4].niveles[0].id, 'CF-01');
-    despues('f-03', 'CF-03'); despues('f-03', 'CF-04'); despues('f-03', 'CF-05');
+    // El final se ve al terminar el último reto del propio curso (ver escenasPendientes).
+    Object.keys(CAT.FINAL_CURSO).forEach(function (c) { var id = CAT.FINAL_CURSO[c]; ['CF-03', 'CF-04', 'CF-05'].forEach(function (e) { if ((DISPARO.despues[id] || []).indexOf(e) < 0) despues(id, e); }); });
   }
   App.disparos = function () { return DISPARO; };
 
-  function escenasPendientes(lista) {
+  function escenasPendientes(lista, idNivel) {
     var p = perfil(); if (!p || (App.estado.docente && App.estado.docente.vista)) return [];
-    return (lista || []).filter(function (e) { return !p.vistos.escenas[e]; });
+    return (lista || []).filter(function (e) {
+      if (/^CF-0[345]$/.test(e) && idNivel && CAT.finalDe(p.curso) !== idNivel) return false;   // el final es el del curso del jugador
+      return !p.vistos.escenas[e];
+    });
   }
-  function antesDe(id, fn) { reproducirEscenas(escenasPendientes(DISPARO.antes[id]), fn); }
-  function despuesDe(id, fn) { reproducirEscenas(escenasPendientes(DISPARO.despues[id]), fn); }
+  function antesDe(id, fn) { reproducirEscenas(escenasPendientes(DISPARO.antes[id], id), fn); }
+  function despuesDe(id, fn) { reproducirEscenas(escenasPendientes(DISPARO.despues[id], id), fn); }
 
   function lineasDeEscena(e) {
     return Object.keys(VOCES.lineas).filter(function (k) { return VOCES.lineas[k].escena === e; });

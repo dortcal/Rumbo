@@ -49,7 +49,7 @@ async function main() {
     for (let i = 0; i < 6; i++) { const hay = await ev(p, () => !!document.querySelector('.escena .b-saltar, .escena .b-sig-esc')); if (!hay) break; await ev(p, () => (document.querySelector('.escena .b-saltar') || document.querySelector('.escena .b-sig-esc')).click()); await esperar(250); }
   }
   async function entender(p) {
-    for (let i = 0; i < 4; i++) { const hay = await ev(p, () => !!document.querySelector('.b-entendido')); if (!hay) break; await ev(p, () => document.querySelector('.b-entendido').click()); await esperar(250); }
+    for (let i = 0; i < 12; i++) { const hay = await ev(p, () => !!document.querySelector(".b-entendido")); if (!hay) break; await ev(p, () => document.querySelector('.b-entendido').click()); await esperar(250); }
   }
   async function abrirNivel(p, id) {
     await ev(p, id => RumboUI.App.jugarNivel(id), id); await esperar(350); await saltarEscenas(p); await entender(p); await esperar(250);
@@ -72,9 +72,9 @@ async function main() {
   console.log('\n1. Arranque y flujo básico (ratón)');
   let p = await pagina();
   chequear(await ev(p, () => !!document.querySelector('.p-portada .logo-svg')), 'la portada se muestra con el logotipo');
-  chequear(await ev(p, () => typeof RumboCatalogo.total === 'function' && RumboCatalogo.TODOS.length === 97), 'el catálogo tiene 97 retos');
+  chequear(await ev(p, () => typeof RumboCatalogo.total === 'function' && RumboCatalogo.TODOS.length === 102), 'el catálogo tiene 102 retos');
   await p.click('.btn-grande.principal'); await esperar(250); await p.click('.tarjeta-jugador.nuevo'); await esperar(250);
-  await p.type('.campo', 'Ana'); await ev(p, () => [...document.querySelectorAll('.chip-curso')].find(b => b.textContent === '1.º').click()); await p.click('.btn-grande.principal'); await esperar(400);
+  await ev(p, () => [...document.querySelectorAll('.chip-curso')].find(b => b.textContent === '1.º').click()); await p.click('.btn-grande.principal'); await esperar(400);
   chequear(await ev(p, () => document.body.dataset.pantalla === 'mapa'), 'se crea el jugador y aparece el mapa');
   await p.screenshot({ path: SHOTS + '/mapa.png' });
   await abrirNivel(p, 'm1-01');
@@ -227,9 +227,9 @@ async function main() {
   console.log('   código corto:', codigo);
   chequear(/^[0-9A-Z-]{11,14}$/.test(String(codigo)), 'se genera un código corto de partida');
   await p.evaluate(() => RumboUI.App.ir('codigo')); await esperar(300);
-  await p.type('.campo', 'Copia'); await p.type('.codigo-texto', String(codigo).toLowerCase());
+  await p.type('.codigo-texto', String(codigo).toLowerCase());
   await ev(p, () => [...document.querySelectorAll('.btn-grande')].find(b => /Recuperar/.test(b.textContent)).click()); await esperar(500);
-  chequear(await ev(p, () => { const per = RumboUI.App.perfil(); return per.nombre === 'Copia' && RumboProgreso.hecho(per, 'm1-03') && RumboProgreso.estaDesbloqueado(per, 'm1-04'); }), 'escribir el código en otro perfil restaura los niveles superados y desbloquea el siguiente');
+  chequear(await ev(p, () => { const per = RumboUI.App.perfil(); return /^Jugador \d+$/.test(per.nombre) && RumboProgreso.hecho(per, 'm1-03') && RumboProgreso.estaDesbloqueado(per, 'm1-04'); }), 'escribir el código en otro perfil restaura los niveles superados y desbloquea el siguiente');
   await p.evaluate(() => RumboUI.App.ir('codigo')); await esperar(300);
   await p.type('.campo', 'X'); await p.type('.codigo-texto', 'ZZZZ-ZZZZ-ZZZ');
   await ev(p, () => [...document.querySelectorAll('.btn-grande')].find(b => /Recuperar/.test(b.textContent)).click()); await esperar(300);
@@ -344,6 +344,42 @@ async function main() {
   await p.screenshot({ path: SHOTS + '/movil.png' });
   const desborda = await ev(p, () => document.documentElement.scrollWidth > innerWidth + 2);
   chequear(!desborda, 'en móvil vertical no hay desbordamiento horizontal');
+  await p.close();
+
+  // =====================================================================
+  console.log('\n13. Protección de datos, pista, explicaciones y finales por curso');
+  p = await pagina();
+  await ev(p, () => RumboUI.App.ir('nuevo-jugador')); await esperar(300);
+  chequear(await ev(p, () => !document.querySelector('input[type=text], input.campo')), 'el formulario de nuevo jugador no pide ningún nombre');
+  await ev(p, () => [...document.querySelectorAll('.chip-curso')].find(b => /5\./.test(b.textContent)).click()); await esperar(100);
+  await ev(p, () => [...document.querySelectorAll('.btn-grande')].find(b => /Vamos/.test(b.textContent)).click()); await esperar(500);
+  const nombreP = await ev(p, () => RumboUI.App.perfil().nombre);
+  chequear(/^Jugador \d+$/.test(nombreP), 'el jugador queda como «' + nombreP + '», con dibujo en lugar de nombre');
+  await ev(p, () => RumboUI.App.estado.docente = null);
+  // 5.º empieza por el calentamiento y se le explica Repetir por pasos
+  await ev(p, () => RumboUI.App.jugarNivel('m3-p4')); await esperar(500); await saltarEscenas(p);
+  chequear(await ev(p, () => !!document.querySelector('.nueva-carta .nc-puntos')), 'Repetir se explica en varios pasos (con puntos de progreso)');
+  chequear(await ev(p, () => /Siguiente/.test(document.querySelector('.b-entendido').textContent)), 'el primer paso ofrece «Siguiente»');
+  const t1 = await ev(p, () => document.querySelector('.nc-texto').textContent);
+  await ev(p, () => document.querySelector('.b-entendido').click()); await esperar(300);
+  const t2 = await ev(p, () => document.querySelector('.nc-texto').textContent);
+  chequear(t1 !== t2, 'el segundo paso muestra otra explicación');
+  await entender(p);
+  chequear(await ev(p, () => !document.querySelector('.nueva-carta') && !!document.querySelector('.b-pista span')), 'el botón de pista es grande y lleva la palabra «Pista»');
+  // dos fallos seguidos → la pista se ofrece sola
+  for (let i = 0; i < 2; i++) { await p.click('.b-play'); await esperarFin(p); await ev(p, () => delete document.querySelector('.juego').dataset.ultimo); await esperar(300); }
+  chequear(await ev(p, () => document.querySelector('.b-pista').classList.contains('llama')), 'tras dos fallos la pista se ofrece sola (parpadea)');
+  // final propio: un jugador de 1.º termina la aventura en m1-25
+  await ev(p, () => { const PR = RumboProgreso, G = RumboUI.Guardado; const per = PR.crearPerfil({ nombre: 'Jugador 9', curso: 'p1' }); RumboCatalogo.MUNDOS[1].niveles.forEach(n => { if (n.id !== 'm1-25') PR.registrar(per, n.id, { ok: true, tarjetas: 1, programa: n.referencia, pistas: 0 }, RumboInterprete); }); const d = G.cargar(); d.perfiles.push(per); d.activo = per.id; G.guardar(); });
+  await p.reload({ waitUntil: 'load' }); await esperar(400); await rapido(p);
+  await ev(p, () => RumboUI.App.jugarNivel('m1-25')); await esperar(400); await saltarEscenas(p); await entender(p);
+  await ev(p, () => { const c = RumboUI.App.estado.controlJuego; c.editor.cargar(RumboCatalogo.POR_ID['m1-25'].referencia); });
+  await p.click('.b-play'); const f1 = await esperarFin(p, 40000);
+  chequear(/^victoria/.test(f1 || ''), 'el jugador de 1.º supera el último reto de su mundo (' + f1 + ')');
+  await esperar(900); await ev(p, () => { const b = document.querySelector('.resultado .b-cont, .resultado .b-mapa2'); if (b) b.click(); }); await esperar(700);
+  chequear(await ev(p, () => !!document.querySelector('.escena')), 'al terminar su mundo ve el final de la historia');
+  await saltarEscenas(p); await esperar(300);
+  chequear(await ev(p, () => !!RumboUI.App.perfil().logros['final']), 'recibe la insignia «Final de la aventura» sin pasar por el Mundo 3');
   await p.close();
 
   console.log('\nErrores de consola/página durante las pruebas:', errores.length ? '\n' + errores.slice(0, 12).join('\n') : 'ninguno');

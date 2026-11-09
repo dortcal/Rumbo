@@ -103,7 +103,7 @@
       alCambiar: function () {
         if (ejecutado && !corriendo) { esc.reiniciar(); pintarObjetos(0); ejecutado = false; }
         actualizarCuenta();
-        pistaVisual(null);
+        pistaVisual(null); armarOcio();
       }
     });
     if (nivel.programaInicial) { ed.cargar(nivel.programaInicial); }
@@ -120,13 +120,25 @@
     var bReset = h('button.btn-ic.b-reset', { type: 'button', 'aria-label': 'Reiniciar el nivel', title: 'Reiniciar', on: { click: reiniciar } }, ic('reiniciar'));
     var bUndo = h('button.btn-ic.b-undo', { type: 'button', 'aria-label': 'Deshacer', title: 'Deshacer', on: { click: function () { if (!corriendo) ed.deshacer(); } } }, ic('deshacer'));
     var bClear = h('button.btn-ic.b-clear', { type: 'button', 'aria-label': 'Borrar el programa', title: 'Borrar todo', on: { click: function () { if (!corriendo) ed.limpiar(); } } }, ic('borrar'));
-    var bPista = h('button.btn-ic.b-pista', { type: 'button', 'aria-label': 'Pedir una pista', title: 'Pista', on: { click: pista } }, ic('pista'));
+    var bPista = h('button.btn-pista.b-pista', { type: 'button', 'aria-label': 'Pedir una pista', title: 'Pista', on: { click: pista } }, ic('pista'), h('span', 'Pista'));
     var bVel = h('button.btn-ic.b-vel', { type: 'button', 'aria-label': 'Velocidad', title: 'Velocidad', on: { click: velocidad } }, ic('velocidad'));
     var bSol = h('button.btn-txt.b-sol', { type: 'button', hidden: true, on: { click: ensenar } }, 'Lumo te lo enseña');
     var pie = h('footer.j-pie', infantil ? [bUndo, bReset, bPlay, bPista] : [bUndo, bClear, cuenta, bVel, bReset, bPausa, bPlay, bPista, bSol]);
     if (infantil) pie.appendChild(bSol);
 
     if (nivel.sinSolucion) bPista.hidden = true;
+    // La pista se ofrece sola (sin presionar) cuando el alumnado parece perdido: tras fallar dos veces o tras un rato sin tocar nada.
+    var ociosoT = null;
+    function ofrecerPista(razon) {
+      if (!vivo || nivel.sinSolucion || corriendo) return;
+      bPista.classList.add('llama');
+      if (razon === 'ocio' && !infantil) mostrarAviso('¿Necesitas una pista? Pulsa la bombilla.');
+    }
+    function armarOcio() {
+      clearTimeout(ociosoT);
+      if (nivel.sinSolucion) return;
+      ociosoT = setTimeout(function () { ofrecerPista('ocio'); }, infantil ? 25000 : 45000);
+    }
     raiz.appendChild(cab); raiz.appendChild(burbuja); raiz.appendChild(cuerpo); raiz.appendChild(pie);
     actualizarCuenta();
 
@@ -181,6 +193,7 @@
       if (UI.Sonido) UI.Sonido.sfx('animo');
       hablar(id);
       if (!nivel.sinSolucion && fallos >= (infantil ? 2 : 3)) bSol.hidden = false;
+      if (fallos >= 2) ofrecerPista('fallos'); armarOcio();
       raiz.dataset.ultimo = 'fallo:' + resultado.motivo;
     }
 
@@ -194,6 +207,7 @@
     }
     function pista() {
       if (corriendo) return;
+      bPista.classList.remove('llama'); armarOcio();
       if (UI.Sonido) UI.Sonido.sfx('pista');
       pistaN++;
       if (!ctx.sinRegistro && perfil) { PR.anotarPistas(perfil, nivel.id, pistaN); ctx.guardar && ctx.guardar(); }
@@ -300,42 +314,63 @@
       if (!cartas.length) { fin(); return; }
       var c = cartas[0], d = DEM && DEM.DEMOS[c];
       if (perfil && !ctx.sinRegistro) { PR.marcarCartaVista(perfil, c); ctx.guardar && ctx.guardar(); }
+      // En Primaria, las tarjetas de control se explican por pasos (problema → herramienta). En Infantil, una sola demostración.
+      var pasos = !infantil && DEM && DEM.PASOS && DEM.PASOS[c] ? DEM.PASOS[c] : [{ texto: DEM && DEM.TEXTOS[c], demo: d }];
+      var paso = 0, vivoDemo = true, gen = 0;
       var ov = h('div.nueva-carta' + (infantil ? '.infantil' : ''), { role: 'dialog', 'aria-label': 'Tarjeta nueva' });
       var caja = h('div.nc-caja');
-      var demoEl = h('div.nc-demo');
+      var demoEl = h('div.nc-demo'), txt = h('p.nc-texto'), puntos = h('div.nc-puntos', { 'aria-hidden': 'true' });
       caja.appendChild(h('div.nc-titulo', h('span.etq', infantil ? '¡Nueva!' : 'Tarjeta nueva'), h('span.carta.grande', { style: { '--c': UI.Arte.CARTA_COLOR[c] } }, UI.svgEl(UI.Arte.iconoCarta(c, 56), 'ic'), infantil ? null : h('span.carta-nombre', UI.Arte.CARTA_NOMBRE[c]))));
       if (d) caja.appendChild(demoEl);
-      if (!infantil && DEM) caja.appendChild(h('p.nc-texto', DEM.TEXTOS[c]));
-      var ok = h('button.btn-grande.b-entendido', { type: 'button', on: { click: function () { vivoDemo = false; if (ctx.voz) ctx.voz.parar(); if (ov.parentNode) ov.parentNode.removeChild(ov); presentarNuevas(cartas.slice(1), fin); } } }, infantil ? ic('play') : h('span', '¡Entendido!'));
+      if (!infantil) { caja.appendChild(txt); if (pasos.length > 1) caja.appendChild(puntos); }
+      var ok = h('button.btn-grande.b-entendido', { type: 'button', on: { click: siguiente } });
       caja.appendChild(ok); ov.appendChild(caja); raiz.appendChild(ov);
-      var vivoDemo = true;
       if (UI.Sonido) UI.Sonido.sfx('desbloqueo');
-      var idv = (infantil ? 'nci_' : 'nc_') + c;
-      if (VOCES.lineas[idv] && aj.voz !== false && ctx.voz) ctx.voz.decir(idv);
-      if (d) {
-        var demo = UI.Escenario.crear(demoEl, d, { disfraz: disfraz, velocidad: 0.9 });
-        (async function bucle() {
-          await UI.esperar(700);
-          while (vivoDemo && vivo) {
-            var r = I.ejecutar(d, d.programa);
-            await demo.reproducir(r, {});
-            await UI.esperar(900);
-            if (!vivoDemo) break;
-            demo.reiniciar(); await UI.esperar(500);
-          }
-        })();
+      function cerrar() { vivoDemo = false; gen++; if (ctx.voz) ctx.voz.parar(); if (ov.parentNode) ov.parentNode.removeChild(ov); presentarNuevas(cartas.slice(1), fin); }
+      function siguiente() { if (paso < pasos.length - 1) { paso++; mostrar(); } else cerrar(); }
+      function mostrar() {
+        var p = pasos[paso], mi = ++gen;
+        txt.textContent = p.texto || '';
+        puntos.innerHTML = ''; pasos.forEach(function (_, i) { puntos.appendChild(h('i' + (i === paso ? '.on' : ''))); });
+        ok.innerHTML = '';
+        if (infantil) ok.appendChild(ic('play')); else ok.appendChild(h('span', paso < pasos.length - 1 ? 'Siguiente' : '¡Entendido!'));
+        var idv = paso === 0 ? (infantil ? 'nci_' : 'nc_') + c : null;
+        if (ctx.voz && aj.voz !== false) { ctx.voz.parar(); if (!infantil && pasos.length > 1) { var lid = 'ncp_' + c + '_' + paso; if (VOCES.lineas[lid]) ctx.voz.decir(lid); } else if (idv && VOCES.lineas[idv]) ctx.voz.decir(idv); }
+        if (p.demo) {
+          demoEl.innerHTML = '';
+          var demo = UI.Escenario.crear(demoEl, p.demo, { disfraz: disfraz, velocidad: 0.9 });
+          (async function bucle() {
+            await UI.esperar(700);
+            while (vivoDemo && vivo && gen === mi) {
+              var r = I.ejecutar(p.demo, p.demo.programa);
+              await demo.reproducir(r, {});
+              await UI.esperar(900);
+              if (!vivoDemo || gen !== mi) break;
+              demo.reiniciar(); await UI.esperar(500);
+            }
+          })();
+        }
       }
+      mostrar();
     }
 
     function destruir() {
-      vivo = false; esc.cancelar(); if (ctx.voz) ctx.voz.parar(); clearTimeout(hablaTimer);
+      vivo = false; clearTimeout(ociosoT); esc.cancelar(); if (ctx.voz) ctx.voz.parar(); clearTimeout(hablaTimer);
     }
 
     // ----------------------------- arranque
     avatarDe('Lumo');
-    var nuevas = ctx.sinRegistro || !perfil ? [] : CAT.cartasNuevas(nivel.id).filter(function (c) { return !perfil.vistos.cartas[c] && nivel.cartas.disponibles.indexOf(c) >= 0 && DEM && DEM.DEMOS[c]; });
+    // Se explican las tarjetas que este jugador aún no ha visto (también si empieza a mitad de la aventura, p. ej. en 5.º).
+    // A partir de 3.º se da por sabido el movimiento básico para no repetir lo trivial.
+    var BASICAS = ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'esperar'];
+    var saltaBasicas = !infantil && perfil && /^p[3-6]$/.test(perfil.curso || '');
+    var nuevas = ctx.sinRegistro || !perfil ? [] : (infantil ? CAT.cartasNuevas(nivel.id) : nivel.cartas.disponibles).filter(function (c) {
+      if (perfil.vistos.cartas[c] || !(DEM && DEM.DEMOS[c]) || nivel.cartas.disponibles.indexOf(c) < 0) return false;
+      if (saltaBasicas && BASICAS.indexOf(c) >= 0) { PR.marcarCartaVista(perfil, c); return false; }
+      return true;
+    });
     if (ctx.mostrarTarjetasNuevas) nuevas = CAT.cartasNuevas(nivel.id).filter(function (c) { return DEM && DEM.DEMOS[c]; });
-    presentarNuevas(nuevas, function () { hablar('n_' + nivel.id); });
+    presentarNuevas(nuevas, function () { hablar('n_' + nivel.id); armarOcio(); });
     if (!nuevas.length) hablar('n_' + nivel.id);
 
     return { destruir: destruir, editor: ed, escenario: esc, ejecutar: ejecutar, reiniciar: reiniciar, el: raiz,

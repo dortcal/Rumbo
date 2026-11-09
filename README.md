@@ -15,6 +15,19 @@ Con la ayuda del alumnado y de sus amigos (Búho Bruma, Bichito, Tinta, el lagar
 mundos, repara su brújula —es decir, **depura**— y vuelve a encender el Faro. Al final, el Laboratorio de
 programación le da el turno al alumnado: ahora crean ellos los retos.
 
+## Todo el alumnado puede terminar la aventura
+
+Cada curso tiene **su propio final**, con las mismas escenas y créditos y la insignia «Final de la aventura»:
+3, 4 y 5 años al completar su itinerario; 1.º–2.º al superar el último reto del Mundo 1; 3.º–4.º el del Mundo 2;
+5.º–6.º el último reto del Faro. El Laboratorio se abre al terminar la aventura de cada curso. Quien llega al Mundo 3 sin
+haber pasado por los anteriores empieza por **5 retos de calentamiento** (que no bloquean el resto) y recibe la explicación
+de cada tarjeta la primera vez que la usa.
+
+## Protección de datos
+
+El juego **no pide ni guarda nombres**. Cada jugador aparece como «Jugador N» con un dibujo. Todo se guarda solo en el navegador.
+Los títulos de los retos del Laboratorio llevan un aviso para no escribir nombres de personas.
+
 ## Qué contiene
 
 | Campaña | Etapa | Retos | Qué se trabaja |
@@ -22,8 +35,8 @@ programación le da el turno al alumnado: ahora crean ellos los retos.
 | **Mundo 0 · Pequeños exploradores** | Infantil (3, 4 y 5 años) | 15 (3 itinerarios) | Direcciones, secuencias de 1 a 5 tarjetas, giros, patrones, anticipación, detectar errores sencillos. Sin texto ni terminología: voz e imágenes. |
 | **Mundo 1 · Primeros programadores** | 1.º–2.º | 25 | Secuencias, giros, recoger, saltar, mecanismos, primeros bucles, depuración. |
 | **Mundo 2 · Maestros del código** | 3.º–4.º | 25 | Bucles con cantidades, descomposición, recetas (bloques reutilizables), primera condición, optimización. |
-| **Mundo 3 · Expertos en algoritmos** | 5.º–6.º | 25 | Bucles anidados, condiciones y sensores, «mientras», recetas, límites de tarjetas, depuración avanzada. |
-| **El Faro Mayor** | cierre | 3 + 4 retos secretos | Retos integradores por fases. |
+| **Mundo 3 · Expertos en algoritmos** | 5.º–6.º | 30 (5 de calentamiento + 25) | Bucles anidados, condiciones y sensores, «mientras», recetas, límites de tarjetas, depuración avanzada. |
+| **El Faro Mayor** | cierre de 5.º–6.º | 3 + 4 retos secretos | Retos integradores por fases. |
 | **Laboratorio** | todos | ilimitados | Crear un tablero, resolverlo, compartirlo con un código o un archivo. |
 
 La dificultad **no** crece solo alargando recorridos: cada bloque introduce una forma nueva de pensar
@@ -32,8 +45,8 @@ La dificultad **no** crece solo alargando recorridos: cada bloque introduce una 
 ### Las tarjetas
 
 `Avanzar`, `Retroceder`, `Girar izquierda/derecha`, `Saltar`, `Recoger`, `Activar`, `Esperar`, `Repetir`, `Si / si no`,
-`Mientras`, `Receta`. Se **desbloquean poco a poco**; la primera vez que aparece una se muestra una mini‑demostración
-animada que se ejecuta con el intérprete real.
+`Mientras`, `Receta`. Se **desbloquean poco a poco**; la primera vez que aparece una se muestra una explicación animada
+que se ejecuta con el intérprete real. Repetir, Si, Mientras y Receta se explican **por pasos** (primero el problema, después la herramienta).
 
 ### Estrellas
 
@@ -43,7 +56,7 @@ En Infantil solo hay una estrella de celebración y no se muestra ninguna puntua
 
 ### Los errores no se castigan
 
-Lumo reacciona con humor y con una pista («¿Y si repetimos esta secuencia?»); hay tres pistas progresivas por reto y, tras
+Lumo reacciona con humor y con una pista («¿Y si repetimos esta secuencia?»); hay un botón grande de **Pista** (tres pistas progresivas por reto; parpadea solo tras dos fallos o un rato sin tocar nada) y, tras
 varios intentos, «Lumo te lo enseña» (con 1 estrella como máximo). Hay retos cuyo objetivo es **encontrar y reparar** programas
 con fallos (tarjetas desordenadas, que faltan, sobran, bucles mal contados, condiciones erróneas) y retos de optimización.
 

@@ -102,8 +102,11 @@
       var i = lista.indexOf(id);
       return i === 0 || hecho(perfil, lista[i - 1]);
     }
-    var pos = CAT.posicion(id);
-    return pos === 0 || hecho(perfil, CAT.MUNDOS[nivel.mundo].niveles[pos - 1].id);
+    var pos = CAT.posicion(id), previo = pos > 0 ? CAT.MUNDOS[nivel.mundo].niveles[pos - 1] : null;
+    if (!previo) return true;
+    // El calentamiento (bloque 0) es un repaso: no bloquea el primer reto «de verdad» del mundo.
+    if (previo.bloque === 0 && nivel.bloque !== 0) return true;
+    return hecho(perfil, previo.id);
   }
 
   // Primer nivel pendiente y abierto (para el botón «Continuar»)
@@ -206,6 +209,7 @@
       perseverancia: function () {
         return Object.keys(perfil.niveles).some(function (k) { var d = perfil.niveles[k]; return d.completado && d.tras >= 4; });
       },
+      finalHecho: function () { return hecho(perfil, CAT.finalDe(perfil.curso)); },
       itinerario: function (k) { return itinerarioCompleto(perfil, k); },
       retosCreados: function () { return (perfil.retos || []).length; }
     };
@@ -341,7 +345,7 @@
     estrellasNivel: estrellasNivel, completadosMundo: completadosMundo, mundoCompleto: mundoCompleto,
     estrellasMundo: estrellasMundo, estrellasTotales: estrellasTotales, itinerarioCompleto: itinerarioCompleto,
     mundoAbierto: mundoAbierto, itinerarioAbierto: itinerarioAbierto, secretoAbierto: secretoAbierto,
-    estaDesbloqueado: estaDesbloqueado, siguientePendiente: siguientePendiente,
+    finalHecho: function (perfil) { return hecho(perfil, CAT.finalDe(perfil.curso)); }, estaDesbloqueado: estaDesbloqueado, siguientePendiente: siguientePendiente,
     registrar: registrar, anotarPistas: anotarPistas, marcarCartaVista: marcarCartaVista, marcarEscenaVista: marcarEscenaVista,
     evaluarLogros: evaluarLogros, disfracesDesbloqueados: disfracesDesbloqueados, resumen: resumen,
     aCodigo: aCodigo, aCodigoLargo: aCodigoLargo, desdeCodigo: desdeCodigo, ORDEN_LARGO: ORDEN_LARGO

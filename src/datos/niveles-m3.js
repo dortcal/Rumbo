@@ -35,7 +35,38 @@
   var FILAS3 = ['>oo', '.oo', '.oo', 'G..'];
   var ARCA = ['avanzar', 'girar-d', 'girar-i', 'recoger', 'repetir', 'receta'];
 
+  // Calentamiento: repaso suave para quien llega al Mundo 3 sin haber pasado por los anteriores.
+  function cal(def, n) {
+    def.e = 'primaria-3c';
+    def.z = 'ciudad';
+    def.b = 0;
+    def.id = 'm3-p' + n;
+    return D.nivel(def);
+  }
+
   return [
+    // ---- Bloque 0. Calentamiento (repaso de secuencias, giros, recoger y primer bucle) ----
+    cal({ tt: 'Primeros pasos en la ciudad', m: ['>...G'], c: ['avanzar', 'girar-d', 'girar-i'],
+      ref: [A, A, A, A], holgura: 1, h: 'seq',
+      o: 'Lleva a Lumo hasta la meta.', i: 'Bit enseña a Lumo las calles de la ciudad tecnológica.',
+      cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: secuencia corta'] }, 1),
+    cal({ tt: 'Doblar la esquina', m: ['>..', '##.', '##G'], c: ['avanzar', 'girar-d', 'girar-i'],
+      ref: [A, A, G, A, A], holgura: 1, h: 'giro',
+      o: 'Gira en la esquina para llegar a la meta.', i: 'Las calles tienen esquinas.',
+      cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: giros'] }, 2),
+    cal({ tt: 'Paneles en la acera', m: ['>.o.o.G'], c: ['avanzar', 'girar-d', 'girar-i', 'recoger'],
+      ref: [A, A, R, A, A, R, A, A], holgura: 2, h: 'obj',
+      o: 'Recoge los dos paneles solares y llega a la meta.', i: 'Hay paneles solares por recoger.',
+      cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: recoger objetos'] }, 3),
+    cal({ tt: 'Repite el paso', m: ['>......G'], c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
+      ref: [rep(7, A)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
+      o: 'Usa Repetir en lugar de muchas tarjetas.', i: 'Una calle recta y muy larga.',
+      cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: un bucle sencillo'] }, 4),
+    cal({ tt: 'Calle con vueltas', m: ['>...', '###.', 'G...'], c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
+      ref: [rep(3, A), G, rep(2, A), G, rep(3, A)], lim: { repetir: 3 }, holgura: 1, usa: 'repetir', h: 'bucle',
+      o: 'Tres tramos: usa Repetir en cada uno.', i: 'La calle hace una S.',
+      cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: varios bucles seguidos'] }, 5),
+
     // ---- Bloque 1. Bucles anidados ----
     m3({ tt: 'La escalera larga', b: 1, m: ESCALERA, c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, rep(3, A), G, A, I)], lim: { repetir: 2 }, holgura: 1, usa: 'repetir', h: 'bucle',

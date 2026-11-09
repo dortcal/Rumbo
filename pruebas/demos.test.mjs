@@ -19,3 +19,16 @@ test('hay demo para todas las tarjetas que el juego presenta', () => {
   for (const n of CAT.TODOS) for (const c of CAT.cartasNuevas(n.id)) vistas.add(c);
   for (const c of vistas) assert.ok(DEMOS[c], 'falta demo de ' + c);
 });
+
+test('cada paso de la explicación de las tarjetas de control se ejecuta bien y usa la tarjeta explicada', async () => {
+  const { PASOS } = require('../src/datos/demos.js');
+  for (const [carta, pasos] of Object.entries(PASOS)) {
+    assert.ok(pasos.length >= 2, carta + ': explicar en al menos dos pasos');
+    pasos.forEach((p, i) => {
+      assert.ok(p.texto && p.texto.length > 20, `${carta} paso ${i}: texto`);
+      const r = I.ejecutar(p.demo, p.demo.programa);
+      assert.equal(r.ok, true, `${carta} paso ${i}: ${r.motivo}`);
+    });
+    assert.ok(pasos.slice(1).some(p => I.usaTarjeta(p.demo.programa, carta)), carta + ' se muestra en uso');
+  }
+});
