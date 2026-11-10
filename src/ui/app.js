@@ -120,6 +120,11 @@
     }
     centro.appendChild(bs);
     cont.appendChild(centro);
+    cont.appendChild(h('div.portada-licencia',
+      h('a.cc-logo', { href: 'https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es', target: '_blank', rel: 'license noopener noreferrer', 'aria-label': 'Licencia Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0' },
+        h('img', { src: 'https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png', alt: 'CC BY-NC-ND 4.0', width: '88', height: '31', loading: 'lazy' })),
+      h('p', 'Diseñado por David OZC · © 2026 David. Uso gratuito en centros educativos.'),
+      h('p.cc-texto', 'Licencia CC BY-NC-ND 4.0: Reconocimiento · NoComercial · SinObraDerivada.')));
     cont.appendChild(h('div.portada-pie',
       h('button.btn-txt', { type: 'button', on: { click: function () { ir('codigo'); } } }, 'Continuar con un código'),
       h('button.btn-txt', { type: 'button', on: { click: function () { ir('ajustes'); } } }, 'Ajustes'),

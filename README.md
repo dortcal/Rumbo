@@ -165,8 +165,7 @@ Si algún día se graban audios, basta con asociarlos a esos mismos identificado
 
 ## Licencias y créditos
 
-- Arte (Lumo, personajes, escenarios, iconos), niveles, textos y código: obra original creada para este proyecto. **La licencia
-  del código y de los contenidos está pendiente de que su autor la elija** (mientras tanto, todos los derechos reservados).
+- Diseñado por **David OZC** · © 2026 David. Arte (Lumo, personajes, escenarios, iconos), niveles, textos y código: obra original creada para este proyecto, publicada bajo licencia **[Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0 (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es)**. Uso gratuito en centros educativos.
 - Tipografías **Baloo 2** y **Nunito**: SIL Open Font License 1.1 (`fonts/OFL-*.txt`).
 - No se usa ningún personaje, gráfico, sonido ni elemento protegido de otros videojuegos. Lightbot, Code‑a‑pillar y Smile and
   Learn fueron solo inspiración de mecánicas pedagógicas.

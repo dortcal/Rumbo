@@ -304,3 +304,5 @@ details.doc-caja>summary{font:800 1.2rem var(--titulo);cursor:pointer;color:var(
 .reducir-animaciones .btn-pista.llama{animation:none}
 
 .nc-puntos{display:flex;gap:8px;justify-content:center;margin:.2rem 0}.nc-puntos i{width:12px;height:12px;border-radius:50%;background:#cfd8e3}.nc-puntos i.on{background:#f59e0b;transform:scale(1.25)}
+
+.portada-licencia{position:relative;z-index:2;text-align:center;margin:.4rem auto 0;padding:.5rem 1rem;max-width:34rem;background:rgba(255,255,255,.82);border-radius:14px;font-size:.9rem;color:#33415c}.portada-licencia p{margin:.15rem 0}.portada-licencia .cc-texto{font-size:.8rem;opacity:.85}.portada-licencia img{display:inline-block;vertical-align:middle;height:31px;width:88px}
