@@ -1,7 +1,7 @@
-/* RUMBO — service worker (generado por tools/build.js; versión fbce9391ae).
+/* RUMBO — service worker (generado por tools/build.js; versión 00c1a5b662).
  * Guarda el juego en la caché del navegador para que funcione sin conexión tras la primera carga.
  * Funciona solo con HTTPS (GitHub Pages lo es) o en localhost. */
-const CACHE = 'rumbo-fbce9391ae';
+const CACHE = 'rumbo-00c1a5b662';
 const ARCHIVOS = ["./","index.html","manifest.webmanifest","css/rumbo.css","js/rumbo.js","fonts/baloo-2-latin-700-normal.woff2","fonts/baloo-2-latin-800-normal.woff2","fonts/nunito-latin-600-normal.woff2","fonts/nunito-latin-800-normal.woff2","intro/escena-1.jpg","intro/escena-2.jpg","intro/escena-3.jpg","icons/icon.svg","icons/icon-192.png","icons/icon-512.png","icons/icon-maskable-512.png"];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ARCHIVOS)).then(() => self.skipWaiting()));

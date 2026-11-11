@@ -151,28 +151,53 @@
   var CAPA = '<path d="M26 52Q10 78 18 92l32-6 32 6q8-14-8-40z" fill="#e8553f"/><path d="M26 52Q20 70 26 84" stroke="#b83a28" stroke-width="3" fill="none"/>';
 
   // Lumo: viewBox 0 0 100 100. dir: E/O/N/S (hacia dónde mira)
+  //  S = de frente (mira al jugador) · N = de espaldas · E/O = de perfil (tres cuartos).
   function lumo(op) {
     op = op || {};
-    var o = OJO[op.dir || 'S'] || OJO.S, expr = op.expr || 'normal', d = op.disfraz | 0;
-    var cerrados = expr === 'triste' || expr === 'feliz';
-    var ojos = [38, 62].map(function (cx) {
-      return '<ellipse cx="' + cx + '" cy="52" rx="9" ry="' + (cerrados && expr === 'feliz' ? 7 : 10) + '" fill="#fff"/>' +
-        '<circle cx="' + (cx + o[0]) + '" cy="' + (53 + o[1]) + '" r="5" fill="#2b2140"/><circle cx="' + (cx + o[0] + 1.6) + '" cy="' + (51 + o[1]) + '" r="1.8" fill="#fff"/>';
-    }).join('');
-    var cejas = expr === 'triste' ? '<path d="M27 43l15-6M73 43l-15-6" stroke="#7a2a1a" stroke-width="3.5" stroke-linecap="round"/>' :
-      expr === 'sorpresa' ? '<path d="M28 36q10-6 18-1M72 36q-10-6-18-1" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>' :
-      expr === 'pensando' ? '<path d="M28 38q10-5 18 0M56 36l16-4" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>' : '';
+    var dir = op.dir || 'S', expr = op.expr || 'normal', d = op.disfraz | 0;
+    var cerrados = expr === 'feliz';
+    var cejas = function (dx) {
+      return expr === 'triste' ? '<path d="M' + (27 + dx) + ' 43l15-6M' + (73 + dx) + ' 43l-15-6" stroke="#7a2a1a" stroke-width="3.5" stroke-linecap="round"/>' :
+        expr === 'sorpresa' ? '<path d="M' + (28 + dx) + ' 36q10-6 18-1M' + (72 + dx) + ' 36q-10-6-18-1" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>' :
+        expr === 'pensando' ? '<path d="M' + (28 + dx) + ' 38q10-5 18 0M' + (56 + dx) + ' 36l16-4" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>' : '';
+    };
+    var ojo = function (cx, rx, ry, px, py) {
+      return '<ellipse cx="' + cx + '" cy="52" rx="' + rx + '" ry="' + ry + '" fill="#fff"/>' +
+        '<circle cx="' + (cx + px) + '" cy="' + (53 + py) + '" r="' + (rx * .56).toFixed(1) + '" fill="#2b2140"/><circle cx="' + (cx + px + 1.6) + '" cy="' + (51 + py) + '" r="1.8" fill="#fff"/>';
+    };
+    var cuerpoBase = '<circle cx="50" cy="56" r="46" fill="url(#gLumoGlow)"/>' +
+      '<g class="llama"><path d="M50 4q14 14 10 26-3 7-10 7t-10-7Q36 18 50 4z" fill="url(#gLlama)"/><path d="M50 14q6 8 3 15-3 4-3 4t-3-4q-3-7 3-15z" fill="#fff3a8" opacity=".85"/></g>';
+    var interior, pies, frontal = '';
+    if (dir === 'N') {
+      // De espaldas: sin cara; se ve la nuca, el remolino de la llama y la mochila-brújula.
+      interior = '<ellipse cx="50" cy="60" rx="35" ry="32" fill="url(#gLumo)"/>' +
+        '<ellipse cx="50" cy="60" rx="35" ry="32" fill="#c8641a" opacity=".22"/>' +
+        '<path d="M50 34q-9 4-9 12t9 10 9-6q0-7-7-8" fill="none" stroke="#e0731a" stroke-width="3.5" stroke-linecap="round" opacity=".7"/>' +
+        '<ellipse cx="50" cy="72" rx="15" ry="13" fill="#e8553f"/><ellipse cx="50" cy="72" rx="15" ry="13" fill="none" stroke="#b83a28" stroke-width="3"/><circle cx="50" cy="72" r="4" fill="#ffd166"/>';
+      pies = '<ellipse cx="36" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="64" cy="91" rx="10" ry="5" fill="#e0731a"/>';
+    } else if (dir === 'E' || dir === 'O') {
+      // De perfil: cuerpo más estrecho, ojo cercano grande, ojo lejano pequeño, boca al frente.
+      interior = '<ellipse cx="48" cy="60" rx="31" ry="32" fill="url(#gLumo)"/>' +
+        '<ellipse cx="42" cy="40" rx="11" ry="6" fill="#fff" opacity=".28" transform="rotate(-20 42 40)"/>' +
+        '<circle cx="76" cy="64" r="6" fill="#ff7f8a" opacity=".6"/>' +
+        '<ellipse cx="68" cy="52" rx="8" ry="9.5" fill="#fff"/><circle cx="72" cy="53" r="4.6" fill="#2b2140"/><circle cx="73.4" cy="51" r="1.7" fill="#fff"/>' +
+        '<ellipse cx="52" cy="52" rx="6.5" ry="8" fill="#fff"/><circle cx="55.5" cy="53" r="3.8" fill="#2b2140"/><circle cx="56.8" cy="51.4" r="1.4" fill="#fff"/>' +
+        '<g transform="translate(14 0)">' + cejas(0).replace(/M(\d+)/g, function (m, n) { return m; }) + boca(expr) + '</g>' +
+        '<ellipse cx="30" cy="70" rx="7" ry="10" fill="#e0731a" opacity=".85"/>';
+      pies = '<ellipse cx="42" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="62" cy="91" rx="9" ry="5" fill="#e0731a"/>';
+      if (cerrados) interior = interior.replace('rx="8" ry="9.5"', 'rx="8" ry="6.5"');
+      if (dir === 'O') { interior = '<g transform="translate(100 0) scale(-1 1)">' + interior + '</g>'; pies = '<g transform="translate(100 0) scale(-1 1)">' + pies + '</g>'; }
+    } else {
+      interior = '<ellipse cx="50" cy="60" rx="35" ry="32" fill="url(#gLumo)"/>' +
+        '<ellipse cx="38" cy="40" rx="13" ry="7" fill="#fff" opacity=".28" transform="rotate(-20 38 40)"/>' +
+        '<circle cx="26" cy="64" r="6" fill="#ff7f8a" opacity=".55"/><circle cx="74" cy="64" r="6" fill="#ff7f8a" opacity=".55"/>' +
+        [38, 62].map(function (cx) { return ojo(cx, 9, cerrados ? 7 : 10, 0, 2.2); }).join('') + cejas(0) + boca(expr) +
+        '<g transform="translate(50 84)"><circle r="8" fill="#fff" stroke="#c9741a" stroke-width="2.5"/><path d="M0-6l3 6-3 6-3-6z" fill="#e8553f"/><path d="M0 6l-3-6h6z" fill="#7a8aa8"/></g>';
+      pies = '<ellipse cx="34" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="66" cy="91" rx="10" ry="5" fill="#e0731a"/>';
+    }
     return '<svg viewBox="0 0 100 100" class="lumo-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      (d === 3 ? CAPA : '') +
-      '<circle cx="50" cy="56" r="46" fill="url(#gLumoGlow)"/>' +
-      '<g class="llama"><path d="M50 4q14 14 10 26-3 7-10 7t-10-7Q36 18 50 4z" fill="url(#gLlama)"/><path d="M50 14q6 8 3 15-3 4-3 4t-3-4q-3-7 3-15z" fill="#fff3a8" opacity=".85"/></g>' +
-      '<ellipse cx="50" cy="60" rx="35" ry="32" fill="url(#gLumo)"/>' +
-      '<ellipse cx="38" cy="40" rx="13" ry="7" fill="#fff" opacity=".28" transform="rotate(-20 38 40)"/>' +
-      '<ellipse cx="34" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="66" cy="91" rx="10" ry="5" fill="#e0731a"/>' +
-      '<circle cx="26" cy="64" r="6" fill="#ff7f8a" opacity=".55"/><circle cx="74" cy="64" r="6" fill="#ff7f8a" opacity=".55"/>' +
-      ojos + cejas + boca(expr) +
-      '<g transform="translate(50 84)"><circle r="8" fill="#fff" stroke="#c9741a" stroke-width="2.5"/><path d="M0-6l3 6-3 6-3-6z" fill="#e8553f"/><path d="M0 6l-3-6h6z" fill="#7a8aa8"/></g>' +
-      (DISFRACES_SVG[d] || '') + '</svg>';
+      (d === 3 && dir !== 'N' ? CAPA : '') + cuerpoBase + (d === 3 && dir === 'N' ? CAPA : '') +
+      interior + pies + frontal + (dir === 'N' || dir === 'S' ? (DISFRACES_SVG[d] || '') : (DISFRACES_SVG[d] || '')) + '</svg>';
   }
 
   // ---------------------------------------------------------------- personajes secundarios

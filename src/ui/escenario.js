@@ -9,6 +9,7 @@
   var A = function () { return UI.Arte; };
   var CELDA = 64;
   var DELTA = { N: [0, -1], E: [1, 0], S: [0, 1], O: [-1, 0] };
+  var DER = { N: 'E', E: 'S', S: 'O', O: 'N' };
   var OPUESTA = { N: 'S', S: 'N', E: 'O', O: 'E' };
   var ANGULO = { N: -90, E: 0, S: 90, O: 180 };
 
@@ -43,15 +44,21 @@
       }
     }
     svg.innerHTML = '<g class="suelo">' + capaSuelo + '</g><g class="objetos">' + capaObj + '</g>' +
-      '<g class="lumo" style="transform:translate(' + (pos.x * CELDA) + 'px,' + (pos.y * CELDA) + 'px)"><g class="lumo-in"><g class="lumo-cara"></g></g></g><g class="efectos"></g>';
+      '<g class="lumo" style="transform:translate(' + (pos.x * CELDA) + 'px,' + (pos.y * CELDA) + 'px)"><g class="lumo-rumbo"><g class="lumo-aro"><ellipse class="aro-base" cx="32" cy="34" rx="29" ry="29"/></g></g><g class="lumo-in"><g class="lumo-cara"></g></g><g class="lumo-rumbo"><g class="lumo-aro"><path class="aro-flecha" d="M63.5 34 L51 24.5 L54 34 L51 43.5 Z"/></g></g></g><g class="efectos"></g>';
     contenedor.innerHTML = '';
     contenedor.appendChild(svg);
 
-    var gLumo = svg.querySelector('.lumo'), gIn = svg.querySelector('.lumo-in'), gCara = svg.querySelector('.lumo-cara'), gEf = svg.querySelector('.efectos');
+    var gAros = svg.querySelectorAll('.lumo-aro'), ang = ANGULO[pos.dir], gLumo = svg.querySelector('.lumo'), gIn = svg.querySelector('.lumo-in'), gCara = svg.querySelector('.lumo-cara'), gEf = svg.querySelector('.efectos');
 
     function dibujarLumo() {
       var s = A().lumo({ dir: pos.dir, expr: expr, disfraz: disfraz });
       gCara.innerHTML = s.replace('class="lumo-svg"', 'class="lumo-svg" x="2" y="-4" width="60" height="60"');
+    }
+    // Anillo de rumbo: rota de verdad (por el camino corto) hacia donde mira Lumo.
+    function girarAros(ms) { for (var k = 0; k < gAros.length; k++) { gAros[k].style.transitionDuration = (ms || 0) + 'ms'; gAros[k].style.transform = 'rotate(' + ang + 'deg)'; } }
+    function orientar(dir, ms, sentido) {
+      ang += sentido * 90;   // los giros son siempre de 90°: el anillo da el cuarto de vuelta en el sentido correcto
+      girarAros(ms);
     }
     function colocar(x, y, ms) {
       gLumo.style.transitionDuration = ms + 'ms';
@@ -86,6 +93,7 @@
       expr = 'normal';
       gIn.classList.remove('hop', 'bump', 'caer', 'giro-w', 'alegre');
       gIn.style.opacity = '';
+      ang = ANGULO[pos.dir]; girarAros(0);
       colocar(pos.x, pos.y, 0);
       dibujarLumo();
       svg.querySelectorAll('.obj').forEach(function (o) { o.classList.remove('recogido'); });
@@ -123,8 +131,11 @@
             S && S.sfx('salto'); anim('hop', d * 1.3); colocar(p.a.x, p.a.y, d * 1.3); pos = { x: p.a.x, y: p.a.y, dir: p.a.dir };
             await espera(d * 1.3 + 40); break;
           case 'giro':
-            S && S.sfx('giro'); pos.dir = p.a.dir; dibujarLumo(); anim('giro-w', d);
-            await espera(d); break;
+            S && S.sfx('giro');
+            var sent = p.a.dir === DER[p.de.dir] ? 1 : -1;
+            orientar(p.a.dir, d, sent); anim('giro-w', d);
+            await espera(Math.round(d * .5)); pos.dir = p.a.dir; dibujarLumo();   // a mitad del giro se ve la otra cara
+            await espera(Math.round(d * .5) + 60); break;
           case 'recoger': {
             S && S.sfx('recoger');
             var o = svg.querySelector('.obj[data-x="' + p.de.x + '"][data-y="' + p.de.y + '"]');
