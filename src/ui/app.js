@@ -26,6 +26,7 @@
       VOCES.lineas['nc_' + c] = { quien: 'Lumo', texto: DEM.TEXTOS[c].replace(/^[^:]+:\s*/, '') };
     });
     Object.keys(DEM.PASOS || {}).forEach(function (c) { DEM.PASOS[c].forEach(function (p, i) { VOCES.lineas['ncp_' + c + '_' + i] = { quien: 'Lumo', texto: p.texto }; }); });
+    INTRO.forEach(function (e) { VOCES.lineas[e.id] = { quien: 'Lumo', texto: e.texto }; });
     Object.keys(DEM.VOZ_INFANTIL).forEach(function (c) { VOCES.lineas['nci_' + c] = { quien: 'Lumo', texto: DEM.VOZ_INFANTIL[c] }; });
     App.raiz = raiz;
     raiz.innerHTML = Ar.defs();
@@ -39,7 +40,7 @@
     aplicarAjustes();
     construirDisparos();
     if (!G.persistente()) setTimeout(function () { toast('Este navegador no deja guardar datos: el progreso se perderá al cerrar. Usa «Mi código».', 6000); }, 800);
-    ir('portada');
+    if (!datos().ajustes.introVista) intro(function () { ir('portada'); }); else ir('portada');
   }
 
   function aplicarAjustes() {
@@ -131,6 +132,44 @@
       h('button.btn-txt', { type: 'button', on: { click: function () { ir('docente'); } } }, 'Docentes')));
     UI.Sonido.musica('mapa');
   });
+
+  // ---------------------------------------------------------------- intro (3 ilustraciones animadas + subtítulos + voz)
+  var INTRO = [
+    { img: 'intro/escena-1.jpg', id: 'intro_1', texto: '¡Hola! Soy Lumo.', dur: 4200, mov: 'a' },
+    { img: 'intro/escena-2.jpg', id: 'intro_2', texto: 'Mi brújula se ha roto y el Faro se ha apagado.', dur: 6200, mov: 'b' },
+    { img: 'intro/escena-3.jpg', id: 'intro_3', texto: '¿Me ayudas a encontrar el camino?', dur: 5200, mov: 'c' }
+  ];
+
+  function intro(fin) {
+    var ov = h('div.intro', { role: 'dialog', 'aria-label': 'Presentación de RUMBO' });
+    var capas = INTRO.map(function (e) { var im = h('img.intro-img.mov-' + e.mov, { src: e.img, alt: '', draggable: 'false' }); var c = h('div.intro-capa', im); ov.appendChild(c); return c; });
+    ov.appendChild(h('div.intro-brillos', { 'aria-hidden': 'true' }, [1, 2, 3, 4, 5, 6, 7, 8].map(function (k) { return h('i.b' + k); })));
+    var sub = h('div.intro-sub', { 'aria-live': 'polite' });
+    var saltar = h('button.btn-txt.intro-saltar', { type: 'button', on: { click: cerrar } }, 'Saltar');
+    ov.appendChild(sub); ov.appendChild(saltar);
+    document.body.appendChild(ov);
+    UI.Sonido.musica('mapa');
+    var cerrado = false, tim = null, k = 0;
+    function cerrar() {
+      if (cerrado) return; cerrado = true; clearTimeout(tim);
+      if (App.estado.voz) App.estado.voz.parar();
+      datos().ajustes.introVista = true; G.guardar();
+      ov.classList.add('sale');
+      setTimeout(function () { if (ov.parentNode) ov.parentNode.removeChild(ov); fin(); }, 450);
+    }
+    function paso() {
+      if (cerrado) return;
+      if (k >= INTRO.length) { cerrar(); return; }
+      var e = INTRO[k];
+      capas.forEach(function (c, j) { c.classList.toggle('on', j === k); });
+      sub.textContent = e.texto; sub.classList.remove('in'); void sub.offsetWidth; sub.classList.add('in');
+      if (datos().ajustes.voz !== false && App.estado.voz) App.estado.voz.decir(e.id, { velocidad: 0.95 });
+      k++; tim = setTimeout(paso, e.dur);
+    }
+    ov.addEventListener('click', function (ev) { if (ev.target === saltar) return; clearTimeout(tim); paso(); });   // toca para pasar a la siguiente
+    paso();
+  }
+  App.intro = function () { intro(function () {}); };
 
   // Protección de datos: no se pide ningún nombre. Cada jugador es «Jugador N» y se distingue por un dibujo.
   function perfilAnonimo(curso) {
@@ -584,6 +623,7 @@
     vozInfo.appendChild(sel); vozInfo.appendChild(info); vozInfo.appendChild(probar);
     f.appendChild(vozInfo); llenarVoces();
     if (root.speechSynthesis && root.speechSynthesis.addEventListener) root.speechSynthesis.addEventListener('voiceschanged', llenarVoces);
+    f.appendChild(h('div.ajuste', h('div.aj-txt', h('b', 'Presentación'), h('span', 'Vuelve a ver la introducción de Lumo.')), h('button.btn-txt', { type: 'button', on: { click: function () { UI.Sonido.iniciar(); App.intro(); } } }, 'Ver la intro')));
     f.appendChild(h('p.nota', 'Los datos se guardan solo en este navegador. Nada se envía a Internet.'));
     cont.appendChild(f);
   });

@@ -26,6 +26,7 @@ async function main() {
   await new Promise(r => servidor.listen(8765, r));
   const browser = await puppeteer.launch({ executablePath: process.env.CHROME || '/usr/bin/google-chrome', args: ['--no-sandbox', '--disable-gpu', '--autoplay-policy=no-user-gesture-required'], headless: 'new' });
   const errores = [];
+  async function ev0(p) { await p.evaluate(() => { const b = document.querySelector('.intro-saltar'); if (b) b.click(); }); await esperar(700); }
   async function pagina(op = {}) {
     const p = await browser.newPage();
     await p.setViewport(Object.assign({ width: 1280, height: 800 }, op.viewport || {}));
@@ -37,13 +38,14 @@ async function main() {
     await p.goto('http://localhost:8765/index.html', { waitUntil: 'load' });
     if (!op.conservar) { await p.evaluate(() => localStorage.clear()); await p.reload({ waitUntil: 'load' }); }
     await esperar(300);
+    if (!op.conservar) await ev0(p);
     p.__nav = true;
     return p;
   }
   const ev = (p, f, ...a) => p.evaluate(f, ...a);
   async function crearPerfil(p, nombre, curso) {
     await ev(p, (n, c) => { const PR = RumboProgreso, G = RumboUI.Guardado; const per = PR.crearPerfil({ nombre: n, curso: c }); const d = G.cargar(); d.perfiles.push(per); d.activo = per.id; G.guardar(); }, nombre, curso);
-    await p.reload({ waitUntil: 'load' }); await esperar(300);
+    await p.reload({ waitUntil: 'load' }); await esperar(300); await ev0(p);
   }
   async function saltarEscenas(p) {
     for (let i = 0; i < 6; i++) { const hay = await ev(p, () => !!document.querySelector('.escena .b-saltar, .escena .b-sig-esc')); if (!hay) break; await ev(p, () => (document.querySelector('.escena .b-saltar') || document.querySelector('.escena .b-sig-esc')).click()); await esperar(250); }

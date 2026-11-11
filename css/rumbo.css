@@ -306,3 +306,19 @@ details.doc-caja>summary{font:800 1.2rem var(--titulo);cursor:pointer;color:var(
 .nc-puntos{display:flex;gap:8px;justify-content:center;margin:.2rem 0}.nc-puntos i{width:12px;height:12px;border-radius:50%;background:#cfd8e3}.nc-puntos i.on{background:#f59e0b;transform:scale(1.25)}
 
 .portada-licencia{position:relative;z-index:2;text-align:center;margin:.4rem auto 0;padding:.5rem 1rem;max-width:34rem;background:rgba(255,255,255,.82);border-radius:14px;font-size:.9rem;color:#33415c}.portada-licencia p{margin:.15rem 0}.portada-licencia .cc-texto{font-size:.8rem;opacity:.85}.portada-licencia img{display:inline-block;vertical-align:middle;height:31px;width:88px}
+
+.intro{position:fixed;inset:0;z-index:90;background:#2a1f4d;overflow:hidden;transition:opacity .45s}.intro.sale{opacity:0}
+.intro-capa{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}.intro-capa.on{opacity:1}
+.intro-img{width:100%;height:100%;object-fit:cover;transform-origin:center;image-rendering:auto}
+.intro-capa.on .mov-a{animation:intro-a 5.5s ease-out forwards}.intro-capa.on .mov-b{animation:intro-b 7s ease-out forwards}.intro-capa.on .mov-c{animation:intro-c 6s ease-out forwards}
+@keyframes intro-a{from{transform:scale(1.02)}to{transform:scale(1.14) translateY(-1%)}}
+@keyframes intro-b{from{transform:scale(1.15) translateX(3%)}to{transform:scale(1.02) translateX(-1%)}}
+@keyframes intro-c{from{transform:scale(1.02) translateX(-2%)}to{transform:scale(1.12) translateX(2%)}}
+.intro-brillos i{position:absolute;bottom:-20px;width:10px;height:10px;border-radius:50%;background:#fff7c2;box-shadow:0 0 12px 4px rgba(255,230,120,.8);opacity:0;animation:brillo 6s linear infinite}
+.intro-brillos .b1{left:8%;animation-delay:0s}.intro-brillos .b2{left:20%;animation-delay:1.3s}.intro-brillos .b3{left:33%;animation-delay:2.6s}.intro-brillos .b4{left:46%;animation-delay:.7s}.intro-brillos .b5{left:60%;animation-delay:3.4s}.intro-brillos .b6{left:72%;animation-delay:1.9s}.intro-brillos .b7{left:84%;animation-delay:4.2s}.intro-brillos .b8{left:93%;animation-delay:2.2s}
+@keyframes brillo{0%{opacity:0;transform:translateY(0) scale(.6)}15%{opacity:.9}100%{opacity:0;transform:translateY(-70vh) scale(1.2)}}
+.intro-sub{position:absolute;left:50%;bottom:9%;transform:translateX(-50%);max-width:88%;padding:.6rem 1.4rem;border-radius:18px;background:rgba(40,25,80,.78);color:#fff;font:800 clamp(1.3rem,3.2vw,2.2rem) var(--titulo);text-align:center;opacity:0}
+.intro-sub.in{animation:sub-in .6s ease forwards}@keyframes sub-in{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+.intro-saltar{position:absolute;right:16px;top:16px;background:rgba(255,255,255,.9);color:#4a2d86;border-radius:999px;padding:.6rem 1.2rem;font-weight:800}
+body.reducir .intro-capa.on .intro-img,body.reducir .intro-brillos i{animation:none}
+@media (prefers-reduced-motion:reduce){.intro-capa.on .intro-img,.intro-brillos i{animation:none}}
