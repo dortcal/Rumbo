@@ -14,7 +14,7 @@
 Estrellas, validación y reglas de los niveles no cambian. Reducir animaciones: sin baile, sin Bichito, sin vuelo de la chispa (el Faro aparece ya con su ventana encendida).
 
 ## Comprobado
-- 220+ pruebas unitarias; e2e completa; capturas de resultados (meta de zona, depuración, f-03, Infantil) y diario a 1280×800, 1024×768 y 1920×1080 revisadas.
+- 220 pruebas unitarias y 79 e2e en verde; capturas de resultados (meta de zona, depuración, f-03, Infantil) y diario a 1280×800, 1024×768 y 1920×1080 revisadas.
 
 ## No comprobado / limitaciones
 - La pantalla de resultados con muchas insignias nuevas a la vez (perfil fabricado en las pruebas) desborda en 800 px de alto y hace scroll; en juego real las insignias llegan de una en una.
