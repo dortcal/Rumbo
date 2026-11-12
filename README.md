@@ -8,12 +8,19 @@ Funciona en el navegador, sin instalar nada y **sin enviar datos a ningún servi
 
 > **Jugar:** `https://dortcal.github.io/rumbo/` (cuando actives GitHub Pages, ver más abajo)
 
-## La historia
+## La historia: «La luz de Lumo»
 
-Lumo, una pequeña chispa con una brújula en el pecho, ha perdido el camino a casa: el Faro Mayor se ha apagado.
-Con la ayuda del alumnado y de sus amigos (Búho Bruma, Bichito, Tinta, el lagarto gigante, Bit…) recorre cuatro
-mundos, repara su brújula —es decir, **depura**— y vuelve a encender el Faro. Al final, el Laboratorio de
-programación le da el turno al alumnado: ahora crean ellos los retos.
+Una tormenta apagó el Faro Mayor y rompió la brújula de Lumo, una pequeña chispa. Para encenderlo de nuevo reúne a seis chispas de
+su familia (Titila, Brasa, Destello, Ascua, Píxel y Cometa), una por zona; cada una enciende una ventana del Faro.
+Un amigo travieso, Bichito, es una chispa sin luz: sus fallos acaban apuntando al Faro. Una señal misteriosa («corto, corto, largo»)
+guía a Lumo: era su abuela. Al final, el Laboratorio da el turno al alumnado: ahora crean ellos los retos.
+
+- **50 escenas** dirigidas por datos (`src/datos/escenas.js`, frases en `voces-es.js`), con motor propio (`src/ui/escena-motor.js`): entradas, emociones, cámara y objetos; todas saltables y con «Reducir animaciones».
+- **Cada curso tiene su final** (ver abajo); Infantil nunca ve escenas de Primaria.
+- **Victoria con historia:** línea de avance de zona, celebración variada determinista, el Faro en pequeño y Bichito en las depuraciones.
+- **Diario de Lumo** (en *Mi colección*): una página por chispa y amigo, con las escenas para volver a verlas.
+- **Música propia por zona** con el motivo del Faro, sonidos de la historia y voz con carácter por personaje (voz del navegador).
+- Guion completo: `docs/guion-v2.md`; notas por fase: `docs/fase-2.md` … `docs/fase-6.md`; ilustraciones y voces que faltan: `docs/recursos-pendientes.md`.
 
 ## Todo el alumnado puede terminar la aventura
 
@@ -100,8 +107,8 @@ sw.js                 service worker generado (versión según el contenido)
 src/engine/           intérprete de tarjetas, estrellas y validador de niveles (puros, sin DOM)
 src/datos/            niveles (JSON-like con un pequeño DSL), catálogo, logros, voces, retos del Laboratorio
 src/progreso/         perfiles, desbloqueos, códigos de partida
-src/audio/            capa de voz (voz sintética del navegador o audios grabados)
-src/ui/               arte SVG, escenario, editor de tarjetas, juego, pantallas, docente, laboratorio
+src/audio/            capa de voz (voz sintética del navegador) y datos de la música por zona
+src/ui/               arte SVG (Lumo y chispas), motor de escenas, escenario, editor de tarjetas, juego, pantallas, sonido, docente, laboratorio
 tools/build.js        concatena los módulos en js/rumbo.js y genera sw.js
 pruebas/              pruebas unitarias (node --test) y pruebas en Chrome real (e2e)
 fonts/, icons/        tipografías (licencia OFL) e iconos de la aplicación
@@ -160,7 +167,10 @@ Si algún día se graban audios, basta con asociarlos a esos mismos identificado
 - **Referencias curriculares:** están redactadas a partir de los decretos (los PDF del proyecto) y se muestran separadas de la
   «extensión» propia del juego. Deben contrastarse con el BOC antes de citarlas en documentos oficiales; el juego no puede comprobar
   que un criterio exista.
-- La música es sencilla (generada por código); no hay una pista compuesta por mundo.
+- La música es sintetizada por código (una pieza por zona con el motivo del Faro); no hay música grabada y su calidad solo se ha medido, no escuchado en altavoces reales.
+- Los personajes secundarios (Bruma, Bichito, Tinta, lagarto, Bit, Conejo, Abuela) conservan el arte anterior; Lumo y las seis chispas tienen el nuevo.
+- La voz de los personajes es la del navegador con tono y ritmo distintos; `historia/<id>.jpg` y `audio/voz/<id>.mp3` aún no se cargan (ver `docs/recursos-pendientes.md`).
+- Sin probar en móvil estrecho (< 760 px).
 - Probado en Chrome actualizado. Otros navegadores modernos deberían funcionar, pero no se ha verificado.
 
 ## Licencias y créditos

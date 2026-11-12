@@ -216,7 +216,7 @@ async function main() {
   await ev(p, () => document.querySelector('.escena .b-sig-esc').click()); await esperar(300);
   await saltarEscenas(p); await esperar(300);
   chequear(await ev(p, () => !document.querySelector('.escena') && !!document.querySelector('.juego')), 'la escena avanza y se puede saltar');
-  chequear(await ev(p, () => RumboUI.App.perfil().vistos.escenas['C1-01']), 'la escena queda marcada como vista (álbum de recuerdos)');
+  chequear(await ev(p, () => RumboUI.App.perfil().vistos.escenas['C1-01']), 'la escena queda marcada como vista (diario de Lumo)');
   await ev(p, () => RumboUI.App.ir('mundo', { mundo: 1 })); await esperar(300);
   chequear(await ev(p, () => document.querySelectorAll('.nodo.abierto').length === 1 && document.querySelectorAll('.nodo.cerrado').length >= 20), 'solo está abierto el primer reto; el resto, bloqueado');
   await ev(p, () => RumboUI.App.ir('mapa')); await esperar(300);
@@ -381,10 +381,17 @@ async function main() {
   await ev(p, () => { const c = RumboUI.App.estado.controlJuego; c.editor.cargar(RumboCatalogo.POR_ID['m1-25'].referencia); });
   await p.click('.b-play'); const f1 = await esperarFin(p, 40000);
   chequear(/^victoria/.test(f1 || ''), 'el jugador de 1.º supera el último reto de su mundo (' + f1 + ')');
-  await esperar(900); await ev(p, () => { const b = document.querySelector('.resultado .b-cont, .resultado .b-mapa2'); if (b) b.click(); }); await esperar(700);
+  await esperar(900);
+  chequear(await ev(p, () => (document.querySelector('.res-avance') || {}).textContent === '¡Has llegado a la cumbre con Brasa!'), 'los resultados muestran la línea de avance de la historia al llegar a Brasa');
+  chequear(await ev(p, () => !!document.querySelector('.res-faro svg') && !!document.querySelector('.res-cabeza')), 'los resultados muestran la celebración y el Faro en pequeño');
+  await ev(p, () => { const b = document.querySelector('.resultado .b-cont, .resultado .b-mapa2'); if (b) b.click(); }); await esperar(700);
   chequear(await ev(p, () => !!document.querySelector('.escena')), 'al terminar su mundo ve el final de la historia');
   await saltarEscenas(p); await esperar(300);
   chequear(await ev(p, () => !!RumboUI.App.perfil().logros['final']), 'recibe la insignia «Final de la aventura» sin pasar por el Mundo 3');
+  await ev(p, () => RumboUI.App.ir('mapa')); await esperar(400); await ev(p, () => RumboUI.App.ir('coleccion')); await esperar(500);
+  chequear(await ev(p, () => document.querySelectorAll('.diario .pagina:not(.cerrada)').length >= 5 && document.querySelectorAll('.diario .pagina.cerrada').length >= 1), 'el diario de Lumo abre las páginas ganadas y deja cerradas las demás');
+  chequear(await ev(p, () => { const b = document.querySelector('.diario .pagina.rejugable'); if (!b) return false; b.click(); return true; }), 'una página con escena permite volver a verla');
+  await esperar(500); chequear(await ev(p, () => !!document.querySelector('.escena')), 'la escena del diario se reproduce'); await saltarEscenas(p);
   await p.close();
 
   console.log('\nErrores de consola/página durante las pruebas:', errores.length ? '\n' + errores.slice(0, 12).join('\n') : 'ninguno');
