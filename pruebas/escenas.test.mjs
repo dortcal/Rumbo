@@ -183,3 +183,33 @@ test('«Repetir» se explica en m1-15 y no antes (corrige el orden de C1-03 y C1
   assert.ok(!ES.ESCENAS.some((e) => e.dispara.nivel === 'm1-14' && e.dispara.cuando === 'antes' && e.lineas.some((l) => /Repetir/.test(VOCES.lineas[l.id].texto))));
   assert.ok(CAT.POR_ID['m1-15'].cartas.disponibles.includes('repetir'));
 });
+
+// ---------------------------------------------------------------- fase 3: pasos de puesta en escena
+const E = ES;
+{
+  const TIPOS = ['fondo', 'entra', 'sale', 'emocion', 'accion', 'objeto', 'camara', 'sonido', 'espera', 'dice'];
+  const conPasos = E.ESCENAS.filter(e => e.pasos);
+  test('hay escenas con pasos escritos a mano', () => { assert.ok(conPasos.length >= 5); });
+  test('todo paso usa un tipo conocido y las cámaras, acciones y objetos son válidos', () => {
+    const CAM = ['acerca', 'aleja', 'sacude'], ACC = ['salta', 'baila', 'tiembla', 'gira', 'asiente'], OBJ = ['pieza', 'brujula', 'luz', 'flor', 'zanahoria', 'estrella'];
+    conPasos.forEach(e => e.pasos.forEach(p => {
+      assert.ok(TIPOS.some(t => t in p), e.id + ': paso desconocido ' + JSON.stringify(p));
+      if (p.camara) assert.ok(CAM.includes(p.camara), e.id);
+      if (p.haz) assert.ok(ACC.includes(p.haz), e.id + ' acción ' + p.haz);
+      if (p.objeto) assert.ok(OBJ.includes(p.objeto), e.id + ' objeto ' + p.objeto);
+    }));
+  });
+  test('cada escena con pasos dice todas sus frases, una vez y en orden', () => {
+    conPasos.forEach(e => {
+      const dichas = e.pasos.filter(p => p.dice);
+      assert.equal(dichas.length, e.lineas.length, e.id + ': nº de {dice} distinto al de líneas');
+      dichas.forEach(p => assert.equal(p.dice, '*', e.id));
+    });
+  });
+  test('quien habla entra antes de hablar o es Lumo (el motor lo hace entrar si falta)', () => {
+    conPasos.forEach(e => assert.ok(e.pasos.some(p => p.entra === 'Lumo'), e.id + ' no hace entrar a Lumo'));
+  });
+  test('el fondo de los pasos coincide con la zona de la escena', () => {
+    conPasos.forEach(e => e.pasos.filter(p => p.fondo).forEach(p => assert.equal(p.fondo, e.zona, e.id)));
+  });
+}

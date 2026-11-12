@@ -4,8 +4,8 @@
  * Cada escena dice cuándo se dispara (antes o después de un reto), para qué etapa, sobre qué fondo y qué frases dice.
  * Las frases viven en voces-es.js (aquí solo su identificador). Guion completo: docs/guion-v2.md.
  *
- * ESTADO (fase 2): los pasos de puesta en escena (entradas, acciones, objetos, cámara, sonido) se añadirán en la fase 3
- * junto con el motor de escenas; hoy cada escena es una lista de intervenciones («lineas») sobre un fondo de zona.
+ * PUESTA EN ESCENA (fase 3): una escena puede traer `pasos` (entradas, acciones, objetos, cámara, sonido; ver src/ui/escena-motor.js).
+ * Si no los trae, el motor los deduce de sus intervenciones («lineas»). {dice:'*'} = la siguiente intervención.
  *
  * Reglas de elegibilidad (función pendientes, pura y probada):
  *   - Infantil solo ve escenas de etapa «infantil»; Primaria, solo las de etapa «primaria».
@@ -33,6 +33,14 @@
       cuando: 'antes',
       nivel: 'i3-01'
     },
+    pasos: [
+      { fondo: 'jardin' },
+      { entra: 'Lumo', lado: 'izq', modo: 'cae' },
+      { camara: 'sacude' },
+      { dice: '*' },
+      { accion: 'Lumo', haz: 'baila' },
+      { dice: '*' }
+    ],
     lineas: [
       {
         id: 'c0_01_a',
@@ -448,6 +456,21 @@
       cuando: 'despues',
       nivel: 'm1-25'
     },
+    pasos: [
+      { fondo: 'montanas' },
+      { entra: 'Lumo', lado: 'izq', modo: 'salta' },
+      { entra: 'Brasa', lado: 'der', modo: 'desliza' },
+      { dice: '*' },
+      { dice: '*' },
+      { objeto: 'pieza', lado: 'centro', brilla: true },
+      { emocion: 'Lumo', expr: 'emocionado', pose: 'arriba' },
+      { dice: '*' },
+      { dice: '*' },
+      { sonido: 'animo' },
+      { accion: 'Lumo', haz: 'salta' },
+      { dice: '*' },
+      { dice: '*' }
+    ],
     lineas: [
       {
         id: 'cap1_01_a',
@@ -587,6 +610,17 @@
       cuando: 'antes',
       nivel: 'm2-01'
     },
+    pasos: [
+      { fondo: 'mar' },
+      { entra: 'Tinta', lado: 'der', modo: 'desliza' },
+      { entra: 'Lumo', lado: 'izq', modo: 'salta' },
+      { dice: '*' },
+      { dice: '*' },
+      { dice: '*' },
+      { accion: 'Tinta', haz: 'baila' },
+      { dice: '*' },
+      { dice: '*' }
+    ],
     lineas: [
       {
         id: 'c2_01_a',
@@ -1268,6 +1302,19 @@
       cuando: 'despues',
       nivel: 'f-03'
     },
+    pasos: [
+      { fondo: 'faro' },
+      { entra: 'Lumo', lado: 'izq', modo: 'salta' },
+      { entra: 'Brasa', lado: 'der', modo: 'desliza' },
+      { dice: '*' },
+      { camara: 'acerca' },
+      { objeto: 'luz', lado: 'centro', brilla: true },
+      { sonido: 'victoria' },
+      { dice: '*' },
+      { entra: 'Bichito', lado: 'centro', modo: 'salta' },
+      { dice: '*' },
+      { dice: '*' }
+    ],
     lineas: [
       {
         id: 'fin_01_a',
@@ -1298,6 +1345,18 @@
       cuando: 'despues',
       nivel: 'f-03'
     },
+    pasos: [
+      { fondo: 'faro' },
+      { entra: 'Abuela Chispa', lado: 'der', modo: 'desliza' },
+      { entra: 'Lumo', lado: 'izq', modo: 'desliza' },
+      { dice: '*' },
+      { dice: '*' },
+      { dice: '*' },
+      { dice: '*' },
+      { objeto: 'estrella', lado: 'centro', brilla: true },
+      { sonido: 'victoria' },
+      { dice: '*' }
+    ],
     lineas: [
       {
         id: 'cf_03_a',

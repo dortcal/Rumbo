@@ -209,6 +209,10 @@ body.contraste .btn-grande,body.contraste .btn-ic{outline:3px solid #000}
 /* ----- animaciones del escenario ----- */
 .lumo{transition-property:transform;transition-timing-function:ease-in-out;transition-duration:0ms}
 .lumo-in{transform-box:fill-box;transform-origin:50% 100%}
+.lumo-in:not(.hop):not(.bump):not(.caer):not(.giro-w):not(.alegre){animation:respira 2.6s ease-in-out infinite}
+@keyframes respira{50%{transform:scale(1.025,.975)}}
+.lumo-svg .brazo-i,.lumo-svg .brazo-d{transform-box:fill-box;transform-origin:50% 90%;animation:saluda .7s ease-in-out infinite alternate}
+@keyframes saluda{to{transform:rotate(-14deg)}}
 .lumo-in.hop{animation:hop var(--ms,500ms) ease-in-out}.lumo-in.bump{animation:bump var(--ms,300ms) ease-out}.lumo-in.caer{animation:caer var(--ms,600ms) ease-in forwards}.lumo-in.giro-w{animation:giro-cuerpo var(--ms,400ms) ease-in-out}.lumo-in.alegre{animation:baila .45s ease-in-out 2}
 /* anillo de rumbo bajo Lumo: la flecha indica siempre hacia dónde mira */
 .lumo-rumbo{pointer-events:none}
@@ -216,7 +220,7 @@ body.contraste .btn-grande,body.contraste .btn-ic{outline:3px solid #000}
 .aro-base{fill:rgba(255,255,255,.28);stroke:rgba(255,255,255,.75);stroke-width:2.5;stroke-dasharray:3 5}
 .aro-flecha{fill:#ffd93d;stroke:#b86a00;stroke-width:2.5;stroke-linejoin:round;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.35))}
 @keyframes giro-cuerpo{0%{transform:scale(1,1)}22%{transform:scale(.55,1.04) translateY(-4px)}50%{transform:scale(.18,1.06) translateY(-8px)}78%{transform:scale(.55,1.04) translateY(-4px)}100%{transform:scale(1,1)}}
-@keyframes hop{0%,100%{transform:translateY(0) scale(1)}40%{transform:translateY(-26px) scale(.96,1.06)}}
+@keyframes hop{0%{transform:translateY(0) scale(1.12,.86)}18%{transform:translateY(0) scale(.92,1.1)}45%{transform:translateY(-26px) scale(.94,1.08)}78%{transform:translateY(0) scale(1.1,.88)}100%{transform:translateY(0) scale(1)}}
 @keyframes bump{0%{transform:scale(1.15,.85)}100%{transform:scale(1)}}
 @keyframes caer{to{transform:translateY(14px) scale(.15);opacity:0}}
 @keyframes wiggle{25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
@@ -329,7 +333,7 @@ details.doc-caja>summary{font:800 1.2rem var(--titulo);cursor:pointer;color:var(
 body.reducir .intro-capa.on .intro-img,body.reducir .intro-brillos i{animation:none}
 @media (prefers-reduced-motion:reduce){.intro-capa.on .intro-img,.intro-brillos i{animation:none}}
 
-body.reducir .lumo-in.giro-w{animation:none!important}body.reducir .lumo-aro{transition:none!important}
+body.reducir .lumo-in,body.reducir .lumo-svg .brazo-i,body.reducir .lumo-svg .brazo-d{animation:none!important}body.reducir .lumo-in.giro-w{animation:none!important}body.reducir .lumo-aro{transition:none!important}
 @media (prefers-reduced-motion:reduce){.lumo-in.giro-w{animation:none}.lumo-aro{transition:none}}
 
 /* ----- aventura de bienvenida (Primaria) ----- */
@@ -347,3 +351,45 @@ body.reducir .lumo-in.giro-w{animation:none!important}body.reducir .lumo-aro{tra
 .modal.fin-bienvenida .res-acciones{justify-content:center;gap:12px;flex-wrap:wrap}
 .modal.fin-bienvenida .bv-lumo.baila svg{animation:baila .6s ease-in-out 4}
 body.reducir .modal.fin-bienvenida .bv-lumo svg{animation:none}
+
+/* ----- motor de escenas (fase 3) ----- */
+.escena.motor{background:#10183a}
+.esc-cielo,.esc-capa,.esc-particulas,.esc-escenario,.esc-objetos,.esc-velo{position:absolute;inset:0;pointer-events:none}
+.esc-capa svg{position:absolute;left:0;bottom:0;width:100%;height:100%}
+.esc-suelo{position:absolute;left:0;right:0;bottom:0;height:23%;border-top:6px solid rgba(255,255,255,.25);box-shadow:inset 0 14px 18px -10px rgba(0,0,0,.25);pointer-events:none}
+.esc-capa.lejos{transition:transform 1.2s ease}.esc-capa.medio{transition:transform 1.2s ease}.esc-capa svg{height:100%}
+.escena.motor.cam-acerca .esc-escenario{animation:camAcerca 1.2s ease forwards}.escena.motor.cam-aleja .esc-escenario{animation:camAleja 1.2s ease forwards}.escena.motor.cam-sacude{animation:sacude .5s}
+@keyframes camAcerca{to{transform:scale(1.18) translateY(4%)}}@keyframes camAleja{from{transform:scale(1.18)}to{transform:scale(1)}}
+@keyframes sacude{20%{transform:translate(-8px,3px)}40%{transform:translate(8px,-3px)}60%{transform:translate(-5px,2px)}80%{transform:translate(4px,-2px)}}
+.esc-velo{background:#10183a;opacity:0;transition:opacity .26s}.esc-velo.on{opacity:1}
+.esc-particulas i{position:absolute;width:7px;height:7px;border-radius:50%;opacity:0;box-shadow:0 0 10px 3px rgba(255,236,150,.8);animation:motas 7s ease-in-out infinite}
+@keyframes motas{0%{opacity:0;transform:translateY(0)}25%{opacity:.9}100%{opacity:0;transform:translate(24px,-90px)}}
+.titila{animation:titila 2.6s ease-in-out infinite}@keyframes titila{50%{opacity:.25}}
+.burbuja{animation:sube 8s linear infinite}@keyframes sube{to{transform:translateY(-200px);opacity:0}}
+.escena.motor .act{position:absolute;bottom:17%;width:min(32vw,36vh,300px);height:min(32vw,36vh,300px);transition:transform .35s,left .6s,right .6s,opacity .5s;filter:drop-shadow(0 10px 6px rgba(0,0,0,.35));pointer-events:none}
+.escena.motor .act.pos-izq{left:9%}.escena.motor .act.pos-der{right:9%}.escena.motor .act.pos-centro{left:50%;margin-left:min(-16vw,-18vh)}
+.escena.motor .act.habla{transform:translateY(-12px) scale(1.07);z-index:2}
+.escena.motor .act-cuerpo{width:100%;height:100%;transform-origin:50% 100%;animation:respira 2.6s ease-in-out infinite}
+.escena.motor .act-cuerpo svg{width:100%;height:100%;overflow:visible}
+.escena.motor .act-cuerpo.a-habla{animation:hablaSalto .45s ease-out}.escena.motor .act-cuerpo.a-salta{animation:hop .7s ease-in-out}
+.escena.motor .act-cuerpo.a-baila{animation:baila .9s ease-in-out 2}.escena.motor .act-cuerpo.a-tiembla{animation:tiembla .5s linear}.escena.motor .act-cuerpo.a-gira{animation:giraVuelta .8s ease-in-out}.escena.motor .act-cuerpo.a-asiente{animation:asiente .6s ease-in-out}
+@keyframes hablaSalto{30%{transform:translateY(-8px) scale(.97,1.05)}70%{transform:translateY(0) scale(1.04,.96)}}
+@keyframes baila{25%{transform:rotate(-8deg) translateY(-10px)}75%{transform:rotate(8deg) translateY(-10px)}}
+@keyframes tiembla{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes giraVuelta{50%{transform:scaleX(.1)}}
+@keyframes asiente{40%{transform:translateY(8px) scale(1.03,.95)}}
+.escena.motor .act.entra-desliza.pos-der{animation:entraDer .6s ease-out}.escena.motor .act.entra-desliza.pos-izq{animation:entraIzq .6s ease-out}
+.escena.motor .act.entra-salta{animation:entraSalta .7s ease-out}.escena.motor .act.entra-cae{animation:entraCae .7s cubic-bezier(.3,1.5,.5,1)}
+.escena.motor .act.sale{opacity:0;transform:translateY(20px)}
+@keyframes entraDer{from{transform:translateX(60vw);opacity:0}}@keyframes entraIzq{from{transform:translateX(-60vw);opacity:0}}
+@keyframes entraSalta{0%{transform:translateY(-60vh) scale(.8,1.2);opacity:0}60%{opacity:1}75%{transform:translateY(0) scale(1.15,.85)}100%{transform:translateY(0)}}
+@keyframes entraCae{from{transform:translateY(-80vh) rotate(-40deg);opacity:0}}
+.esc-obj{position:absolute;bottom:42%;width:min(18vw,20vh,160px);height:min(18vw,20vh,160px);animation:objFlota 2.4s ease-in-out infinite}
+.esc-obj.pos-centro{left:50%;margin-left:min(-9vw,-10vh)}.esc-obj.pos-izq{left:30%}.esc-obj.pos-der{right:30%}
+.esc-obj.brilla{filter:drop-shadow(0 0 14px #ffe27a) drop-shadow(0 0 30px #ffd166)}.esc-obj svg{width:100%;height:100%}
+@keyframes objFlota{50%{transform:translateY(-12px)}}
+.escena.motor .escena-burbuja{z-index:4;bottom:3.5%;transition:opacity .25s}.escena.motor .escena-burbuja.oculta{opacity:0}
+.escena.motor .b-sig-esc,.escena.motor .b-saltar{z-index:5}
+.escena.motor.sin-mov .act,.escena.motor.sin-mov .act-cuerpo,.escena.motor.sin-mov .esc-obj,.escena.motor.sin-mov .titila,.escena.motor.sin-mov .burbuja{animation:none!important;transition:none!important}
+body.reducir .escena.motor .act,body.reducir .escena.motor .act-cuerpo,body.reducir .escena.motor .esc-obj,body.reducir .esc-particulas i,body.reducir .titila,body.reducir .burbuja{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){.escena.motor .act,.escena.motor .act-cuerpo,.esc-particulas i,.titila,.burbuja{animation:none!important}}

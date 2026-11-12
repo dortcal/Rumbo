@@ -24,7 +24,7 @@
     var vel = op.velocidad || 1;
     var cancelado = false, pausado = false, reanudar = null, corriendo = false;
     var pos = { x: nivel.inicio.x, y: nivel.inicio.y, dir: nivel.inicio.dir };
-    var expr = 'normal';
+    var expr = 'normal', pose = '';
 
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', '0 0 ' + (ancho * CELDA) + ' ' + (alto * CELDA));
@@ -51,7 +51,7 @@
     var gAros = svg.querySelectorAll('.lumo-aro'), ang = ANGULO[pos.dir], gLumo = svg.querySelector('.lumo'), gIn = svg.querySelector('.lumo-in'), gCara = svg.querySelector('.lumo-cara'), gEf = svg.querySelector('.efectos');
 
     function dibujarLumo() {
-      var s = A().lumo({ dir: pos.dir, expr: expr, disfraz: disfraz });
+      var s = A().lumo({ dir: pos.dir, expr: expr, disfraz: disfraz, pose: pose });
       gCara.innerHTML = s.replace('class="lumo-svg"', 'class="lumo-svg" x="2" y="-4" width="60" height="60"');
     }
     // Anillo de rumbo: rota de verdad (por el camino corto) hacia donde mira Lumo.
@@ -90,7 +90,7 @@
     function reiniciar() {
       cancelado = true; pausado = false; if (reanudar) { reanudar(); reanudar = null; }
       pos = { x: nivel.inicio.x, y: nivel.inicio.y, dir: nivel.inicio.dir };
-      expr = 'normal';
+      expr = 'normal'; pose = '';
       gIn.classList.remove('hop', 'bump', 'caer', 'giro-w', 'alegre');
       gIn.style.opacity = '';
       ang = ANGULO[pos.dir]; girarAros(0);
@@ -122,7 +122,7 @@
         if (cb.alPaso) cb.alPaso(p, i);
         var d = dur(1);
         if (p.evento === 'control') { await espera(Math.round(d * .45)); continue; }
-        expr = 'normal';
+        expr = 'normal'; pose = '';
         switch (p.evento) {
           case 'mover':
             S && S.sfx('paso'); colocar(p.a.x, p.a.y, d); pos = { x: p.a.x, y: p.a.y, dir: p.a.dir };
@@ -141,7 +141,7 @@
             var o = svg.querySelector('.obj[data-x="' + p.de.x + '"][data-y="' + p.de.y + '"]');
             if (o) o.classList.add('recogido');
             recogidos++; svg.dataset.recogidos = recogidos;
-            chispas(p.de.x, p.de.y); expr = 'feliz'; dibujarLumo(); anim('hop', d);
+            chispas(p.de.x, p.de.y); expr = 'alegre'; pose = 'recoge'; dibujarLumo(); anim('hop', d);
             if (cb.alRecoger) cb.alRecoger(recogidos);
             await espera(d); break;
           }
@@ -160,7 +160,7 @@
           case 'choque': {
             S && S.sfx('choque');
             var dirM = p.t === 'retroceder' ? OPUESTA[p.de.dir] : p.de.dir, dd = DELTA[dirM];
-            expr = 'sorpresa'; dibujarLumo();
+            expr = 'ups'; dibujarLumo();
             colocar(p.de.x + dd[0] * .35, p.de.y + dd[1] * .35, d * .3);
             await espera(d * .3);
             colocar(p.de.x, p.de.y, d * .4); anim('bump', d * .5);
@@ -179,7 +179,7 @@
       if (cancelado) { return { cancelado: true }; }
       if (resultado.ok) {
         S && S.sfx('victoria');
-        expr = 'feliz'; dibujarLumo(); anim('alegre', 900); chispas(pos.x, pos.y);
+        expr = 'emocionado'; pose = 'arriba'; dibujarLumo(); anim('alegre', 900); chispas(pos.x, pos.y);
         svg.dataset.estado = 'victoria';
         await espera(900);
       } else {

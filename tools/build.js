@@ -11,7 +11,7 @@ const orden = [
   'src/datos/voces-es.js', 'src/datos/escenas.js', 'src/datos/dsl.js', 'src/datos/demos.js', 'src/datos/retos.js',
   'src/datos/niveles-infantil.js', 'src/datos/niveles-m1.js', 'src/datos/niveles-m2.js', 'src/datos/niveles-m3.js', 'src/datos/niveles-final.js',
   'src/datos/logros.js', 'src/datos/catalogo.js', 'src/progreso/progreso.js', 'src/audio/voz.js',
-  'src/ui/util.js', 'src/ui/arte.js', 'src/ui/sonido.js', 'src/ui/guardado.js', 'src/ui/escenario.js', 'src/ui/editor.js', 'src/ui/juego.js',
+  'src/ui/util.js', 'src/ui/arte.js', 'src/ui/sonido.js', 'src/ui/escena-motor.js', 'src/ui/guardado.js', 'src/ui/escenario.js', 'src/ui/editor.js', 'src/ui/juego.js',
   'src/ui/app.js', 'src/ui/docente.js', 'src/ui/laboratorio.js', 'src/ui/main.js'
 ].filter(f => fs.existsSync(path.join(raiz, f)));
 let out = '/* RUMBO — paquete generado por tools/build.js. No editar a mano: edita los archivos de /src. */\n';

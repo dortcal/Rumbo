@@ -930,8 +930,8 @@
  * Cada escena dice cuándo se dispara (antes o después de un reto), para qué etapa, sobre qué fondo y qué frases dice.
  * Las frases viven en voces-es.js (aquí solo su identificador). Guion completo: docs/guion-v2.md.
  *
- * ESTADO (fase 2): los pasos de puesta en escena (entradas, acciones, objetos, cámara, sonido) se añadirán en la fase 3
- * junto con el motor de escenas; hoy cada escena es una lista de intervenciones («lineas») sobre un fondo de zona.
+ * PUESTA EN ESCENA (fase 3): una escena puede traer `pasos` (entradas, acciones, objetos, cámara, sonido; ver src/ui/escena-motor.js).
+ * Si no los trae, el motor los deduce de sus intervenciones («lineas»). {dice:'*'} = la siguiente intervención.
  *
  * Reglas de elegibilidad (función pendientes, pura y probada):
  *   - Infantil solo ve escenas de etapa «infantil»; Primaria, solo las de etapa «primaria».
@@ -959,6 +959,14 @@
       cuando: 'antes',
       nivel: 'i3-01'
     },
+    pasos: [
+      { fondo: 'jardin' },
+      { entra: 'Lumo', lado: 'izq', modo: 'cae' },
+      { camara: 'sacude' },
+      { dice: '*' },
+      { accion: 'Lumo', haz: 'baila' },
+      { dice: '*' }
+    ],
     lineas: [
       {
         id: 'c0_01_a',
@@ -1374,6 +1382,21 @@
       cuando: 'despues',
       nivel: 'm1-25'
     },
+    pasos: [
+      { fondo: 'montanas' },
+      { entra: 'Lumo', lado: 'izq', modo: 'salta' },
+      { entra: 'Brasa', lado: 'der', modo: 'desliza' },
+      { dice: '*' },
+      { dice: '*' },
+      { objeto: 'pieza', lado: 'centro', brilla: true },
+      { emocion: 'Lumo', expr: 'emocionado', pose: 'arriba' },
+      { dice: '*' },
+      { dice: '*' },
+      { sonido: 'animo' },
+      { accion: 'Lumo', haz: 'salta' },
+      { dice: '*' },
+      { dice: '*' }
+    ],
     lineas: [
       {
         id: 'cap1_01_a',
@@ -1513,6 +1536,17 @@
       cuando: 'antes',
       nivel: 'm2-01'
     },
+    pasos: [
+      { fondo: 'mar' },
+      { entra: 'Tinta', lado: 'der', modo: 'desliza' },
+      { entra: 'Lumo', lado: 'izq', modo: 'salta' },
+      { dice: '*' },
+      { dice: '*' },
+      { dice: '*' },
+      { accion: 'Tinta', haz: 'baila' },
+      { dice: '*' },
+      { dice: '*' }
+    ],
     lineas: [
       {
         id: 'c2_01_a',
@@ -2194,6 +2228,19 @@
       cuando: 'despues',
       nivel: 'f-03'
     },
+    pasos: [
+      { fondo: 'faro' },
+      { entra: 'Lumo', lado: 'izq', modo: 'salta' },
+      { entra: 'Brasa', lado: 'der', modo: 'desliza' },
+      { dice: '*' },
+      { camara: 'acerca' },
+      { objeto: 'luz', lado: 'centro', brilla: true },
+      { sonido: 'victoria' },
+      { dice: '*' },
+      { entra: 'Bichito', lado: 'centro', modo: 'salta' },
+      { dice: '*' },
+      { dice: '*' }
+    ],
     lineas: [
       {
         id: 'fin_01_a',
@@ -2224,6 +2271,18 @@
       cuando: 'despues',
       nivel: 'f-03'
     },
+    pasos: [
+      { fondo: 'faro' },
+      { entra: 'Abuela Chispa', lado: 'der', modo: 'desliza' },
+      { entra: 'Lumo', lado: 'izq', modo: 'desliza' },
+      { dice: '*' },
+      { dice: '*' },
+      { dice: '*' },
+      { dice: '*' },
+      { objeto: 'estrella', lado: 'centro', brilla: true },
+      { sonido: 'victoria' },
+      { dice: '*' }
+    ],
     lineas: [
       {
         id: 'cf_03_a',
@@ -4480,15 +4539,52 @@
   }
   function objeto(tema, skin) { var T = TEMAS[tema] || TEMAS.jardin; skin = skin || {}; return OBJETOS[skin.obj || T.obj](); }
 
-  // ---------------------------------------------------------------- Lumo
-  var OJO = { E: [3, 0], O: [-3, 0], N: [0, -2.5], S: [0, 2.5] };
-  function boca(expr) {
-    switch (expr) {
-      case 'feliz': return '<path d="M36 61q14 14 28 0z" fill="#7a2a1a" stroke="#7a2a1a" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 65q8 6 16 0" stroke="#ff7f8a" stroke-width="3" fill="none"/>';
-      case 'triste': return '<path d="M39 69q11-9 22 0" stroke="#7a2a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
-      case 'sorpresa': return '<ellipse cx="50" cy="66" rx="6" ry="7.5" fill="#7a2a1a"/>';
-      case 'pensando': return '<path d="M42 66q8 3 16-2" stroke="#7a2a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
-      default: return '<path d="M40 63q10 9 20 0" stroke="#7a2a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
+  // ---------------------------------------------------------------- Lumo (rediseño fase 3)
+  // Una sola figura modular: cuerpo redondo con llama, ojos grandes y brillantes, mejillas, bracitos, pies y brújula dorada en el pecho.
+  // Expresiones: normal, alegre, concentrado, sorprendido, ups, orgulloso, emocionado, tierno.
+  // Nombres antiguos aceptados: feliz→alegre, sorpresa→sorprendido, pensando→concentrado, triste→ups (ya no hay cara triste).
+  var EXPR_ALIAS = { feliz: 'alegre', sorpresa: 'sorprendido', pensando: 'concentrado', triste: 'ups', literal: 'normal', serena: 'tierno', sereno: 'tierno', tierna: 'tierno', sincero: 'tierno', soñador: 'tierno', ilusionado: 'emocionado', divertido: 'alegre', travieso: 'alegre', terco: 'concentrado', curioso: 'sorprendido' };
+  var EXPRESIONES = ['normal', 'alegre', 'concentrado', 'sorprendido', 'ups', 'orgulloso', 'emocionado', 'tierno'];
+  function exprDe(e) { e = EXPR_ALIAS[e] || e; return EXPRESIONES.indexOf(e) >= 0 ? e : 'normal'; }
+  var TINTA = '#7a2a1a';
+  function boca(expr, cx, cy) {
+    cx = cx == null ? 50 : cx; cy = cy == null ? 64 : cy;
+    var t = 'translate(' + (cx - 50) + ' ' + (cy - 64) + ')';
+    var g;
+    switch (exprDe(expr)) {
+      case 'alegre': g = '<path d="M38 60q12 16 24 0z" fill="' + TINTA + '" stroke="' + TINTA + '" stroke-width="2.5" stroke-linejoin="round"/><path d="M43 65q7 5 14 0" stroke="#ff7f8a" stroke-width="3" fill="none"/>'; break;
+      case 'emocionado': g = '<path d="M36 64q14 19 28 0z" fill="' + TINTA + '" stroke="' + TINTA + '" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 71q8 6 16 0" stroke="#ff7f8a" stroke-width="3.5" fill="none"/><rect x="43" y="64" width="14" height="3.2" rx="1.5" fill="#fff"/>'; break;
+      case 'sorprendido': g = '<ellipse cx="50" cy="66" rx="5.5" ry="7" fill="' + TINTA + '"/><ellipse cx="50" cy="68" rx="3" ry="3.4" fill="#ff7f8a"/>'; break;
+      case 'ups': g = '<path d="M38 67q4-6 8 0t8 0 8 0" stroke="' + TINTA + '" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'; break;
+      case 'concentrado': g = '<path d="M42 66h16" stroke="' + TINTA + '" stroke-width="3.6" stroke-linecap="round"/>'; break;
+      case 'orgulloso': g = '<path d="M39 62q11 12 22 0" stroke="' + TINTA + '" stroke-width="3.8" fill="none" stroke-linecap="round"/><path d="M60 62l3-3" stroke="' + TINTA + '" stroke-width="3" stroke-linecap="round"/>'; break;
+      case 'tierno': g = '<path d="M42 63q8 7 16 0" stroke="' + TINTA + '" stroke-width="3.4" fill="none" stroke-linecap="round"/>'; break;
+      default: g = '<path d="M40 63q10 9 20 0" stroke="' + TINTA + '" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
+    }
+    return '<g transform="' + t + '">' + g + '</g>';
+  }
+  // Ojos de frente. cx = centro horizontal; dx,dy = hacia dónde mira la pupila.
+  function ojoFrente(cx, e, dx, dy) {
+    var c = '#2b2140', B = '<circle cx="' + (cx + dx + 2) + '" cy="' + (50 + dy) + '" r="2.2" fill="#fff"/>';
+    switch (e) {
+      case 'alegre': case 'orgulloso': return '<path d="M' + (cx - 8) + ' 54q8-13 16 0" stroke="' + c + '" stroke-width="4.2" fill="none" stroke-linecap="round"/>';
+      case 'tierno': return '<ellipse cx="' + cx + '" cy="53" rx="9" ry="9" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (55 + dy) + '" r="5.6" fill="' + c + '"/><circle cx="' + (cx + dx + 2) + '" cy="' + (52.6 + dy) + '" r="2" fill="#fff"/><path d="M' + (cx - 9.5) + ' 51q9.5-6 19 0v-3h-19z" fill="url(#gLumo)"/><path d="M' + (cx - 9) + ' 50.5q9-5 18 0" stroke="#c9741a" stroke-width="1.8" fill="none"/>';
+      case 'emocionado': return '<ellipse cx="' + cx + '" cy="52" rx="10" ry="11.5" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (53 + dy) + '" r="7" fill="' + c + '"/><circle cx="' + (cx + dx + 2.6) + '" cy="' + (50 + dy) + '" r="2.8" fill="#fff"/><circle cx="' + (cx + dx - 2.4) + '" cy="' + (56 + dy) + '" r="1.5" fill="#fff"/>';
+      case 'sorprendido': return '<ellipse cx="' + cx + '" cy="52" rx="10" ry="12" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (52 + dy) + '" r="3.8" fill="' + c + '"/><circle cx="' + (cx + dx + 1.2) + '" cy="' + (50.6 + dy) + '" r="1.4" fill="#fff"/>';
+      case 'ups': return '<ellipse cx="' + cx + '" cy="52" rx="9.5" ry="10.5" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (53 + dy) + '" r="3" fill="' + c + '"/>';
+      case 'concentrado': return '<ellipse cx="' + cx + '" cy="53" rx="9" ry="7.5" fill="#fff"/><circle cx="' + (cx + dx + 2) + '" cy="' + (54 + dy) + '" r="4.8" fill="' + c + '"/><circle cx="' + (cx + dx + 3.6) + '" cy="' + (52.4 + dy) + '" r="1.7" fill="#fff"/>';
+      default: return '<ellipse cx="' + cx + '" cy="52" rx="9" ry="10" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (53 + dy) + '" r="5.4" fill="' + c + '"/>' + B.replace('r="2.2"', 'r="2"');
+    }
+  }
+  function cejasFrente(e) {
+    var s = 'stroke="' + TINTA + '" stroke-width="3.4" fill="none" stroke-linecap="round"';
+    switch (e) {
+      case 'concentrado': return '<path d="M30 42l14 3M70 42l-14 3" ' + s + '/>';
+      case 'sorprendido': case 'emocionado': return '<path d="M28 35q10-6 18-1M72 35q-10-6-18-1" ' + s + '/>';
+      case 'ups': return '<path d="M29 40q9-6 17-2M71 40q-9-6-17-2" ' + s + '/><path d="M80 40q4 6 0 9q-4-3 0-9z" fill="#7be0ff" stroke="#3a9fd0" stroke-width="1.5"/>';
+      case 'orgulloso': return '<path d="M29 39q9-5 16-1M71 39q-9-5-16-1" ' + s + '/>';
+      case 'tierno': return '<path d="M29 39q9-4 16 0M71 39q-9-4-16 0" ' + s + ' opacity=".7"/>';
+      default: return '';
     }
   }
   var DISFRACES_SVG = {
@@ -4501,80 +4597,108 @@
   };
   var CAPA = '<path d="M26 52Q10 78 18 92l32-6 32 6q8-14-8-40z" fill="#e8553f"/><path d="M26 52Q20 70 26 84" stroke="#b83a28" stroke-width="3" fill="none"/>';
 
-  // Lumo: viewBox 0 0 100 100. dir: E/O/N/S (hacia dónde mira)
-  //  S = de frente (mira al jugador) · N = de espaldas · E/O = de perfil (tres cuartos).
+  // Bracitos: pose 'bajos' (por defecto), 'arriba' (¡viva!), 'saludo' (una mano arriba), 'pecho' (orgullo), 'recoge' (hacia delante).
+  function brazos(pose) {
+    var f = 'fill="#e0731a"', st = ' stroke="#c9601a" stroke-width="1.6"';
+    switch (pose) {
+      case 'arriba': return '<g class="brazo-i"><ellipse cx="17" cy="48" rx="6.5" ry="10" transform="rotate(-35 17 48)" ' + f + st + '/></g><g class="brazo-d"><ellipse cx="83" cy="48" rx="6.5" ry="10" transform="rotate(35 83 48)" ' + f + st + '/></g>';
+      case 'saludo': return '<ellipse cx="18" cy="72" rx="6" ry="9" transform="rotate(15 18 72)" ' + f + st + '/><g class="brazo-d"><ellipse cx="83" cy="46" rx="6.5" ry="10" transform="rotate(30 83 46)" ' + f + st + '/></g>';
+      case 'pecho': return '<ellipse cx="33" cy="74" rx="6" ry="8" transform="rotate(-30 33 74)" ' + f + st + '/><ellipse cx="67" cy="74" rx="6" ry="8" transform="rotate(30 67 74)" ' + f + st + '/>';
+      case 'recoge': return '<ellipse cx="30" cy="80" rx="6" ry="8" transform="rotate(-20 30 80)" ' + f + st + '/><ellipse cx="70" cy="80" rx="6" ry="8" transform="rotate(20 70 80)" ' + f + st + '/>';
+      default: return '<ellipse cx="17" cy="70" rx="6" ry="9.5" transform="rotate(12 17 70)" ' + f + st + '/><ellipse cx="83" cy="70" rx="6" ry="9.5" transform="rotate(-12 83 70)" ' + f + st + '/>';
+    }
+  }
+
+  // Lumo: viewBox 0 0 100 100. dir: E/O/N/S (hacia dónde mira). S = de frente · N = de espaldas · E/O = de perfil.
+  // op: { dir, expr, disfraz, pose, mira:[dx,dy] }
   function lumo(op) {
     op = op || {};
-    var dir = op.dir || 'S', expr = op.expr || 'normal', d = op.disfraz | 0;
-    var cerrados = expr === 'feliz';
-    var cejas = function (dx) {
-      return expr === 'triste' ? '<path d="M' + (27 + dx) + ' 43l15-6M' + (73 + dx) + ' 43l-15-6" stroke="#7a2a1a" stroke-width="3.5" stroke-linecap="round"/>' :
-        expr === 'sorpresa' ? '<path d="M' + (28 + dx) + ' 36q10-6 18-1M' + (72 + dx) + ' 36q-10-6-18-1" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>' :
-        expr === 'pensando' ? '<path d="M' + (28 + dx) + ' 38q10-5 18 0M' + (56 + dx) + ' 36l16-4" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>' : '';
-    };
-    var ojo = function (cx, rx, ry, px, py) {
-      return '<ellipse cx="' + cx + '" cy="52" rx="' + rx + '" ry="' + ry + '" fill="#fff"/>' +
-        '<circle cx="' + (cx + px) + '" cy="' + (53 + py) + '" r="' + (rx * .56).toFixed(1) + '" fill="#2b2140"/><circle cx="' + (cx + px + 1.6) + '" cy="' + (51 + py) + '" r="1.8" fill="#fff"/>';
-    };
-    var cuerpoBase = '<circle cx="50" cy="56" r="46" fill="url(#gLumoGlow)"/>' +
-      '<g class="llama"><path d="M50 4q14 14 10 26-3 7-10 7t-10-7Q36 18 50 4z" fill="url(#gLlama)"/><path d="M50 14q6 8 3 15-3 4-3 4t-3-4q-3-7 3-15z" fill="#fff3a8" opacity=".85"/></g>';
-    var interior, pies, frontal = '';
+    var dir = op.dir || 'S', e = exprDe(op.expr), d = op.disfraz | 0, mira = op.mira || [0, 1.2];
+    var glow = '<circle cx="50" cy="56" r="46" fill="url(#gLumoGlow)"/>';
+    var llama = '<g class="llama"><path d="M50 3q15 15 11 27-3 7-11 7t-11-7Q35 18 50 3z" fill="url(#gLlama)"/><path d="M50 13q6 8 3 15-3 4-3 4t-3-4q-3-7 3-15z" fill="#fff3a8" opacity=".9"/></g>';
+    var interior, pies, br = (dir === 'N') ? '' : brazos(op.pose);
+    var mejillas = e === 'tierno' || e === 'orgulloso' || e === 'emocionado' ? .85 : .55;
     if (dir === 'N') {
-      // De espaldas: sin cara; se ve la nuca, el remolino de la llama y la mochila-brújula.
-      interior = '<ellipse cx="50" cy="60" rx="35" ry="32" fill="url(#gLumo)"/>' +
-        '<ellipse cx="50" cy="60" rx="35" ry="32" fill="#c8641a" opacity=".22"/>' +
+      interior = '<ellipse cx="50" cy="60" rx="36" ry="32" fill="url(#gLumo)"/><ellipse cx="50" cy="60" rx="36" ry="32" fill="#c8641a" opacity=".2"/>' +
         '<path d="M50 34q-9 4-9 12t9 10 9-6q0-7-7-8" fill="none" stroke="#e0731a" stroke-width="3.5" stroke-linecap="round" opacity=".7"/>' +
-        '<ellipse cx="50" cy="72" rx="15" ry="13" fill="#e8553f"/><ellipse cx="50" cy="72" rx="15" ry="13" fill="none" stroke="#b83a28" stroke-width="3"/><circle cx="50" cy="72" r="4" fill="#ffd166"/>';
+        '<ellipse cx="50" cy="72" rx="15" ry="13" fill="#e8553f"/><ellipse cx="50" cy="72" rx="15" ry="13" fill="none" stroke="#b83a28" stroke-width="3"/><circle cx="50" cy="72" r="4" fill="#ffd166"/>' +
+        '<ellipse cx="15" cy="68" rx="6" ry="9" fill="#e0731a"/><ellipse cx="85" cy="68" rx="6" ry="9" fill="#e0731a"/>';
       pies = '<ellipse cx="36" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="64" cy="91" rx="10" ry="5" fill="#e0731a"/>';
     } else if (dir === 'E' || dir === 'O') {
-      // De perfil: cuerpo más estrecho, ojo cercano grande, ojo lejano pequeño, boca al frente.
-      interior = '<ellipse cx="48" cy="60" rx="31" ry="32" fill="url(#gLumo)"/>' +
-        '<ellipse cx="42" cy="40" rx="11" ry="6" fill="#fff" opacity=".28" transform="rotate(-20 42 40)"/>' +
-        '<circle cx="76" cy="64" r="6" fill="#ff7f8a" opacity=".6"/>' +
-        '<ellipse cx="68" cy="52" rx="8" ry="9.5" fill="#fff"/><circle cx="72" cy="53" r="4.6" fill="#2b2140"/><circle cx="73.4" cy="51" r="1.7" fill="#fff"/>' +
-        '<ellipse cx="52" cy="52" rx="6.5" ry="8" fill="#fff"/><circle cx="55.5" cy="53" r="3.8" fill="#2b2140"/><circle cx="56.8" cy="51.4" r="1.4" fill="#fff"/>' +
-        '<g transform="translate(14 0)">' + cejas(0).replace(/M(\d+)/g, function (m, n) { return m; }) + boca(expr) + '</g>' +
-        '<ellipse cx="30" cy="70" rx="7" ry="10" fill="#e0731a" opacity=".85"/>';
+      var ojoC = e === 'alegre' || e === 'orgulloso' ?
+        '<path d="M60 56q8-13 16 0" stroke="#2b2140" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M47 56q5-9 10 0" stroke="#2b2140" stroke-width="3.4" fill="none" stroke-linecap="round"/>' :
+        '<ellipse cx="68" cy="52" rx="8.5" ry="' + (e === 'concentrado' ? 7 : e === 'sorprendido' || e === 'emocionado' ? 11 : 9.8) + '" fill="#fff"/><circle cx="' + (72 + mira[0] / 2) + '" cy="' + (53 + mira[1]) + '" r="' + (e === 'sorprendido' ? 3.6 : e === 'emocionado' ? 6.6 : 4.8) + '" fill="#2b2140"/><circle cx="' + (73.6 + mira[0] / 2) + '" cy="' + (51 + mira[1]) + '" r="1.8" fill="#fff"/>' +
+        '<ellipse cx="52" cy="52" rx="6.5" ry="8" fill="#fff"/><circle cx="55.5" cy="53" r="3.8" fill="#2b2140"/><circle cx="56.8" cy="51.4" r="1.4" fill="#fff"/>';
+      var ce = e === 'concentrado' ? '<path d="M60 43l16 4" stroke="' + TINTA + '" stroke-width="3.2" stroke-linecap="round"/>' : e === 'sorprendido' || e === 'emocionado' ? '<path d="M60 36q9-5 16-1" stroke="' + TINTA + '" stroke-width="3.2" fill="none" stroke-linecap="round"/>' : e === 'ups' ? '<path d="M82 40q4 6 0 9q-4-3 0-9z" fill="#7be0ff" stroke="#3a9fd0" stroke-width="1.5"/>' : '';
+      interior = '<ellipse cx="48" cy="60" rx="31" ry="32" fill="url(#gLumo)"/><ellipse cx="42" cy="40" rx="11" ry="6" fill="#fff" opacity=".28" transform="rotate(-20 42 40)"/>' +
+        '<circle cx="76" cy="66" r="6" fill="#ff7f8a" opacity="' + mejillas + '"/>' + ojoC + ce + boca(e, 66, 66) +
+        '<ellipse cx="30" cy="70" rx="7" ry="10" fill="#e0731a" opacity=".85"/><path d="M62 78a6 6 0 1 0 0 .1" fill="none"/>';
       pies = '<ellipse cx="42" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="62" cy="91" rx="9" ry="5" fill="#e0731a"/>';
-      if (cerrados) interior = interior.replace('rx="8" ry="9.5"', 'rx="8" ry="6.5"');
-      if (dir === 'O') { interior = '<g transform="translate(100 0) scale(-1 1)">' + interior + '</g>'; pies = '<g transform="translate(100 0) scale(-1 1)">' + pies + '</g>'; }
+      var bp = e === 'emocionado' || op.pose === 'arriba' ? '<ellipse cx="30" cy="50" rx="6" ry="10" transform="rotate(-30 30 50)" fill="#e0731a" stroke="#c9601a" stroke-width="1.6"/>' : '<ellipse cx="50" cy="82" rx="6" ry="8" transform="rotate(-18 50 82)" fill="#e0731a" stroke="#c9601a" stroke-width="1.6"/>';
+      br = bp;
+      if (dir === 'O') { var espejo = function (s) { return '<g transform="translate(100 0) scale(-1 1)">' + s + '</g>'; }; interior = espejo(interior); pies = espejo(pies); br = espejo(br); }
     } else {
-      interior = '<ellipse cx="50" cy="60" rx="35" ry="32" fill="url(#gLumo)"/>' +
+      interior = '<ellipse cx="50" cy="60" rx="36" ry="32" fill="url(#gLumo)"/>' +
         '<ellipse cx="38" cy="40" rx="13" ry="7" fill="#fff" opacity=".28" transform="rotate(-20 38 40)"/>' +
-        '<circle cx="26" cy="64" r="6" fill="#ff7f8a" opacity=".55"/><circle cx="74" cy="64" r="6" fill="#ff7f8a" opacity=".55"/>' +
-        [38, 62].map(function (cx) { return ojo(cx, 9, cerrados ? 7 : 10, 0, 2.2); }).join('') + cejas(0) + boca(expr) +
-        '<g transform="translate(50 84)"><circle r="8" fill="#fff" stroke="#c9741a" stroke-width="2.5"/><path d="M0-6l3 6-3 6-3-6z" fill="#e8553f"/><path d="M0 6l-3-6h6z" fill="#7a8aa8"/></g>';
+        '<circle cx="25" cy="64" r="6.5" fill="#ff7f8a" opacity="' + mejillas + '"/><circle cx="75" cy="64" r="6.5" fill="#ff7f8a" opacity="' + mejillas + '"/>' +
+        ojoFrente(38, e, mira[0], mira[1]) + ojoFrente(62, e, mira[0], mira[1]) + cejasFrente(e) + boca(e) +
+        '<g transform="translate(50 84)"><circle r="8.5" fill="#fff" stroke="#c9741a" stroke-width="2.5"/><circle r="6" fill="#fff6c9"/><path d="M0-6l3 6-3 6-3-6z" fill="#e8553f"/><path d="M0 6l-3-6h6z" fill="#7a8aa8"/></g>';
       pies = '<ellipse cx="34" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="66" cy="91" rx="10" ry="5" fill="#e0731a"/>';
     }
-    return '<svg viewBox="0 0 100 100" class="lumo-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      (d === 3 && dir !== 'N' ? CAPA : '') + cuerpoBase + (d === 3 && dir === 'N' ? CAPA : '') +
-      interior + pies + frontal + (dir === 'N' || dir === 'S' ? (DISFRACES_SVG[d] || '') : (DISFRACES_SVG[d] || '')) + '</svg>';
+    var capaAtras = d === 3 ? CAPA : '';
+    return '<svg viewBox="0 0 100 100" class="lumo-svg" data-expr="' + e + '" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      capaAtras + glow + llama + interior + pies + br + (DISFRACES_SVG[d] || '') + '</svg>';
   }
 
   // ---------------------------------------------------------------- personajes secundarios
-  // Figuras PROVISIONALES de las chispas y de Conejo (fase 2). En la fase 3 se redibujan con el mismo lenguaje visual que Lumo.
-  function chispaProv(c1, c2) {
-    return '<ellipse cx="50" cy="93" rx="24" ry="4" fill="#000" opacity=".15"/><path d="M50 4q16 18 11 32-3 7-11 7t-11-7Q34 22 50 4z" fill="' + c2 + '"/><ellipse cx="50" cy="64" rx="30" ry="29" fill="' + c1 + '"/>' +
-      '<g fill="#fff"><circle cx="40" cy="58" r="8"/><circle cx="60" cy="58" r="8"/></g><circle cx="41" cy="59" r="4" fill="#2b2140"/><circle cx="61" cy="59" r="4" fill="#2b2140"/><circle cx="42.5" cy="57.5" r="1.5" fill="#fff"/><circle cx="62.5" cy="57.5" r="1.5" fill="#fff"/>' +
-      '<path d="M42 72q8 7 16 0" stroke="#5a2a2a" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="31" cy="68" r="4" fill="#ff9ac8" opacity=".55"/><circle cx="69" cy="68" r="4" fill="#ff9ac8" opacity=".55"/>';
+  // Las seis chispas comparten el lenguaje visual de Lumo (cuerpo redondo, llama, ojos grandes, mejillas, bracitos)
+  // y se distinguen por el color y un rasgo propio. Expresiones: normal, alegre, sorprendido, tierno.
+  var CHISPAS_DISENO = {
+    'Titila':   { c1: '#8fdc86', c2: '#d6f7c8', rasgo: '<path d="M50 14q-14-6-20 4 12 6 20-4z" fill="#3aa55a"/><path d="M50 14q12-8 20 2-10 8-20-2z" fill="#2c8745"/>' },
+    'Brasa':    { c1: '#ff7a55', c2: '#ffc2a8', rasgo: '<path d="M36 24l6-12 6 10 6-12 6 12 6-10 2 16z" fill="#c9401f"/>' },
+    'Destello': { c1: '#5ec8ff', c2: '#c4ecff', rasgo: '<path d="M30 22q8-14 22-6 8 4 6 12-10-4-14 2-6-6-14-8z" fill="#2a9ad6"/><circle cx="66" cy="18" r="3" fill="#fff"/>' },
+    'Ascua':    { c1: '#e8603f', c2: '#ffa571', rasgo: '<path d="M34 28q-6-14 2-18 2 10 8 14zM66 28q6-14-2-18-2 10-8 14z" fill="#8c2a1a"/>' },
+    'Píxel':    { c1: '#4fe0c8', c2: '#b6f7ec', rasgo: '<path d="M50 20V6" stroke="#2a8f80" stroke-width="3.5"/><rect x="43" y="-1" width="14" height="14" rx="2" fill="#7affe4" stroke="#2a8f80" stroke-width="2.5"/><rect x="47" y="3" width="6" height="6" fill="#2a8f80"/>' },
+    'Cometa':   { c1: '#b58cff', c2: '#e3d3ff', rasgo: '<path d="M72 18l6-14 3 11 12 1-10 6 3 12-10-8-9 6 3-12-10-5z" fill="#ffd166" stroke="#e8a82e" stroke-width="2" stroke-linejoin="round"/>' }
+  };
+  function chispa(nombre, expr) {
+    var D = CHISPAS_DISENO[nombre]; if (!D) return '';
+    expr = EXPR_ALIAS[expr] || expr;
+    var ojos, boca_;
+    switch (expr) {
+      case 'alegre': case 'emocionado': case 'orgulloso':
+        ojos = '<path d="M31 58q8-12 16 0M53 58q8-12 16 0" stroke="#2b2140" stroke-width="4" fill="none" stroke-linecap="round"/>';
+        boca_ = '<path d="M40 66q10 14 20 0z" fill="#7a2a1a" stroke="#7a2a1a" stroke-width="2" stroke-linejoin="round"/>'; break;
+      case 'sorprendido': case 'ups':
+        ojos = '<ellipse cx="39" cy="58" rx="8.5" ry="10" fill="#fff"/><ellipse cx="61" cy="58" rx="8.5" ry="10" fill="#fff"/><circle cx="39" cy="58" r="3.4" fill="#2b2140"/><circle cx="61" cy="58" r="3.4" fill="#2b2140"/>';
+        boca_ = '<ellipse cx="50" cy="72" rx="4.5" ry="5.5" fill="#7a2a1a"/>'; break;
+      case 'tierno':
+        ojos = '<ellipse cx="39" cy="59" rx="8" ry="8" fill="#fff"/><ellipse cx="61" cy="59" rx="8" ry="8" fill="#fff"/><circle cx="40" cy="60" r="5" fill="#2b2140"/><circle cx="62" cy="60" r="5" fill="#2b2140"/><circle cx="41.6" cy="58" r="1.8" fill="#fff"/><circle cx="63.6" cy="58" r="1.8" fill="#fff"/><path d="M30 55q9-6 18 0M52 55q9-6 18 0" stroke="' + D.c1 + '" stroke-width="3" fill="none"/>';
+        boca_ = '<path d="M44 70q6 5 12 0" stroke="#7a2a1a" stroke-width="3" fill="none" stroke-linecap="round"/>'; break;
+      default:
+        ojos = '<ellipse cx="39" cy="58" rx="8" ry="9" fill="#fff"/><ellipse cx="61" cy="58" rx="8" ry="9" fill="#fff"/><circle cx="40" cy="59" r="4.8" fill="#2b2140"/><circle cx="62" cy="59" r="4.8" fill="#2b2140"/><circle cx="41.6" cy="57" r="1.8" fill="#fff"/><circle cx="63.6" cy="57" r="1.8" fill="#fff"/>';
+        boca_ = '<path d="M43 70q7 6 14 0" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>';
+    }
+    return '<defs><radialGradient id="gCh' + nombre.charCodeAt(0) + '"><stop offset="55%" stop-color="' + D.c1 + '" stop-opacity=".4"/><stop offset="100%" stop-color="' + D.c1 + '" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="58" r="48" fill="url(#gCh' + nombre.charCodeAt(0) + ')"/><ellipse cx="50" cy="93" rx="24" ry="4" fill="#000" opacity=".15"/>' +
+      '<g class="llama"><path d="M50 6q15 15 10 28-3 7-10 7t-10-7Q35 21 50 6z" fill="' + D.c1 + '"/><path d="M50 16q6 8 3 14-3 4-3 4t-3-4q-3-6 3-14z" fill="' + D.c2 + '" opacity=".9"/></g>' +
+      D.rasgo +
+      '<ellipse cx="50" cy="64" rx="33" ry="29" fill="' + D.c1 + '"/><ellipse cx="38" cy="46" rx="11" ry="5.5" fill="#fff" opacity=".3" transform="rotate(-20 38 46)"/>' +
+      '<ellipse cx="17" cy="72" rx="5.5" ry="8.5" transform="rotate(12 17 72)" fill="' + D.c1 + '" stroke="#0002" stroke-width="1.4"/><ellipse cx="83" cy="72" rx="5.5" ry="8.5" transform="rotate(-12 83 72)" fill="' + D.c1 + '" stroke="#0002" stroke-width="1.4"/>' +
+      '<circle cx="27" cy="68" r="5" fill="#ff7f8a" opacity=".55"/><circle cx="73" cy="68" r="5" fill="#ff7f8a" opacity=".55"/>' + ojos + boca_ +
+      '<ellipse cx="38" cy="91" rx="9" ry="4.5" fill="' + D.c1 + '"/><ellipse cx="62" cy="91" rx="9" ry="4.5" fill="' + D.c1 + '"/>';
   }
   var PERSONAJES = {
-    'Abuela Chispa': '<circle cx="50" cy="56" r="46" fill="#c9a0ff" opacity=".3"/><path d="M50 2q16 16 11 30-3 7-11 7t-11-7Q34 18 50 2z" fill="#d9a8ff"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="#b784f0"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="url(#gLumoGlow)" opacity=".4"/><g fill="#fff" fill-opacity=".4" stroke="#6a3fa8" stroke-width="3"><circle cx="37" cy="54" r="10"/><circle cx="63" cy="54" r="10"/></g><path d="M47 54h6" stroke="#6a3fa8" stroke-width="3"/><circle cx="37" cy="55" r="4" fill="#2b2140"/><circle cx="63" cy="55" r="4" fill="#2b2140"/><path d="M40 72q10 9 20 0" stroke="#5a2a7a" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="26" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><circle cx="74" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><ellipse cx="36" cy="93" rx="10" ry="5" fill="#8b57c9"/><ellipse cx="64" cy="93" rx="10" ry="5" fill="#8b57c9"/><path d="M30 28q20-12 40 0" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>',
+    'Abuela Chispa': '<defs><radialGradient id="gChAb"><stop offset="55%" stop-color="#c9a0ff" stop-opacity=".4"/><stop offset="100%" stop-color="#c9a0ff" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="56" r="48" fill="url(#gChAb)"/><path d="M50 2q16 16 11 30-3 7-11 7t-11-7Q34 18 50 2z" fill="#d9a8ff"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="#b784f0"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="url(#gLumoGlow)" opacity=".4"/><g fill="#fff" fill-opacity=".4" stroke="#6a3fa8" stroke-width="3"><circle cx="37" cy="54" r="10"/><circle cx="63" cy="54" r="10"/></g><path d="M47 54h6" stroke="#6a3fa8" stroke-width="3"/><circle cx="37" cy="55" r="4" fill="#2b2140"/><circle cx="63" cy="55" r="4" fill="#2b2140"/><path d="M40 72q10 9 20 0" stroke="#5a2a7a" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="26" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><circle cx="74" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><ellipse cx="36" cy="93" rx="10" ry="5" fill="#8b57c9"/><ellipse cx="64" cy="93" rx="10" ry="5" fill="#8b57c9"/><path d="M30 28q20-12 40 0" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>',
     'Búho Bruma': '<ellipse cx="50" cy="94" rx="30" ry="5" fill="#000" opacity=".15"/><path d="M20 38l-4-22 18 12q16-6 32 0l18-12-4 22q8 22-6 40-12 14-24 14T26 78q-14-18-6-40z" fill="#8b6bd1"/><ellipse cx="50" cy="70" rx="20" ry="20" fill="#d7c8f5"/><g fill="#fff" stroke="#4a3a8a" stroke-width="3"><circle cx="37" cy="48" r="13"/><circle cx="63" cy="48" r="13"/></g><circle cx="38" cy="49" r="6" fill="#2b2140"/><circle cx="62" cy="49" r="6" fill="#2b2140"/><circle cx="40" cy="47" r="2" fill="#fff"/><circle cx="64" cy="47" r="2" fill="#fff"/><path d="M50 54l-5 8h10z" fill="#ffb02e"/><path d="M38 78l6 6M50 82l0 6M62 78l-6 6" stroke="#8b6bd1" stroke-width="3" stroke-linecap="round"/>',
     'Bichito': '<ellipse cx="50" cy="90" rx="22" ry="4" fill="#000" opacity=".15"/><path d="M36 34q-6-14-16-14M64 34q6-14 16-14" stroke="#2d6a3e" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="20" cy="20" r="4" fill="#ff6f91"/><circle cx="80" cy="20" r="4" fill="#ff6f91"/><ellipse cx="50" cy="62" rx="30" ry="28" fill="#6fcf6f"/><path d="M50 36v52" stroke="#3aa55a" stroke-width="3"/><circle cx="38" cy="66" r="5" fill="#2d6a3e"/><circle cx="62" cy="74" r="5" fill="#2d6a3e"/><circle cx="50" cy="52" r="16" fill="#8be08b"/><circle cx="43" cy="50" r="5" fill="#fff"/><circle cx="57" cy="50" r="5" fill="#fff"/><circle cx="44" cy="51" r="2.4" fill="#2b2140"/><circle cx="58" cy="51" r="2.4" fill="#2b2140"/><path d="M43 60q7 6 14 0" stroke="#2d6a3e" stroke-width="3" fill="none" stroke-linecap="round"/>',
     'Tinta': '<ellipse cx="50" cy="94" rx="30" ry="4" fill="#000" opacity=".15"/><g stroke="#ff7fb0" stroke-width="9" stroke-linecap="round" fill="none"><path d="M28 70q-10 12-4 22"/><path d="M40 76q-4 12 2 18"/><path d="M60 76q4 12-2 18"/><path d="M72 70q10 12 4 22"/></g><ellipse cx="50" cy="44" rx="30" ry="34" fill="#ff7fb0"/><ellipse cx="50" cy="44" rx="30" ry="34" fill="url(#gLumoGlow)" opacity=".25"/><g fill="#fff" stroke="#c43b78" stroke-width="3"><circle cx="38" cy="52" r="9"/><circle cx="62" cy="52" r="9"/></g><circle cx="39" cy="53" r="4" fill="#2b2140"/><circle cx="63" cy="53" r="4" fill="#2b2140"/><path d="M42 68q8 7 16 0" stroke="#8c1f52" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M32 22q18-14 36 0" stroke="#ffc0da" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/><circle cx="76" cy="20" r="7" fill="#ffd166"/><path d="M72 20h8M76 16v8" stroke="#a8672d" stroke-width="2.5"/>',
     'Lagarto gigante': '<ellipse cx="50" cy="94" rx="36" ry="4" fill="#000" opacity=".2"/><path d="M8 78q14-24 40-24h20q22 0 26 16l-12 6q-6-6-16-4-24 4-58 6z" fill="#4faf5a"/><path d="M68 54q10-16 22-8-2 12-14 14z" fill="#4faf5a"/><circle cx="82" cy="52" r="5" fill="#fff"/><circle cx="83" cy="53" r="2.4" fill="#2b2140"/><path d="M20 70l6-10 6 10M36 66l6-10 6 10M52 62l6-10 6 10" fill="#ffb02e"/><rect x="26" y="76" width="9" height="14" rx="4" fill="#3d9148"/><rect x="62" y="76" width="9" height="14" rx="4" fill="#3d9148"/>',
-    'Titila': chispaProv('#9fe3a0', '#c8f5c0'),
-    'Brasa': chispaProv('#ff6a4d', '#ffb199'),
-    'Destello': chispaProv('#5ec8ff', '#b4e6ff'),
-    'Ascua': chispaProv('#e0563a', '#ff9a6b'),
-    'Píxel': chispaProv('#4fe0c8', '#a8f5e8'),
-    'Cometa': chispaProv('#b58cff', '#dcc8ff'),
     'Conejo': '<ellipse cx="50" cy="93" rx="26" ry="4" fill="#000" opacity=".15"/><ellipse cx="38" cy="22" rx="8" ry="20" fill="#f0e6dc"/><ellipse cx="62" cy="22" rx="8" ry="20" fill="#f0e6dc"/><ellipse cx="50" cy="66" rx="30" ry="26" fill="#f7f1ea"/><circle cx="41" cy="60" r="4" fill="#2b2140"/><circle cx="59" cy="60" r="4" fill="#2b2140"/><path d="M44 72q6 5 12 0" stroke="#a8672d" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="50" cy="67" r="3" fill="#ff9ac8"/>',
     'Bit': '<ellipse cx="50" cy="94" rx="26" ry="4" fill="#000" opacity=".15"/><rect x="40" y="2" width="4" height="12" fill="#8d9bb8"/><circle cx="42" cy="4" r="5" fill="#ff5a5f"/><rect x="22" y="14" width="56" height="40" rx="12" fill="#c9d4ea"/><rect x="28" y="22" width="44" height="24" rx="8" fill="#26335e"/><circle cx="40" cy="34" r="6" fill="#5fe0ff"/><circle cx="60" cy="34" r="6" fill="#5fe0ff"/><path d="M42 42q8 4 16 0" stroke="#5fe0ff" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="28" y="56" width="44" height="30" rx="8" fill="#9fb0cf"/><circle cx="50" cy="70" r="7" fill="#ffd166"/><rect x="14" y="58" width="12" height="22" rx="6" fill="#c9d4ea"/><rect x="74" y="58" width="12" height="22" rx="6" fill="#c9d4ea"/><rect x="32" y="86" width="12" height="8" rx="3" fill="#7b8bb0"/><rect x="56" y="86" width="12" height="8" rx="3" fill="#7b8bb0"/>'
   };
-  function personaje(nombre) {
-    if (nombre === 'Lumo') return lumo({ expr: 'feliz', dir: 'S' });
+  function personaje(nombre, op) {
+    if (CHISPAS_DISENO[nombre]) return '<svg viewBox="0 0 100 100" class="pers-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + chispa(nombre, op && op.expr) + '</svg>';
+    if (nombre === 'Lumo') return lumo({ expr: op && op.expr || 'alegre', dir: 'S', pose: op && op.pose });
     return '<svg viewBox="0 0 100 100" class="pers-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + (PERSONAJES[nombre] || '') + '</svg>';
   }
 
@@ -4691,7 +4815,7 @@
 
   UI.Arte = {
     TEMAS: TEMAS, NOMBRES_ZONA: NOMBRES_ZONA, celda: celda, objeto: objeto, interruptor: interruptor, puerta: puerta,
-    lumo: lumo, personaje: personaje, PERSONAJES: Object.keys(PERSONAJES).concat(['Lumo']),
+    lumo: lumo, exprDe: exprDe, EXPRESIONES: EXPRESIONES, personaje: personaje, PERSONAJES: Object.keys(PERSONAJES).concat(Object.keys(CHISPAS_DISENO), ['Lumo']),
     iconoCarta: iconoCarta, CARTA_COLOR: CARTA_COLOR, CARTA_NOMBRE: CARTA_NOMBRE,
     iconoCond: iconoCond, COND_NOMBRE: COND_NOMBRE, insignia: insignia,
     picto: picto, PICTOS: PICTOS, PICTO_NOMBRE: PICTO_NOMBRE,
@@ -4801,6 +4925,257 @@
 })(typeof self !== 'undefined' ? self : this);
 
 
+/* ===== src/ui/escena-motor.js ===== */
+;/*
+ * RUMBO — Motor de escenas de la historia (fase 3).
+ *
+ * Reproduce una escena de src/datos/escenas.js con un escenario por capas (cielo, fondo lejano, fondo medio, suelo y primer plano),
+ * personajes de cuerpo entero que entran, salen, se mueven y cambian de gesto, y partículas de luz.
+ *
+ * Una escena puede traer `pasos` (puesta en escena a mano). Si no los trae, el motor los deduce de sus `lineas`:
+ * Lumo entra por la izquierda, el interlocutor por la derecha y cada frase lleva su emoción.
+ *
+ * Pasos reconocidos (todos opcionales):
+ *   {fondo:'bosque'}                       cambia de zona (fundido)
+ *   {entra:'Titila', lado:'der'|'izq'|'centro', modo:'salta'|'cae'|'desliza'}
+ *   {sale:'Titila'}
+ *   {emocion:'Lumo', expr:'sorprendido', pose:'arriba'}
+ *   {accion:'Lumo', haz:'salta'|'baila'|'tiembla'|'gira'|'asiente'|'mira'}
+ *   {objeto:'pieza'|'brujula'|'luz'|'flor'|'zanahoria', lado:'centro', brilla:true}
+ *   {camara:'acerca'|'aleja'|'sacude'}
+ *   {sonido:'victoria'}
+ *   {espera:600}
+ *   {dice:'*'}                            la siguiente frase de `lineas` (con su emoción); también vale {dice:'id_de_frase', emocion:'alegre'}
+ * Con «reducir animaciones» activado no hay desplazamientos ni partículas: los personajes aparecen y desaparecen con un corte limpio.
+ */
+(function (root) {
+  'use strict';
+  var UI = root.RumboUI = root.RumboUI || {};
+  var Ar = function () { return UI.Arte; };
+
+  // ---------------------------------------------------------------- fondos por capas
+  function azar(seed) { var s = seed || 7; return function () { s = (s * 16807) % 2147483647; return s / 2147483647; }; }
+  function colinas(color, y, amp, seed, ancho) {
+    var r = azar(seed), d = 'M0 600V' + y, x = 0; ancho = ancho || 1200;
+    while (x < ancho) { var w = 120 + r() * 160; d += 'Q' + (x + w / 2) + ' ' + (y - amp * (.4 + r())) + ' ' + (x + w) + ' ' + (y + (r() - .5) * amp * .4); x += w; }
+    return '<path d="' + d + 'V600z" fill="' + color + '"/>';
+  }
+  function arboles(color, n, y, seed, alto) {
+    var r = azar(seed), s = '';
+    for (var i = 0; i < n; i++) {
+      var x = (i + r() * .8) * 1300 / n - 40, h = (alto || 150) * (.7 + r() * .6), w = h * .55;
+      s += '<g transform="translate(' + x.toFixed(0) + ' ' + y + ')"><rect x="-6" y="-' + (h * .3).toFixed(0) + '" width="12" height="' + (h * .35).toFixed(0) + '" fill="' + color + '" opacity=".9"/>' +
+        '<path d="M0 -' + h.toFixed(0) + 'L' + (w * .7).toFixed(0) + ' -' + (h * .3).toFixed(0) + 'H-' + (w * .7).toFixed(0) + 'z" fill="' + color + '"/><path d="M0 -' + (h * .75).toFixed(0) + 'L' + w.toFixed(0) + ' -' + (h * .12).toFixed(0) + 'H-' + w.toFixed(0) + 'z" fill="' + color + '"/></g>';
+    }
+    return s;
+  }
+  function picos(color, nieve, y, seed) {
+    var r = azar(seed), s = '', x = -60;
+    while (x < 1260) {
+      var w = 200 + r() * 160, h = 150 + r() * 170;
+      s += '<path d="M' + x + ' ' + y + 'L' + (x + w / 2) + ' ' + (y - h).toFixed(0) + 'L' + (x + w) + ' ' + y + 'z" fill="' + color + '"/>';
+      if (nieve) s += '<path d="M' + (x + w / 2 - w * .17).toFixed(0) + ' ' + (y - h * .66).toFixed(0) + 'L' + (x + w / 2) + ' ' + (y - h).toFixed(0) + 'L' + (x + w / 2 + w * .17).toFixed(0) + ' ' + (y - h * .66).toFixed(0) + 'l-14 12-12-10-14 10z" fill="#fff" opacity=".92"/>';
+      x += w * .62;
+    }
+    return s;
+  }
+  function ciudad(color, ventana, y, seed) {
+    var r = azar(seed), s = '', x = -10;
+    while (x < 1220) {
+      var w = 50 + r() * 70, h = 120 + r() * 220;
+      s += '<rect x="' + x.toFixed(0) + '" y="' + (y - h).toFixed(0) + '" width="' + w.toFixed(0) + '" height="' + h.toFixed(0) + '" fill="' + color + '"/>';
+      for (var vy = y - h + 14; vy < y - 14; vy += 26) for (var vx = x + 8; vx < x + w - 14; vx += 20) if (r() > .45) s += '<rect x="' + vx.toFixed(0) + '" y="' + vy.toFixed(0) + '" width="9" height="12" rx="2" fill="' + ventana + '" opacity="' + (.5 + r() * .5).toFixed(2) + '"/>';
+      x += w + 6 + r() * 14;
+    }
+    return s;
+  }
+  function estrellas(n, seed, color) {
+    var r = azar(seed), s = '';
+    for (var i = 0; i < n; i++) s += '<circle class="titila" cx="' + (r() * 1200).toFixed(0) + '" cy="' + (r() * 420).toFixed(0) + '" r="' + (1 + r() * 2.4).toFixed(1) + '" fill="' + (color || '#fff') + '" opacity="' + (.5 + r() * .5).toFixed(2) + '" style="animation-delay:' + (r() * 3).toFixed(1) + 's"/>';
+    return s;
+  }
+  function burbujas(n, seed) {
+    var r = azar(seed), s = '';
+    for (var i = 0; i < n; i++) s += '<circle class="burbuja" cx="' + (r() * 1200).toFixed(0) + '" cy="' + (200 + r() * 380).toFixed(0) + '" r="' + (4 + r() * 10).toFixed(0) + '" fill="none" stroke="#fff" stroke-width="2.5" opacity=".5" style="animation-delay:' + (r() * 5).toFixed(1) + 's"/>';
+    return s;
+  }
+  function flores(colores, n, y, seed) {
+    var r = azar(seed), s = '';
+    for (var i = 0; i < n; i++) { var x = r() * 1200, c = colores[i % colores.length]; s += '<g transform="translate(' + x.toFixed(0) + ' ' + (y + r() * 60).toFixed(0) + ')"><path d="M0 0v-26" stroke="#3f8f3a" stroke-width="4"/><circle cy="-30" r="9" fill="' + c + '"/><circle cy="-30" r="3.5" fill="#ffd93d"/></g>'; }
+    return s;
+  }
+  function rocas(color, n, y, seed) {
+    var r = azar(seed), s = '';
+    for (var i = 0; i < n; i++) { var x = r() * 1200, w = 40 + r() * 70; s += '<path d="M' + x.toFixed(0) + ' ' + y + 'q' + (w * .1).toFixed(0) + ' -' + (w * .7).toFixed(0) + ' ' + (w * .5).toFixed(0) + ' -' + (w * .72).toFixed(0) + 'q' + (w * .45).toFixed(0) + ' ' + (w * .1).toFixed(0) + ' ' + (w * .55).toFixed(0) + ' ' + (w * .72).toFixed(0) + 'z" fill="' + color + '"/>'; }
+    return s;
+  }
+  function faroGrande(x, y, escala, lucesEncendidas) {
+    var v = '';
+    for (var i = 0; i < 6; i++) v += '<rect x="' + (-13 + (i % 2) * 14) + '" y="' + (-250 + Math.floor(i / 2) * 60 + 20) + '" width="12" height="18" rx="5" fill="' + (i < lucesEncendidas ? '#ffe27a' : '#46506f') + '"/>';
+    return '<g transform="translate(' + x + ' ' + y + ') scale(' + escala + ')"><path d="M-46 0l12-260h68l12 260z" fill="#f4f1ea"/><path d="M-40 -60h80l-3 30h-74zM-34 -150h68l-3 26h-62zM-28 -240h56l-2 22h-52z" fill="#e8553f"/>' + v +
+      '<rect x="-36" y="-310" width="72" height="50" rx="8" fill="#2b3558"/><rect x="-26" y="-302" width="52" height="34" rx="6" fill="' + (lucesEncendidas > 0 ? '#ffe27a' : '#46506f') + '"/><path d="M-44 -310l44-40 44 40z" fill="#e8553f"/></g>';
+  }
+  var FONDOS = {
+    jardin: function () { return { lejos: colinas('#a6dd8a', 360, 60, 3) + '<circle cx="980" cy="120" r="46" fill="#fff4a8"/>', medio: colinas('#8fd172', 430, 40, 5) + arboles('#6cbd5a', 7, 440, 11, 120), cerca: flores(['#ff7fb0', '#ffd93d', '#ffffff', '#c79bff'], 26, 520, 9) }; },
+    granja: function () { return { lejos: colinas('#e8d28a', 360, 50, 4) + '<circle cx="1000" cy="110" r="44" fill="#fff0a0"/>', medio: colinas('#d6c070', 440, 36, 8) + '<g transform="translate(220 430)"><rect x="-50" y="-70" width="100" height="70" fill="#d0553f"/><path d="M-62 -70l62-46 62 46z" fill="#8d3a2c"/><rect x="-14" y="-40" width="28" height="40" fill="#f5e6c0"/></g>', cerca: flores(['#ffd93d', '#ffffff'], 18, 530, 12) }; },
+    playa: function () { return { lejos: '<rect y="300" width="1200" height="120" fill="#4ec3e8"/><path d="M0 330q150-20 300 0t300 0 300 0 300 0V420H0z" fill="#7ad7f2"/>', medio: colinas('#f3e1a4', 450, 30, 6), cerca: rocas('#c9b27a', 6, 560, 4) }; },
+    bosque: function () { return { lejos: arboles('#134034', 11, 400, 3, 210) + '<circle cx="220" cy="90" r="40" fill="#d8f3c8" opacity=".85"/>', medio: arboles('#1e5c43', 8, 470, 7, 180), cerca: arboles('#0e3228', 5, 600, 13, 260) + flores(['#ffe27a'], 14, 540, 21) }; },
+    montanas: function () { return { lejos: picos('#7e8ccb', true, 430, 3), medio: picos('#a99fd0', true, 500, 9) + colinas('#d7d2e8', 520, 30, 5), cerca: rocas('#8b84ab', 7, 600, 8) }; },
+    mar: function () { return { lejos: '<path d="M0 120q150-30 300 0t300 0 300 0 300 0V600H0z" fill="#1f86b5" opacity=".6"/>' + burbujas(14, 5), medio: '<path d="M0 400q100-30 200 0t200 0 200 0 200 0 200 0 200 0V600H0z" fill="#e9d095"/>' + '<g fill="#ff7a7a"><path d="M150 430q-20-60 10-90 6 40 24 50 4-30 20-44 4 50-16 84z"/></g><g fill="#ffb347"><path d="M880 440q-14-70 18-96 4 36 20 44 8-26 24-34 0 56-20 86z"/></g>', cerca: burbujas(10, 12) + rocas('#c9b27a', 5, 590, 6) }; },
+    volcan: function () { return { lejos: '<path d="M300 440L520 150h160L900 440z" fill="#3a1f26"/><path d="M520 150h160l-14 30q-66 22-132 0z" fill="#ff6a2e"/><path d="M590 180q-8 90-30 180M610 180q4 100 20 200" stroke="#ff8a3c" stroke-width="10" fill="none" stroke-linecap="round"/>' + estrellas(26, 7, '#ffcf9a'), medio: picos('#4a2a2f', false, 520, 4), cerca: rocas('#2b171c', 8, 600, 3) }; },
+    ciudad: function () { return { lejos: ciudad('#2a3a74', '#9fe8ff', 440, 5) + estrellas(20, 9), medio: ciudad('#1a2550', '#ffe27a', 520, 8), cerca: '<rect y="560" width="1200" height="40" fill="#10183a"/><path d="M0 570h1200" stroke="#7be0ff" stroke-width="3" stroke-dasharray="30 18"/>' }; },
+    espacio: function () { return { lejos: estrellas(70, 3) + '<circle cx="940" cy="140" r="70" fill="#b58cff"/><ellipse cx="940" cy="140" rx="116" ry="20" fill="none" stroke="#ffd166" stroke-width="7" transform="rotate(-14 940 140)"/><circle cx="260" cy="110" r="28" fill="#5ec8ff"/>', medio: colinas('#4b4784', 500, 40, 5), cerca: rocas('#3a3768', 6, 600, 2) + estrellas(10, 8, '#ffd166') }; },
+    faro: function () { return { lejos: estrellas(40, 4, '#ffe9b0') + '<circle cx="1000" cy="110" r="50" fill="#fff0c8" opacity=".9"/>', medio: colinas('#2e3a68', 450, 34, 6) + faroGrande(640, 470, 1.15, 6), cerca: colinas('#1d2548', 560, 24, 3) }; }
+  };
+  function capasDeFondo(zona) { return (FONDOS[zona] || FONDOS.jardin)(); }
+  var SUELOS = { mar: ['#e9d095', '#d9bd7d'], faro: ['#3b4778', '#2a3560'], ciudad: ['#2b3768', '#1e2850'], espacio: ['#4b4784', '#3a3768'] };
+  var CIELO_NOCHE = { bosque: 1, montanas: 0, mar: 1, volcan: 1, ciudad: 1, espacio: 1, faro: 1 };
+
+  // ---------------------------------------------------------------- objetos de escena
+  var OBJ = {
+    pieza: '<circle cx="50" cy="50" r="30" fill="none" stroke="#ffd166" stroke-width="8" stroke-dasharray="46 20" stroke-linecap="round"/><circle cx="50" cy="50" r="8" fill="#ffd166"/>',
+    brujula: '<circle cx="50" cy="50" r="34" fill="#fff" stroke="#c9741a" stroke-width="6"/><circle cx="50" cy="50" r="27" fill="#fff6c9"/><path d="M50 26l9 24-9 24-9-24z" fill="#e8553f"/><path d="M50 74l-9-24h18z" fill="#7a8aa8"/><circle cx="50" cy="50" r="4" fill="#2b2140"/>',
+    luz: '<circle cx="50" cy="50" r="40" fill="url(#gLumoGlow)"/><path d="M50 14q16 18 11 32-3 7-11 7t-11-7Q34 32 50 14z" fill="#ffd93d"/><ellipse cx="50" cy="64" rx="18" ry="16" fill="#ffb22e"/>',
+    flor: '<path d="M50 90V54" stroke="#3f8f3a" stroke-width="6"/><g fill="#ff7fb0"><circle cx="50" cy="30" r="14"/><circle cx="32" cy="42" r="14"/><circle cx="68" cy="42" r="14"/><circle cx="38" cy="58" r="12"/><circle cx="62" cy="58" r="12"/></g><circle cx="50" cy="44" r="11" fill="#ffd93d"/>',
+    zanahoria: '<path d="M50 86L36 38q14-12 28 0z" fill="#ff8a2e"/><path d="M50 40q-18-18-10-30 10 8 10 30zM50 40q18-18 10-30-10 8-10 30z" fill="#3aa55a"/>',
+    estrella: '<path d="M50 8l12 28 30 3-23 20 7 30-26-16-26 16 7-30-23-20 30-3z" fill="#ffd166" stroke="#e8a82e" stroke-width="3" stroke-linejoin="round"/>'
+  };
+
+  // ---------------------------------------------------------------- pasos automáticos
+  function ladoDe(quien, i) { return quien === 'Lumo' ? 'izq' : 'der'; }
+  function deducirPasos(def, lineas) {
+    var pasos = [{ fondo: def.zona }, { entra: 'Lumo', lado: 'izq', modo: 'salta' }], dentro = { Lumo: true };
+    lineas.forEach(function (l) {
+      var q = l.quien;
+      if (!dentro[q]) { pasos.push({ entra: q, lado: 'der', modo: 'desliza' }); dentro[q] = true; }
+      pasos.push({ dice: l.id, emocion: l.emocion });
+    });
+    return pasos;
+  }
+
+  // ---------------------------------------------------------------- reproducción
+  /*
+   * opciones: { def, lineas:[{id,quien,texto,emocion}], infantil, reducir, voz:{decir(id,op)->{modo}, parar()}, sonido:{sfx(n), musica(z)},
+   *             vocesOn:bool, h(fn de creación de nodos), fin() }
+   */
+  function reproducir(op) {
+    var h = op.h, def = op.def, reducir = !!op.reducir, inf = !!op.infantil, S = op.sonido || {};
+    var pasos = def.pasos && def.pasos.length ? def.pasos : deducirPasos(def, op.lineas);
+    var porId = {}; op.lineas.forEach(function (l) { porId[l.id] = l; });
+
+    var ov = h('div.escena.motor' + (reducir ? '.sin-mov' : ''), { role: 'dialog', 'aria-label': 'Escena de la historia' });
+    var cielo = h('div.esc-cielo'), lejos = h('div.esc-capa.lejos'), medio = h('div.esc-capa.medio'), cerca = h('div.esc-capa.cerca'), particulas = h('div.esc-particulas');
+    var suelo = h('div.esc-suelo'), escenario = h('div.esc-escenario'), objetos = h('div.esc-objetos'), burbuja = h('div.escena-burbuja'), nombre = h('div.escena-nombre'), txt = h('div.escena-texto');
+    var vel = h('div.esc-velo');
+    burbuja.appendChild(nombre); burbuja.appendChild(txt);
+    var sig = h('button.btn-grande.principal.b-sig-esc', { type: 'button', 'aria-label': 'Siguiente', on: { click: pulsar } }, UI.svgEl(UI.ICON.sig, 'ic'));
+    var saltar = h('button.btn-txt.b-saltar', { type: 'button', on: { click: cerrar } }, 'Saltar escena');
+    [cielo, lejos, medio, suelo, escenario, cerca, objetos, particulas, vel, burbuja, sig, saltar].forEach(function (n) { ov.appendChild(n); });
+    burbuja.classList.add('oculta');
+    document.body.appendChild(ov);
+
+    var sigLinea = 0, cerrado = false, actores = {}, esperando = null, zonaActual = null, saltarEspera = false;
+
+    function aplicarZona(z) {
+      var T = Ar().TEMAS[z] || Ar().TEMAS.jardin, c = capasDeFondo(z);
+      zonaActual = z;
+      ov.className = ov.className.replace(/\bzona-\S+/g, '').trim() + ' zona-' + z;
+      cielo.style.background = 'linear-gradient(' + T.cielo[0] + ',' + T.cielo[1] + ')';
+      var svg = function (x) { return '<svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">' + x + '</svg>'; };
+      var G = SUELOS[z] || [T.c1, T.c2]; suelo.style.background = 'linear-gradient(' + G[0] + ',' + G[1] + ')'; suelo.style.filter = CIELO_NOCHE[z] && !SUELOS[z] ? 'brightness(.5) saturate(.9)' : 'none';
+      lejos.innerHTML = svg(c.lejos); medio.innerHTML = svg(c.medio); cerca.innerHTML = svg(c.cerca);
+      if (!reducir) {
+        var p = '', r = azar(z.length * 31 + 5), col = CIELO_NOCHE[z] ? '#ffe9a0' : '#fffbe0';
+        for (var i = 0; i < 16; i++) p += '<i style="left:' + (r() * 100).toFixed(0) + '%;top:' + (30 + r() * 60).toFixed(0) + '%;animation-delay:' + (r() * 6).toFixed(1) + 's;animation-duration:' + (5 + r() * 5).toFixed(1) + 's;background:' + col + '"></i>';
+        particulas.innerHTML = p;
+      } else particulas.innerHTML = '';
+      if (S.musica) S.musica(z);
+    }
+
+    function dibujar(a, expr, pose) {
+      a.expr = expr || a.expr; if (pose !== undefined) a.pose = pose;
+      a.cuerpo.innerHTML = a.nombre === 'Lumo' ? Ar().lumo({ expr: a.expr, pose: a.pose, dir: a.dir || 'S', disfraz: op.disfraz || 0 }) :
+        Ar().personaje(a.nombre, { expr: a.expr });
+    }
+    function entra(nombre_, lado, modo) {
+      if (actores[nombre_]) return;
+      var a = { nombre: nombre_, lado: lado, expr: 'normal', pose: '', dir: lado === 'der' ? 'O' : 'S' };
+      a.dir = nombre_ === 'Lumo' ? 'S' : 'S';
+      a.el = h('div.act.pos-' + lado + (reducir ? '' : '.entra-' + (modo || 'desliza')));
+      a.cuerpo = h('div.act-cuerpo'); a.el.appendChild(a.cuerpo);
+      escenario.appendChild(a.el); actores[nombre_] = a; dibujar(a, nombre_ === 'Lumo' ? 'alegre' : 'normal');
+      if (!reducir && modo === 'salta') S.sfx && S.sfx('salto');
+    }
+    function sale(nombre_) {
+      var a = actores[nombre_]; if (!a) return; delete actores[nombre_];
+      if (reducir) { if (a.el.parentNode) a.el.parentNode.removeChild(a.el); return; }
+      a.el.classList.add('sale'); setTimeout(function () { if (a.el.parentNode) a.el.parentNode.removeChild(a.el); }, 600);
+    }
+    function haz(nombre_, que) {
+      var a = actores[nombre_]; if (!a || reducir) return;
+      a.cuerpo.className = 'act-cuerpo'; void a.cuerpo.offsetWidth; a.cuerpo.classList.add('a-' + que);
+    }
+    function exprDeEmocion(nombre_, emo) {
+      if (nombre_ === 'Lumo') return Ar().exprDe(emo);
+      var e = Ar().exprDe(emo); return ['normal', 'alegre', 'sorprendido', 'tierno'].indexOf(e) >= 0 ? e : (e === 'emocionado' || e === 'orgulloso' ? 'alegre' : e === 'ups' ? 'sorprendido' : 'normal');
+    }
+    function esperar(ms) {
+      return new Promise(function (ok) {
+        var t = setTimeout(done, reducir ? Math.min(ms, 150) : ms); saltarEspera = false;
+        function done() { clearTimeout(t); esperando = null; ok(); }
+        esperando = done;
+      });
+    }
+    function pulsar() { if (esperando) { var f = esperando; esperando = null; f(); } else if (aDecir) { var g = aDecir; aDecir = null; g(); } }
+    var aDecir = null;
+    function esperarPulsacion() { return new Promise(function (ok) { aDecir = ok; }); }
+
+    function hablar(l, emo) {
+      if (!actores[l.quien]) entra(l.quien, l.quien === 'Lumo' ? 'izq' : 'der', 'desliza');
+      var a = actores[l.quien];
+      Object.keys(actores).forEach(function (k) { actores[k].el.classList.toggle('habla', k === l.quien); });
+      Object.keys(actores).forEach(function (k) { var o = actores[k]; if (k !== l.quien && (o.expr === 'concentrado' || o.expr === 'ups')) dibujar(o, 'normal'); });
+      if (a) { dibujar(a, exprDeEmocion(l.quien, emo || l.emocion)); if (!reducir) haz(l.quien, 'habla'); }
+      burbuja.classList.remove('oculta'); nombre.textContent = l.quien;
+      var r = op.vocesOn !== false && op.voz ? op.voz.decir(l.id, { velocidad: inf ? .85 : .95 }) : null;
+      var sinVoz = !r || r.modo === 'subtitulo';
+      txt.textContent = (!inf || sinVoz) ? l.texto : '';
+      burbuja.classList.toggle('sin-texto', inf && !sinVoz);
+      S.sfx && S.sfx('toque');
+    }
+
+    async function ejecutar(p) {
+      if (p.dice) { var l = p.dice === '*' ? op.lineas[sigLinea++] : porId[p.dice]; if (!l) return; hablar(l, p.emocion || l.emocion); await esperarPulsacion(); return; }
+      if (p.fondo) { if (p.fondo !== zonaActual) { if (!reducir) { vel.classList.add('on'); await esperar(260); } aplicarZona(p.fondo); vel.classList.remove('on'); } return; }
+      if (p.entra) { entra(p.entra, p.lado || 'der', p.modo); if (!reducir) await esperar(520); return; }
+      if (p.sale) { sale(p.sale); if (!reducir) await esperar(400); return; }
+      if (p.emocion) { var a = actores[p.emocion]; if (a) dibujar(a, exprDeEmocion(p.emocion, p.expr), p.pose || ''); return; }
+      if (p.accion) { haz(p.accion, p.haz || 'salta'); await esperar(700); return; }
+      if (p.objeto) {
+        var o = h('div.esc-obj.pos-' + (p.lado || 'centro') + (p.brilla ? '.brilla' : ''), { html: '<svg viewBox="0 0 100 100" aria-hidden="true">' + (OBJ[p.objeto] || OBJ.estrella) + '</svg>' });
+        objetos.innerHTML = ''; objetos.appendChild(o); S.sfx && S.sfx('animo'); await esperar(700); return;
+      }
+      if (p.camara) { ov.classList.remove('cam-acerca', 'cam-aleja', 'cam-sacude'); void ov.offsetWidth; ov.classList.add('cam-' + p.camara); await esperar(600); return; }
+      if (p.sonido) { S.sfx && S.sfx(p.sonido); return; }
+      if (p.espera) { await esperar(p.espera); return; }
+    }
+    function cerrar() {
+      if (cerrado) return; cerrado = true; if (op.voz) op.voz.parar();
+      if (ov.parentNode) ov.parentNode.removeChild(ov); op.fin();
+    }
+    (async function correr() {
+      try {
+        for (var i = 0; i < pasos.length && !cerrado; i++) await ejecutar(pasos[i]);
+      } catch (e) { if (root.console) console.error('Escena', def.id, e); }
+      cerrar();
+    })();
+    return { cerrar: cerrar, el: ov };
+  }
+
+  UI.Escenas = { reproducir: reproducir, deducirPasos: deducirPasos, capasDeFondo: capasDeFondo, OBJETOS: OBJ };
+})(typeof self !== 'undefined' ? self : this);
+
+
 /* ===== src/ui/guardado.js ===== */
 ;/*
  * RUMBO — Guardado local (localStorage con respaldo en memoria).
@@ -4880,7 +5255,7 @@
     var vel = op.velocidad || 1;
     var cancelado = false, pausado = false, reanudar = null, corriendo = false;
     var pos = { x: nivel.inicio.x, y: nivel.inicio.y, dir: nivel.inicio.dir };
-    var expr = 'normal';
+    var expr = 'normal', pose = '';
 
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', '0 0 ' + (ancho * CELDA) + ' ' + (alto * CELDA));
@@ -4907,7 +5282,7 @@
     var gAros = svg.querySelectorAll('.lumo-aro'), ang = ANGULO[pos.dir], gLumo = svg.querySelector('.lumo'), gIn = svg.querySelector('.lumo-in'), gCara = svg.querySelector('.lumo-cara'), gEf = svg.querySelector('.efectos');
 
     function dibujarLumo() {
-      var s = A().lumo({ dir: pos.dir, expr: expr, disfraz: disfraz });
+      var s = A().lumo({ dir: pos.dir, expr: expr, disfraz: disfraz, pose: pose });
       gCara.innerHTML = s.replace('class="lumo-svg"', 'class="lumo-svg" x="2" y="-4" width="60" height="60"');
     }
     // Anillo de rumbo: rota de verdad (por el camino corto) hacia donde mira Lumo.
@@ -4946,7 +5321,7 @@
     function reiniciar() {
       cancelado = true; pausado = false; if (reanudar) { reanudar(); reanudar = null; }
       pos = { x: nivel.inicio.x, y: nivel.inicio.y, dir: nivel.inicio.dir };
-      expr = 'normal';
+      expr = 'normal'; pose = '';
       gIn.classList.remove('hop', 'bump', 'caer', 'giro-w', 'alegre');
       gIn.style.opacity = '';
       ang = ANGULO[pos.dir]; girarAros(0);
@@ -4978,7 +5353,7 @@
         if (cb.alPaso) cb.alPaso(p, i);
         var d = dur(1);
         if (p.evento === 'control') { await espera(Math.round(d * .45)); continue; }
-        expr = 'normal';
+        expr = 'normal'; pose = '';
         switch (p.evento) {
           case 'mover':
             S && S.sfx('paso'); colocar(p.a.x, p.a.y, d); pos = { x: p.a.x, y: p.a.y, dir: p.a.dir };
@@ -4997,7 +5372,7 @@
             var o = svg.querySelector('.obj[data-x="' + p.de.x + '"][data-y="' + p.de.y + '"]');
             if (o) o.classList.add('recogido');
             recogidos++; svg.dataset.recogidos = recogidos;
-            chispas(p.de.x, p.de.y); expr = 'feliz'; dibujarLumo(); anim('hop', d);
+            chispas(p.de.x, p.de.y); expr = 'alegre'; pose = 'recoge'; dibujarLumo(); anim('hop', d);
             if (cb.alRecoger) cb.alRecoger(recogidos);
             await espera(d); break;
           }
@@ -5016,7 +5391,7 @@
           case 'choque': {
             S && S.sfx('choque');
             var dirM = p.t === 'retroceder' ? OPUESTA[p.de.dir] : p.de.dir, dd = DELTA[dirM];
-            expr = 'sorpresa'; dibujarLumo();
+            expr = 'ups'; dibujarLumo();
             colocar(p.de.x + dd[0] * .35, p.de.y + dd[1] * .35, d * .3);
             await espera(d * .3);
             colocar(p.de.x, p.de.y, d * .4); anim('bump', d * .5);
@@ -5035,7 +5410,7 @@
       if (cancelado) { return { cancelado: true }; }
       if (resultado.ok) {
         S && S.sfx('victoria');
-        expr = 'feliz'; dibujarLumo(); anim('alegre', 900); chispas(pos.x, pos.y);
+        expr = 'emocionado'; pose = 'arriba'; dibujarLumo(); anim('alegre', 900); chispas(pos.x, pos.y);
         svg.dataset.estado = 'victoria';
         await espera(900);
       } else {
@@ -6378,41 +6753,20 @@
   }
   UI.reproducirEscena = function (id, fin) { mostrarEscena(id, fin || function () {}); };
 
+  // La escena la dirige el motor src/ui/escena-motor.js (fondos por capas, personajes de cuerpo entero, pasos).
   function escena(id, lineas, fin) {
-    var zona = ES.zonaDe(id);
-    var T = Ar.TEMAS[zona];
-    var inf = infantil() || (ES.POR_ID[id] && ES.POR_ID[id].etapa === 'infantil');
-    var ov = h('div.escena.zona-' + zona, { role: 'dialog', 'aria-label': 'Escena de la historia', style: { '--c1': T.cielo[0], '--c2': T.cielo[1] } });
-    var suelo = h('div.escena-suelo', { style: { background: T.c1 } });
-    var izq = h('div.act.izq'), der = h('div.act.der');
-    var burbuja = h('div.escena-burbuja'), nombre = h('div.escena-nombre'), txt = h('div.escena-texto');
-    burbuja.appendChild(nombre); burbuja.appendChild(txt);
-    var cerrado = false, i = 0;
-    var sig = h('button.btn-grande.principal.b-sig-esc', { type: 'button', 'aria-label': 'Siguiente', on: { click: avanzar } }, UI.svgEl(UI.ICON.sig, 'ic'));
-    var saltar = h('button.btn-txt.b-saltar', { type: 'button', on: { click: cerrar } }, 'Saltar escena');
-    ov.appendChild(h('i.nube.n1')); ov.appendChild(h('i.nube.n2'));
-    ov.appendChild(suelo); ov.appendChild(izq); ov.appendChild(der); ov.appendChild(burbuja); ov.appendChild(sig); ov.appendChild(saltar);
-    document.body.appendChild(ov);
-    UI.Sonido.musica(zona);
-    function cerrar() {
-      if (cerrado) return; cerrado = true; App.estado.voz.parar();
-      if (ov.parentNode) ov.parentNode.removeChild(ov); fin();
-    }
-    function mostrar() {
-      var id_ = lineas[i], l = VOCES.lineas[id_];
-      var quien = l.quien;
-      var avatarL = Ar.personaje('Lumo'), otro = quien !== 'Lumo' ? Ar.personaje(quien) : null;
-      izq.innerHTML = avatarL; der.innerHTML = otro || '';
-      izq.classList.toggle('habla', quien === 'Lumo'); der.classList.toggle('habla', quien !== 'Lumo');
-      nombre.textContent = quien;
-      var r = datos().ajustes.voz !== false ? App.estado.voz.decir(id_, { velocidad: inf ? 0.85 : 0.95 }) : null;
-      var sinVoz = !r || r.modo === 'subtitulo';
-      txt.textContent = (!inf || sinVoz) ? l.texto : '';
-      burbuja.classList.toggle('sin-texto', inf && !sinVoz);
-      UI.Sonido.sfx('toque');
-    }
-    function avanzar() { i++; if (i >= lineas.length) cerrar(); else mostrar(); }
-    mostrar();
+    var d = ES.POR_ID[id];
+    var inf = infantil() || (d && d.etapa === 'infantil');
+    var datos_ = lineas.map(function (lid, k) {
+      var l = VOCES.lineas[lid], emo = null;
+      (d.lineas || []).forEach(function (x) { if (x.id === lid) emo = x.emocion; });
+      return { id: lid, quien: l.quien, texto: l.texto, emocion: emo };
+    });
+    UI.Escenas.reproducir({
+      def: d, lineas: datos_, infantil: inf, h: h, disfraz: perfil() ? perfil().disfraz : 0,
+      reducir: !!(datos().ajustes && datos().ajustes.reducir),
+      vocesOn: datos().ajustes.voz !== false, voz: App.estado.voz, sonido: UI.Sonido, fin: fin
+    });
   }
 
   function creditos(datos_, fin) {

@@ -542,41 +542,20 @@
   }
   UI.reproducirEscena = function (id, fin) { mostrarEscena(id, fin || function () {}); };
 
+  // La escena la dirige el motor src/ui/escena-motor.js (fondos por capas, personajes de cuerpo entero, pasos).
   function escena(id, lineas, fin) {
-    var zona = ES.zonaDe(id);
-    var T = Ar.TEMAS[zona];
-    var inf = infantil() || (ES.POR_ID[id] && ES.POR_ID[id].etapa === 'infantil');
-    var ov = h('div.escena.zona-' + zona, { role: 'dialog', 'aria-label': 'Escena de la historia', style: { '--c1': T.cielo[0], '--c2': T.cielo[1] } });
-    var suelo = h('div.escena-suelo', { style: { background: T.c1 } });
-    var izq = h('div.act.izq'), der = h('div.act.der');
-    var burbuja = h('div.escena-burbuja'), nombre = h('div.escena-nombre'), txt = h('div.escena-texto');
-    burbuja.appendChild(nombre); burbuja.appendChild(txt);
-    var cerrado = false, i = 0;
-    var sig = h('button.btn-grande.principal.b-sig-esc', { type: 'button', 'aria-label': 'Siguiente', on: { click: avanzar } }, UI.svgEl(UI.ICON.sig, 'ic'));
-    var saltar = h('button.btn-txt.b-saltar', { type: 'button', on: { click: cerrar } }, 'Saltar escena');
-    ov.appendChild(h('i.nube.n1')); ov.appendChild(h('i.nube.n2'));
-    ov.appendChild(suelo); ov.appendChild(izq); ov.appendChild(der); ov.appendChild(burbuja); ov.appendChild(sig); ov.appendChild(saltar);
-    document.body.appendChild(ov);
-    UI.Sonido.musica(zona);
-    function cerrar() {
-      if (cerrado) return; cerrado = true; App.estado.voz.parar();
-      if (ov.parentNode) ov.parentNode.removeChild(ov); fin();
-    }
-    function mostrar() {
-      var id_ = lineas[i], l = VOCES.lineas[id_];
-      var quien = l.quien;
-      var avatarL = Ar.personaje('Lumo'), otro = quien !== 'Lumo' ? Ar.personaje(quien) : null;
-      izq.innerHTML = avatarL; der.innerHTML = otro || '';
-      izq.classList.toggle('habla', quien === 'Lumo'); der.classList.toggle('habla', quien !== 'Lumo');
-      nombre.textContent = quien;
-      var r = datos().ajustes.voz !== false ? App.estado.voz.decir(id_, { velocidad: inf ? 0.85 : 0.95 }) : null;
-      var sinVoz = !r || r.modo === 'subtitulo';
-      txt.textContent = (!inf || sinVoz) ? l.texto : '';
-      burbuja.classList.toggle('sin-texto', inf && !sinVoz);
-      UI.Sonido.sfx('toque');
-    }
-    function avanzar() { i++; if (i >= lineas.length) cerrar(); else mostrar(); }
-    mostrar();
+    var d = ES.POR_ID[id];
+    var inf = infantil() || (d && d.etapa === 'infantil');
+    var datos_ = lineas.map(function (lid, k) {
+      var l = VOCES.lineas[lid], emo = null;
+      (d.lineas || []).forEach(function (x) { if (x.id === lid) emo = x.emocion; });
+      return { id: lid, quien: l.quien, texto: l.texto, emocion: emo };
+    });
+    UI.Escenas.reproducir({
+      def: d, lineas: datos_, infantil: inf, h: h, disfraz: perfil() ? perfil().disfraz : 0,
+      reducir: !!(datos().ajustes && datos().ajustes.reducir),
+      vocesOn: datos().ajustes.voz !== false, voz: App.estado.voz, sonido: UI.Sonido, fin: fin
+    });
   }
 
   function creditos(datos_, fin) {
