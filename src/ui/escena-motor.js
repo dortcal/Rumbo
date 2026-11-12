@@ -103,6 +103,7 @@
   var SUELOS = { mar: ['#e9d095', '#d9bd7d'], faro: ['#3b4778', '#2a3560'], ciudad: ['#2b3768', '#1e2850'], espacio: ['#4b4784', '#3a3768'] };
   var CIELO_NOCHE = { bosque: 1, montanas: 0, mar: 1, volcan: 1, ciudad: 1, espacio: 1, faro: 1 };
 
+  var CHISPAS_NOM = ['Titila', 'Brasa', 'Destello', 'Ascua', 'Píxel', 'Cometa'];
   // ---------------------------------------------------------------- objetos de escena
   var OBJ = {
     pieza: '<circle cx="50" cy="50" r="30" fill="none" stroke="#ffd166" stroke-width="8" stroke-dasharray="46 20" stroke-linecap="round"/><circle cx="50" cy="50" r="8" fill="#ffd166"/>',
@@ -176,7 +177,7 @@
       a.el = h('div.act.pos-' + lado + (reducir ? '' : '.entra-' + (modo || 'desliza')));
       a.cuerpo = h('div.act-cuerpo'); a.el.appendChild(a.cuerpo);
       escenario.appendChild(a.el); actores[nombre_] = a; dibujar(a, nombre_ === 'Lumo' ? 'alegre' : 'normal');
-      if (!reducir && modo === 'salta') S.sfx && S.sfx('salto');
+      if (S.sfx) S.sfx(nombre_ === 'Bichito' ? 'bichito' : nombre_ === 'Abuela Chispa' ? 'abuela' : CHISPAS_NOM.indexOf(nombre_) >= 0 ? 'chispa' : nombre_ === 'Lumo' ? (modo === 'salta' ? 'salto' : 'aparece') : 'aparece');
     }
     function sale(nombre_) {
       var a = actores[nombre_]; if (!a) return; delete actores[nombre_];
@@ -209,7 +210,7 @@
       Object.keys(actores).forEach(function (k) { var o = actores[k]; if (k !== l.quien && (o.expr === 'concentrado' || o.expr === 'ups')) dibujar(o, 'normal'); });
       if (a) { dibujar(a, exprDeEmocion(l.quien, emo || l.emocion)); if (!reducir) haz(l.quien, 'habla'); }
       burbuja.classList.remove('oculta'); nombre.textContent = l.quien;
-      var r = op.vocesOn !== false && op.voz ? op.voz.decir(l.id, { velocidad: inf ? .85 : .95 }) : null;
+      var r = op.vocesOn !== false && op.voz ? op.voz.decir(l.id, { velocidad: inf ? .85 : .95, caracter: true, emocion: emo || l.emocion }) : null;
       var sinVoz = !r || r.modo === 'subtitulo';
       txt.textContent = (!inf || sinVoz) ? l.texto : '';
       burbuja.classList.toggle('sin-texto', inf && !sinVoz);
@@ -225,7 +226,7 @@
       if (p.accion) { haz(p.accion, p.haz || 'salta'); await esperar(700); return; }
       if (p.objeto) {
         var o = h('div.esc-obj.pos-' + (p.lado || 'centro') + (p.brilla ? '.brilla' : ''), { html: '<svg viewBox="0 0 100 100" aria-hidden="true">' + (OBJ[p.objeto] || OBJ.estrella) + '</svg>' });
-        objetos.innerHTML = ''; objetos.appendChild(o); S.sfx && S.sfx('animo'); await esperar(700); return;
+        objetos.innerHTML = ''; objetos.appendChild(o); S.sfx && S.sfx(p.objeto === 'pieza' || p.objeto === 'brujula' ? 'pieza' : p.objeto === 'luz' ? 'faro' : 'animo'); await esperar(700); return;
       }
       if (p.camara) { ov.classList.remove('cam-acerca', 'cam-aleja', 'cam-sacude'); void ov.offsetWidth; ov.classList.add('cam-' + p.camara); await esperar(600); return; }
       if (p.sonido) { S.sfx && S.sfx(p.sonido); return; }

@@ -323,6 +323,7 @@
       if (PR.debeRecomendarBienvenida(p)) recomendarBienvenida();
     }
     var arch = !infantil();
+    if (arch) setTimeout(function () { UI.Sonido.sfx('guino'); }, 300);   // suena a la vez que el primer guiño visual del Faro
     var grid = h('div.mundos' + (infantil() ? '.uno' : '.archipielago'));
     var opc = opcionesDocente();
     var chispasHalladas = ES.CHISPAS.filter(function (c) { return p.vistos.escenas[c.rescate]; }).length;

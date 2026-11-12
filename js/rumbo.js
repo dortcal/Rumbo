@@ -4261,6 +4261,35 @@
     return mejor;
   }
 
+  // Carácter de cada voz: la voz sintética es la misma, pero cada personaje cambia de tono (pitch) y ritmo (vel).
+  // Multiplican al tono base (1.05) y a la velocidad pedida. Con opciones.caracter=true se aplican; la emoción añade un matiz.
+  var PERFILES = {
+    'Lumo': { tono: 1.2, vel: 1.0 },
+    'Abuela Chispa': { tono: 0.8, vel: 0.85 },
+    'Búho Bruma': { tono: 0.55, vel: 0.8 },
+    'Bichito': { tono: 1.85, vel: 1.2 },
+    'Tinta': { tono: 1.3, vel: 1.05 },
+    'Lagarto gigante': { tono: 0.5, vel: 0.78 },
+    'Bit': { tono: 0.95, vel: 1.1 },
+    'Conejo': { tono: 1.6, vel: 1.15 },
+    'Titila': { tono: 1.35, vel: 1.0 },
+    'Brasa': { tono: 1.0, vel: 1.1 },
+    'Destello': { tono: 1.5, vel: 1.1 },
+    'Ascua': { tono: 0.85, vel: 1.0 },
+    'Píxel': { tono: 1.4, vel: 1.2 },
+    'Cometa': { tono: 1.1, vel: 0.95 }
+  };
+  var MATICES = {
+    alegre: [0.08, 1.05], emocionado: [0.12, 1.1], sorprendido: [0.15, 1.05], ups: [0.1, 1.05], orgulloso: [-0.05, 0.95],
+    tierno: [-0.05, 0.9], tierna: [-0.05, 0.9], sereno: [-0.08, 0.88], serena: [-0.08, 0.88], concentrado: [-0.05, 0.95], travieso: [0.1, 1.1]
+  };
+  // Devuelve {tono, vel} para un personaje y una emoción (valores relativos; 1 = sin cambio).
+  function perfilDeVoz(quien, emocion) {
+    var P = PERFILES[quien] || { tono: 1, vel: 1 }, M = MATICES[emocion] || [0, 1];
+    var tono = Math.max(0.1, Math.min(2, P.tono + M[0])), vel = Math.max(0.5, Math.min(1.6, P.vel * M[1]));
+    return { tono: Math.round(tono * 100) / 100, vel: Math.round(vel * 100) / 100 };
+  }
+
   // entorno: { synth, Utterance, voces, enLinea: fn, audios: {id: url}, Audio }
   function crearVoz(entorno) {
     entorno = entorno || {};
@@ -4311,8 +4340,9 @@
         var u = new Utterance(linea.texto);
         u.voice = elegida;
         u.lang = elegida.lang;
-        u.rate = opciones.velocidad || 0.9;
-        u.pitch = opciones.tono || 1.05;
+        var pf = opciones.caracter ? perfilDeVoz(linea.quien, opciones.emocion) : { tono: 1, vel: 1 };
+        u.rate = Math.max(0.1, Math.min(2, (opciones.velocidad || 0.9) * pf.vel));
+        u.pitch = opciones.tono || Math.min(2, 1.05 * pf.tono);
         u.volume = opciones.volumen == null ? 1 : opciones.volumen;
         if (opciones.alTerminar) u.onend = opciones.alTerminar;
         synth.speak(u);
@@ -4349,11 +4379,112 @@
   }
 
   return {
+    PERFILES: PERFILES, perfilDeVoz: perfilDeVoz,
     puntuarVoz: puntuarVoz,
     elegirVoz: elegirVoz,
     crearVoz: crearVoz,
     crearDesdeNavegador: crearDesdeNavegador
   };
+});
+
+
+/* ===== src/audio/musica-datos.js ===== */
+;/*
+ * RUMBO — Piezas de música por zona (datos + generador puro de eventos, probado en Node).
+ *
+ * Cada zona tiene su propia pieza de 4 compases (16 pulsos) que se repite: tonalidad, escala, tempo, timbres, melodía y
+ * acompañamiento propios. El motivo del Faro —«corto, corto, largo», el guiño de la abuela— aparece en la pieza del Faro,
+ * en la del mapa (cada cuatro vueltas) y como sonido suelto (efecto «guino»).
+ *
+ * Una melodía es una lista de [grado, pulsos]: grado = posición en la escala (0 = tónica; 7 en pentatónica = octava),
+ * null = silencio. Los acordes son grados de la escala, uno por compás.
+ */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api; else root.RumboMusicaDatos = api;
+})(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+
+  var PENTA = [0, 2, 4, 7, 9], MENOR = [0, 3, 5, 7, 10], DORICA = [0, 2, 3, 7, 9], FRIGIA = [0, 1, 5, 7, 8], LIDIA = [0, 2, 4, 6, 7, 9, 11];
+
+  // Motivo del guiño: tres notas iguales, dos cortas y una larga (en pulsos).
+  var MOTIVO_FARO = [[7, 0.5], [7, 0.5], [7, 1.5]];
+
+  var PIEZAS = {
+    jardin: { bpm: 96, tonica: 60, escala: PENTA, lead: 'triangle', bajo: 'sine', acordes: [0, 2, 3, 2], bajoPatron: 'pulso', perc: null,
+      melodia: [[0, 1], [2, 1], [4, 1], [2, 1], [3, 1], [2, 0.5], [1, 0.5], [0, 2], [4, 1], [5, 1], [6, 1], [5, 1], [4, 1], [2, 1], [0, 2]] },
+    granja: { bpm: 108, tonica: 55, escala: PENTA, lead: 'square', bajo: 'triangle', acordes: [0, 0, 3, 4], bajoPatron: 'oompa', perc: 'suave', vol: 0.5,
+      melodia: [[2, 0.5], [2, 0.5], [4, 1], [2, 1], [0, 1], [1, 0.5], [2, 0.5], [3, 1], [1, 1], [null, 1], [4, 0.5], [4, 0.5], [5, 1], [4, 1], [2, 1], [3, 1], [0, 1], [null, 2]] },
+    playa: { bpm: 84, tonica: 62, escala: PENTA, lead: 'sine', bajo: 'sine', acordes: [0, 3, 2, 3], bajoPatron: 'larga', perc: null, eco: true,
+      melodia: [[4, 1.5], [3, 0.5], [2, 1], [3, 1], [4, 2], [null, 1], [5, 1], [4, 1.5], [2, 0.5], [3, 2], [2, 1], [1, 1], [4, 2]] },
+    bosque: { bpm: 72, tonica: 50, escala: DORICA, lead: 'sine', bajo: 'sine', acordes: [0, 2, 0, 3], bajoPatron: 'larga', perc: null, pings: true,
+      melodia: [[4, 2], [null, 1], [3, 1], [2, 2], [null, 2], [4, 1], [5, 1], [3, 2], [2, 1], [1, 1], [0, 2]] },
+    montanas: { bpm: 66, tonica: 45, escala: MENOR, lead: 'triangle', bajo: 'sine', acordes: [0, 4, 3, 4], bajoPatron: 'larga', perc: null, quintas: true,
+      melodia: [[7, 2], [8, 2], [7, 1], [5, 1], [4, 2], [3, 2], [5, 2], [4, 1], [3, 1], [2, 2]] },
+    mar: { bpm: 70, tonica: 52, escala: LIDIA, lead: 'sine', bajo: 'sine', acordes: [0, 3, 4, 3], bajoPatron: 'larga', perc: null, vib: true, eco: true,
+      melodia: [[7, 2], [8, 1], [9, 1], [8, 2], [7, 1], [6, 1], [4, 2], [null, 2], [9, 2], [8, 1], [7, 1]] },
+    volcan: { bpm: 104, tonica: 40, escala: FRIGIA, lead: 'sawtooth', bajo: 'sawtooth', acordes: [0, 0, 1, 0], bajoPatron: 'sincopa', perc: 'fuerte', vol: 0.6,
+      melodia: [[7, 0.5], [null, 0.5], [7, 0.5], [8, 0.5], [9, 1], [7, 1], [null, 1], [10, 0.5], [9, 0.5], [7, 1], [null, 1], [8, 0.5], [7, 0.5], [5, 1], [7, 2], [null, 1], [7, 2], [null, 1]] },
+    ciudad: { bpm: 112, tonica: 48, escala: MENOR, lead: 'square', bajo: 'square', acordes: [0, 3, 2, 4], bajoPatron: 'pulso', perc: 'fuerte', arpegio: true, vol: 0.38,
+      melodia: [[7, 0.5], [9, 0.5], [8, 0.5], [7, 0.5], [5, 1], [null, 1], [7, 0.5], [9, 0.5], [10, 0.5], [9, 0.5], [8, 2], [null, 2], [7, 0.5], [9, 0.5], [8, 1], [5, 2], [null, 2]] },
+    espacio: { bpm: 60, tonica: 53, escala: PENTA, lead: 'sine', bajo: 'sine', acordes: [0, 2, 4, 2], bajoPatron: 'larga', perc: null, pings: true, quintas: true,
+      melodia: [[9, 3], [null, 1], [8, 2], [null, 2], [7, 3], [null, 1], [5, 2], [null, 2]] },
+    faro: { bpm: 68, tonica: 55, escala: PENTA, lead: 'triangle', bajo: 'sine', acordes: [0, 2, 3, 0], bajoPatron: 'larga', perc: null, motivo: 'cada', eco: true,
+      melodia: [[null, 4], [4, 2], [3, 1], [2, 1], [3, 2], [2, 1], [1, 1], [0, 4]] },
+    mapa: { bpm: 92, tonica: 60, escala: PENTA, lead: 'triangle', bajo: 'sine', acordes: [0, 3, 4, 0], bajoPatron: 'pulso', perc: null, motivo: 'cuarta',
+      melodia: [[4, 1], [4, 0.5], [5, 0.5], [6, 1], [4, 1], [2, 2], [3, 1], [2, 1], [4, 2], [3, 1], [2, 1], [0, 2], [null, 2]] }
+  };
+
+  function midi(zona, grado) {
+    var P = PIEZAS[zona], e = P.escala, n = e.length, o = Math.floor(grado / n), i = ((grado % n) + n) % n;
+    return P.tonica + e[i] + 12 * o;
+  }
+  function frecuencia(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+  function duracionPulso(zona) { return 60 / PIEZAS[zona].bpm; }
+
+  /*
+   * Eventos del compás `n` (0-3 dentro de la pieza) de la vuelta `vuelta`. Tiempos en pulsos desde el inicio del compás.
+   * Voces: lead, bajo, pad, ping, kick, hat, motivo.
+   */
+  function eventosCompas(zona, n, vuelta) {
+    var P = PIEZAS[zona]; if (!P) return [];
+    n = ((n % 4) + 4) % 4; vuelta = vuelta | 0;
+    var ev = [], t = 0, ini = n * 4, fin = ini + 4;
+    // melodía: se recorre acumulando pulsos para saber qué notas caen en este compás
+    P.melodia.forEach(function (nota) {
+      var a = t, b = t + nota[1]; t = b;
+      if (nota[0] == null) return;
+      if (a >= ini && a < fin) ev.push({ voz: 'lead', t: a - ini, dur: Math.min(nota[1], fin - a) * 1.05, midi: midi(zona, nota[0]) });
+    });
+    // motivo del Faro: en la pieza del Faro, cada vuelta en el compás 3; en el mapa, cada cuarta vuelta
+    var conMotivo = P.motivo === 'cada' ? n === 3 : P.motivo === 'cuarta' ? (n === 3 && vuelta % 4 === 3) : false;
+    if (conMotivo) {
+      ev = ev.filter(function (e) { return e.voz !== 'lead' || e.t < 0; });
+      var tt = 0; MOTIVO_FARO.forEach(function (m) { ev.push({ voz: 'motivo', t: tt, dur: m[1], midi: midi(zona, m[0]) }); tt += m[1]; });
+    }
+    var raiz = P.acordes[n];
+    // bajo
+    var bm = midi(zona, raiz) - 12;
+    if (P.bajoPatron === 'larga') ev.push({ voz: 'bajo', t: 0, dur: 4, midi: bm });
+    else if (P.bajoPatron === 'pulso') [0, 2].forEach(function (b) { ev.push({ voz: 'bajo', t: b, dur: 1.6, midi: bm }); });
+    else if (P.bajoPatron === 'oompa') [0, 1, 2, 3].forEach(function (b) { ev.push({ voz: 'bajo', t: b, dur: 0.8, midi: b % 2 ? bm + 7 : bm }); });
+    else if (P.bajoPatron === 'sincopa') [0, 1.5, 2, 3.5].forEach(function (b) { ev.push({ voz: 'bajo', t: b, dur: 0.6, midi: bm }); });
+    // pad: tríada suave (raíz, tercera, quinta de la escala)
+    ev.push({ voz: 'pad', t: 0, dur: 4, midi: midi(zona, raiz) + (P.quintas ? 7 : 0) }, { voz: 'pad', t: 0, dur: 4, midi: midi(zona, raiz + 2) }, { voz: 'pad', t: 0, dur: 4, midi: midi(zona, raiz + 4) });
+    // arpegio rápido (ciudad)
+    if (P.arpegio) for (var k = 0; k < 8; k++) ev.push({ voz: 'ping', t: k * 0.5, dur: 0.4, midi: midi(zona, raiz + [0, 2, 4, 2][k % 4] + 7) });
+    // destellos sueltos (bosque, espacio): cuatro notas altas deterministas
+    if (P.pings) [0.75, 1.5, 2.5, 3.25].forEach(function (b, i) { ev.push({ voz: 'ping', t: b, dur: 0.5, midi: midi(zona, 12 + ((n + i + vuelta) * 3) % 8) }); });
+    // percusión
+    if (P.perc) {
+      [0, 2].forEach(function (b) { ev.push({ voz: 'kick', t: b, dur: 0.2, midi: 0 }); });
+      if (P.perc === 'fuerte') for (var h = 0; h < 8; h++) ev.push({ voz: 'hat', t: h * 0.5 + 0.25, dur: 0.05, midi: 0 });
+      else ev.push({ voz: 'hat', t: 1, dur: 0.05, midi: 0 }, { voz: 'hat', t: 3, dur: 0.05, midi: 0 });
+    }
+    return ev;
+  }
+
+  return { PIEZAS: PIEZAS, MOTIVO_FARO: MOTIVO_FARO, midi: midi, frecuencia: frecuencia, duracionPulso: duracionPulso, eventosCompas: eventosCompas };
 });
 
 
@@ -4850,7 +4981,7 @@
     try {
       ctx = new AC();
       maestro = ctx.createGain(); maestro.gain.value = 0.8; maestro.connect(ctx.destination);
-      musicaGain = ctx.createGain(); musicaGain.gain.value = 0.10; musicaGain.connect(maestro);
+      musicaGain = ctx.createGain(); musicaGain.gain.value = 0.09; musicaGain.connect(maestro);
     } catch (e) { ctx = null; }
   }
   function nota(f, t0, dur, tipo, vol, destino, glide) {
@@ -4864,6 +4995,8 @@
     o.connect(g); g.connect(destino || maestro); o.start(t0); o.stop(t0 + dur + 0.05);
   }
   var F = { do4: 261.63, re4: 293.66, mi4: 329.63, sol4: 392, la4: 440, do5: 523.25, re5: 587.33, mi5: 659.25, sol5: 783.99, do6: 1046.5 };
+  var MD = function () { return root.RumboMusicaDatos; };
+  function campana(f, t, dur, vol, destino) { nota(f, t, dur, 'triangle', vol, destino); nota(f * 2, t, dur * 0.7, 'sine', vol * 0.35, destino); }
 
   var EFECTOS = {
     toque: function (t) { nota(660, t, .08, 'triangle', .15); },
@@ -4880,46 +5013,83 @@
     estrella: function (t) { [F.do5, F.mi5, F.sol5, F.do6].forEach(function (f, i) { nota(f, t + i * .1, .25, 'triangle', .2); }); },
     victoria: function (t) { [F.do5, F.mi5, F.sol5, F.do6, F.sol5, F.do6].forEach(function (f, i) { nota(f, t + i * .11, .3, 'triangle', .22); }); },
     desbloqueo: function (t) { [F.sol4, F.do5, F.mi5, F.sol5, F.do6].forEach(function (f, i) { nota(f, t + i * .08, .3, 'sine', .2); }); },
-    animo: function (t) { nota(F.mi4, t, .18, 'sine', .16); nota(F.sol4, t + .16, .24, 'sine', .16); }
+    animo: function (t) { nota(F.mi4, t, .18, 'sine', .16); nota(F.sol4, t + .16, .24, 'sine', .16); },
+    // ---- sonidos de la historia ----
+    // El guiño de la abuela: corto, corto, largo (el motivo del Faro).
+    guino: function (t) { var d = 0.2, tt = t; MD().MOTIVO_FARO.forEach(function (m) { campana(F.sol5, tt, m[1] * d * 1.5, .22); tt += m[1] * d * 1.4; }); },
+    // Una chispa de la familia aparece: destello ascendente.
+    chispa: function (t) { [F.mi5, F.sol5, F.do6, 1318.5].forEach(function (f, i) { campana(f, t + i * .07, .35, .14); }); },
+    // Pieza de la brújula: clic metálico y acorde que brilla.
+    pieza: function (t) { nota(1800, t, .04, 'square', .08); [F.do5, F.mi5, F.sol5, F.do6].forEach(function (f) { campana(f, t + .08, .9, .12); }); },
+    // Se enciende una ventana del Faro: barrido y acorde cálido.
+    faro: function (t) { nota(220, t, .5, 'sine', .16, null, 880); [F.sol4, F.do5, F.mi5, F.sol5].forEach(function (f, i) { campana(f, t + .4 + i * .05, 1.2, .13); }); },
+    // Alguien llega a la escena.
+    aparece: function (t) { nota(400, t, .12, 'sine', .14, null, 800); },
+    // Abuela Chispa: dos notas graves y cálidas.
+    abuela: function (t) { campana(F.do4, t, .9, .16); campana(F.sol4, t + .18, 1.1, .14); },
+    // Bichito se ríe: chillidos cortos y subidos de tono.
+    bichito: function (t) { [900, 1300, 1000, 1500, 1200].forEach(function (f, i) { nota(f, t + i * .07, .08, 'square', .1, null, f * 1.25); }); }
   };
   function sfx(n) {
     if (!sfxOn) return; iniciar(); if (!ctx || !EFECTOS[n]) return;
     EFECTOS[n](ctx.currentTime + 0.01);
   }
 
-  // Escalas y compases propios de cada zona (acordes lentos y un arpegio suave).
-  var MUSICA = {
-    jardin: { bpm: 84, esc: [0, 2, 4, 7, 9], base: 60, onda: 'triangle' },
-    granja: { bpm: 90, esc: [0, 2, 4, 7, 9], base: 62, onda: 'triangle' },
-    playa: { bpm: 80, esc: [0, 2, 4, 7, 9], base: 64, onda: 'sine' },
-    bosque: { bpm: 72, esc: [0, 3, 5, 7, 10], base: 57, onda: 'sine' },
-    montanas: { bpm: 66, esc: [0, 2, 5, 7, 9], base: 55, onda: 'triangle' },
-    mar: { bpm: 70, esc: [0, 2, 4, 7, 11], base: 59, onda: 'sine' },
-    volcan: { bpm: 96, esc: [0, 3, 5, 6, 7], base: 52, onda: 'sawtooth' },
-    ciudad: { bpm: 100, esc: [0, 2, 4, 7, 9], base: 60, onda: 'square' },
-    espacio: { bpm: 64, esc: [0, 2, 7, 9, 14], base: 58, onda: 'sine' },
-    faro: { bpm: 68, esc: [0, 4, 7, 9, 12], base: 60, onda: 'triangle' },
-    mapa: { bpm: 78, esc: [0, 2, 4, 7, 9], base: 60, onda: 'triangle' }
-  };
-  function midi(n) { return 440 * Math.pow(2, (n - 69) / 12); }
-  function tic() {
-    var m = MUSICA[zonaActual]; if (!m || !ctx || !musOn) return;
-    var t = ctx.currentTime + 0.05, dur = 60 / m.bpm;
-    var g = (paso * 7 + (paso >> 2)) % m.esc.length;
-    var n1 = m.base + m.esc[g] + (paso % 8 === 0 ? -12 : 0);
-    nota(midi(n1), t, dur * 1.6, m.onda, m.onda === 'square' || m.onda === 'sawtooth' ? .35 : .9, musicaGain);
-    if (paso % 2 === 1) nota(midi(m.base + 12 + m.esc[(g + 2) % m.esc.length]), t + dur / 2, dur, 'sine', .5, musicaGain);
-    paso++;
+  // ---------------------------------------------------------------- música: secuenciador de las piezas de musica-datos.js
+  var ruido = null;
+  function bufferRuido() {
+    if (ruido || !ctx) return ruido;
+    ruido = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate);
+    var d = ruido.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    return ruido;
+  }
+  function golpe(tipo, t, vol) {
+    if (!ctx) return;
+    if (tipo === 'kick') { nota(130, t, .22, 'sine', vol * 1.6, musicaGain, 40); return; }
+    var src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    src.buffer = bufferRuido(); f.type = 'highpass'; f.frequency.value = 6000;
+    g.gain.setValueAtTime(vol * 0.5, t); g.gain.exponentialRampToValueAtTime(0.0001, t + .05);
+    src.connect(f); f.connect(g); g.connect(musicaGain); src.start(t); src.stop(t + .06);
+  }
+  function suave(f, t, dur, tipo, vol, destino) {   // ataque lento, para pads
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = tipo; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(vol, t + Math.min(0.6, dur / 3)); g.gain.linearRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(destino); o.start(t); o.stop(t + dur + .05);
+  }
+  var seq = { zona: null, compas: 0, proximo: 0, timer: null };
+  function planificarCompas(zona, n, vuelta, t0) {
+    var M = MD(), P = M.PIEZAS[zona], pulso = M.duracionPulso(zona), vol = P.vol || 1;
+    M.eventosCompas(zona, n, vuelta).forEach(function (e) {
+      var t = t0 + e.t * pulso, d = e.dur * pulso, f = M.frecuencia(e.midi);
+      switch (e.voz) {
+        case 'lead': nota(f, t, d, P.lead, .5 * vol, musicaGain); if (P.eco) nota(f, t + pulso * .75, d, P.lead, .16 * vol, musicaGain); break;
+        case 'motivo': campana(f, t, d * 1.4, .55, musicaGain); break;
+        case 'bajo': nota(f, t, d, P.bajo, .55 * vol, musicaGain); break;
+        case 'pad': suave(f, t, d, 'sine', .22, musicaGain); break;
+        case 'ping': nota(f, t, d, 'sine', .3, musicaGain); break;
+        case 'kick': case 'hat': golpe(e.voz, t, .5 * vol); break;
+      }
+    });
+  }
+  function planificar() {
+    if (!ctx || !musOn || !seq.zona || !MD().PIEZAS[seq.zona]) return;
+    var pulso = MD().duracionPulso(seq.zona);
+    while (seq.proximo < ctx.currentTime + 0.6) {
+      planificarCompas(seq.zona, seq.compas % 4, Math.floor(seq.compas / 4), seq.proximo);
+      seq.proximo += 4 * pulso; seq.compas++;
+    }
   }
   function musica(zona) {
     if (zona === zonaActual) return;
     detener(); zonaActual = zona;
     if (!zona || !musOn) return;
     iniciar(); if (!ctx) return;
-    var m = MUSICA[zona] || MUSICA.mapa;
-    tic(); timer = setInterval(tic, 60000 / m.bpm);
+    if (!MD().PIEZAS[zona]) zona = 'mapa';
+    seq.zona = zona; seq.compas = 0; seq.proximo = ctx.currentTime + 0.08;
+    planificar(); timer = seq.timer = setInterval(planificar, 150);
   }
-  function detener() { if (timer) clearInterval(timer); timer = null; }
+  function detener() { if (timer) clearInterval(timer); timer = null; seq.zona = null; }
   function ajustar(o) {
     sfxOn = o.sonido !== false;
     var antes = musOn; musOn = o.musica !== false;
@@ -4927,7 +5097,13 @@
     else if (!antes && zonaActual) { var z = zonaActual; zonaActual = null; musica(z); }
   }
 
-  UI.Sonido = { iniciar: iniciar, sfx: sfx, musica: musica, detener: detener, ajustar: ajustar };
+  // Para comprobar el nivel real de salida (pruebas y diagnóstico): analizador conectado a la salida maestra.
+  function analizador() {
+    iniciar(); if (!ctx) return null;
+    if (!seq.an) { seq.an = ctx.createAnalyser(); seq.an.fftSize = 2048; maestro.connect(seq.an); }
+    return seq.an;
+  }
+  UI.Sonido = { analizador: analizador, iniciar: iniciar, sfx: sfx, musica: musica, detener: detener, ajustar: ajustar };
   // Un primer gesto desbloquea el audio del navegador.
   ['pointerdown', 'keydown'].forEach(function (e) { root.addEventListener && root.addEventListener(e, iniciar, { once: true, passive: true }); });
 })(typeof self !== 'undefined' ? self : this);
@@ -5039,6 +5215,7 @@
   var SUELOS = { mar: ['#e9d095', '#d9bd7d'], faro: ['#3b4778', '#2a3560'], ciudad: ['#2b3768', '#1e2850'], espacio: ['#4b4784', '#3a3768'] };
   var CIELO_NOCHE = { bosque: 1, montanas: 0, mar: 1, volcan: 1, ciudad: 1, espacio: 1, faro: 1 };
 
+  var CHISPAS_NOM = ['Titila', 'Brasa', 'Destello', 'Ascua', 'Píxel', 'Cometa'];
   // ---------------------------------------------------------------- objetos de escena
   var OBJ = {
     pieza: '<circle cx="50" cy="50" r="30" fill="none" stroke="#ffd166" stroke-width="8" stroke-dasharray="46 20" stroke-linecap="round"/><circle cx="50" cy="50" r="8" fill="#ffd166"/>',
@@ -5112,7 +5289,7 @@
       a.el = h('div.act.pos-' + lado + (reducir ? '' : '.entra-' + (modo || 'desliza')));
       a.cuerpo = h('div.act-cuerpo'); a.el.appendChild(a.cuerpo);
       escenario.appendChild(a.el); actores[nombre_] = a; dibujar(a, nombre_ === 'Lumo' ? 'alegre' : 'normal');
-      if (!reducir && modo === 'salta') S.sfx && S.sfx('salto');
+      if (S.sfx) S.sfx(nombre_ === 'Bichito' ? 'bichito' : nombre_ === 'Abuela Chispa' ? 'abuela' : CHISPAS_NOM.indexOf(nombre_) >= 0 ? 'chispa' : nombre_ === 'Lumo' ? (modo === 'salta' ? 'salto' : 'aparece') : 'aparece');
     }
     function sale(nombre_) {
       var a = actores[nombre_]; if (!a) return; delete actores[nombre_];
@@ -5145,7 +5322,7 @@
       Object.keys(actores).forEach(function (k) { var o = actores[k]; if (k !== l.quien && (o.expr === 'concentrado' || o.expr === 'ups')) dibujar(o, 'normal'); });
       if (a) { dibujar(a, exprDeEmocion(l.quien, emo || l.emocion)); if (!reducir) haz(l.quien, 'habla'); }
       burbuja.classList.remove('oculta'); nombre.textContent = l.quien;
-      var r = op.vocesOn !== false && op.voz ? op.voz.decir(l.id, { velocidad: inf ? .85 : .95 }) : null;
+      var r = op.vocesOn !== false && op.voz ? op.voz.decir(l.id, { velocidad: inf ? .85 : .95, caracter: true, emocion: emo || l.emocion }) : null;
       var sinVoz = !r || r.modo === 'subtitulo';
       txt.textContent = (!inf || sinVoz) ? l.texto : '';
       burbuja.classList.toggle('sin-texto', inf && !sinVoz);
@@ -5161,7 +5338,7 @@
       if (p.accion) { haz(p.accion, p.haz || 'salta'); await esperar(700); return; }
       if (p.objeto) {
         var o = h('div.esc-obj.pos-' + (p.lado || 'centro') + (p.brilla ? '.brilla' : ''), { html: '<svg viewBox="0 0 100 100" aria-hidden="true">' + (OBJ[p.objeto] || OBJ.estrella) + '</svg>' });
-        objetos.innerHTML = ''; objetos.appendChild(o); S.sfx && S.sfx('animo'); await esperar(700); return;
+        objetos.innerHTML = ''; objetos.appendChild(o); S.sfx && S.sfx(p.objeto === 'pieza' || p.objeto === 'brujula' ? 'pieza' : p.objeto === 'luz' ? 'faro' : 'animo'); await esperar(700); return;
       }
       if (p.camara) { ov.classList.remove('cam-acerca', 'cam-aleja', 'cam-sacude'); void ov.offsetWidth; ov.classList.add('cam-' + p.camara); await esperar(600); return; }
       if (p.sonido) { S.sfx && S.sfx(p.sonido); return; }
@@ -5943,7 +6120,7 @@
     function hablar(id, repetir) {
       var linea = VOCES && VOCES.lineas[id]; if (!linea) return;
       var r = null;
-      if (aj.voz !== false && ctx.voz) r = ctx.voz.decir(id, { velocidad: infantil ? 0.85 : 0.95 });
+      if (aj.voz !== false && ctx.voz) r = ctx.voz.decir(id, { velocidad: infantil ? 0.85 : 0.95, caracter: true });
       var sinVoz = !r || r.modo === 'subtitulo';
       var texto = linea.texto;
       if (id.indexOf('n_') === 0 && !infantil && nivel.intro && !repetir) texto = nivel.intro.replace(/^[^:«.!?]{2,24}:\s*[«"]?/, '').replace(/[»"]$/, '') + '\n' + linea.texto;
@@ -6579,6 +6756,7 @@
       if (PR.debeRecomendarBienvenida(p)) recomendarBienvenida();
     }
     var arch = !infantil();
+    if (arch) setTimeout(function () { UI.Sonido.sfx('guino'); }, 300);   // suena a la vez que el primer guiño visual del Faro
     var grid = h('div.mundos' + (infantil() ? '.uno' : '.archipielago'));
     var opc = opcionesDocente();
     var chispasHalladas = ES.CHISPAS.filter(function (c) { return p.vistos.escenas[c.rescate]; }).length;
