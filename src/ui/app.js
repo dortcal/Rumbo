@@ -617,15 +617,22 @@
     var piezas = [PR.mundoCompleto(p, 1), PR.mundoCompleto(p, 2), PR.mundoCompleto(p, 3), PR.hecho(p, 'f-03')];
     var sec3 = h('section', h('h2', 'La brújula de Lumo'), h('div.brujula', piezas.map(function (v, i) { return UI.svgEl(Ar.brujulaPieza(i + 1, v), ''); })));
     cuerpo.appendChild(sec3);
-    // Álbum de recuerdos
-    var vistas = Object.keys(p.vistos.escenas);
-    var sec4 = h('section', h('h2', 'Álbum de recuerdos'));
-    var al = h('div.album');
-    vistas.filter(function (e) { return ES.POR_ID[e]; }).sort().forEach(function (e) {
-      al.appendChild(h('button.recuerdo', { type: 'button', on: { click: function () { UI.reproducirEscena(e, function () {}); } } }, h('span', ES.POR_ID[e] ? ES.POR_ID[e].titulo : e)));
+    // Diario de Lumo (sustituye al álbum): una página por chispa y por amigo; se calcula desde retos superados y escenas vistas.
+    var inf = PR.esInfantil(p), VI = root.RumboVictoria;
+    var pags = VI.paginasDiario(p, inf);
+    var sec4 = h('section.diario', h('h2', 'El diario de Lumo'));
+    var dl = h('div.diario-paginas');
+    pags.forEach(function (pg, i) {
+      var abre = pg.escena ? function () { UI.reproducirEscena(pg.escena, function () {}); } : null;
+      var tag = abre ? 'button' : 'div';
+      var art = pg.abierta ? Ar.personaje(pg.personaje, { expr: 'alegre' }) : Ar.personaje(pg.personaje, { expr: 'normal' });
+      dl.appendChild(h(tag + '.pagina' + (pg.abierta ? '' : '.cerrada') + (abre ? '.rejugable' : '') + (i % 2 ? '.der' : ''),
+        Object.assign({ 'aria-label': pg.abierta ? pg.titulo + (abre ? ': volver a ver la escena' : '') : 'Página aún cerrada' }, abre ? { type: 'button', on: { click: abre } } : {}),
+        h('div.pg-dibujo', { html: art }),
+        h('div.pg-texto', h('b', pg.abierta ? pg.titulo : '???'), pg.abierta && pg.texto ? h('span', '«' + pg.texto + '»') : null,
+          abre ? h('i.pg-ver', inf ? '▶' : '▶ Volver a ver') : null)));
     });
-    if (!vistas.length) al.appendChild(h('p.nota', 'Aquí aparecerán las escenas de la historia que vayas viendo.'));
-    sec4.appendChild(al); cuerpo.appendChild(sec4);
+    sec4.appendChild(dl); cuerpo.appendChild(sec4);
     cont.appendChild(cuerpo);
   });
 

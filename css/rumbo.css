@@ -442,3 +442,38 @@ body.reducir .paisaje .mota,body.reducir .paisaje .fauna,body.reducir .faro-luz,
 @media (max-height:820px){.faro-arte{height:108px!important}.faro-arte .faro-svg{height:90px}.isla .mt-arte{height:60px}.isla .mt-info{padding:4px 10px 8px}}
 .portada-faro{position:absolute;right:7%;bottom:9%;width:min(13vw,150px);opacity:.95;pointer-events:none;z-index:0}.portada-faro svg{width:100%;height:auto;display:block}
 @media (max-width:900px){.portada-faro{display:none}}
+
+/* ===== Fase 6: victoria con historia ===== */
+.res-cabeza{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:10px;min-height:130px}
+.resultado.infantil .res-cabeza{min-height:190px}
+.res-cabeza .res-lumo{animation:none}
+.res-cabeza.baile-voltereta .res-lumo{animation:resVoltereta 1.1s ease-in-out 2}
+.res-cabeza.baile-brujula .res-lumo{animation:resGiro 1.4s ease-in-out 1}
+.res-cabeza.baile-zona .res-lumo{animation:baila .6s ease-in-out 4}
+.res-cabeza.baile-abrazo .res-lumo{animation:resAbrazoL 1s ease-out both}
+@keyframes resVoltereta{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(-38px) rotate(180deg)}70%{transform:translateY(-38px) rotate(360deg)}85%{transform:translateY(0) rotate(360deg)}}
+@keyframes resGiro{0%{transform:rotate(0) scale(1)}50%{transform:rotate(360deg) scale(1.12)}100%{transform:rotate(720deg) scale(1)}}
+@keyframes resAbrazoL{from{transform:translateX(-30px)}to{transform:translateX(8px)}}
+.res-amigo{width:104px;height:104px;animation:resAbrazoA 1s ease-out both}.res-amigo svg{width:100%;height:100%;overflow:visible}
+@keyframes resAbrazoA{from{transform:translateX(40px);opacity:0}to{transform:translateX(-10px);opacity:1}}
+.res-bichito{position:absolute;right:-6px;bottom:0;display:flex;align-items:flex-end;gap:4px;animation:resBichito 2.6s ease-in .8s both}
+.rb-pj{width:62px;height:62px}.rb-pj svg{width:100%;height:100%;overflow:visible}
+.rb-ji{background:#fff;border:2px solid #6fcf6f;border-radius:12px;padding:1px 8px;font-weight:800;font-size:.8rem;color:#2d6a3e;margin-bottom:34px}
+@keyframes resBichito{0%{transform:translateX(-30px);opacity:0}15%{transform:translateX(0);opacity:1}55%{transform:translateX(0) rotate(0)}60%{transform:translateX(0) rotate(-8deg)}65%{transform:translateX(0) rotate(8deg)}100%{transform:translateX(150px) rotate(0);opacity:0}}
+.res-faro{width:56px;height:140px;margin-left:6px;flex:none}.res-faro svg{width:100%;height:100%;overflow:visible}
+.res-faro.encendido .faro-halo{opacity:1!important;animation:none}
+.res-chispa-vuela{position:absolute;left:50%;bottom:50px;width:54px;height:54px;animation:resVuela 1.6s ease-in-out .1s both;z-index:2}
+.res-chispa-vuela svg{width:100%;height:100%;overflow:visible}
+@keyframes resVuela{0%{transform:translate(-20px,0) scale(1)}60%{transform:translate(60px,-70px) scale(1.2)}100%{transform:translate(130px,-30px) scale(.4);opacity:0}}
+.res-avance{font-weight:800;color:#5b3fa0;background:#f3edff;border-radius:14px;padding:5px 14px;font-size:.98rem}
+.res-avance.llegado{background:#fff3c4;color:#8a5a00}
+body.reducir .res-cabeza .res-lumo,body.reducir .res-amigo,body.reducir .res-bichito,body.reducir .res-chispa-vuela{animation:none!important}
+body.reducir .res-bichito{display:none}
+@media (max-height:800px){.res-cabeza{min-height:110px}.res-faro{height:116px;width:46px}.res-cabeza .res-lumo{width:110px;height:110px}}
+.diario-paginas{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.pagina{display:flex;align-items:center;gap:10px;background:#fffaf0;border:2px solid #e8d9b5;border-radius:18px;padding:8px 12px;text-align:left;font:inherit;color:inherit;box-shadow:0 3px 0 #e8d9b5}
+.pagina.der{background:#f6f3ff;border-color:#d8cdf5;box-shadow:0 3px 0 #d8cdf5}
+.pagina.rejugable{cursor:pointer}.pagina.rejugable:hover,.pagina.rejugable:focus-visible{transform:translateY(-2px)}
+.pagina.cerrada{opacity:.55}.pagina.cerrada .pg-dibujo{filter:grayscale(1) brightness(.5)}
+.pg-dibujo{width:64px;height:64px;flex:none}.pg-dibujo svg{width:100%;height:100%;overflow:visible}
+.pg-texto{display:flex;flex-direction:column;gap:2px}.pg-texto span{font-size:.92rem}.pg-ver{font-style:normal;font-weight:800;font-size:.8rem;color:#5b3fa0}

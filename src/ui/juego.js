@@ -259,15 +259,37 @@
       else t3 = 'Resuélvelo con ' + I.contarTarjetas(nivel.referencia) + ' tarjetas o menos';
       return ['Superar el reto', 'Usar ' + nivel.estrellas.s2max + ' tarjetas o menos', t3];
     }
+    function ES_CH(id) { var c = root.RumboEscenas.CHISPAS.filter(function (x) { return x.id === id; })[0]; return c ? c.nombre : 'Lumo'; }
     function resultados(est, tarjetas, info, nuevos, nuevosDisf) {
       var ov = h('div.resultado' + (infantil ? '.infantil' : ''), { role: 'dialog', 'aria-label': 'Reto superado' });
       var tarj = h('div.res-tarjeta');
-      tarj.appendChild(h('div.res-lumo', { html: UI.Arte.lumo({ expr: 'feliz', dir: 'S', disfraz: disfraz }) }));
+      var VI = root.RumboVictoria, historia = !ctx.sinRegistro && VI && nivel.mundo !== 'sec' && CAT.POR_ID[nivel.id];
+      var cel = historia ? VI.celebracion(nivel.id, est) : null;
+      var cab = h('div.res-cabeza' + (cel ? '.baile-' + cel.baile : ''));
+      cab.appendChild(h('div.res-lumo', { html: UI.Arte.lumo({ expr: 'emocionado', pose: 'arriba', dir: 'S', disfraz: disfraz }) }));
+      if (cel && cel.baile === 'abrazo') cab.appendChild(h('div.res-amigo', { 'aria-hidden': 'true', html: UI.Arte.personaje(VI.amigoDe(cel.zona), { expr: 'alegre' }) }));
+      if (cel && cel.bichito) cab.appendChild(h('div.res-bichito', { 'aria-hidden': 'true' }, h('div.rb-pj', { html: UI.Arte.personaje('Bichito') }), infantil ? null : h('span.rb-ji', '¡Ji, ji!')));
+      var faroRes = null;
+      if (cel && !infantil && nivel.mundo >= 1) {
+        var fp = VI.faroPequeno(function (id) { return PR.hecho(perfil, id); });
+        var vuela = cel.especial === 'chispa-al-faro' && !aj.reducir;
+        faroRes = h('div.res-faro' + (fp.luzFinal ? '.encendido' : ''), { 'aria-hidden': 'true', html: UI.Escenas.faroSvg(vuela ? fp.encendidas - 1 : fp.encendidas) });
+        if (vuela) {
+          cab.appendChild(h('div.res-chispa-vuela', { html: UI.Arte.personaje(ES_CH(cel.chispa), { expr: 'alegre' }) }));
+          setTimeout(function () { if (vivo && faroRes) faroRes.innerHTML = UI.Escenas.faroSvg(fp.encendidas); }, 1700);
+        }
+        cab.appendChild(faroRes);
+      }
+      tarj.appendChild(cab);
       tarj.appendChild(h('h2', ctx.sinRegistro ? '¡Resuelto!' : infantil ? '¡Muy bien!' : '¡Reto superado!'));
       var fila = h('div.res-estrellas');
       var n = infantil ? 1 : 3;
       for (var i = 0; i < n; i++) fila.appendChild(h('span.est' + (i < est ? '.ganada' : '') , { style: { 'animation-delay': (0.3 + i * 0.35) + 's' } }, UI.svgEl(UI.Arte.estrella(i < est, infantil ? 96 : 64), '')));
       tarj.appendChild(fila);
+      if (!infantil && historia && nivel.mundo >= 1) {
+        var av = VI.avance(nivel.zona, function (id) { return PR.hecho(perfil, id); });
+        if (av) tarj.appendChild(h('div.res-avance' + (av.llegado ? '.llegado' : ''), av.texto));
+      }
       if (!infantil) {
         var t = textoEstrellas();
         tarj.appendChild(h('div.res-info', 'Has usado ' + tarjetas + (tarjetas === 1 ? ' tarjeta.' : ' tarjetas.')));
