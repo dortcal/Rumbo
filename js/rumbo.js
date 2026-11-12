@@ -1981,6 +1981,9 @@
   var ITINERARIOS = { 3: [], 4: [], 5: [] };
   INF.forEach(function (n) { ITINERARIOS[n.itinerario].push(n.id); });
 
+  // Aventura de bienvenida: los primeros retos de Infantil (jardín), recomendados al alumnado de Primaria que empieza.
+  var BIENVENIDA = ITINERARIOS[3].slice();
+
   var CURSOS = [
     { id: 'inf3', nombre: '3 años', mundos: [0], itinerarios: [3] },
     { id: 'inf4', nombre: '4 años', mundos: [0], itinerarios: [3, 4] },
@@ -2058,7 +2061,7 @@
 
   return {
     MUNDOS: MUNDOS, TODOS: TODOS, SECRETOS: SECRETOS, POR_ID: POR_ID,
-    SEC_INFANTIL: SEC_INFANTIL, SEC_PRIMARIA: SEC_PRIMARIA, ITINERARIOS: ITINERARIOS,
+    SEC_INFANTIL: SEC_INFANTIL, BIENVENIDA: BIENVENIDA, SEC_PRIMARIA: SEC_PRIMARIA, ITINERARIOS: ITINERARIOS,
     CURSOS: CURSOS, REQUISITO_SECRETO: REQUISITO_SECRETO,
     cursoDe: cursoDe, finalDe: finalDe, FINAL_CURSO: FINAL_CURSO, mundoDe: mundoDe, posicion: posicion, siguiente: siguiente,
     cartasNuevas: cartasNuevas, registrarVoces: registrarVoces, total: total, DSL: DSL
@@ -2178,8 +2181,23 @@
     return hecho(perfil, previo.id);
   }
 
+  // ---------- aventura de bienvenida (Primaria) ----------
+  // perfil.bienvenida: undefined = aún sin decidir · 'aceptada' · 'omitida'. El progreso son los propios niveles de Infantil.
+  function bienvenida(perfil) {
+    var ids = CAT.BIENVENIDA, hechos = ids.filter(function (id) { return hecho(perfil, id); });
+    var sig = null;
+    for (var i = 0; i < ids.length; i++) if (!hecho(perfil, ids[i])) { sig = ids[i]; break; }
+    return { ids: ids, hechos: hechos.length, total: ids.length, completa: hechos.length === ids.length, siguiente: sig, estado: perfil.bienvenida || null };
+  }
+  // ¿Hay que recomendarla? Solo a jugadores de Primaria nuevos (sin ningún reto superado) que aún no han decidido.
+  function debeRecomendarBienvenida(perfil) {
+    if (esInfantil(perfil) || perfil.bienvenida) return false;
+    return !Object.keys(perfil.niveles).some(function (id) { return perfil.niveles[id] && perfil.niveles[id].completado; });
+  }
+
   // Primer nivel pendiente y abierto (para el botón «Continuar»)
   function siguientePendiente(perfil) {
+    if (!esInfantil(perfil) && perfil.bienvenida === 'aceptada') { var b = bienvenida(perfil); if (b.siguiente) return b.siguiente; }
     var lista = esInfantil(perfil) ? CAT.SEC_INFANTIL : CAT.SEC_PRIMARIA;
     var curso = CAT.cursoDe(perfil.curso);
     var candidatos = lista.filter(function (id) {
@@ -2414,7 +2432,7 @@
     estrellasNivel: estrellasNivel, completadosMundo: completadosMundo, mundoCompleto: mundoCompleto,
     estrellasMundo: estrellasMundo, estrellasTotales: estrellasTotales, itinerarioCompleto: itinerarioCompleto,
     mundoAbierto: mundoAbierto, itinerarioAbierto: itinerarioAbierto, secretoAbierto: secretoAbierto,
-    finalHecho: function (perfil) { return hecho(perfil, CAT.finalDe(perfil.curso)); }, estaDesbloqueado: estaDesbloqueado, siguientePendiente: siguientePendiente,
+    finalHecho: function (perfil) { return hecho(perfil, CAT.finalDe(perfil.curso)); }, estaDesbloqueado: estaDesbloqueado, siguientePendiente: siguientePendiente, bienvenida: bienvenida, debeRecomendarBienvenida: debeRecomendarBienvenida,
     registrar: registrar, anotarPistas: anotarPistas, marcarCartaVista: marcarCartaVista, marcarEscenaVista: marcarEscenaVista,
     evaluarLogros: evaluarLogros, disfracesDesbloqueados: disfracesDesbloqueados, resumen: resumen,
     aCodigo: aCodigo, aCodigoLargo: aCodigoLargo, desdeCodigo: desdeCodigo, ORDEN_LARGO: ORDEN_LARGO
@@ -4025,7 +4043,7 @@
         });
         if (UI.Sonido) setTimeout(function () { UI.Sonido.sfx('desbloqueo'); }, 900);
       }
-      var sig = ctx.sinRegistro ? null : CAT.siguiente(nivel.id);
+      var sig = ctx.sinRegistro ? null : (ctx.siguiente ? ctx.siguiente(nivel.id) : CAT.siguiente(nivel.id));
       var sigOk = sig && perfil && PR.estaDesbloqueado(perfil, sig, {});
       var acciones = h('div.res-acciones');
       acciones.appendChild(h('button.btn-grande.sec.b-repetir', { type: 'button', 'aria-label': 'Jugar otra vez', on: { click: function () { cerrar(); reiniciar(); } } }, ic('reiniciar'), infantil ? null : h('span', 'Repetir')));
@@ -4147,6 +4165,7 @@
     });
     Object.keys(DEM.PASOS || {}).forEach(function (c) { DEM.PASOS[c].forEach(function (p, i) { VOCES.lineas['ncp_' + c + '_' + i] = { quien: 'Lumo', texto: p.texto }; }); });
     INTRO.forEach(function (e) { VOCES.lineas[e.id] = { quien: 'Lumo', texto: e.texto }; });
+    VOCES.lineas.bienv_1 = { quien: 'Lumo', texto: '¡Bienvenido a RUMBO! ¿Empezamos con la aventura de bienvenida?' };
     Object.keys(DEM.VOZ_INFANTIL).forEach(function (c) { VOCES.lineas['nci_' + c] = { quien: 'Lumo', texto: DEM.VOZ_INFANTIL[c] }; });
     App.raiz = raiz;
     raiz.innerHTML = Ar.defs();
@@ -4430,6 +4449,18 @@
       btnIcono(SVG_COL, 'Colección', function () { ir('coleccion'); }),
       btnIcono(SVG_COD, 'Mi código', function () { mostrarMiCodigo(); }),
       btnIcono(SVG_AJ, 'Ajustes', function () { ir('ajustes'); })] }));
+    if (!infantil()) {
+      var bv = PR.bienvenida(p);
+      var textoBv = bv.completa ? 'Completada. Puedes repetirla cuando quieras.' : bv.hechos ? bv.hechos + ' de ' + bv.total + ' retos. ¡Sigue con Lumo!' : bv.total + ' retos cortos con Lumo para conocer las tarjetas y la historia.';
+      cont.appendChild(h('div.mapa-bienvenida' + (bv.completa ? '.hecha' : ''),
+        h('div.bv-lumo', { html: Ar.lumo({ expr: 'feliz', dir: 'S', disfraz: p.disfraz }) }),
+        h('div.bv-txt', h('div.bv-tit', 'Aventura de bienvenida'), h('div.bv-sub', textoBv), h('div.barra', h('i', { style: { width: Math.round(bv.hechos / bv.total * 100) + '%' } }))),
+        h('button.btn-grande.b-bienvenida' + (bv.completa ? '.sec' : '.principal'), { type: 'button', on: { click: function () {
+          UI.Sonido.sfx('toque');
+          if (bv.completa) { p.bienvenida = 'aceptada'; guardar(); jugarNivel(CAT.BIENVENIDA[0]); } else empezarBienvenida(); } } },
+          h('span', bv.completa ? 'Repetir' : bv.hechos ? 'Continuar' : '¡Empezar!'))));
+      if (PR.debeRecomendarBienvenida(p)) recomendarBienvenida();
+    }
     var grid = h('div.mundos' + (infantil() ? '.uno' : ''));
     var opc = opcionesDocente();
     pestanaMundos().forEach(function (m) {
@@ -4457,6 +4488,22 @@
     var sig = PR.siguientePendiente(p);
     if (sig) cont.appendChild(h('div.mapa-cont', boton(infantil() ? '' : 'Continuar', 'principal', function () { jugarNivel(sig); }, '<svg viewBox="0 0 32 32"><path d="M8 5l18 11L8 27z" fill="#fff"/></svg>')));
   });
+
+  // Recomendación al empezar: se muestra una sola vez por jugador (se pueda aceptar o dejar para después).
+  function recomendarBienvenida() {
+    var p = perfil();
+    var ov = h('div.modal.bienvenida', { role: 'dialog', 'aria-label': 'Aventura de bienvenida' });
+    function cerrar(estado) { p.bienvenida = estado; guardar(); if (App.estado.voz) App.estado.voz.parar(); if (ov.parentNode) ov.parentNode.removeChild(ov); }
+    var c = h('div.modal-caja', h('div.bv-lumo.grande', { html: Ar.lumo({ expr: 'feliz', dir: 'S', disfraz: p.disfraz }) }),
+      h('h2', '¡Bienvenido a RUMBO!'),
+      h('p', 'Te recomendamos empezar con la aventura de bienvenida: ' + CAT.BIENVENIDA.length + ' retos muy cortos con Lumo para aprender a usar las tarjetas y conocer la historia.'),
+      h('div.res-acciones',
+        h('button.btn-grande.principal.b-bv-si', { type: 'button', on: { click: function () { cerrar('aceptada'); UI.Sonido.sfx('toque'); empezarBienvenida(); } } }, h('span', '¡Vamos!')),
+        h('button.btn-grande.sec.b-bv-no', { type: 'button', on: { click: function () { cerrar('omitida'); } } }, h('span', 'Ahora no'))),
+      h('p.nota', 'Podrás jugarla cuando quieras desde el mapa.'));
+    ov.appendChild(c); document.body.appendChild(ov);
+    if (datos().ajustes.voz !== false && App.estado.voz) App.estado.voz.decir('bienv_1', { velocidad: 0.95 });
+  }
 
   function mostrarMiCodigo() {
     var p = perfil(), r = PR.aCodigo(p);
@@ -4542,6 +4589,7 @@
       App.estado.pantalla = 'juego';
       UI.Sonido.musica(n.zona || 'jardin');
       var ctl = UI.Juego.abrir(App.pantalla, n, {
+        siguiente: enBienvenida(id) ? function (x) { return CAT.BIENVENIDA[CAT.BIENVENIDA.indexOf(x) + 1] || null; } : null,
         perfil: perfil(), ajustes: datos().ajustes, voz: App.estado.voz, guardar: guardar, sinRegistro: !!(opciones && opciones.sinRegistro) || !!(App.estado.docente && App.estado.docente.vista),
         alSalir: function (extra) {
           if (App.estado.docente && App.estado.docente.vista) { App.estado.docente.vista = false; ir('docente'); return; }
@@ -4567,7 +4615,20 @@
     alSalirDePantalla(function () { ctl.destruir(); });
     return ctl;
   }
+  // Aventura de bienvenida: retos de Infantil que se ofrecen al alumnado de Primaria; al terminar, se vuelve al mapa (no al mundo de Infantil).
+  function enBienvenida(id) { return !infantil() && CAT.BIENVENIDA.indexOf(id) >= 0; }
+  function empezarBienvenida() {
+    var p = perfil(), b = PR.bienvenida(p);
+    p.bienvenida = 'aceptada'; guardar();
+    jugarNivel(b.siguiente || CAT.BIENVENIDA[0]);
+  }
   function volverTras(n, completado) {
+    if (enBienvenida(n.id)) {
+      var b = PR.bienvenida(perfil());
+      var vuelta0 = function () { ir('mapa'); if (completado && b.completa && !perfil().bienvenidaFin) { perfil().bienvenidaFin = true; guardar(); toast('¡Aventura de bienvenida completada! Ya conoces las tarjetas de Lumo.', 5000); } };
+      if (completado) despuesDe(n.id, vuelta0); else vuelta0();
+      return;
+    }
     var mundo = n.mundo === 'sec' ? (n.secreto || 1) : n.mundo;
     var vuelta = function () { ir('mundo', { mundo: mundo }); };
     if (completado) despuesDe(n.id, vuelta); else vuelta();

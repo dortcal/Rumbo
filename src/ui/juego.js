@@ -289,7 +289,7 @@
         });
         if (UI.Sonido) setTimeout(function () { UI.Sonido.sfx('desbloqueo'); }, 900);
       }
-      var sig = ctx.sinRegistro ? null : CAT.siguiente(nivel.id);
+      var sig = ctx.sinRegistro ? null : (ctx.siguiente ? ctx.siguiente(nivel.id) : CAT.siguiente(nivel.id));
       var sigOk = sig && perfil && PR.estaDesbloqueado(perfil, sig, {});
       var acciones = h('div.res-acciones');
       acciones.appendChild(h('button.btn-grande.sec.b-repetir', { type: 'button', 'aria-label': 'Jugar otra vez', on: { click: function () { cerrar(); reiniciar(); } } }, ic('reiniciar'), infantil ? null : h('span', 'Repetir')));

@@ -331,3 +331,15 @@ body.reducir .intro-capa.on .intro-img,body.reducir .intro-brillos i{animation:n
 
 body.reducir .lumo-in.giro-w{animation:none!important}body.reducir .lumo-aro{transition:none!important}
 @media (prefers-reduced-motion:reduce){.lumo-in.giro-w{animation:none}.lumo-aro{transition:none}}
+
+/* ----- aventura de bienvenida (Primaria) ----- */
+.mapa-bienvenida{display:flex;align-items:center;gap:14px;margin:6px auto 4px;padding:10px 16px;max-width:860px;width:calc(100% - 28px);background:#fff;border:3px solid #ffd93d;border-radius:22px;box-shadow:0 4px 0 rgba(0,0,0,.12)}
+.mapa-bienvenida.hecha{border-color:#bfe8c8;opacity:.92}
+.bv-lumo{width:64px;height:64px;flex:none}.bv-lumo svg{width:100%;height:100%}.bv-lumo.grande{width:110px;height:110px;margin:0 auto}
+.bv-txt{flex:1;min-width:0}.bv-tit{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.2rem;color:#4a2a8a}.bv-sub{font-size:.95rem;color:#3a3550;margin-bottom:6px}
+.mapa-bienvenida .barra{height:10px}
+.mapa-bienvenida .b-bienvenida{flex:none;min-width:140px}
+.modal.bienvenida .modal-caja{text-align:center;max-width:520px}
+.modal.bienvenida .res-acciones{justify-content:center;gap:12px;flex-wrap:wrap}
+@media (max-width:640px){.mapa-bienvenida{flex-wrap:wrap}.mapa-bienvenida .b-bienvenida{width:100%}}
+.mapa-bienvenida{--col:#3fae6a}.mapa-bienvenida:not(.hecha){--col:#f2a93b}

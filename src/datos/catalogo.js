@@ -43,6 +43,9 @@
   var ITINERARIOS = { 3: [], 4: [], 5: [] };
   INF.forEach(function (n) { ITINERARIOS[n.itinerario].push(n.id); });
 
+  // Aventura de bienvenida: los primeros retos de Infantil (jardín), recomendados al alumnado de Primaria que empieza.
+  var BIENVENIDA = ITINERARIOS[3].slice();
+
   var CURSOS = [
     { id: 'inf3', nombre: '3 años', mundos: [0], itinerarios: [3] },
     { id: 'inf4', nombre: '4 años', mundos: [0], itinerarios: [3, 4] },
@@ -120,7 +123,7 @@
 
   return {
     MUNDOS: MUNDOS, TODOS: TODOS, SECRETOS: SECRETOS, POR_ID: POR_ID,
-    SEC_INFANTIL: SEC_INFANTIL, SEC_PRIMARIA: SEC_PRIMARIA, ITINERARIOS: ITINERARIOS,
+    SEC_INFANTIL: SEC_INFANTIL, BIENVENIDA: BIENVENIDA, SEC_PRIMARIA: SEC_PRIMARIA, ITINERARIOS: ITINERARIOS,
     CURSOS: CURSOS, REQUISITO_SECRETO: REQUISITO_SECRETO,
     cursoDe: cursoDe, finalDe: finalDe, FINAL_CURSO: FINAL_CURSO, mundoDe: mundoDe, posicion: posicion, siguiente: siguiente,
     cartasNuevas: cartasNuevas, registrarVoces: registrarVoces, total: total, DSL: DSL

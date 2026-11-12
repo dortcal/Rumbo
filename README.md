@@ -169,3 +169,7 @@ Si algún día se graban audios, basta con asociarlos a esos mismos identificado
 - Tipografías **Baloo 2** y **Nunito**: SIL Open Font License 1.1 (`fonts/OFL-*.txt`).
 - No se usa ningún personaje, gráfico, sonido ni elemento protegido de otros videojuegos. Lightbot, Code‑a‑pillar y Smile and
   Learn fueron solo inspiración de mecánicas pedagógicas.
+
+## Aventura de bienvenida
+
+Al entrar por primera vez, a los jugadores de Primaria se les recomienda empezar con la *aventura de bienvenida*: los 5 primeros retos de Infantil (jardín), con la interfaz sencilla de Lumo. Se puede aceptar o dejar para después («Ahora no») y siempre está disponible en el mapa. Sus retos no suman estrellas de Primaria. El alumnado de Infantil ya empieza por esos mismos retos.

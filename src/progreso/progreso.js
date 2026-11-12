@@ -109,8 +109,23 @@
     return hecho(perfil, previo.id);
   }
 
+  // ---------- aventura de bienvenida (Primaria) ----------
+  // perfil.bienvenida: undefined = aún sin decidir · 'aceptada' · 'omitida'. El progreso son los propios niveles de Infantil.
+  function bienvenida(perfil) {
+    var ids = CAT.BIENVENIDA, hechos = ids.filter(function (id) { return hecho(perfil, id); });
+    var sig = null;
+    for (var i = 0; i < ids.length; i++) if (!hecho(perfil, ids[i])) { sig = ids[i]; break; }
+    return { ids: ids, hechos: hechos.length, total: ids.length, completa: hechos.length === ids.length, siguiente: sig, estado: perfil.bienvenida || null };
+  }
+  // ¿Hay que recomendarla? Solo a jugadores de Primaria nuevos (sin ningún reto superado) que aún no han decidido.
+  function debeRecomendarBienvenida(perfil) {
+    if (esInfantil(perfil) || perfil.bienvenida) return false;
+    return !Object.keys(perfil.niveles).some(function (id) { return perfil.niveles[id] && perfil.niveles[id].completado; });
+  }
+
   // Primer nivel pendiente y abierto (para el botón «Continuar»)
   function siguientePendiente(perfil) {
+    if (!esInfantil(perfil) && perfil.bienvenida === 'aceptada') { var b = bienvenida(perfil); if (b.siguiente) return b.siguiente; }
     var lista = esInfantil(perfil) ? CAT.SEC_INFANTIL : CAT.SEC_PRIMARIA;
     var curso = CAT.cursoDe(perfil.curso);
     var candidatos = lista.filter(function (id) {
@@ -345,7 +360,7 @@
     estrellasNivel: estrellasNivel, completadosMundo: completadosMundo, mundoCompleto: mundoCompleto,
     estrellasMundo: estrellasMundo, estrellasTotales: estrellasTotales, itinerarioCompleto: itinerarioCompleto,
     mundoAbierto: mundoAbierto, itinerarioAbierto: itinerarioAbierto, secretoAbierto: secretoAbierto,
-    finalHecho: function (perfil) { return hecho(perfil, CAT.finalDe(perfil.curso)); }, estaDesbloqueado: estaDesbloqueado, siguientePendiente: siguientePendiente,
+    finalHecho: function (perfil) { return hecho(perfil, CAT.finalDe(perfil.curso)); }, estaDesbloqueado: estaDesbloqueado, siguientePendiente: siguientePendiente, bienvenida: bienvenida, debeRecomendarBienvenida: debeRecomendarBienvenida,
     registrar: registrar, anotarPistas: anotarPistas, marcarCartaVista: marcarCartaVista, marcarEscenaVista: marcarEscenaVista,
     evaluarLogros: evaluarLogros, disfracesDesbloqueados: disfracesDesbloqueados, resumen: resumen,
     aCodigo: aCodigo, aCodigoLargo: aCodigoLargo, desdeCodigo: desdeCodigo, ORDEN_LARGO: ORDEN_LARGO

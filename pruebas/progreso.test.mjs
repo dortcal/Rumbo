@@ -209,3 +209,30 @@ test('cada curso tiene su propio final y puede terminar la aventura', async () =
     assert.equal(P.finalHecho(p), false);
   }
 });
+
+test('aventura de bienvenida: se recomienda a Primaria nuevo, no a Infantil ni a quien ya juega', () => {
+  assert.deepEqual(C.BIENVENIDA, C.ITINERARIOS[3]);
+  const p = P.crearPerfil({ nombre: 'x', curso: 'p3' });
+  assert.equal(P.debeRecomendarBienvenida(p), true);
+  assert.equal(P.debeRecomendarBienvenida(P.crearPerfil({ nombre: 'x', curso: 'inf4' })), false);
+  p.bienvenida = 'omitida';
+  assert.equal(P.debeRecomendarBienvenida(p), false);
+  const q = P.crearPerfil({ nombre: 'x', curso: 'p5' });
+  ganar(q, 'm1-01');
+  assert.equal(P.debeRecomendarBienvenida(q), false, 'quien ya tiene retos superados no recibe la recomendación');
+});
+
+test('aventura de bienvenida: el progreso se cuenta y «Continuar» la sigue mientras esté aceptada', () => {
+  const p = P.crearPerfil({ nombre: 'x', curso: 'p4' });
+  assert.equal(P.bienvenida(p).hechos, 0);
+  assert.notEqual(P.siguientePendiente(p), C.BIENVENIDA[0], 'sin aceptar, Continuar sigue la ruta normal de su curso');
+  p.bienvenida = 'aceptada';
+  assert.equal(P.siguientePendiente(p), C.BIENVENIDA[0]);
+  ganar(p, C.BIENVENIDA[0], 1);
+  const b = P.bienvenida(p);
+  assert.equal(b.hechos, 1); assert.equal(b.siguiente, C.BIENVENIDA[1]); assert.equal(P.siguientePendiente(p), C.BIENVENIDA[1]);
+  C.BIENVENIDA.forEach(id => { if (!P.hecho(p, id)) ganar(p, id, 1); });
+  assert.equal(P.bienvenida(p).completa, true);
+  assert.notEqual(P.siguientePendiente(p), C.BIENVENIDA[0]);
+  assert.equal(P.estrellasTotales(p), 0, 'los retos de Infantil no suman estrellas de Primaria');
+});

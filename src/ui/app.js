@@ -27,6 +27,7 @@
     });
     Object.keys(DEM.PASOS || {}).forEach(function (c) { DEM.PASOS[c].forEach(function (p, i) { VOCES.lineas['ncp_' + c + '_' + i] = { quien: 'Lumo', texto: p.texto }; }); });
     INTRO.forEach(function (e) { VOCES.lineas[e.id] = { quien: 'Lumo', texto: e.texto }; });
+    VOCES.lineas.bienv_1 = { quien: 'Lumo', texto: '¡Bienvenido a RUMBO! ¿Empezamos con la aventura de bienvenida?' };
     Object.keys(DEM.VOZ_INFANTIL).forEach(function (c) { VOCES.lineas['nci_' + c] = { quien: 'Lumo', texto: DEM.VOZ_INFANTIL[c] }; });
     App.raiz = raiz;
     raiz.innerHTML = Ar.defs();
@@ -310,6 +311,18 @@
       btnIcono(SVG_COL, 'Colección', function () { ir('coleccion'); }),
       btnIcono(SVG_COD, 'Mi código', function () { mostrarMiCodigo(); }),
       btnIcono(SVG_AJ, 'Ajustes', function () { ir('ajustes'); })] }));
+    if (!infantil()) {
+      var bv = PR.bienvenida(p);
+      var textoBv = bv.completa ? 'Completada. Puedes repetirla cuando quieras.' : bv.hechos ? bv.hechos + ' de ' + bv.total + ' retos. ¡Sigue con Lumo!' : bv.total + ' retos cortos con Lumo para conocer las tarjetas y la historia.';
+      cont.appendChild(h('div.mapa-bienvenida' + (bv.completa ? '.hecha' : ''),
+        h('div.bv-lumo', { html: Ar.lumo({ expr: 'feliz', dir: 'S', disfraz: p.disfraz }) }),
+        h('div.bv-txt', h('div.bv-tit', 'Aventura de bienvenida'), h('div.bv-sub', textoBv), h('div.barra', h('i', { style: { width: Math.round(bv.hechos / bv.total * 100) + '%' } }))),
+        h('button.btn-grande.b-bienvenida' + (bv.completa ? '.sec' : '.principal'), { type: 'button', on: { click: function () {
+          UI.Sonido.sfx('toque');
+          if (bv.completa) { p.bienvenida = 'aceptada'; guardar(); jugarNivel(CAT.BIENVENIDA[0]); } else empezarBienvenida(); } } },
+          h('span', bv.completa ? 'Repetir' : bv.hechos ? 'Continuar' : '¡Empezar!'))));
+      if (PR.debeRecomendarBienvenida(p)) recomendarBienvenida();
+    }
     var grid = h('div.mundos' + (infantil() ? '.uno' : ''));
     var opc = opcionesDocente();
     pestanaMundos().forEach(function (m) {
@@ -337,6 +350,22 @@
     var sig = PR.siguientePendiente(p);
     if (sig) cont.appendChild(h('div.mapa-cont', boton(infantil() ? '' : 'Continuar', 'principal', function () { jugarNivel(sig); }, '<svg viewBox="0 0 32 32"><path d="M8 5l18 11L8 27z" fill="#fff"/></svg>')));
   });
+
+  // Recomendación al empezar: se muestra una sola vez por jugador (se pueda aceptar o dejar para después).
+  function recomendarBienvenida() {
+    var p = perfil();
+    var ov = h('div.modal.bienvenida', { role: 'dialog', 'aria-label': 'Aventura de bienvenida' });
+    function cerrar(estado) { p.bienvenida = estado; guardar(); if (App.estado.voz) App.estado.voz.parar(); if (ov.parentNode) ov.parentNode.removeChild(ov); }
+    var c = h('div.modal-caja', h('div.bv-lumo.grande', { html: Ar.lumo({ expr: 'feliz', dir: 'S', disfraz: p.disfraz }) }),
+      h('h2', '¡Bienvenido a RUMBO!'),
+      h('p', 'Te recomendamos empezar con la aventura de bienvenida: ' + CAT.BIENVENIDA.length + ' retos muy cortos con Lumo para aprender a usar las tarjetas y conocer la historia.'),
+      h('div.res-acciones',
+        h('button.btn-grande.principal.b-bv-si', { type: 'button', on: { click: function () { cerrar('aceptada'); UI.Sonido.sfx('toque'); empezarBienvenida(); } } }, h('span', '¡Vamos!')),
+        h('button.btn-grande.sec.b-bv-no', { type: 'button', on: { click: function () { cerrar('omitida'); } } }, h('span', 'Ahora no'))),
+      h('p.nota', 'Podrás jugarla cuando quieras desde el mapa.'));
+    ov.appendChild(c); document.body.appendChild(ov);
+    if (datos().ajustes.voz !== false && App.estado.voz) App.estado.voz.decir('bienv_1', { velocidad: 0.95 });
+  }
 
   function mostrarMiCodigo() {
     var p = perfil(), r = PR.aCodigo(p);
@@ -422,6 +451,7 @@
       App.estado.pantalla = 'juego';
       UI.Sonido.musica(n.zona || 'jardin');
       var ctl = UI.Juego.abrir(App.pantalla, n, {
+        siguiente: enBienvenida(id) ? function (x) { return CAT.BIENVENIDA[CAT.BIENVENIDA.indexOf(x) + 1] || null; } : null,
         perfil: perfil(), ajustes: datos().ajustes, voz: App.estado.voz, guardar: guardar, sinRegistro: !!(opciones && opciones.sinRegistro) || !!(App.estado.docente && App.estado.docente.vista),
         alSalir: function (extra) {
           if (App.estado.docente && App.estado.docente.vista) { App.estado.docente.vista = false; ir('docente'); return; }
@@ -447,7 +477,20 @@
     alSalirDePantalla(function () { ctl.destruir(); });
     return ctl;
   }
+  // Aventura de bienvenida: retos de Infantil que se ofrecen al alumnado de Primaria; al terminar, se vuelve al mapa (no al mundo de Infantil).
+  function enBienvenida(id) { return !infantil() && CAT.BIENVENIDA.indexOf(id) >= 0; }
+  function empezarBienvenida() {
+    var p = perfil(), b = PR.bienvenida(p);
+    p.bienvenida = 'aceptada'; guardar();
+    jugarNivel(b.siguiente || CAT.BIENVENIDA[0]);
+  }
   function volverTras(n, completado) {
+    if (enBienvenida(n.id)) {
+      var b = PR.bienvenida(perfil());
+      var vuelta0 = function () { ir('mapa'); if (completado && b.completa && !perfil().bienvenidaFin) { perfil().bienvenidaFin = true; guardar(); toast('¡Aventura de bienvenida completada! Ya conoces las tarjetas de Lumo.', 5000); } };
+      if (completado) despuesDe(n.id, vuelta0); else vuelta0();
+      return;
+    }
     var mundo = n.mundo === 'sec' ? (n.secreto || 1) : n.mundo;
     var vuelta = function () { ir('mundo', { mundo: mundo }); };
     if (completado) despuesDe(n.id, vuelta); else vuelta();

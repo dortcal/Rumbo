@@ -44,7 +44,7 @@ async function main() {
   }
   const ev = (p, f, ...a) => p.evaluate(f, ...a);
   async function crearPerfil(p, nombre, curso) {
-    await ev(p, (n, c) => { const PR = RumboProgreso, G = RumboUI.Guardado; const per = PR.crearPerfil({ nombre: n, curso: c }); const d = G.cargar(); d.perfiles.push(per); d.activo = per.id; G.guardar(); }, nombre, curso);
+    await ev(p, (n, c) => { const PR = RumboProgreso, G = RumboUI.Guardado; const per = PR.crearPerfil({ nombre: n, curso: c }); if (c.indexOf('p') === 0) per.bienvenida = 'omitida'; const d = G.cargar(); d.perfiles.push(per); d.activo = per.id; G.guardar(); }, nombre, curso);
     await p.reload({ waitUntil: 'load' }); await esperar(300); await ev0(p);
   }
   async function saltarEscenas(p) {
@@ -78,7 +78,10 @@ async function main() {
   await p.click('.btn-grande.principal'); await esperar(250); await p.click('.tarjeta-jugador.nuevo'); await esperar(250);
   await ev(p, () => [...document.querySelectorAll('.chip-curso')].find(b => b.textContent === '1.º').click()); await p.click('.btn-grande.principal'); await esperar(400);
   chequear(await ev(p, () => document.body.dataset.pantalla === 'mapa'), 'se crea el jugador y aparece el mapa');
+  chequear(await ev(p, () => !!document.querySelector('.modal.bienvenida')), 'a un jugador nuevo de Primaria se le recomienda la aventura de bienvenida');
   await p.screenshot({ path: SHOTS + '/mapa.png' });
+  await ev(p, () => document.querySelector('.b-bv-no').click()); await esperar(200);
+  chequear(await ev(p, () => !document.querySelector('.modal.bienvenida') && RumboUI.App.perfil().bienvenida === 'omitida'), '«Ahora no» la deja para después y queda accesible en el mapa');
   await abrirNivel(p, 'm1-01');
   await arrastrarPaleta(p, 'avanzar'); await arrastrarPaleta(p, 'avanzar'); await arrastrarPaleta(p, 'avanzar');
   chequear((await programaEnPantalla(p)) === JSON.stringify([{ t: 'avanzar' }, { t: 'avanzar' }, { t: 'avanzar' }]), 'arrastrar 3 tarjetas las coloca en la zona de programación');
