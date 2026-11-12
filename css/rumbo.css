@@ -303,7 +303,7 @@ details.doc-caja>summary{font:800 1.2rem var(--titulo);cursor:pointer;color:var(
 
 .j-pie .btn-pista{display:inline-flex;align-items:center;gap:.5rem;min-height:56px;padding:.4rem 1.1rem .4rem .8rem;border:0;border-radius:999px;background:#f59e0b;box-shadow:0 4px 0 #b97000;color:#fff;font:800 1.15rem var(--titulo);cursor:pointer}
 .j-pie .btn-pista svg{width:34px;height:34px}.j-pie .btn-pista:disabled{opacity:.5}
-.juego.infantil .j-pie .btn-pista{min-height:76px;padding:.5rem 1.2rem}.juego.infantil .j-pie .btn-pista span{display:none}.juego.infantil .j-pie .btn-pista svg{width:52px;height:52px}
+.juego.infantil .j-pie .btn-pista{min-height:76px;padding:.5rem 1.2rem}.juego.infantil .j-pie .btn-pista>span:not(.svg){display:none}.juego.infantil .j-pie .btn-pista .svg{display:inline-flex}.juego.infantil .j-pie .btn-pista svg{width:52px;height:52px}
 .btn-pista.llama{animation:llama 1.1s ease-in-out infinite;box-shadow:0 0 0 6px rgba(245,158,11,.35),0 4px 0 #b97000}
 @keyframes llama{50%{transform:scale(1.1)}}
 @media (prefers-reduced-motion:reduce){.btn-pista.llama{animation:none}}

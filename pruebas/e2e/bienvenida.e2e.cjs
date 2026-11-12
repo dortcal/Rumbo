@@ -17,6 +17,7 @@ await p.screenshot({path:'/tmp/bv1.png'});
 await ev(()=>document.querySelector('.b-bv-si').click());await w(600);
 for(let i=0;i<8;i++){const h=await ev(()=>{const x=document.querySelector('.escena .b-saltar,.escena .b-sig-esc,.b-entendido');if(x){x.click();return 1}return 0});if(!h)break;await w(300);}
 ok(await ev(()=>document.querySelector('.juego')&&document.querySelector('.juego').classList.contains('infantil')),'se juega con la interfaz sencilla de Infantil');
+ok(await ev(()=>{const b=document.querySelector('.juego.infantil .btn-pista');const i=b&&b.querySelector('svg');return !!i&&i.getBoundingClientRect().width>30&&b.getBoundingClientRect().width>60;}),'el botón de pista de Infantil muestra su bombilla');
 const ids=await ev(()=>RumboCatalogo.BIENVENIDA);
 let fin=false;
 for(let i=0;i<ids.length;i++){
