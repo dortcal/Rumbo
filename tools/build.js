@@ -26,7 +26,7 @@ console.log('js/rumbo.js:', (out.length / 1024).toFixed(0), 'KB,', orden.length,
 const crypto = require('crypto');
 const archivos = ['./', 'index.html', 'manifest.webmanifest', 'css/rumbo.css', 'js/rumbo.js',
   'fonts/baloo-2-latin-700-normal.woff2', 'fonts/baloo-2-latin-800-normal.woff2', 'fonts/nunito-latin-600-normal.woff2', 'fonts/nunito-latin-800-normal.woff2',
-  'intro/escena-1.jpg', 'intro/escena-2.jpg', 'intro/escena-3.jpg', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png'];
+  'intro/escena-1.jpg', 'intro/escena-2.jpg', 'intro/escena-3.jpg', 'intro/voz-lumo.mp3', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png'];
 const hash = crypto.createHash('sha1');
 for (const f of archivos.filter(f => f !== './')) hash.update(fs.readFileSync(path.join(raiz, f)));
 const version = hash.digest('hex').slice(0, 10);

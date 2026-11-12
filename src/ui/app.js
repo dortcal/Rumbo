@@ -135,9 +135,9 @@
 
   // ---------------------------------------------------------------- intro (3 ilustraciones animadas + subtítulos + voz)
   var INTRO = [
-    { img: 'intro/escena-1.jpg', id: 'intro_1', texto: '¡Hola! Soy Lumo.', dur: 4200, mov: 'a' },
-    { img: 'intro/escena-2.jpg', id: 'intro_2', texto: 'Mi brújula se ha roto y el Faro se ha apagado.', dur: 6200, mov: 'b' },
-    { img: 'intro/escena-3.jpg', id: 'intro_3', texto: '¿Me ayudas a encontrar el camino?', dur: 5200, mov: 'c' }
+    { img: 'intro/escena-1.jpg', id: 'intro_1', texto: '¡Hola! Soy Lumo.', dur: 3000, mov: 'a' },
+    { img: 'intro/escena-2.jpg', id: 'intro_2', texto: 'Mi brújula se ha roto y el Faro se ha apagado.', dur: 2900, mov: 'b' },
+    { img: 'intro/escena-3.jpg', id: 'intro_3', texto: '¿Me ayudas a encontrar el camino?', dur: 3900, mov: 'c' }
   ];
 
   function intro(fin) {
@@ -149,9 +149,17 @@
     ov.appendChild(sub); ov.appendChild(saltar);
     document.body.appendChild(ov);
     UI.Sonido.musica('mapa');
-    var cerrado = false, tim = null, k = 0;
+    var cerrado = false, tim = null, k = 0, audio = null, vozNav = false;
+    // Voz grabada de Lumo (ElevenLabs). Los tiempos de las escenas siguen sus pausas; si no puede sonar, se usa la voz del navegador.
+    if (datos().ajustes.voz !== false) {
+      try {
+        audio = new Audio('intro/voz-lumo.mp3'); audio.preload = 'auto';
+        audio.addEventListener('error', function () { vozNav = true; });
+      } catch (e) { audio = null; }
+    }
     function cerrar() {
       if (cerrado) return; cerrado = true; clearTimeout(tim);
+      if (audio) { try { audio.pause(); } catch (e) {} }
       if (App.estado.voz) App.estado.voz.parar();
       datos().ajustes.introVista = true; G.guardar();
       ov.classList.add('sale');
@@ -163,7 +171,11 @@
       var e = INTRO[k];
       capas.forEach(function (c, j) { c.classList.toggle('on', j === k); });
       sub.textContent = e.texto; sub.classList.remove('in'); void sub.offsetWidth; sub.classList.add('in');
-      if (datos().ajustes.voz !== false && App.estado.voz) App.estado.voz.decir(e.id, { velocidad: 0.95 });
+      var habla = datos().ajustes.voz !== false && App.estado.voz;
+      if (k === 0 && audio) {
+        var p = audio.play();
+        if (p && p.catch) p.catch(function () { vozNav = true; if (!cerrado && habla) App.estado.voz.decir(INTRO[Math.max(0, k - 1)].id, { velocidad: 0.95 }); });
+      } else if ((!audio || vozNav) && habla) App.estado.voz.decir(e.id, { velocidad: 0.95 });
       k++; tim = setTimeout(paso, e.dur);
     }
     ov.addEventListener('click', function (ev) { if (ev.target === saltar) return; clearTimeout(tim); paso(); });   // toca para pasar a la siguiente
