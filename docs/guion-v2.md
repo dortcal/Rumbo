@@ -1,6 +1,6 @@
 # RUMBO · «La luz de Lumo», versión 2 — Guion (Fase 1)
 
-**Estado:** borrador para tu visto bueno. **No hay cambios de código**: esta fase solo entrega el guion.
+**Estado:** guion **aprobado** (Fase 1). La Fase 2 lo ha pasado a datos (ver `docs/fase-2.md`). Cuatro introducciones cambiaron de redacción en la Fase 2 para evitar dos puntos al principio de frase (la pantalla de juego los interpreta como «Personaje:»).
 **Base:** commit `09338b5` de `dortcal/Rumbo` (174 pruebas en verde). Parte del guion aprobado (Anexo 2) y de la auditoría (Anexo 4).
 **Qué contiene:** decisiones abiertas (§1), arco y personajes (§2–§3), la meta visible (§4), las seis chispas (§5), los guiños de la abuela (§6), Bichito en cinco tiempos (§7), secundarios y regalos (§8), la escaleta de escenas con sus frases (§9), los finales por etapa (§10), victoria y diario (§11), las correcciones de continuidad (§12) y las **102 introducciones nuevas** (§13).
 
@@ -618,7 +618,7 @@ Es el campo de introducción de cada reto. **No se cambian los objetivos (`o`), 
 | `m1-01` | Bosque | Lumo despierta en el bosque. Su brújula brilla poquito. | **Lumo ha caído en el bosque. Las luciérnagas señalan la puerta de luz.** |
 | `m1-02` | Bosque | Las luciérnagas se han ido por el camino. | **Las luciérnagas se alejan hacia abajo. ¡Síguelas!** |
 | `m1-03` | Bosque | Lumo se ha pasado de camino. | **Lumo se ha pasado de camino. Hay que volver un paso.** |
-| `m1-04` | Bosque | El camino del bosque da una curva. | **Búho Bruma avisa: el sendero gira. Lumo debe girar con él.** |
+| `m1-04` | Bosque | El camino del bosque da una curva. | **Búho Bruma avisa de que el sendero gira. Lumo debe girar con él.** |
 | `m1-05` | Bosque | Otra curva, pero hacia el otro lado. | **Bruma vuela delante. Esta curva va hacia el otro lado.** |
 | `m1-06` | Bosque | El sendero zigzaguea entre los árboles. | **El sendero zigzaguea entre los árboles como una serpiente de luz.** |
 | `m1-07` | Bosque | Lumo tiene que pensar desde su propio sitio. | **Desde donde mira Lumo, la puerta de luz queda a su izquierda.** |
@@ -632,7 +632,7 @@ Es el campo de introducción de cada reto. **No se cambian los objetivos (`o`), 
 | `m1-15` | Montañas | La escalera de piedra repite siempre lo mismo. | **La escalera de piedra repite siempre el mismo paso. Brasa sigue gritando.** |
 | `m1-16` | Montañas | Cuatro luces en fila, igual que cuatro notas. | **Cuatro luces en fila suenan como cuatro notas de una canción.** |
 | `m1-17` | Montañas | Hay piedras para cruzar el río, una sí y otra no. | **El río se cruza por piedras: una sí y otra no. ¡Hay un patrón!** |
-| `m1-18` | Montañas | ¡Ji, ji! Bichito ha cambiado las tarjetas de sitio. | **Bichito se ríe: ha desordenado el programa de Lumo. ¡Ordénalo!** |
+| `m1-18` | Montañas | ¡Ji, ji! Bichito ha cambiado las tarjetas de sitio. | **Bichito se ríe, ha desordenado el programa de Lumo. ¡Ordénalo!** |
 | `m1-19` | Montañas | Bichito ha cambiado un giro. | **Bichito se esconde tras una roca. Ha cambiado un giro.** |
 | `m1-20` | Montañas | Bichito se ha comido una tarjeta. | **Bichito se ha llevado una tarjeta. Al programa le falta algo.** |
 | `m1-21` | Montañas | Una puerta cierra el paso al faro. | **Una puerta de hielo cierra el paso a la cumbre. Hay un interruptor.** |
@@ -655,7 +655,7 @@ Es el campo de introducción de cada reto. **No se cambian los objetivos (`o`), 
 | `m2-08` | Mar | Las dunas submarinas suben y bajan. | **Las dunas submarinas suben y bajan, suben y bajan. ¡Cuenta los zigzags!** |
 | `m2-09` | Mar | Una puerta separa dos salas del barco hundido. | **Dentro del barco hundido hay dos salas y una puerta. Resuelve cada sala.** |
 | `m2-10` | Mar | Cada nicho esconde una perla. | **Tinta guarda sus perlas en tres nichos. Cada visita es igual.** |
-| `m2-11` | Mar | Tinta: «Una receta se hace una vez y se usa muchas». | **Tinta tiene un truco: guardar la visita al nicho en una receta.** |
+| `m2-11` | Mar | Tinta: «Una receta se hace una vez y se usa muchas». | **Tinta tiene un truco, guardar la visita al nicho en una receta.** |
 | `m2-12` | Mar | Algunos nichos están por encima del camino. | **Algunos nichos están arriba y otros abajo. Hacen falta dos recetas.** |
 | `m2-13` | Mar | La grieta es larga y tiene muchos nichos. | **La grieta tiene muchos nichos. En uno juega Destello, escondido.** |
 | `m2-14` | Volcán | El lagarto gigante guarda una puerta de roca. | **El lagarto gigante guarda el volcán. Él no cabe en los túneles, pero Lumo sí.** |
@@ -666,7 +666,7 @@ Es el campo de introducción de cada reto. **No se cambian los objetivos (`o`), 
 | `m2-19` | Volcán | Una perla sin recoger es una pista perdida. | **Lumo llega a la meta, pero deja gemas atrás. ¿Qué falta?** |
 | `m2-20` | Volcán | Un fallo en una receta se repite cada vez que se usa. | **Bichito ha toqueteado la receta. Su fallo se repite cada vez que se usa.** |
 | `m2-21` | Volcán | Tinta: «Un programa corto es un programa elegante». | **El programa funciona, pero es larguísimo. El lagarto pide uno más corto.** |
-| `m2-22` | Volcán | El lagarto gigante: «Aquí las paredes mandan». | **El lagarto avisa: en estos túneles las paredes aparecen sin avisar.** |
+| `m2-22` | Volcán | El lagarto gigante: «Aquí las paredes mandan». | **El lagarto avisa de que en estos túneles aparecen paredes sin avisar.** |
 | `m2-23` | Volcán | Los ríos de lava aparecen cada dos casillas. | **Los ríos de lava aparecen cada dos casillas. Lumo debe decidir sobre la marcha.** |
 | `m2-24` | Volcán | Los túneles forman una espiral hacia el corazón del volcán. | **Los túneles forman una espiral hacia el corazón del volcán. Algo brilla dentro.** |
 | `m2-25` | Volcán | El corazón del volcán late. ¡Último reto del mundo! | **El corazón del volcán late flojito. Allí gruñe Ascua: «¡Dejadme en paz!»** |
@@ -685,7 +685,7 @@ Es el campo de introducción de cada reto. **No se cambian los objetivos (`o`), 
 | `m3-03` | Ciudad | La plaza central es un cuadrado enorme. | **La plaza central es un cuadrado enorme. Bit quiere recorrerla entera.** |
 | `m3-04` | Ciudad | Bit se ha equivocado al contar. | **Bichito quiso ayudar a Bit a contar. Ahora el bucle de dentro cuenta mal.** |
 | `m3-05` | Ciudad | Bit: «Si lo repites, ponlo en un bucle». | **Funciona, pero repite tres veces lo mismo. Bit propone un bucle.** |
-| `m3-06` | Ciudad | Bit: «Observa, decide, actúa». | **Bit dice: observa, decide, actúa. Hoy toca avanzar mientras no haya muro.** |
+| `m3-06` | Ciudad | Bit: «Observa, decide, actúa». | **Bit repite su lema, «observa, decide, actúa». Hoy toca avanzar mientras no haya muro.** |
 | `m3-07` | Ciudad | La ciudad tiene un laberinto de calles. | **Bit conoce cada calle del laberinto, pero no sabe decidir en los cruces.** |
 | `m3-08` | Ciudad | Hay baterías esparcidas por la calle. | **Hay baterías esparcidas por la calle. Bit las necesita todas.** |
 | `m3-09` | Ciudad | La puerta del taller se abre con un interruptor. | **La puerta del taller de Bit solo se abre con un interruptor.** |

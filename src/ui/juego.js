@@ -74,7 +74,7 @@
       if (aj.voz !== false && ctx.voz) r = ctx.voz.decir(id, { velocidad: infantil ? 0.85 : 0.95 });
       var sinVoz = !r || r.modo === 'subtitulo';
       var texto = linea.texto;
-      if (id.indexOf('n_') === 0 && !infantil && nivel.intro && !repetir) texto = nivel.intro.replace(/^[^:]*:\s*[«"]?/, '').replace(/[»"]$/, '') + '\n' + linea.texto;
+      if (id.indexOf('n_') === 0 && !infantil && nivel.intro && !repetir) texto = nivel.intro.replace(/^[^:«.!?]{2,24}:\s*[«"]?/, '').replace(/[»"]$/, '') + '\n' + linea.texto;
       mostrarTexto(texto, id.indexOf('n_') === 0 && !repetir ? quienIntro() : 'Lumo', sinVoz);
     }
 

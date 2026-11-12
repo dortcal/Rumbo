@@ -725,13 +725,154 @@
   'use strict';
 
   var lineas = {
-    // ---- Campaña 0: Infantil ----
+    // ---- Campaña 0: Infantil (solo voz e imagen) ----
     c0_01_a: { quien: 'Lumo', escena: 'C0-01', texto: '¡Uy! ¿Dónde estoy?' },
     c0_01_b: { quien: 'Lumo', escena: 'C0-01', texto: 'Soy Lumo. ¿Me ayudas a moverme?' },
+    gc_0_a: { quien: 'Lumo', escena: 'GC-0', texto: '¡Mira! ¡Una luz que parpadea!' },
     c0_02_a: { quien: 'Lumo', escena: 'C0-02', texto: '¡Lo conseguimos! Gracias, amigo.' },
+    c0_02_b: { quien: 'Lumo', escena: 'C0-02', texto: 'Tienes unas orejas muy suaves.' },
+    c0_03_b: { quien: 'Lumo', escena: 'C0-03', texto: '¡Uno, dos, tres! ¡Qué buena fila!' },
     c0_03_a: { quien: 'Lumo', escena: 'C0-03', texto: 'Primero uno, luego otro. ¡Así se llega!' },
     c0_04_a: { quien: 'Lumo', escena: 'C0-04', texto: 'Mira, mi casa.' },
     c0_04_b: { quien: 'Lumo', escena: 'C0-04', texto: 'Tengo que llegar allí.' },
+
+    // ---- Mundo 1: bosque y montañas ----
+    c1_01_b: { quien: 'Búho Bruma', escena: 'C1-01', texto: 'Hmm. Una chispa nueva en mi bosque.' },
+    c1_01_c: { quien: 'Lumo', escena: 'C1-01', texto: 'Me he caído de lejos. ¡Busco a mi familia!' },
+    c1_01_a: { quien: 'Búho Bruma', escena: 'C1-01', texto: 'Las luciérnagas hablan en orden. Escucha su luz.' },
+    c1_01_d: { quien: 'Búho Bruma', escena: 'C1-01', texto: 'Una lucecita se ha perdido por aquí. Se llama Titila.' },
+    c1_01_e: { quien: 'Lumo', escena: 'C1-01', texto: '¡Es de mi familia! Vamos a buscarla.' },
+    c1_06_a: { quien: 'Brasa', escena: 'C1-06', texto: '¡Eh, tú! No necesito ayuda para bajar.' },
+    c1_06_b: { quien: 'Lumo', escena: 'C1-06', texto: '¡Hola! Soy Lumo. ¿Eres de mi familia?' },
+    c1_06_c: { quien: 'Brasa', escena: 'C1-06', texto: 'Soy Brasa. Y puedo sola. ¡Casi siempre!' },
+    c1_06_d: { quien: 'Lumo', escena: 'C1-06', texto: 'Subir juntos es más divertido. Voy ya.' },
+    c1_03_b: { quien: 'Lumo', escena: 'C1-03', texto: 'Subir, subir, subir… ¡siempre igual!' },
+    c1_03_a: { quien: 'Lumo', escena: 'C1-03', texto: '¿Y si repetimos este trozo?' },
+    c1_04_a: { quien: 'Lumo', escena: 'C1-03', texto: 'Repetir tres veces. ¡Así es más corto!' },
+    c1_02_a: { quien: 'Bichito', escena: 'C1-02', texto: '¡Ji, ji! ¿Quién ha movido las tarjetas?' },
+    c1_02_b: { quien: 'Lumo', escena: 'C1-02', texto: '¡Eh! ¿Quién eres tú?' },
+    c1_02_c: { quien: 'Lumo', escena: 'C1-02', texto: 'Un fallo con patas. ¡Vamos a arreglarlo!' },
+    cap1_a_a: { quien: 'Lumo', escena: 'CAP1-A', texto: 'Soy Lumo, de tu familia. Estás a salvo.' },
+    cap1_a_b: { quien: 'Titila', escena: 'CAP1-A', texto: '¡Brillo! ¡Hacía tanto que no brillaba!' },
+    cap1_a_c: { quien: 'Titila', escena: 'CAP1-A', texto: '¡Os espero en el Faro!' },
+    cap1_a_d: { quien: 'Lumo', escena: 'CAP1-A', texto: 'Una ventana encendida. ¡Queda más familia!' },
+    br_2_a: { quien: 'Búho Bruma', escena: 'BR-2', texto: 'Mis luciérnagas vuelven a casa. Gracias, pequeño.' },
+    br_2_b: { quien: 'Búho Bruma', escena: 'BR-2', texto: 'Te presté mi gorra de guía. Quédatela.' },
+    br_2_c: { quien: 'Lumo', escena: 'BR-2', texto: '¡Ahora soy un explorador de verdad!' },
+    cap1_01_a: { quien: 'Brasa', escena: 'CAP1-01', texto: 'Podía bajar sola. Pero… gracias por subir.' },
+    cap1_01_b: { quien: 'Brasa', escena: 'CAP1-01', texto: 'Esto cayó a mi lado. Creo que es tuyo.' },
+    c1_05_a: { quien: 'Lumo', escena: 'CAP1-01', texto: '¡Una pieza de mi brújula! ¡Brilla más!' },
+    cap1_01_c: { quien: 'Brasa', escena: 'CAP1-01', texto: 'Desde aquí se ve el Faro. ¡Mándale un guiño!' },
+    cap1_01_d: { quien: 'Lumo', escena: 'CAP1-01', texto: '¡El Faro me ha contestado! ¡Está despertando!' },
+    cap1_01_e: { quien: 'Brasa', escena: 'CAP1-01', texto: '¡Pues no lo dejemos dormir!' },
+    cap1_02_a: { quien: 'Lumo', escena: 'CAP1-02', texto: 'Bichito está solo y tiene frío.' },
+    cap1_02_b: { quien: 'Bichito', escena: 'CAP1-02', texto: '¿Para mí? ¡Ji, ji!' },
+    cap1_02_c: { quien: 'Lumo', escena: 'CAP1-02', texto: 'Los fallos también necesitan abrigo.' },
+    cap1_03_a: { quien: 'Tinta', escena: 'CAP1-03', texto: '¡Lumo! ¡Tengo un mundo bajo el mar que enseñarte!' },
+    cap1_03_b: { quien: 'Lumo', escena: 'CAP1-03', texto: '¡Allá vamos! El Faro nos espera.' },
+    gc_1_a: { quien: 'Lumo', escena: 'GC-1', texto: 'Esa luz… parpadea como una canción.' },
+
+    // ---- Mundo 2: mar y volcán ----
+    c2_01_a: { quien: 'Tinta', escena: 'C2-01', texto: '¡Bienvenido a mi taller! ¡Todo funciona con instrucciones!' },
+    c2_01_b: { quien: 'Tinta', escena: 'C2-01', texto: 'Construyo un camino de luz para los peces.' },
+    c2_01_c: { quien: 'Lumo', escena: 'C2-01', texto: '¡Qué bien! ¿Has visto a alguien de mi familia?' },
+    c2_01_d: { quien: 'Tinta', escena: 'C2-01', texto: 'Destello juega por aquí. Se esconde muy bien.' },
+    c2_01_e: { quien: 'Lumo', escena: 'C2-01', texto: '¡Pues a buscarlo! Primero, tu camino.' },
+    c2_02_b: { quien: 'Lumo', escena: 'C2-02', texto: 'Otro nicho, otra vez los mismos pasos…' },
+    c2_02_a: { quien: 'Tinta', escena: 'C2-02', texto: 'Una receta se hace una vez y se usa muchas.' },
+    c2_02_c: { quien: 'Lumo', escena: 'C2-02', texto: '¡Un frasco de pasos! Me gusta.' },
+    cap2_a_a: { quien: 'Lumo', escena: 'CAP2-A', texto: '¡Eres Destello! Soy Lumo. Tu familia te busca.' },
+    cap2_a_b: { quien: 'Lumo', escena: 'CAP2-A', texto: 'Otra ventana encendida. ¡Ya van tres!' },
+    tin_2_a: { quien: 'Tinta', escena: 'TIN-2', texto: '¡Mi camino de luz está listo! ¡Mira cómo brilla!' },
+    tin_2_b: { quien: 'Tinta', escena: 'TIN-2', texto: 'Quédate el casco de buceo. Te llevará lejos.' },
+    tin_2_c: { quien: 'Lumo', escena: 'TIN-2', texto: 'Gracias, Tinta. ¡Hasta pronto!' },
+    c2_03_a: { quien: 'Lagarto gigante', escena: 'C2-03', texto: 'Despacio, pequeño. Aquí la tierra aún está caliente.' },
+    c2_03_b: { quien: 'Lumo', escena: 'C2-03', texto: '¡Qué grande eres! ¿Vives aquí?' },
+    c2_03_c: { quien: 'Lagarto gigante', escena: 'C2-03', texto: 'Cuido el corazón del volcán. Pero yo no quepo.' },
+    c2_03_d: { quien: 'Lagarto gigante', escena: 'C2-03', texto: 'Dentro vive Ascua, de tu familia. Gruñe un poco.' },
+    c2_03_e: { quien: 'Lumo', escena: 'C2-03', texto: '¡Yo sí quepo! Déjamelo a mí.' },
+    c2_04_a: { quien: 'Lumo', escena: 'B2-1', texto: 'Algo no encaja. ¿Dónde está el fallo?' },
+    b2_1_a: { quien: 'Lumo', escena: 'B2-1', texto: '¡Bichito! Nos sigue de lejos. ¡Qué curioso!' },
+    b2_2_a: { quien: 'Bichito', escena: 'B2-2', texto: '¡Uy! ¡Ji, ji, ji!' },
+    b2_2_b: { quien: 'Lagarto gigante', escena: 'B2-2', texto: 'Vaya. Su tropiezo ha abierto un camino.' },
+    b2_2_c: { quien: 'Lumo', escena: 'B2-2', texto: '¡A veces un fallo enseña algo nuevo!' },
+    cap2_b_a: { quien: 'Lumo', escena: 'CAP2-B', texto: 'Lo sé. Pero no me iba sin ti.' },
+    cap2_b_b: { quien: 'Ascua', escena: 'CAP2-B', texto: '…Gracias. Pero no se lo digas a nadie.' },
+    cap2_b_c: { quien: 'Ascua', escena: 'CAP2-B', texto: '¡Os espero en el Faro! ¡No tardéis!' },
+    cap2_01_a: { quien: 'Lagarto gigante', escena: 'CAP2-01', texto: 'Toma. Estas gafas protegen del calor del volcán.' },
+    cap2_01_b: { quien: 'Lumo', escena: 'CAP2-01', texto: '¡Me quedan genial! Gracias, Lagarto.' },
+    cap2_01_c: { quien: 'Lumo', escena: 'CAP2-01', texto: '¡Contesta más fuerte! Casi dice la canción entera.' },
+    cap2_01_d: { quien: 'Lagarto gigante', escena: 'CAP2-01', texto: 'La luz tarda en llegar. Pero siempre llega.' },
+    cap2_02_a: { quien: 'Lumo', escena: 'CAP2-02', texto: '¡Una pieza de mi brújula! ¿Quién la dejó?' },
+    c2_05_a: { quien: 'Lumo', escena: 'CAP2-02', texto: 'Gracias, Bichito. Cada fallo me ha enseñado algo.' },
+    cap2_03_a: { quien: 'Bit', escena: 'CAP2-03', texto: 'Saludos. Detecto una chispa visitante. ¿Colaboramos?' },
+    cap2_03_b: { quien: 'Lumo', escena: 'CAP2-03', texto: '¡Hola, Bit! ¡Vamos a tu ciudad!' },
+    ar_2_a: { quien: 'Lumo', escena: 'AR-2', texto: 'Antes, en RUMBO: una tormenta apagó el Faro Mayor.' },
+    ar_2_b: { quien: 'Lumo', escena: 'AR-2', texto: 'Mi brújula se rompió y mi familia se perdió.' },
+    ar_2_c: { quien: 'Lumo', escena: 'AR-2', texto: 'Ya he encontrado a Titila y a Brasa.' },
+    ar_2_d: { quien: 'Lumo', escena: 'AR-2', texto: 'Ahora toca el mar. ¿Me ayudas?' },
+    gc_2_a: { quien: 'Lumo', escena: 'GC-2', texto: 'Otra vez esa luz. Corto, corto, largo.' },
+
+    // ---- Mundo 3: ciudad y espacio ----
+    c3_01_b: { quien: 'Bit', escena: 'C3-01', texto: 'Saludos. Soy Bit. Esta ciudad está sin energía.' },
+    c3_01_c: { quien: 'Lumo', escena: 'C3-01', texto: '¡Hola, Bit! Yo busco a mi familia.' },
+    c3_01_d: { quien: 'Bit', escena: 'C3-01', texto: 'Mi vecina Píxel se perdió entre los cables.' },
+    c3_01_e: { quien: 'Bit', escena: 'C3-01', texto: 'Yo no sé improvisar. ¿Me enseñas?' },
+    c3_01_f: { quien: 'Lumo', escena: 'C3-01', texto: 'Tú me enseñas a pensar. Yo, a improvisar.' },
+    c3_01_a: { quien: 'Bit', escena: 'C3-02', texto: 'Observa, decide, actúa.' },
+    c3_02_a: { quien: 'Bit', escena: 'C3-02', texto: 'Si no hay muro, avanzo. Si hay muro, giro.' },
+    c3_02_b: { quien: 'Lumo', escena: 'C3-02', texto: '¡Es una regla que decide por ti!' },
+    bi_3_a: { quien: 'Bichito', escena: 'BI-3', texto: '¡Yo cuento! ¡Uno, dos, siete, cuatro!' },
+    bi_3_b: { quien: 'Bit', escena: 'BI-3', texto: 'Error detectado. ¡Culpable: Bichito!' },
+    bi_3_c: { quien: 'Lumo', escena: 'BI-3', texto: 'No es culpable. Quería ayudar.' },
+    bi_3_d: { quien: 'Bit', escena: 'BI-3', texto: 'Procesando… Acepto. Errar también es aprender.' },
+    cap3_a_a: { quien: 'Píxel', escena: 'CAP3-A', texto: '¿Y esto? ¿Y eso? ¿Cómo funcionan los cables?' },
+    cap3_a_b: { quien: 'Bit', escena: 'CAP3-A', texto: 'Píxel. Te busqué en 3.482 cables.' },
+    cap3_a_c: { quien: 'Lumo', escena: 'CAP3-A', texto: '¡Es Píxel! Tu familia te echa de menos.' },
+    cap3_a_d: { quien: 'Píxel', escena: 'CAP3-A', texto: '¿Mi familia? ¿Y dónde está? ¿Y cómo vamos?' },
+    cap3_a_e: { quien: 'Lumo', escena: 'CAP3-A', texto: 'Cinco ventanas. ¡Casi está!' },
+    c3_04_b: { quien: 'Bit', escena: 'C3-04', texto: 'La señal de Cometa viene de la estación espacial.' },
+    c3_04_c: { quien: 'Lumo', escena: 'C3-04', texto: '¡Cometa! ¿Otra chispa de mi familia?' },
+    c3_04_d: { quien: 'Bit', escena: 'C3-04', texto: 'Afirmativo. Y la nave tiene poca memoria.' },
+    c3_03_a: { quien: 'Bichito', escena: 'BI-4a', texto: 'No quería romper nada. Solo estaba perdido.' },
+    bi_4a_a: { quien: 'Lumo', escena: 'BI-4a', texto: '¡Eres una chispa! La tormenta te apagó.' },
+    bi_4a_b: { quien: 'Bichito', escena: 'BI-4a', texto: 'Lo desordeno todo buscando el camino a casa.' },
+    bi_4a_c: { quien: 'Lumo', escena: 'BI-4a', texto: 'Tus fallos siempre apuntaban hacia el Faro.' },
+    c3_04_a: { quien: 'Lumo', escena: 'BI-4b', texto: 'Los errores también necesitan amigos.' },
+    bi_4b_a: { quien: 'Lumo', escena: 'BI-4b', texto: 'Ven con nosotros. ¡Encenderemos el Faro juntos!' },
+    bi_4b_b: { quien: 'Bit', escena: 'BI-4b', texto: 'Bichito, bienvenido. Te asigno el asiento de copiloto.' },
+    cap3_b_a: { quien: 'Cometa', escena: 'CAP3-B', texto: 'Shhh… escucha cómo bailan las estrellas.' },
+    cap3_b_b: { quien: 'Lumo', escena: 'CAP3-B', texto: 'Cometa, soy Lumo. Es hora de volver a casa.' },
+    cap3_b_c: { quien: 'Cometa', escena: 'CAP3-B', texto: '¿A casa? Yo creía que el cielo era mi casa.' },
+    cap3_b_d: { quien: 'Bit', escena: 'CAP3-B', texto: 'Reactor activo. Aquí tienes la tercera pieza.' },
+    c3_05_a: { quien: 'Lumo', escena: 'CAP3-B', texto: 'Ya casi está completa.' },
+    bit_2_a: { quien: 'Bit', escena: 'BIT-2', texto: 'Mi ciudad brillará cuando enciendas el Faro.' },
+    bit_2_b: { quien: 'Bit', escena: 'BIT-2', texto: 'La antena te queda bien. Es tuya, para siempre.' },
+    bit_2_c: { quien: 'Lumo', escena: 'BIT-2', texto: '¡Gracias, Bit! Has aprendido a improvisar.' },
+    ar_3_a: { quien: 'Lumo', escena: 'AR-3', texto: 'Antes, en RUMBO: una tormenta apagó el Faro Mayor.' },
+    ar_3_b: { quien: 'Lumo', escena: 'AR-3', texto: 'Mi brújula se rompió. La voy reparando pieza a pieza.' },
+    ar_3_c: { quien: 'Lumo', escena: 'AR-3', texto: 'Cuatro chispas de mi familia ya brillan en el Faro.' },
+    ar_3_d: { quien: 'Lumo', escena: 'AR-3', texto: 'Y un amigo travieso, Bichito, nos sigue de lejos.' },
+    ar_3_e: { quien: 'Lumo', escena: 'AR-3', texto: 'Ahora toca la ciudad de Bit. ¿Me ayudas?' },
+    gc_3_a: { quien: 'Lumo', escena: 'GC-3', texto: 'Corto, corto, largo. ¡Quiere decirme algo!' },
+
+    // ---- El Faro Mayor y el gran final ----
+    cf_01_a: { quien: 'Lumo', escena: 'CF-01', texto: 'Tres piezas. Una brújula entera.' },
+    cf_01_b: { quien: 'Lumo', escena: 'CF-01', texto: 'Ya sé el camino. Subamos al Faro.' },
+    cf_01_c: { quien: 'Bichito', escena: 'CF-01', texto: '¡Ji! ¡Yo subo el primero!' },
+    cf_02_a: { quien: 'Brasa', escena: 'CF-02', texto: '¡Yo seré la primera en brillar!' },
+    cf_02_b: { quien: 'Lumo', escena: 'CF-02', texto: 'Falta el último paso. ¡Con todo lo que sabemos!' },
+    fin_01_a: { quien: 'Lumo', escena: 'FIN-01', texto: '¡Ahora! ¡Que se encienda la luz!' },
+    fin_01_b: { quien: 'Brasa', escena: 'FIN-01', texto: '¡Lo hicimos! ¡Juntos!' },
+    fin_01_c: { quien: 'Bichito', escena: 'FIN-01', texto: '¡Ji, ji! ¡Yo también brillo!' },
+    fin_01_d: { quien: 'Lumo', escena: 'FIN-01', texto: 'Sigues siendo Bichito. Y brillas.' },
+    cf_03_a: { quien: 'Abuela Chispa', escena: 'FIN-02', texto: 'Cada noche te enviaba mis guiños. Sabía que los reconocerías.' },
+    cf_03_b: { quien: 'Lumo', escena: 'FIN-02', texto: 'Eran patrones… ¡los he aprendido!' },
+    cf_03_c: { quien: 'Abuela Chispa', escena: 'FIN-02', texto: 'Nadie te ha dado el camino. Lo has encontrado tú, con cada error.' },
+    fin_02_a: { quien: 'Lumo', escena: 'FIN-02', texto: 'Te he echado mucho de menos, abuela.' },
+    fin_02_b: { quien: 'Abuela Chispa', escena: 'FIN-02', texto: 'Esta corona es para quien enciende el Faro.' },
+    cf_05_a: { quien: 'Lumo', escena: 'FIN-04', texto: 'Ahora te toca a ti guiar a otros.' },
+    fin_04_a: { quien: 'Lumo', escena: 'FIN-04', texto: 'En el Laboratorio puedes crear tus propios retos.' },
 
     // ---- Aventura de bienvenida (para Primaria; Infantil usa las escenas C0) ----
     bv_01_a: { quien: 'Lumo', escena: 'BV-01', texto: '¡Hola! Soy Lumo, una chispa curiosa y muy despistada.' },
@@ -750,33 +891,6 @@
     bv_05_b: { quien: 'Lumo', escena: 'BV-05', texto: 'Con estas tarjetas voy a arreglar mi brújula.' },
     bv_05_c: { quien: 'Lumo', escena: 'BV-05', texto: 'Más allá del bosque me espera el Faro Mayor.' },
     bv_05_d: { quien: 'Lumo', escena: 'BV-05', texto: 'Toda la aventura empieza ahora. ¿Vienes conmigo?' },
-
-    // ---- Campaña 1 ----
-    c1_01_a: { quien: 'Búho Bruma', escena: 'C1-01', texto: 'Las luciérnagas hablan en orden. Escucha su luz.' },
-    c1_02_a: { quien: 'Bichito', escena: 'C1-02', texto: '¡Ji, ji! ¿Quién ha movido las tarjetas?' },
-    c1_03_a: { quien: 'Lumo', escena: 'C1-03', texto: '¿Y si repetimos este trozo?' },
-    c1_04_a: { quien: 'Lumo', escena: 'C1-04', texto: 'Repetir tres veces. ¡Así es más corto!' },
-    c1_05_a: { quien: 'Lumo', escena: 'C1-05', texto: 'La brújula brilla un poquito más.' },
-
-    // ---- Campaña 2 ----
-    c2_01_a: { quien: 'Tinta', escena: 'C2-01', texto: '¡Todo funciona con instrucciones!' },
-    c2_02_a: { quien: 'Tinta', escena: 'C2-02', texto: 'Una receta se hace una vez y se usa muchas.' },
-    c2_03_a: { quien: 'Lagarto gigante', escena: 'C2-03', texto: 'Aquí las piedras se mueven. Piensa antes de empujar.' },
-    c2_04_a: { quien: 'Lumo', escena: 'C2-04', texto: 'Algo no encaja. ¿Dónde está el fallo?' },
-    c2_05_a: { quien: 'Lumo', escena: 'C2-05', texto: 'Cada fallo me ha enseñado algo.' },
-
-    // ---- Campaña 3 ----
-    c3_01_a: { quien: 'Bit', escena: 'C3-01', texto: 'Observa, decide, actúa.' },
-    c3_02_a: { quien: 'Bit', escena: 'C3-02', texto: 'Si hay luz, avanza. Si no, espera.' },
-    c3_03_a: { quien: 'Bichito', escena: 'C3-03', texto: 'No quería romper nada. Solo estaba perdido.' },
-    c3_04_a: { quien: 'Lumo', escena: 'C3-04', texto: 'Los errores también necesitan amigos.' },
-    c3_05_a: { quien: 'Lumo', escena: 'C3-05', texto: 'Ya casi está completa.' },
-
-    // ---- Final ----
-    cf_03_a: { quien: 'Abuela Chispa', escena: 'CF-03', texto: 'Cada noche te enviaba mis destellos. Sabía que los reconocerías.' },
-    cf_03_b: { quien: 'Lumo', escena: 'CF-03', texto: 'Eran patrones… ¡los he aprendido!' },
-    cf_03_c: { quien: 'Abuela Chispa', escena: 'CF-03', texto: 'Nadie te ha dado el camino. Lo has encontrado tú, con cada error.' },
-    cf_05_a: { quien: 'Lumo', escena: 'CF-05', texto: 'Ahora te toca a ti guiar a otros.' },
 
     // ---- Instrucciones de Infantil (voz + imagen) ----
     in_tarjeta: { quien: 'Lumo', texto: 'Pulsa una tarjeta.' },
@@ -806,6 +920,1559 @@
   };
 
   return { version: 1, lineas: lineas };
+});
+
+
+/* ===== src/datos/escenas.js ===== */
+;/*
+ * RUMBO — Escenas de la historia «La luz de Lumo» (v2), dirigidas por datos.
+ *
+ * Cada escena dice cuándo se dispara (antes o después de un reto), para qué etapa, sobre qué fondo y qué frases dice.
+ * Las frases viven en voces-es.js (aquí solo su identificador). Guion completo: docs/guion-v2.md.
+ *
+ * ESTADO (fase 2): los pasos de puesta en escena (entradas, acciones, objetos, cámara, sonido) se añadirán en la fase 3
+ * junto con el motor de escenas; hoy cada escena es una lista de intervenciones («lineas») sobre un fondo de zona.
+ *
+ * Reglas de elegibilidad (función pendientes, pura y probada):
+ *   - Infantil solo ve escenas de etapa «infantil»; Primaria, solo las de etapa «primaria».
+ *   - Las escenas FIN-* solo se ven en el último reto de la aventura del propio curso (soloFinalCurso).
+ *   - «siNoVista»: solo si ese otro identificador no se ha visto (resúmenes «Antes, en RUMBO…»).
+ *   - «requiere: guinos»: no se ofrece hasta que exista el guiño visual (fase 4); ver GUINOS_ACTIVOS.
+ */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module === 'object' && module.exports) { module.exports = api; } else { root.RumboEscenas = api; }
+})(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+
+  // Se pondrá a true en la fase 4, cuando el Faro del mapa pueda hacer el guiño (corto, corto, largo).
+  var GUINOS_ACTIVOS = false;
+
+  var ESCENAS = [
+  {
+    id: 'C0-01',
+    titulo: 'Un vientazo en el valle',
+    etapa: 'infantil',
+    zona: 'jardin',
+    dur: 18,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'i3-01'
+    },
+    lineas: [
+      {
+        id: 'c0_01_a',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'c0_01_b',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'BV-01',
+    titulo: 'BV-01',
+    etapa: 'primaria',
+    zona: 'jardin',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'i3-01'
+    },
+    lineas: [
+      {
+        id: 'bv_01_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_01_b',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_01_c',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_01_d',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_01_e',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_01_f',
+        emocion: 'normal'
+      }
+    ]
+  },
+  {
+    id: 'BV-02',
+    titulo: 'BV-02',
+    etapa: 'primaria',
+    zona: 'jardin',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'i3-02'
+    },
+    lineas: [
+      {
+        id: 'bv_02_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_02_b',
+        emocion: 'normal'
+      }
+    ]
+  },
+  {
+    id: 'BV-03',
+    titulo: 'BV-03',
+    etapa: 'primaria',
+    zona: 'jardin',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'i3-04'
+    },
+    lineas: [
+      {
+        id: 'bv_03_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_03_b',
+        emocion: 'normal'
+      }
+    ]
+  },
+  {
+    id: 'BV-04',
+    titulo: 'BV-04',
+    etapa: 'primaria',
+    zona: 'jardin',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'i3-05'
+    },
+    lineas: [
+      {
+        id: 'bv_04_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_04_b',
+        emocion: 'normal'
+      }
+    ]
+  },
+  {
+    id: 'GC-0',
+    titulo: 'Una luz que parpadea',
+    etapa: 'infantil',
+    zona: 'jardin',
+    dur: 6,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'i3-01'
+    },
+    lineas: [
+      {
+        id: 'gc_0_a',
+        emocion: 'sorprendido'
+      }
+    ],
+    requiere: 'guinos'
+  },
+  {
+    id: 'BV-05',
+    titulo: 'BV-05',
+    etapa: 'primaria',
+    zona: 'jardin',
+    dur: 15,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'i3-05'
+    },
+    lineas: [
+      {
+        id: 'bv_05_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_05_b',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_05_c',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_05_d',
+        emocion: 'normal'
+      }
+    ]
+  },
+  {
+    id: 'C0-02',
+    titulo: 'Conejo y la flor',
+    etapa: 'infantil',
+    zona: 'jardin',
+    dur: 20,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'i3-05'
+    },
+    lineas: [
+      {
+        id: 'c0_02_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c0_02_b',
+        emocion: 'tierno'
+      }
+    ]
+  },
+  {
+    id: 'C0-03',
+    titulo: 'El camino de los animales',
+    etapa: 'infantil',
+    zona: 'granja',
+    dur: 20,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'i4-05'
+    },
+    lineas: [
+      {
+        id: 'c0_03_b',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'c0_03_a',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'C0-04',
+    titulo: 'Mira, mi casa',
+    etapa: 'infantil',
+    zona: 'playa',
+    dur: 22,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'i5-05'
+    },
+    lineas: [
+      {
+        id: 'c0_04_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'c0_04_b',
+        emocion: 'emocionado'
+      }
+    ]
+  },
+  {
+    id: 'C1-01',
+    titulo: 'El bosque que parpadea',
+    etapa: 'primaria',
+    zona: 'bosque',
+    dur: 30,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm1-01'
+    },
+    lineas: [
+      {
+        id: 'c1_01_b',
+        emocion: 'sereno'
+      },
+      {
+        id: 'c1_01_c',
+        emocion: 'ups'
+      },
+      {
+        id: 'c1_01_a',
+        emocion: 'sereno'
+      },
+      {
+        id: 'c1_01_d',
+        emocion: 'tierno'
+      },
+      {
+        id: 'c1_01_e',
+        emocion: 'emocionado'
+      }
+    ]
+  },
+  {
+    id: 'GC-1',
+    titulo: 'GC-1',
+    etapa: 'primaria',
+    zona: 'bosque',
+    dur: 6,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-01'
+    },
+    lineas: [
+      {
+        id: 'gc_1_a',
+        emocion: 'sorprendido'
+      }
+    ],
+    requiere: 'guinos'
+  },
+  {
+    id: 'CAP1-A',
+    titulo: 'La lucecita del arroyo',
+    etapa: 'primaria',
+    zona: 'bosque',
+    dur: 28,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-13'
+    },
+    lineas: [
+      {
+        id: 'cap1_a_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap1_a_b',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap1_a_c',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap1_a_d',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'BR-2',
+    titulo: 'La gorra de Bruma',
+    etapa: 'primaria',
+    zona: 'bosque',
+    dur: 15,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-13'
+    },
+    lineas: [
+      {
+        id: 'br_2_a',
+        emocion: 'sereno'
+      },
+      {
+        id: 'br_2_b',
+        emocion: 'tierno'
+      },
+      {
+        id: 'br_2_c',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'C1-06',
+    titulo: 'La voz de la cumbre',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 22,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm1-14'
+    },
+    lineas: [
+      {
+        id: 'c1_06_a',
+        emocion: 'terco'
+      },
+      {
+        id: 'c1_06_b',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c1_06_c',
+        emocion: 'terco'
+      },
+      {
+        id: 'c1_06_d',
+        emocion: 'tierno'
+      }
+    ]
+  },
+  {
+    id: 'C1-03',
+    titulo: 'Siempre lo mismo',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 28,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm1-15'
+    },
+    lineas: [
+      {
+        id: 'c1_03_b',
+        emocion: 'ups'
+      },
+      {
+        id: 'c1_03_a',
+        emocion: 'concentrado'
+      },
+      {
+        id: 'c1_04_a',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'C1-02',
+    titulo: '¿Quién ha movido las tarjetas?',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 20,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm1-18'
+    },
+    lineas: [
+      {
+        id: 'c1_02_a',
+        emocion: 'travieso'
+      },
+      {
+        id: 'c1_02_b',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'c1_02_c',
+        emocion: 'concentrado'
+      }
+    ]
+  },
+  {
+    id: 'CAP1-01',
+    titulo: 'La primera luz',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 32,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-25'
+    },
+    lineas: [
+      {
+        id: 'cap1_01_a',
+        emocion: 'terco'
+      },
+      {
+        id: 'cap1_01_b',
+        emocion: 'orgulloso'
+      },
+      {
+        id: 'c1_05_a',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'cap1_01_c',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'cap1_01_d',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'cap1_01_e',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'CAP1-02',
+    titulo: 'Una lucecita para Bichito',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 18,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-25'
+    },
+    lineas: [
+      {
+        id: 'cap1_02_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap1_02_b',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap1_02_c',
+        emocion: 'tierno'
+      }
+    ]
+  },
+  {
+    id: 'CAP1-03',
+    titulo: 'Fin del capítulo 1 y avance',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 15,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-25'
+    },
+    lineas: [
+      {
+        id: 'cap1_03_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap1_03_b',
+        emocion: 'emocionado'
+      }
+    ],
+    tipo: 'creditos',
+    creditos: {
+      titulo: 'Capítulo 1 · La primera luz',
+      filas: [
+        [
+          'Lumo',
+          'La chispa que busca su camino'
+        ],
+        [
+          'Búho Bruma',
+          'Bosque encantado'
+        ],
+        [
+          'Titila',
+          'Rescatada en el bosque'
+        ],
+        [
+          'Brasa',
+          'Rescatada en las montañas'
+        ],
+        [
+          'Bichito',
+          'El fallo que nos sigue'
+        ]
+      ]
+    }
+  },
+  {
+    id: 'AR-2',
+    titulo: 'Antes, en RUMBO… (hasta el mar)',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 12,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-01'
+    },
+    lineas: [
+      {
+        id: 'ar_2_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'ar_2_b',
+        emocion: 'normal'
+      },
+      {
+        id: 'ar_2_c',
+        emocion: 'orgulloso'
+      },
+      {
+        id: 'ar_2_d',
+        emocion: 'alegre'
+      }
+    ],
+    siNoVista: 'CAP1-03'
+  },
+  {
+    id: 'C2-01',
+    titulo: 'Todo funciona con instrucciones',
+    etapa: 'primaria',
+    zona: 'mar',
+    dur: 30,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-01'
+    },
+    lineas: [
+      {
+        id: 'c2_01_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c2_01_b',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'c2_01_c',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c2_01_d',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c2_01_e',
+        emocion: 'emocionado'
+      }
+    ]
+  },
+  {
+    id: 'GC-2',
+    titulo: 'GC-2',
+    etapa: 'primaria',
+    zona: 'mar',
+    dur: 6,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-08'
+    },
+    lineas: [
+      {
+        id: 'gc_2_a',
+        emocion: 'concentrado'
+      }
+    ],
+    requiere: 'guinos'
+  },
+  {
+    id: 'C2-02',
+    titulo: 'Una receta, muchas veces',
+    etapa: 'primaria',
+    zona: 'mar',
+    dur: 22,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-11'
+    },
+    lineas: [
+      {
+        id: 'c2_02_b',
+        emocion: 'ups'
+      },
+      {
+        id: 'c2_02_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c2_02_c',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'CAP2-A',
+    titulo: 'Destello se esconde',
+    etapa: 'primaria',
+    zona: 'mar',
+    dur: 28,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-13'
+    },
+    lineas: [
+      {
+        id: 'cap2_a_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap2_a_b',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'TIN-2',
+    titulo: 'El camino de luz',
+    etapa: 'primaria',
+    zona: 'mar',
+    dur: 15,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-13'
+    },
+    lineas: [
+      {
+        id: 'tin_2_a',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'tin_2_b',
+        emocion: 'tierno'
+      },
+      {
+        id: 'tin_2_c',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'C2-03',
+    titulo: 'El lagarto que no cabe',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 30,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-14'
+    },
+    lineas: [
+      {
+        id: 'c2_03_a',
+        emocion: 'sereno'
+      },
+      {
+        id: 'c2_03_b',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'c2_03_c',
+        emocion: 'sereno'
+      },
+      {
+        id: 'c2_03_d',
+        emocion: 'tierno'
+      },
+      {
+        id: 'c2_03_e',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'B2-1',
+    titulo: 'Alguien nos sigue',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-17'
+    },
+    lineas: [
+      {
+        id: 'c2_04_a',
+        emocion: 'concentrado'
+      },
+      {
+        id: 'b2_1_a',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'B2-2',
+    titulo: 'El fallo que abrió un camino',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 18,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-22'
+    },
+    lineas: [
+      {
+        id: 'b2_2_a',
+        emocion: 'ups'
+      },
+      {
+        id: 'b2_2_b',
+        emocion: 'divertido'
+      },
+      {
+        id: 'b2_2_c',
+        emocion: 'emocionado'
+      }
+    ]
+  },
+  {
+    id: 'CAP2-B',
+    titulo: 'Ascua, la gruñona',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 32,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-25'
+    },
+    lineas: [
+      {
+        id: 'cap2_b_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap2_b_b',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap2_b_c',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'CAP2-01',
+    titulo: 'El Faro contesta más fuerte',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 30,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-25'
+    },
+    lineas: [
+      {
+        id: 'cap2_01_a',
+        emocion: 'sereno'
+      },
+      {
+        id: 'cap2_01_b',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap2_01_c',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'cap2_01_d',
+        emocion: 'sereno'
+      }
+    ]
+  },
+  {
+    id: 'CAP2-02',
+    titulo: 'La pieza que volvió',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 18,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-25'
+    },
+    lineas: [
+      {
+        id: 'cap2_02_a',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'c2_05_a',
+        emocion: 'tierno'
+      }
+    ]
+  },
+  {
+    id: 'CAP2-03',
+    titulo: 'Fin del capítulo 2 y avance',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 15,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-25'
+    },
+    lineas: [
+      {
+        id: 'cap2_03_a',
+        emocion: 'literal'
+      },
+      {
+        id: 'cap2_03_b',
+        emocion: 'alegre'
+      }
+    ],
+    tipo: 'creditos',
+    creditos: {
+      titulo: 'Capítulo 2 · El corazón del volcán',
+      filas: [
+        [
+          'Tinta',
+          'Mundo submarino'
+        ],
+        [
+          'Destello',
+          'Rescatado en el mar'
+        ],
+        [
+          'Lagarto gigante',
+          'Isla volcánica'
+        ],
+        [
+          'Ascua',
+          'Rescatada en el volcán'
+        ],
+        [
+          'Bichito',
+          'Nos devolvió una pieza'
+        ]
+      ]
+    }
+  },
+  {
+    id: 'AR-3',
+    titulo: 'Antes, en RUMBO… (hasta la ciudad)',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm3-p1'
+    },
+    lineas: [
+      {
+        id: 'ar_3_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'ar_3_b',
+        emocion: 'normal'
+      },
+      {
+        id: 'ar_3_c',
+        emocion: 'orgulloso'
+      },
+      {
+        id: 'ar_3_d',
+        emocion: 'alegre'
+      },
+      {
+        id: 'ar_3_e',
+        emocion: 'emocionado'
+      }
+    ],
+    siNoVista: 'CAP2-03',
+    marca: [
+      'AR-2'
+    ]
+  },
+  {
+    id: 'C3-01',
+    titulo: 'La ciudad sin energía',
+    etapa: 'primaria',
+    zona: 'ciudad',
+    dur: 30,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm3-p1'
+    },
+    lineas: [
+      {
+        id: 'c3_01_b',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_01_c',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c3_01_d',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_01_e',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_01_f',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'BI-3',
+    titulo: 'Bichito quiere ayudar',
+    etapa: 'primaria',
+    zona: 'ciudad',
+    dur: 28,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm3-04'
+    },
+    lineas: [
+      {
+        id: 'bi_3_a',
+        emocion: 'ilusionado'
+      },
+      {
+        id: 'bi_3_b',
+        emocion: 'literal'
+      },
+      {
+        id: 'bi_3_c',
+        emocion: 'concentrado'
+      },
+      {
+        id: 'bi_3_d',
+        emocion: 'sorprendido'
+      }
+    ]
+  },
+  {
+    id: 'GC-3',
+    titulo: 'GC-3',
+    etapa: 'primaria',
+    zona: 'ciudad',
+    dur: 6,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-05'
+    },
+    lineas: [
+      {
+        id: 'gc_3_a',
+        emocion: 'emocionado'
+      }
+    ],
+    requiere: 'guinos'
+  },
+  {
+    id: 'C3-02',
+    titulo: 'Observa, decide, actúa',
+    etapa: 'primaria',
+    zona: 'ciudad',
+    dur: 25,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm3-06'
+    },
+    lineas: [
+      {
+        id: 'c3_01_a',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_02_a',
+        emocion: 'concentrado'
+      },
+      {
+        id: 'c3_02_b',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'CAP3-A',
+    titulo: 'Píxel entre los cables',
+    etapa: 'primaria',
+    zona: 'ciudad',
+    dur: 28,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-13'
+    },
+    lineas: [
+      {
+        id: 'cap3_a_a',
+        emocion: 'curioso'
+      },
+      {
+        id: 'cap3_a_b',
+        emocion: 'literal'
+      },
+      {
+        id: 'cap3_a_c',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap3_a_d',
+        emocion: 'curioso'
+      },
+      {
+        id: 'cap3_a_e',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'C3-04',
+    titulo: 'Rumbo a la estación',
+    etapa: 'primaria',
+    zona: 'espacio',
+    dur: 20,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm3-14'
+    },
+    lineas: [
+      {
+        id: 'c3_04_b',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_04_c',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'c3_04_d',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'BI-4a',
+    titulo: 'Una chispa sin luz',
+    etapa: 'primaria',
+    zona: 'espacio',
+    dur: 30,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-21'
+    },
+    lineas: [
+      {
+        id: 'c3_03_a',
+        emocion: 'sincero'
+      },
+      {
+        id: 'bi_4a_a',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'bi_4a_b',
+        emocion: 'sincero'
+      },
+      {
+        id: 'bi_4a_c',
+        emocion: 'tierno'
+      }
+    ]
+  },
+  {
+    id: 'BI-4b',
+    titulo: 'Un amigo más',
+    etapa: 'primaria',
+    zona: 'espacio',
+    dur: 16,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-21'
+    },
+    lineas: [
+      {
+        id: 'c3_04_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'bi_4b_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'bi_4b_b',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'CAP3-B',
+    titulo: 'Cometa y el reactor',
+    etapa: 'primaria',
+    zona: 'espacio',
+    dur: 32,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-25'
+    },
+    lineas: [
+      {
+        id: 'cap3_b_a',
+        emocion: 'soñador'
+      },
+      {
+        id: 'cap3_b_b',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap3_b_c',
+        emocion: 'soñador'
+      },
+      {
+        id: 'cap3_b_d',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_05_a',
+        emocion: 'emocionado'
+      }
+    ]
+  },
+  {
+    id: 'BIT-2',
+    titulo: 'La antena de Bit',
+    etapa: 'primaria',
+    zona: 'espacio',
+    dur: 16,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-25'
+    },
+    lineas: [
+      {
+        id: 'bit_2_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'bit_2_b',
+        emocion: 'literal'
+      },
+      {
+        id: 'bit_2_c',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'CF-01',
+    titulo: 'La brújula completa',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 28,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'f-01'
+    },
+    lineas: [
+      {
+        id: 'cf_01_a',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'cf_01_b',
+        emocion: 'orgulloso'
+      },
+      {
+        id: 'cf_01_c',
+        emocion: 'ilusionado'
+      }
+    ]
+  },
+  {
+    id: 'CF-02',
+    titulo: 'Todos a sus puestos',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 20,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'f-03'
+    },
+    lineas: [
+      {
+        id: 'cf_02_a',
+        emocion: 'orgulloso'
+      },
+      {
+        id: 'cf_02_b',
+        emocion: 'concentrado'
+      }
+    ]
+  },
+  {
+    id: 'FIN-01',
+    titulo: 'El Faro se enciende',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 35,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'f-03'
+    },
+    lineas: [
+      {
+        id: 'fin_01_a',
+        emocion: 'concentrado'
+      },
+      {
+        id: 'fin_01_b',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'fin_01_c',
+        emocion: 'ilusionado'
+      },
+      {
+        id: 'fin_01_d',
+        emocion: 'tierno'
+      }
+    ],
+    soloFinalCurso: true
+  },
+  {
+    id: 'FIN-02',
+    titulo: 'La abuela Chispa',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 35,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'f-03'
+    },
+    lineas: [
+      {
+        id: 'cf_03_a',
+        emocion: 'serena'
+      },
+      {
+        id: 'cf_03_b',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'cf_03_c',
+        emocion: 'serena'
+      },
+      {
+        id: 'fin_02_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'fin_02_b',
+        emocion: 'tierna'
+      }
+    ],
+    soloFinalCurso: true
+  },
+  {
+    id: 'FIN-03',
+    titulo: 'Gracias por encender el Faro',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: null,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'f-03'
+    },
+    lineas: [],
+    soloFinalCurso: true,
+    tipo: 'creditos',
+    creditos: {
+      titulo: 'Gracias por encender el Faro',
+      filas: [
+        [
+          'Búho Bruma',
+          'Bosque encantado · «Las luciérnagas hablaban en orden.»'
+        ],
+        [
+          'Brasa',
+          'Reino de las montañas · «Subir juntos es más divertido.»'
+        ],
+        [
+          'Tinta',
+          'Mundo submarino · «Una receta se usa muchas veces.»'
+        ],
+        [
+          'Lagarto gigante',
+          'Isla volcánica · «Hasta un fallo puede abrir un camino.»'
+        ],
+        [
+          'Bit',
+          'Ciudad tecnológica · «Observa, decide, actúa.»'
+        ],
+        [
+          'Cometa',
+          'Mundo espacial · «Los errores también necesitan amigos.»'
+        ],
+        [
+          'Abuela Chispa',
+          'El Faro Mayor · La guardiana del Faro'
+        ],
+        [
+          'Bichito',
+          'El Faro Mayor · El fallo que volvió a brillar'
+        ]
+      ]
+    }
+  },
+  {
+    id: 'FIN-04',
+    titulo: 'Ahora te toca a ti',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 20,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'f-03'
+    },
+    lineas: [
+      {
+        id: 'cf_05_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'fin_04_a',
+        emocion: 'emocionado'
+      }
+    ],
+    soloFinalCurso: true,
+    final: true
+  }
+];
+
+  // Hitos del guiño de la abuela (corto, corto, largo). «respuesta»: el Faro contesta; «encendido»: el final.
+  var GUINOS = [
+  {
+    id: 'G-01',
+    tipo: 'guino',
+    infantil: 'i3-01',
+    primaria: 'm1-01'
+  },
+  {
+    id: 'G-02',
+    tipo: 'guino',
+    primaria: 'm1-13'
+  },
+  {
+    id: 'G-03',
+    tipo: 'guino',
+    infantil: 'i5-04',
+    primaria: 'm1-17'
+  },
+  {
+    id: 'G-I2',
+    tipo: 'guino',
+    infantil: 'i4-05'
+  },
+  {
+    id: 'R-1',
+    tipo: 'respuesta',
+    primaria: 'm1-25'
+  },
+  {
+    id: 'G-04',
+    tipo: 'guino',
+    primaria: 'm2-08'
+  },
+  {
+    id: 'G-05',
+    tipo: 'guino',
+    primaria: 'm2-13'
+  },
+  {
+    id: 'R-2',
+    tipo: 'respuesta',
+    primaria: 'm2-25'
+  },
+  {
+    id: 'G-06',
+    tipo: 'guino',
+    primaria: 'm3-05'
+  },
+  {
+    id: 'G-07',
+    tipo: 'guino',
+    primaria: 'm3-13'
+  },
+  {
+    id: 'G-08',
+    tipo: 'guino',
+    primaria: 'm3-25'
+  },
+  {
+    id: 'R-3',
+    tipo: 'encendido',
+    primaria: 'f-03'
+  }
+];
+
+  // Las seis chispas de la familia de Lumo: se rescatan en el último reto de su zona y encienden una ventana del Faro.
+  var CHISPAS = [
+  {
+    id: 'titila',
+    nombre: 'Titila',
+    zona: 'bosque',
+    meta: 'm1-13',
+    ventana: 1,
+    anuncio: 'C1-01',
+    rescate: 'CAP1-A'
+  },
+  {
+    id: 'brasa',
+    nombre: 'Brasa',
+    zona: 'montanas',
+    meta: 'm1-25',
+    ventana: 2,
+    anuncio: 'C1-06',
+    rescate: 'CAP1-01'
+  },
+  {
+    id: 'destello',
+    nombre: 'Destello',
+    zona: 'mar',
+    meta: 'm2-13',
+    ventana: 3,
+    anuncio: 'C2-01',
+    rescate: 'CAP2-A'
+  },
+  {
+    id: 'ascua',
+    nombre: 'Ascua',
+    zona: 'volcan',
+    meta: 'm2-25',
+    ventana: 4,
+    anuncio: 'C2-03',
+    rescate: 'CAP2-B'
+  },
+  {
+    id: 'pixel',
+    nombre: 'Píxel',
+    zona: 'ciudad',
+    meta: 'm3-13',
+    ventana: 5,
+    anuncio: 'C3-01',
+    rescate: 'CAP3-A'
+  },
+  {
+    id: 'cometa',
+    nombre: 'Cometa',
+    zona: 'espacio',
+    meta: 'm3-25',
+    ventana: 6,
+    anuncio: 'C3-04',
+    rescate: 'CAP3-B'
+  }
+];
+
+  var POR_ID = {};
+  ESCENAS.forEach(function (e) { POR_ID[e.id] = e; });
+
+  function zonaDe(id) { return POR_ID[id] ? POR_ID[id].zona : 'jardin'; }
+  function lineasDe(id) { return POR_ID[id] ? POR_ID[id].lineas.map(function (l) { return l.id; }) : []; }
+
+  /*
+   * Escenas que corresponde reproducir ahora.
+   * o: { cuando: 'antes'|'despues', nivel, infantil: bool, vistas: {id: true}, esFinalDelCurso: bool, guinosActivos: bool }
+   */
+  function pendientes(o) {
+    var vistas = o.vistas || {};
+    var activos = o.guinosActivos == null ? GUINOS_ACTIVOS : o.guinosActivos;
+    return ESCENAS.filter(function (e) {
+      if (e.dispara.cuando !== o.cuando || e.dispara.nivel !== o.nivel) return false;
+      if ((e.etapa === 'infantil') !== !!o.infantil) return false;
+      if (e.soloFinalCurso && !o.esFinalDelCurso) return false;
+      if (e.requiere === 'guinos' && !activos) return false;
+      if (e.siNoVista && vistas[e.siNoVista]) return false;
+      return !vistas[e.id];
+    }).map(function (e) { return e.id; });
+  }
+
+  return { ESCENAS: ESCENAS, POR_ID: POR_ID, GUINOS: GUINOS, CHISPAS: CHISPAS, zonaDe: zonaDe, lineasDe: lineasDe, pendientes: pendientes,
+    get GUINOS_ACTIVOS() { return GUINOS_ACTIVOS; } };
 });
 
 
@@ -1237,67 +2904,67 @@
     // ======== 3 años: Pequeños exploradores (una o dos acciones) ========
     inf({ id: 'i3-01', it: 3, tt: 'La flor', z: 'jardin', skin: { meta: 'flor' },
       m: ['>G'], c: ['avanzar'], ref: [A],
-      o: 'Ayuda a Lumo a llegar hasta la flor.', i: 'Lumo quiere oler una flor.',
+      o: 'Ayuda a Lumo a llegar hasta la flor.', i: 'Lumo ve una flor enorme. ¡Vamos a olerla!',
       cur: ['inf14'], ext: ['Asociar una imagen con una acción', 'Causa y efecto: pulso y Lumo se mueve'] }),
     inf({ id: 'i3-02', it: 3, tt: 'La zanahoria', z: 'jardin', skin: { meta: 'zanahoria' },
       m: ['>.G'], c: ['avanzar'], ref: [A, A],
-      o: 'Lleva a Lumo hasta la zanahoria.', i: 'Lumo tiene mucha hambre.',
+      o: 'Lleva a Lumo hasta la zanahoria.', i: 'Conejo tiene hambre. Lumo busca su zanahoria.',
       cur: ['inf14', 'inf15'], ext: ['Repetir una misma acción dos veces'] }),
     inf({ id: 'i3-03', it: 3, tt: 'Hacia arriba', z: 'jardin', skin: { meta: 'arbol' },
       m: ['G', '^'], c: ['avanzar', 'girar-d'], ref: [A], huecos: 1,
-      o: 'Lleva a Lumo hasta el árbol.', i: 'El árbol está arriba.',
+      o: 'Lleva a Lumo hasta el árbol.', i: 'El árbol está arriba. ¡Hay sombra fresquita!',
       cur: ['inf14', 'inf11'], ext: ['Elegir entre dos tarjetas'] }),
     inf({ id: 'i3-04', it: 3, tt: 'Un giro', z: 'jardin', skin: { meta: 'casa' },
       m: ['>.', 'G.'], c: ['avanzar', 'girar-d'], ref: [G, A],
-      o: 'Gira y llega hasta la casa.', i: 'La casa está abajo.',
+      o: 'Gira y llega hasta la casa.', i: 'Conejo vive en la casita de abajo. ¡Vamos!',
       cur: ['inf14'], ext: ['Primer giro: la dirección cambia con una tarjeta'] }),
     inf({ id: 'i3-05', it: 3, tt: 'La fruta', z: 'jardin', skin: { meta: 'casa', obj: 'fruta' },
       m: ['>oG'], c: ['avanzar', 'recoger'], ref: [A, R, A],
-      o: 'Recoge la fruta del camino y ve a la casa.', i: 'Lumo ha encontrado una fruta.',
+      o: 'Recoge la fruta del camino y ve a la casa.', i: 'Una fruta rica para Conejo. Recógela y sigue.',
       cur: ['inf11', 'inf15'], ext: ['Orden: avanzar, recoger y seguir avanzando'] }),
 
     // ======== 4 años: Aventureros del camino (dos a cuatro tarjetas) ========
     inf({ id: 'i4-01', it: 4, tt: 'El camino torcido', z: 'granja', skin: { meta: 'casa' },
       m: ['>.', '#G'], c: ['avanzar', 'girar-d'], ref: [A, G, A],
-      o: 'Sigue el camino hasta la casa.', i: 'El camino tiene una curva.',
+      o: 'Sigue el camino hasta la casa.', i: 'El camino de la granja hace una curva.',
       cur: ['inf14', 'inf15'], ext: ['Secuencia de tres acciones'] }),
     inf({ id: 'i4-02', it: 4, tt: 'La zanahoria del camino', z: 'granja', skin: { meta: 'casa', obj: 'zanahoria' },
       m: ['>oG'], c: ['avanzar', 'recoger'], ref: [A, R, A],
-      o: 'Recoge la zanahoria y llega a la casa.', i: 'Hay una zanahoria en medio.',
+      o: 'Recoge la zanahoria y llega a la casa.', i: 'Una zanahoria en el camino. ¡Cógela!',
       cur: ['inf11', 'inf15'], ext: ['Ordenar acciones: mover, recoger, mover'] }),
     inf({ id: 'i4-03', it: 4, tt: 'Ordena las tarjetas', z: 'granja', skin: { meta: 'casa' }, tipo: 'depurar',
       m: ['>.#', '#.#', '#G#'], c: ['avanzar', 'girar-d'], ref: [A, G, A, A], ini: [A, A, G, A],
-      o: 'Las tarjetas están desordenadas. Ponlas bien.', i: 'Alguien ha movido las tarjetas.',
+      o: 'Las tarjetas están desordenadas. Ponlas bien.', i: 'Un bichito travieso ha movido las tarjetas.',
       cur: ['inf15'], ext: ['Detectar un error de orden y corregirlo'] }),
     inf({ id: 'i4-04', it: 4, tt: 'Cuidado con el agua', z: 'granja', skin: { meta: 'casa' },
       m: ['>.~', '#G#'], c: ['avanzar', 'girar-d'], ref: [A, G, A],
-      o: 'Evita el agua y llega a la casa.', i: 'El agua está fría.',
+      o: 'Evita el agua y llega a la casa.', i: 'El agua está fría. Rodéala sin mojarte.',
       cur: ['inf14', 'inf15'], ext: ['Anticipar el resultado antes de ejecutar'] }),
     inf({ id: 'i4-05', it: 4, tt: 'Recoge y gira', z: 'granja', skin: { meta: 'casa', obj: 'zanahoria' },
       m: ['>o', '#G'], c: ['avanzar', 'recoger', 'girar-d'], ref: [A, R, G, A],
-      o: 'Recoge la zanahoria, gira y llega.', i: 'Un camino pequeño con una sorpresa.',
+      o: 'Recoge la zanahoria, gira y llega.', i: 'Tras la curva hay una sorpresa.',
       cur: ['inf11', 'inf14', 'inf15'], ext: ['Secuencia de cuatro acciones con tres tarjetas distintas'] }),
 
     // ======== 5 años: Guardianes de los patrones (tres a siete tarjetas) ========
     inf({ id: 'i5-01', it: 5, tt: 'Planifica el camino', z: 'playa', skin: { meta: 'cofre' },
       m: ['>..', '##.', '##G'], c: ['avanzar', 'girar-d', 'girar-i'], ref: [A, A, G, A, A],
-      o: 'Planea el camino hasta el cofre.', i: 'Un cofre en la playa.',
+      o: 'Planea el camino hasta el cofre.', i: 'Un cofre brillante en la playa. ¡Planea el camino!',
       cur: ['inf14', 'inf15'], ext: ['Planificar antes de actuar', 'Anticipar el resultado de una secuencia'] }),
     inf({ id: 'i5-02', it: 5, tt: '¿Qué movimiento falta?', z: 'playa', skin: { meta: 'cofre' }, tipo: 'depurar',
       m: ['>..', '##.', '##G'], c: ['avanzar', 'girar-d', 'girar-i'], ref: [A, A, G, A, A], ini: [A, A, A, A],
-      o: 'A la secuencia le falta una tarjeta. Colócala.', i: 'Una tarjeta se ha caído.',
+      o: 'A la secuencia le falta una tarjeta. Colócala.', i: 'Una tarjeta se ha caído. ¿Cuál falta?',
       cur: ['inf15'], ext: ['Completar una secuencia: qué falta'] }),
     inf({ id: 'i5-03', it: 5, tt: 'Encuentra el error', z: 'playa', skin: { meta: 'cofre' }, tipo: 'depurar',
       m: ['#.G', '>.#'], c: ['avanzar', 'girar-d', 'girar-i'], ref: [A, I, A, G, A], ini: [A, G, A, G, A],
-      o: 'Una tarjeta está mal. Cámbiala.', i: 'Lumo se ha equivocado de giro.',
+      o: 'Una tarjeta está mal. Cámbiala.', i: 'Lumo se ha despistado con un giro.',
       cur: ['inf15'], ext: ['Detectar y corregir un error en una secuencia'] }),
     inf({ id: 'i5-04', it: 5, tt: 'Repite el patrón', z: 'playa', skin: { meta: 'cofre', obj: 'concha' },
       m: ['>oooG'], c: ['avanzar', 'recoger'], ref: [A, R, A, R, A, R, A], ini: [A, R, A, R],
-      o: 'Sigue el patrón: avanza, recoge, avanza, recoge…', i: 'Las conchas siguen un patrón.',
+      o: 'Sigue el patrón: avanza, recoge, avanza, recoge…', i: 'Las conchas siguen un patrón. ¡Míralas bien!',
       cur: ['inf11', 'inf15'], ext: ['Reconocer y continuar un patrón repetitivo'] }),
     inf({ id: 'i5-05', it: 5, tt: 'El tesoro', z: 'playa', skin: { meta: 'cofre', obj: 'concha' },
       m: ['>.o', '##.', '..G'], c: ['avanzar', 'recoger', 'girar-d', 'girar-i'], ref: [A, A, R, G, A, A],
-      o: 'Recoge la concha y llega al tesoro.', i: 'El tesoro está cerca.',
+      o: 'Recoge la concha y llega al tesoro.', i: 'El tesoro está cerca. Recoge la concha.',
       cur: ['inf11', 'inf14', 'inf15'], ext: ['Planificar un recorrido con un objetivo intermedio'] })
   ];
 });
@@ -1334,106 +3001,106 @@
   return [
     // ---- Bloque 1. Primeros movimientos ----
     m1({ tt: 'El primer paso', b: 1, m: ['>..G'], c: ['avanzar'], ref: [A, A, A],
-      o: 'Lleva a Lumo hasta la meta.', i: 'Lumo despierta en el bosque. Su brújula brilla poquito.',
+      o: 'Lleva a Lumo hasta la meta.', i: 'Lumo ha caído en el bosque. Las luciérnagas señalan la puerta de luz.',
       cur: ['m1_41', 'saber23'], ext: ['Una tarjeta = una acción'] }, 1),
     m1({ tt: 'Hacia abajo', b: 1, m: ['v', '.', '.', '.', 'G'], c: ['avanzar'], ref: [A, A, A, A],
-      o: 'Lumo mira hacia abajo. Llévalo a la meta.', i: 'Las luciérnagas se han ido por el camino.',
+      o: 'Lumo mira hacia abajo. Llévalo a la meta.', i: 'Las luciérnagas se alejan hacia abajo. ¡Síguelas!',
       cur: ['m1_41', 'saber23'], ext: ['La dirección de Lumo importa'] }, 2),
     m1({ tt: 'Marcha atrás', b: 1, m: ['G..>.'], c: ['avanzar', 'retroceder'], ref: [B, B, B],
-      o: 'La meta está detrás. Usa una tarjeta nueva.', i: 'Lumo se ha pasado de camino.',
+      o: 'La meta está detrás. Usa una tarjeta nueva.', i: 'Lumo se ha pasado de camino. Hay que volver un paso.',
       p: ['La meta está a la espalda de Lumo.', 'Retroceder mueve a Lumo hacia atrás sin girar.', 'Necesitas tres tarjetas de Retroceder.'],
       cur: ['m1_41', 'saber23'], ext: ['Retroceder: una nueva instrucción'] }, 3),
 
     // ---- Bloque 2. Giros y secuencias ----
     m1({ tt: 'La primera curva', b: 2, m: ['>..', '##.', '##G'], c: ['avanzar', 'girar-d'], ref: [A, A, G, A, A], h: 'giro',
-      o: 'Gira a la derecha cuando llegues a la esquina.', i: 'El camino del bosque da una curva.',
+      o: 'Gira a la derecha cuando llegues a la esquina.', i: 'Búho Bruma avisa de que el sendero gira. Lumo debe girar con él.',
       cur: ['m1_41', 'saber23'], ext: ['Giro a la derecha', 'Secuencia de cinco instrucciones'] }, 4),
     m1({ tt: 'Curva hacia arriba', b: 2, m: ['##G', '##.', '>..'], c: ALL, ref: [A, A, I, A, A], h: 'giro',
-      o: 'Ahora el camino sube. Gira a la izquierda.', i: 'Otra curva, pero hacia el otro lado.',
+      o: 'Ahora el camino sube. Gira a la izquierda.', i: 'Bruma vuela delante. Esta curva va hacia el otro lado.',
       cur: ['m1_41', 'saber23'], ext: ['Giro a la izquierda'] }, 5),
     m1({ tt: 'El camino en S', b: 2, m: ['>..', '##.', 'G..'], c: ALL, ref: [A, A, G, A, A, G, A, A], h: 'giro',
-      o: 'Sigue el camino en forma de S.', i: 'El sendero zigzaguea entre los árboles.',
+      o: 'Sigue el camino en forma de S.', i: 'El sendero zigzaguea entre los árboles como una serpiente de luz.',
       cur: ['m1_41', 'm1_42', 'saber23'], ext: ['Secuencias más largas: ocho instrucciones'] }, 6),
 
     // ---- Bloque 3. Orientación ----
     m1({ tt: 'Lumo mira hacia abajo', b: 3, m: ['v..G'], c: ALL, ref: [I, A, A, A], h: 'giro',
-      o: 'Lumo mira hacia abajo, pero la meta está a su izquierda… ¡de la pantalla!', i: 'Lumo tiene que pensar desde su propio sitio.',
+      o: 'Lumo mira hacia abajo, pero la meta está a su izquierda… ¡de la pantalla!', i: 'Desde donde mira Lumo, la puerta de luz queda a su izquierda.',
       p: ['Imagina que eres Lumo y mira hacia donde mira él.', 'La meta queda a su izquierda: ¿qué giro necesitas?', 'Gira primero, luego avanza tres veces.'],
       cur: ['m1_41', 'saber23'], ext: ['Orientación: izquierda y derecha desde el punto de vista de Lumo'] }, 7),
     m1({ tt: 'Dar la vuelta', b: 3, m: ['^', '.', '.', 'G'], c: ALL, ref: [I, I, A, A, A], h: 'giro',
-      o: 'La meta está detrás. Hazle dar la vuelta.', i: 'Lumo se ha dado la vuelta sin querer.',
+      o: 'La meta está detrás. Hazle dar la vuelta.', i: 'Un ruido sorprende a Lumo y se da la vuelta. La puerta quedó atrás.',
       p: ['La meta está justo detrás de Lumo.', 'Para dar la vuelta hacen falta dos giros.', 'Gira dos veces y avanza tres.'],
       cur: ['m1_41', 'saber23'], ext: ['Dos giros seguidos = media vuelta'] }, 8),
 
     // ---- Bloque 4. Recogida de objetos ----
     m1({ tt: 'La primera luciérnaga', b: 4, m: ['>.o.G'], c: ORI, ref: [A, A, R, A, A], h: 'obj',
-      o: 'Recoge la luciérnaga antes de llegar a la meta.', i: 'Una luciérnaga está atrapada.',
+      o: 'Recoge la luciérnaga antes de llegar a la meta.', i: 'Una luciérnaga se ha enredado en las ramas. Bruma pide ayuda.',
       cur: ['m1_41', 'saber23'], ext: ['Recoger: una nueva instrucción'] }, 9),
     m1({ tt: 'Dos seguidas', b: 4, m: ['>oo.G'], c: ORI, ref: [A, R, A, R, A, A], h: 'obj',
-      o: 'Hay dos luciérnagas seguidas. Recoge las dos.', i: 'Siguen una detrás de otra.',
+      o: 'Hay dos luciérnagas seguidas. Recoge las dos.', i: 'Dos luciérnagas más, una detrás de otra. ¡Bruma ya casi las tiene!',
       cur: ['m1_41', 'm1_42'], ext: ['Reconocer una pareja de acciones que se repite'] }, 10),
     m1({ tt: 'Recoger y girar', b: 4, m: ['..G', '>o.'], c: ORI, ref: [A, R, A, I, A], h: 'obj',
-      o: 'Recoge la luciérnaga y sube hasta la meta.', i: 'La meta está arriba, pero la luz está en el camino.',
+      o: 'Recoge la luciérnaga y sube hasta la meta.', i: 'La última luciérnaga brilla en el camino. La puerta de luz está arriba.',
       cur: ['m1_41', 'saber23'], ext: ['Combinar recogida y giro'] }, 11),
 
     // ---- Bloque 5. Obstáculos ----
     m1({ tt: 'Un muro en medio', b: 5, m: ['>#G', '...'], c: ALL, ref: [G, A, I, A, A, I, A], h: 'obs',
-      o: 'Hay un muro. Rodéalo por abajo.', i: 'Un muro de piedra bloquea el camino.',
+      o: 'Hay un muro. Rodéalo por abajo.', i: 'Un muro de piedra tapa el sendero. Bruma propone rodearlo.',
       cur: ['m1_41', 'm1_42'], ext: ['Planificar un rodeo antes de ejecutar'] }, 12),
     m1({ tt: 'Cuidado con el agua', b: 5, m: ['>.~G', '....'], c: ALL, ref: [A, G, A, I, A, A, I, A], h: 'obs',
-      o: 'No pises el agua. Busca otro camino.', i: 'Un arroyo cruza el bosque.',
+      o: 'No pises el agua. Busca otro camino.', i: 'Un arroyo cruza el bosque. Al otro lado, una lucecita tímida espera.',
       cur: ['m1_41', 'm1_42'], ext: ['Anticipar el resultado: el agua detiene a Lumo'] }, 13),
     m1({ tt: '¡A saltar!', b: 5, m: ['>.~G'], c: ['avanzar', 'saltar'], ref: [A, S], h: 'saltar',
-      o: 'Salta el arroyo con una tarjeta nueva.', i: 'En las montañas, saltar será muy útil.',
+      o: 'Salta el arroyo con una tarjeta nueva.', i: 'Lumo sube a las montañas. Desde la cumbre alguien grita: «¡Yo puedo sola!»',
       cur: ['m1_41', 'saber23'], ext: ['Saltar: una instrucción que hace en un paso lo que antes costaba ocho'] }, 14),
 
     // ---- Bloque 6. Patrones y repetición ----
     m1({ tt: 'Escalera repetida', b: 6, m: ['>.##', '#..#', '##..', '###G'], c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, A, G, A, I)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'La escalera repite un patrón. Usa Repetir.', i: 'La escalera de piedra repite siempre lo mismo.',
+      o: 'La escalera repite un patrón. Usa Repetir.', i: 'La escalera de piedra repite siempre el mismo paso. Brasa sigue gritando.',
       cur: ['m1_41', 'm1_42', 'saber23'], ext: ['Primera repetición visual: repetir un patrón varias veces'] }, 15),
     m1({ tt: 'Luciérnagas en fila', b: 6, m: ['>ooooG'], c: ['avanzar', 'recoger', 'repetir'],
       ref: [rep(4, A, R), A], lim: { repetir: 1 }, holgura: 1, h: 'bucle',
-      o: 'Cuatro luciérnagas. ¿Qué se repite?', i: 'Cuatro luces en fila, igual que cuatro notas.',
+      o: 'Cuatro luciérnagas. ¿Qué se repite?', i: 'Cuatro luces en fila suenan como cuatro notas de una canción.',
       cur: ['m1_41', 'm1_42'], ext: ['Bucle con dos acciones'] }, 16),
     m1({ tt: 'Piedras del río', b: 6, m: ['>~.~.~.G'], c: ['avanzar', 'saltar', 'repetir'],
       ref: [rep(3, S), A], lim: { repetir: 1 }, holgura: 1, h: 'bucle',
-      o: 'Cruza el río saltando de piedra en piedra.', i: 'Hay piedras para cruzar el río, una sí y otra no.',
+      o: 'Cruza el río saltando de piedra en piedra.', i: 'El río se cruza por piedras: una sí y otra no. ¡Hay un patrón!',
       cur: ['m1_41', 'm1_42'], ext: ['Repetir una sola acción'] }, 17),
 
     // ---- Bloque 7. Depuración ----
     m1({ tt: 'Tarjetas cambiadas', b: 7, m: ['>..', '##.', '##G'], c: ALL, ref: [A, A, G, A, A], ini: [A, G, A, A, A], h: 'depurar',
-      o: 'Bichito ha desordenado el programa. Arréglalo.', i: '¡Ji, ji! Bichito ha cambiado las tarjetas de sitio.',
+      o: 'Bichito ha desordenado el programa. Arréglalo.', i: 'Bichito se ríe, ha desordenado el programa de Lumo. ¡Ordénalo!',
       cur: ['m1_41', 'm1_42', 'm1_cm'], ext: ['Depurar: instrucciones desordenadas'] }, 18),
     m1({ tt: 'Giro equivocado', b: 7, m: ['####G', '####.', '>....'], c: ALL, ref: [A, A, A, A, I, A, A], ini: [A, A, A, A, G, A, A], h: 'depurar',
-      o: 'Hay una tarjeta que no es la correcta. Cámbiala.', i: 'Bichito ha cambiado un giro.',
+      o: 'Hay una tarjeta que no es la correcta. Cámbiala.', i: 'Bichito se esconde tras una roca. Ha cambiado un giro.',
       cur: ['m1_41', 'm1_42', 'm1_cm'], ext: ['Depurar: una instrucción incorrecta'] }, 19),
     m1({ tt: 'Falta una tarjeta', b: 7, m: ['>..', '##.', 'G..'], c: ALL, ref: [A, A, G, A, A, G, A, A], ini: [A, A, G, A, A, G, A], h: 'depurar',
-      o: 'Al programa le falta algo para llegar. Complétalo.', i: 'Bichito se ha comido una tarjeta.',
+      o: 'Al programa le falta algo para llegar. Complétalo.', i: 'Bichito se ha llevado una tarjeta. Al programa le falta algo.',
       cur: ['m1_41', 'm1_42', 'm1_cm'], ext: ['Depurar: una instrucción que falta'] }, 20),
 
     // ---- Bloque 8. Mecanismos ----
     m1({ tt: 'La puerta de piedra', b: 8, m: ['>.s.dG'], c: ['avanzar', 'activar'], ref: [A, A, X, A, A, A], h: 'mecanismo',
-      o: 'Pisa el interruptor y actívalo para abrir la puerta.', i: 'Una puerta cierra el paso al faro.',
+      o: 'Pisa el interruptor y actívalo para abrir la puerta.', i: 'Una puerta de hielo cierra el paso a la cumbre. Hay un interruptor.',
       cur: ['m1_41', 'saber23'], ext: ['Activar un mecanismo: causa y efecto'] }, 21),
     m1({ tt: 'El interruptor escondido', b: 8, m: ['#s##', '>.dG'], c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'activar'],
       ref: [A, I, A, X, B, G, A, A], holgura: 2, h: 'mecanismo',
-      o: 'El interruptor está en un hueco. Actívalo y vuelve.', i: 'El interruptor se esconde en un hueco.',
+      o: 'El interruptor está en un hueco. Actívalo y vuelve.', i: 'El interruptor se ha escondido en un hueco. Actívalo y regresa.',
       cur: ['m1_41', 'm1_42'], ext: ['Planificar el orden: ir, activar, volver'] }, 22),
 
     // ---- Bloque 10. Grandes desafíos ----
     m1({ tt: 'El gran salto', b: 10, m: ['>o.~o.~G'], c: ['avanzar', 'recoger', 'saltar', 'repetir'],
       ref: [A, rep(2, R, A, S)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'optim',
-      o: 'Recoge las dos luces saltando. ¡Busca el patrón!', i: 'En las montañas, las luces están sobre abismos.',
+      o: 'Recoge las dos luces saltando. ¡Busca el patrón!', i: 'Las luces del camino flotan sobre abismos. Sus saltos repiten un ritmo.',
       cur: ['m1_41', 'm1_42'], ext: ['Encontrar un patrón dentro de una secuencia más larga'] }, 23),
     m1({ tt: 'Bucle mal contado', b: 10, m: ['>ooooG'], c: ['avanzar', 'recoger', 'repetir'],
       ref: [rep(4, A, R), A], ini: [rep(3, A, R), A], lim: { repetir: 1 }, holgura: 1, h: 'depurar',
       p: ['El bucle repite poco: ejecútalo y mira dónde se queda Lumo.', 'Hay cuatro luces. ¿Cuántas veces se repite el bucle?', 'Cambia el número de Repetir a 4.'],
-      o: 'El bucle no repite las veces justas. Corrígelo.', i: 'La brújula de Lumo cuenta mal.',
+      o: 'El bucle no repite las veces justas. Corrígelo.', i: 'Bichito ha tocado el número de la repetición. ¡Ahora cuenta mal!',
       cur: ['m1_41', 'm1_42', 'm1_cm'], ext: ['Depurar un bucle: cambiar el número de repeticiones'] }, 24),
     m1({ tt: 'La escalera de luz', b: 10, m: ['>o###', '#.o##', '##.o#', '###.G'], c: ['avanzar', 'recoger', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, A, R, G, A, I), A], lim: { repetir: 1 }, holgura: 2, usa: 'repetir', h: 'optim',
-      o: 'Tres luces en escalera. ¡Encuentra el patrón!', i: 'La última escalera lleva a la cumbre.',
+      o: 'Tres luces en escalera. ¡Encuentra el patrón!', i: 'La última escalera lleva a la cumbre. Allí espera Brasa.',
       cur: ['m1_41', 'm1_42', 'm1_cm'], ext: ['Gran desafío: patrón de cinco tarjetas repetido tres veces'] }, 25)
   ];
 });
@@ -1476,127 +3143,127 @@
     // ---- Bloque 1. Bucles para recorridos largos ----
     m2({ tt: 'El camino largo', b: 1, m: ['>.........G'], c: ['avanzar', 'repetir'],
       ref: [rep(10, A)], lim: { repetir: 1 }, holgura: 1, h: 'bucle',
-      o: 'Diez pasos son muchos. ¿Hay una forma más corta?', i: 'Tinta ha construido un túnel submarino larguísimo.',
+      o: 'Diez pasos son muchos. ¿Hay una forma más corta?', i: 'Tinta ha excavado un túnel larguísimo para sus máquinas.',
       cur: ['m2_41', 'm2_42', 'saber23'], ext: ['Repetir con una cantidad grande'] }, 1),
     m2({ tt: 'Dos tramos', b: 1, m: ['>.....', '#####.', '#####.', '#####G'], c: MOV,
       ref: [rep(5, A), G, rep(3, A)], lim: { repetir: 2 }, holgura: 1, h: 'bucle',
-      o: 'Cada tramo es una repetición distinta.', i: 'El túnel tiene un codo.',
+      o: 'Cada tramo es una repetición distinta.', i: 'El túnel de Tinta hace un codo. Ella dibuja el plano con sus tentáculos.',
       cur: ['m2_41', 'm2_42'], ext: ['Dos bucles con cantidades diferentes'] }, 2),
     m2({ tt: 'Escalera grande', b: 1, m: ['>.####', '#..###', '##..##', '###..#', '####..', '#####G'], c: MOV,
       ref: [rep(5, A, G, A, I)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Una escalera enorme. ¡Hay un patrón que se repite!', i: 'Las escaleras de coral nunca se acaban.',
+      o: 'Una escalera enorme. ¡Hay un patrón que se repite!', i: 'Las escaleras de coral de Tinta nunca se acaban. Siempre repiten lo mismo.',
       cur: ['m2_41', 'm2_42'], ext: ['Reconocer un patrón de cuatro tarjetas'] }, 3),
 
     // ---- Bloque 2. Bucles y patrones ----
     m2({ tt: 'Anillo de coral', b: 2, m: ['>...', '###.', '###.', 'G...'], c: MOV,
       ref: [rep(3, A, A, A, G)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Tres lados iguales. Repite el patrón.', i: 'Un anillo de coral rodea la isla.',
+      o: 'Tres lados iguales. Repite el patrón.', i: 'Tinta rodea la isla con un anillo de coral. Tiene tres lados iguales.',
       cur: ['m2_41', 'm2_42'], ext: ['Patrón con avance y giro repetido tres veces'] }, 4),
     m2({ tt: 'Tres tramos', b: 2, m: ['>...##', '###.##', '###.##', '###.##', '###.##', '###..G'], c: MOV,
       ref: [rep(3, A), G, rep(5, A), I, rep(2, A)], lim: { repetir: 3 }, holgura: 1, h: 'bucle',
-      o: 'Cada tramo tiene su número de pasos.', i: 'Tinta dibuja el recorrido en la arena.',
+      o: 'Cada tramo tiene su número de pasos.', i: 'Tinta dibuja el recorrido en la arena. Cada tramo mide distinto.',
       cur: ['m2_41', 'm2_42'], ext: ['Tres bucles con tres cantidades distintas'] }, 5),
     m2({ tt: 'Luces con huecos', b: 2, m: ['>.o.o.oG'], c: BASE,
       ref: [rep(3, A, A, R), A], lim: { repetir: 1 }, holgura: 1, h: 'bucle',
-      o: 'Las luces están cada dos casillas.', i: 'Las medusas brillan de dos en dos.',
+      o: 'Las luces están cada dos casillas.', i: 'Las perlas brillan de dos en dos, como las medusas. Tinta las necesita.',
       cur: ['m2_41', 'm2_42'], ext: ['Patrón de tres acciones'] }, 6),
     m2({ tt: 'Recoge y cruza', b: 2, m: ['>ooo~.~.G'], c: ['avanzar', 'recoger', 'saltar', 'repetir'],
       ref: [rep(3, A, R), rep(2, S), A], lim: { repetir: 2 }, holgura: 1, h: 'bucle',
-      o: 'Dos trozos distintos: recoger y saltar.', i: 'Perlas primero, corrientes después.',
+      o: 'Dos trozos distintos: recoger y saltar.', i: 'Perlas primero, corrientes después. Tinta recoge y salta con Lumo.',
       cur: ['m2_41', 'm2_42'], ext: ['Descomponer en dos partes y repetir cada una'] }, 7),
     m2({ tt: 'Dunas de arena', b: 2, m: ['>..####', '##...##', '####...', '######G'], c: MOV,
       ref: [rep(3, A, A, G, A, I)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Un zigzag que se repite. Cuenta los zigzags.', i: 'Las dunas submarinas suben y bajan.',
+      o: 'Un zigzag que se repite. Cuenta los zigzags.', i: 'Las dunas submarinas suben y bajan, suben y bajan. ¡Cuenta los zigzags!',
       cur: ['m2_41', 'm2_42'], ext: ['Patrón de cinco tarjetas'] }, 8),
 
     // ---- Bloque 3. Descomponer problemas ----
     m2({ tt: 'Tres salas', b: 3, m: ['>.os.d.oG'], c: ['avanzar', 'recoger', 'activar', 'repetir'],
       ref: [A, A, R, A, X, rep(4, A), R, A], lim: { repetir: 1 }, holgura: 2, h: 'mecanismo',
       p: ['Divide el problema: primera luz, interruptor, segunda luz.', 'Resuelve cada parte por separado y luego júntalas.', 'Después de activar, hay un tramo largo: usa Repetir.'],
-      o: 'Resuelve cada parte por separado y júntalas.', i: 'Una puerta separa dos salas del barco hundido.',
+      o: 'Resuelve cada parte por separado y júntalas.', i: 'Dentro del barco hundido hay dos salas y una puerta. Resuelve cada sala.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Descomposición: dividir un problema en partes más sencillas'] }, 9),
     m2({ tt: 'Los nichos', b: 3, m: NICHOS, c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir'],
       ref: [rep(3, A, A, G, A, R, B, I), A, A], lim: { repetir: 1 }, holgura: 2, h: 'bucle',
-      o: 'Tres nichos con perlas. Cada visita es igual.', i: 'Cada nicho esconde una perla.',
+      o: 'Tres nichos con perlas. Cada visita es igual.', i: 'Tinta guarda sus perlas en tres nichos. Cada visita es igual.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Descomposición: una visita al nicho se repite tres veces'] }, 10),
 
     // ---- Bloque 4. Recetas (bloques reutilizables) ----
     m2({ tt: 'La receta del nicho', b: 4, m: NICHOS, c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'receta'], rec: ['A'],
       ref: P([A, A, rec('A'), A, A, rec('A'), A, A, rec('A'), A, A], { A: NICHO_REC }), holgura: 3, usa: 'receta', h: 'receta',
-      o: 'Guarda la visita al nicho en la Receta A.', i: 'Tinta: «Una receta se hace una vez y se usa muchas».',
+      o: 'Guarda la visita al nicho en la Receta A.', i: 'Tinta tiene un truco, guardar la visita al nicho en una receta.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Receta: un bloque reutilizable (función) con nombre'] }, 11),
     m2({ tt: 'Dos recetas', b: 4, m: NICHOS_ARR, c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'receta'], rec: ['A', 'B'],
       ref: P([A, A, rec('A'), A, A, rec('B'), A, A, rec('A'), A, A], { A: [G, A, R, B, I], B: [I, A, R, B, G] }), holgura: 4, usa: 'receta', h: 'receta',
       p: ['Hay nichos arriba y nichos abajo.', 'Una receta sirve para los de abajo y otra para los de arriba.', 'La Receta A gira a la derecha; la B, a la izquierda.'],
-      o: 'Nichos arriba y abajo: usa dos recetas.', i: 'Algunos nichos están por encima del camino.',
+      o: 'Nichos arriba y abajo: usa dos recetas.', i: 'Algunos nichos están arriba y otros abajo. Hacen falta dos recetas.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Dos recetas distintas'] }, 12),
     m2({ tt: 'Cinco nichos', b: 4, m: ['>...........G', '##o#o#o#o#o##'],
       c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir', 'receta'], rec: ['A'],
       ref: P([rep(5, A, A, rec('A')), A, A], { A: NICHO_REC }), lim: { repetir: 1 }, holgura: 2, usa: 'receta', h: 'receta',
-      o: 'Cinco nichos. Receta dentro de un bucle.', i: 'La grieta es larga y tiene muchos nichos.',
+      o: 'Cinco nichos. Receta dentro de un bucle.', i: 'La grieta tiene muchos nichos. En uno juega Destello, escondido.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Receta dentro de un bucle'] }, 13),
 
     // ---- Bloque 5. Mecanismos (isla volcánica) ----
     m2({ tt: 'La puerta de lava', b: 5, m: ['>.s.d.....G'], c: ['avanzar', 'activar', 'repetir'],
       ref: [A, A, X, A, A, rep(6, A)], lim: { repetir: 1 }, holgura: 1, h: 'mecanismo',
-      o: 'Abre la puerta y cruza el largo pasillo.', i: 'El lagarto gigante guarda una puerta de roca.',
+      o: 'Abre la puerta y cruza el largo pasillo.', i: 'El lagarto gigante guarda el volcán. Él no cabe en los túneles, pero Lumo sí.',
       cur: ['m2_41', 'm2_42'], ext: ['Mecanismo y bucle en el mismo programa'] }, 14),
     m2({ tt: 'Puerta y barrera', b: 5, m: ['>.s.d.b.G'], c: ['avanzar', 'activar', 'saltar', 'repetir'],
       ref: [A, A, X, rep(3, A), S, A], lim: { repetir: 1 }, holgura: 1, h: 'mecanismo',
-      o: 'Una puerta que se abre y una barrera que se salta.', i: 'Dos obstáculos de lava, dos soluciones distintas.',
+      o: 'Una puerta que se abre y una barrera que se salta.', i: 'Lava y una barrera. El lagarto señala dos formas de pasar.',
       cur: ['m2_41', 'm2_42'], ext: ['Elegir la acción adecuada para cada obstáculo'] }, 15),
     m2({ tt: 'Cruzar la lava', b: 5, m: ['>o.s.d.~.G'], c: ['avanzar', 'recoger', 'activar', 'saltar', 'repetir'],
       ref: [A, R, A, A, X, rep(3, A), S, A], lim: { repetir: 1 }, holgura: 2, h: 'mecanismo',
-      o: 'Luz, interruptor, puerta y lava. Un paso cada vez.', i: 'El camino del volcán tiene de todo.',
+      o: 'Luz, interruptor, puerta y lava. Un paso cada vez.', i: 'Luz, interruptor, puerta y lava. El lagarto aconseja ir despacio, paso a paso.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Planificar varios objetivos en orden'] }, 16),
 
     // ---- Bloque 6. Depuración y optimización ----
     m2({ tt: 'Un tramo corto', b: 6, m: ['>...##', '###.##', '###.##', '###.##', '###.##', '###..G'], c: MOV,
       ref: [rep(3, A), G, rep(5, A), I, rep(2, A)], ini: [rep(3, A), G, rep(4, A), I, rep(2, A)], lim: { repetir: 3 }, holgura: 1, h: 'depurar',
       p: ['Ejecuta el programa y mira dónde se detiene Lumo.', 'Uno de los bucles repite menos veces de las necesarias.', 'Cuenta las casillas del segundo tramo: son cinco.'],
-      o: 'Un bucle repite menos veces de las necesarias.', i: 'Bichito ha cambiado un número.',
+      o: 'Un bucle repite menos veces de las necesarias.', i: 'Desde lejos, Bichito ha cambiado un número del bucle.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Depurar: corregir el número de repeticiones'] }, 17),
     m2({ tt: 'Luces en mal orden', b: 6, m: ['>.o.o.oG'], c: BASE,
       ref: [rep(3, A, A, R), A], ini: [rep(3, A, R, A), A], lim: { repetir: 1 }, holgura: 1, h: 'depurar',
       p: ['Mira por dónde pasa Lumo: ¿recoge las luces?', 'Dentro del bucle, Recoger se ejecuta en el sitio equivocado.', 'Avanza dos veces y después recoge.'],
-      o: 'Lumo pasa de largo sin recoger. Arregla el bucle.', i: 'Las medusas se esconden si se las busca tarde.',
+      o: 'Lumo pasa de largo sin recoger. Arregla el bucle.', i: 'Las gemas del volcán brillan y se esconden. Lumo pasa de largo sin recogerlas.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Depurar: orden de las tarjetas dentro de un bucle'] }, 18),
     m2({ tt: 'Falta recoger', b: 6, m: ['>ooo~.~.G'], c: ['avanzar', 'recoger', 'saltar', 'repetir'],
       ref: [rep(3, A, R), rep(2, S), A], ini: [rep(3, A), rep(2, S), A], lim: { repetir: 2 }, holgura: 1, h: 'depurar',
       p: ['Lumo llega a la meta, pero ¿se deja algo?', 'Faltan perlas por recoger: el primer bucle solo avanza.', 'Añade Recoger dentro del primer bucle.'],
-      o: 'Lumo llega, pero deja las perlas. ¿Qué falta?', i: 'Una perla sin recoger es una pista perdida.',
+      o: 'Lumo llega, pero deja las perlas. ¿Qué falta?', i: 'Lumo llega a la meta, pero deja gemas atrás. ¿Qué falta?',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Depurar: una instrucción que falta dentro de un bucle'] }, 19),
     m2({ tt: 'Receta rota', b: 6, m: NICHOS, c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'receta'], rec: ['A'],
       ref: P([A, A, rec('A'), A, A, rec('A'), A, A, rec('A'), A, A], { A: NICHO_REC }),
       ini: P([A, A, rec('A'), A, A, rec('A'), A, A, rec('A'), A, A], { A: [G, A, R, I, B] }), holgura: 3, usa: 'receta', h: 'depurar',
       p: ['La receta se usa tres veces, así que su error se repite tres veces.', 'Mira la Receta A: Lumo sale del nicho en la dirección equivocada.', 'Después de retroceder se gira a la izquierda; no al revés.'],
-      o: 'La receta tiene un fallo. Arréglala una vez.', i: 'Un fallo en una receta se repite cada vez que se usa.',
+      o: 'La receta tiene un fallo. Arréglala una vez.', i: 'Bichito ha toqueteado la receta. Su fallo se repite cada vez que se usa.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Depurar una receta: corregir en un solo sitio'] }, 20),
     m2({ tt: 'Demasiadas tarjetas', b: 6, m: ['>...', '###.', '###.', 'G...'], c: MOV, tipo: 'optimizar',
       ref: [rep(3, A, A, A, G)], ini: [A, A, A, G, A, A, A, G, A, A, A], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'optim',
-      o: 'Funciona, pero tiene demasiadas tarjetas. Acórtalo.', i: 'Tinta: «Un programa corto es un programa elegante».',
+      o: 'Funciona, pero tiene demasiadas tarjetas. Acórtalo.', i: 'El programa funciona, pero es larguísimo. El lagarto pide uno más corto.',
       cur: ['m2_41', 'm2_42'], ext: ['Optimizar: reducir tarjetas sin cambiar el resultado'] }, 21),
 
     // ---- Bloque 7. Condiciones (anticipación) ----
     m2({ tt: 'Gira si hay muro', b: 7, m: ['>....', '####.', 'G....'], c: ['avanzar', 'girar-d', 'repetir', 'si'], con: ['obstaculo-delante'],
       ref: [rep(20, si(OB, [G], [A]))], lim: { repetir: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
-      o: 'Si hay un muro delante, gira. Si no, avanza.', i: 'El lagarto gigante: «Aquí las paredes mandan».',
+      o: 'Si hay un muro delante, gira. Si no, avanza.', i: 'El lagarto avisa de que en estos túneles aparecen paredes sin avisar.',
       cur: ['m2_41', 'm2_42'], ext: ['Primera condición: si ocurre algo, haz una cosa; si no, otra'] }, 22),
     m2({ tt: 'Salta si hay lava', b: 7, m: ['>.~.~.~.G'], c: ['avanzar', 'saltar', 'repetir', 'si'], con: ['agua-delante'],
       ref: [rep(8, si(AG, [S], [A]))], lim: { repetir: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
-      o: 'Si hay lava delante, salta. Si no, avanza.', i: 'Los ríos de lava aparecen cada dos casillas.',
+      o: 'Si hay lava delante, salta. Si no, avanza.', i: 'Los ríos de lava aparecen cada dos casillas. Lumo debe decidir sobre la marcha.',
       cur: ['m2_41', 'm2_42'], ext: ['Condición para decidir entre dos acciones'] }, 23),
 
     // ---- Bloque 10. Grandes desafíos ----
     m2({ tt: 'Los túneles del volcán', b: 10, m: ['>.o..', '####.', '..G#o', 'o###.', '..o..'], c: ['avanzar', 'girar-d', 'recoger', 'repetir', 'si'], con: ['obstaculo-delante'],
       ref: [rep(30, si(OB, [G], [A]), R)], lim: { repetir: 1, si: 1 }, holgura: 2, usa: 'si', h: 'cond',
       p: ['El camino es una espiral y todos los giros son a la derecha.', 'Usa una condición: si hay muro, gira; si no, avanza. Y recoge siempre.', 'Mete la condición y Recoger dentro de un bucle largo.'],
-      o: 'Una espiral con cuatro luces. Un programa que decide.', i: 'Los túneles forman una espiral hacia el corazón del volcán.',
+      o: 'Una espiral con cuatro luces. Un programa que decide.', i: 'Los túneles forman una espiral hacia el corazón del volcán. Algo brilla dentro.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Condición y bucle juntos: un algoritmo que decide por sí mismo'] }, 24),
     m2({ tt: 'El corazón del volcán', b: 10, m: ['>o.~o.~s.d.G'], c: ['avanzar', 'saltar', 'recoger', 'activar', 'repetir', 'si'], con: ['agua-delante'],
       ref: [rep(15, si(AG, [S], [A]), R, X)], lim: { repetir: 1, si: 1 }, holgura: 2, usa: 'si', h: 'cond',
       p: ['Hay lava, luces, un interruptor y una puerta.', 'Un único bucle puede encargarse de todo: salta si hay lava, y recoge y activa siempre.', 'Dentro del bucle: Si lava, saltar; si no, avanzar. Después Recoger y Activar.'],
-      o: 'Un solo bucle que lo haga todo.', i: 'El corazón del volcán late. ¡Último reto del mundo!',
+      o: 'Un solo bucle que lo haga todo.', i: 'El corazón del volcán late flojito. Allí gruñe Ascua: «¡Dejadme en paz!»',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Gran desafío: descomponer, generalizar y automatizar'] }, 25)
   ];
 });
@@ -1653,154 +3320,154 @@
     // ---- Bloque 0. Calentamiento (repaso de secuencias, giros, recoger y primer bucle) ----
     cal({ tt: 'Primeros pasos en la ciudad', m: ['>...G'], c: ['avanzar', 'girar-d', 'girar-i'],
       ref: [A, A, A, A], holgura: 1, h: 'seq',
-      o: 'Lleva a Lumo hasta la meta.', i: 'Bit enseña a Lumo las calles de la ciudad tecnológica.',
+      o: 'Lleva a Lumo hasta la meta.', i: 'Bit, el robot de la ciudad, enseña sus calles a Lumo. ¡Primer paseo!',
       cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: secuencia corta'] }, 1),
     cal({ tt: 'Doblar la esquina', m: ['>..', '##.', '##G'], c: ['avanzar', 'girar-d', 'girar-i'],
       ref: [A, A, G, A, A], holgura: 1, h: 'giro',
-      o: 'Gira en la esquina para llegar a la meta.', i: 'Las calles tienen esquinas.',
+      o: 'Gira en la esquina para llegar a la meta.', i: 'En la ciudad todas las calles hacen esquina. Bit marca el giro.',
       cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: giros'] }, 2),
     cal({ tt: 'Paneles en la acera', m: ['>.o.o.G'], c: ['avanzar', 'girar-d', 'girar-i', 'recoger'],
       ref: [A, A, R, A, A, R, A, A], holgura: 2, h: 'obj',
-      o: 'Recoge los dos paneles solares y llega a la meta.', i: 'Hay paneles solares por recoger.',
+      o: 'Recoge los dos paneles solares y llega a la meta.', i: 'Los paneles solares están apagados. Bit necesita dos para arrancar.',
       cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: recoger objetos'] }, 3),
     cal({ tt: 'Repite el paso', m: ['>......G'], c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(7, A)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Usa Repetir en lugar de muchas tarjetas.', i: 'Una calle recta y muy larga.',
+      o: 'Usa Repetir en lugar de muchas tarjetas.', i: 'Una calle recta y larguísima. ¿Cuántas tarjetas iguales harán falta?',
       cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: un bucle sencillo'] }, 4),
     cal({ tt: 'Calle con vueltas', m: ['>...', '###.', 'G...'], c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, A), G, rep(2, A), G, rep(3, A)], lim: { repetir: 3 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Tres tramos: usa Repetir en cada uno.', i: 'La calle hace una S.',
+      o: 'Tres tramos: usa Repetir en cada uno.', i: 'La calle hace una S con tres tramos. Bit cuenta cada uno.',
       cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: varios bucles seguidos'] }, 5),
 
     // ---- Bloque 1. Bucles anidados ----
     m3({ tt: 'La escalera larga', b: 1, m: ESCALERA, c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, rep(3, A), G, A, I)], lim: { repetir: 2 }, holgura: 1, usa: 'repetir', h: 'bucle',
       p: ['Cada escalón es igual: tres pasos, giro, un paso, giro.', 'Ahora los tres pasos también se repiten: un bucle dentro de otro.', 'Repite tres veces: [Repetir 3 veces Avanzar], girar, avanzar, girar.'],
-      o: 'Un bucle dentro de otro bucle.', i: 'Bit, el robot de la ciudad, ha construido una escalera con escalones largos.',
+      o: 'Un bucle dentro de otro bucle.', i: 'Bit ha construido una escalera de escalones largos. Hay dos cuentas a la vez.',
       cur: ['m3_41', 'm3_42', 'saber23'], ext: ['Bucles anidados: un bucle dentro de otro'] }, 1),
     m3({ tt: 'Filas de paneles', b: 1, m: ['>oo', '.oo', 'G..'], c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir'],
       ref: [rep(2, rep(2, A, R), rep(2, B), G, A, I)], lim: { repetir: 3 }, holgura: 2, usa: 'repetir', h: 'bucle',
       p: ['Cada fila se recorre igual: ir recogiendo y volver.', 'Ir y recoger se repite dos veces; volver, también.', 'Mete eso dentro de otro bucle que baje una fila.'],
-      o: 'Recoge cada fila y vuelve. Dos bucles dentro de uno.', i: 'Los paneles solares están en filas. Hay que recogerlos todos.',
+      o: 'Recoge cada fila y vuelve. Dos bucles dentro de uno.', i: 'Los paneles solares están en filas. Hay que recoger cada fila y volver.',
       cur: ['m3_41', 'm3_42'], ext: ['Descomponer: una fila se repite para cada fila'] }, 2),
     m3({ tt: 'La plaza grande', b: 1, m: PLAZA, c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, rep(4, A), G)], lim: { repetir: 2 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Tres lados iguales. Cada lado, cuatro pasos.', i: 'La plaza central es un cuadrado enorme.',
+      o: 'Tres lados iguales. Cada lado, cuatro pasos.', i: 'La plaza central es un cuadrado enorme. Bit quiere recorrerla entera.',
       cur: ['m3_41', 'm3_42'], ext: ['Bucle anidado: lados y pasos'] }, 3),
     m3({ tt: 'La cuenta falla', b: 1, m: PLAZA, c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, rep(4, A), G)], ini: [rep(3, rep(3, A), G)], lim: { repetir: 2 }, holgura: 1, h: 'depurar',
       p: ['Ejecuta y fíjate dónde se queda Lumo.', 'Los lados miden cuatro pasos, no tres.', 'Cambia el número del bucle interior.'],
-      o: 'El bucle de dentro cuenta mal. Corrígelo.', i: 'Bit se ha equivocado al contar.',
+      o: 'El bucle de dentro cuenta mal. Corrígelo.', i: 'Bichito quiso ayudar a Bit a contar. Ahora el bucle de dentro cuenta mal.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar un bucle anidado'] }, 4),
     m3({ tt: 'La fábrica larga', b: 1, m: FILAS3, c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir'], tipo: 'optimizar',
       ref: [rep(3, rep(2, A, R), rep(2, B), G, A, I)],
       ini: [rep(2, A, R), rep(2, B), G, A, I, rep(2, A, R), rep(2, B), G, A, I, rep(2, A, R), rep(2, B), G, A],
       lim: { repetir: 3 }, holgura: 2, usa: 'repetir', h: 'optim',
-      o: 'Funciona, pero se repite tres veces lo mismo. Acórtalo.', i: 'Bit: «Si lo repites, ponlo en un bucle».',
+      o: 'Funciona, pero se repite tres veces lo mismo. Acórtalo.', i: 'Funciona, pero repite tres veces lo mismo. Bit propone un bucle.',
       cur: ['m3_41', 'm3_42'], ext: ['Optimizar: detectar una secuencia que se repite y automatizarla'] }, 5),
 
     // ---- Bloque 2. Condiciones y sensores ----
     m3({ tt: 'Hasta el muro', b: 2, m: ['>.......G'], c: ['avanzar', 'mientras'], con: ['obstaculo-delante'],
       ref: [mientras(no(OB), [A])], lim: { mientras: 1 }, holgura: 1, h: 'cond',
-      o: 'Avanza mientras no haya un muro delante.', i: 'Bit: «Observa, decide, actúa».',
+      o: 'Avanza mientras no haya un muro delante.', i: 'Bit repite su lema, «observa, decide, actúa». Hoy toca avanzar mientras no haya muro.',
       p: ['No hace falta contar los pasos.', 'Mientras no haya un muro delante, Lumo avanza.', 'Elige Mientras, pon la condición «no hay obstáculo» y dentro Avanzar.'],
       cur: ['m3_41', 'm3_42'], ext: ['Bucle «mientras» con un sensor: se repite hasta que algo ocurre'] }, 6),
     m3({ tt: 'Camino con curvas', b: 2, m: CURVAS, c: ['avanzar', 'girar-d', 'mientras', 'si'], con: ['obstaculo-delante', 'meta-aqui'],
       ref: [mientras(no(MA), si(OB, [G], [A]))], lim: { mientras: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
       p: ['Todas las curvas son a la derecha y siempre acaban en un muro.', 'Si hay un muro delante, gira; si no, avanza.', 'Mientras no estés en la meta: Si obstáculo, girar; si no, avanzar.'],
-      o: 'Si hay muro, gira; si no, avanza. Hasta llegar a la meta.', i: 'La ciudad tiene un laberinto de calles.',
+      o: 'Si hay muro, gira; si no, avanza. Hasta llegar a la meta.', i: 'Bit conoce cada calle del laberinto, pero no sabe decidir en los cruces.',
       cur: ['m3_41', 'm3_42'], ext: ['Condicional si / si no dentro de un bucle'] }, 7),
     m3({ tt: 'Recoge o avanza', b: 2, m: ['>.o..oo.o.G'], c: ['avanzar', 'recoger', 'repetir', 'si'], con: ['objeto-aqui'],
       ref: [rep(30, si(OA, [R], [A]))], lim: { repetir: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
       p: ['Hay luces en sitios distintos y no hace falta contarlos.', 'Si hay una luz aquí, recógela; si no, avanza.', 'Dentro de un bucle largo: Si objeto aquí, recoger; si no, avanzar.'],
-      o: 'Si hay una luz, recógela. Si no, avanza.', i: 'Hay baterías esparcidas por la calle.',
+      o: 'Si hay una luz, recógela. Si no, avanza.', i: 'Hay baterías esparcidas por la calle. Bit las necesita todas.',
       cur: ['m3_41', 'm3_42'], ext: ['Un algoritmo que funciona sin saber dónde están los objetos'] }, 8),
     m3({ tt: 'Interruptor automático', b: 2, m: ['>..s..d..G'], c: ['avanzar', 'activar', 'repetir', 'si'], con: ['interruptor-aqui'],
       ref: [rep(12, si(IN, [X, A], [A]))], lim: { repetir: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
-      o: 'Activa el interruptor si estás encima. Si no, avanza.', i: 'La puerta del taller se abre con un interruptor.',
+      o: 'Activa el interruptor si estás encima. Si no, avanza.', i: 'La puerta del taller de Bit solo se abre con un interruptor.',
       cur: ['m3_41', 'm3_42'], ext: ['Sensor de interruptor'] }, 9),
     m3({ tt: 'Lava o muro', b: 2, m: ['>.~..', '####.', 'G.~..'], c: ['avanzar', 'girar-d', 'saltar', 'repetir', 'si'], con: ['agua-delante', 'obstaculo-delante'],
       ref: [rep(20, si(AG, [S], [si(OB, [G], [A])]))], lim: { repetir: 1, si: 2 }, holgura: 1, usa: 'si', h: 'cond',
       p: ['Hay dos cosas que mirar: agua y muro.', 'Primero pregunta por el agua; si no hay, pregunta por el muro.', 'Si agua: saltar; si no: (si muro: girar; si no: avanzar).'],
-      o: 'Si hay vacío, salta; si hay muro, gira; si no, avanza.', i: 'Unos huecos de energía cortan las calles.',
+      o: 'Si hay vacío, salta; si hay muro, gira; si no, avanza.', i: 'Unos huecos de energía cortan las calles. Hay que saltar o girar.',
       cur: ['m3_41', 'm3_42'], ext: ['Condicionales combinados (una condición dentro de otra)'] }, 10),
 
     // ---- Bloque 3. Funciones (recetas) ----
     m3({ tt: 'Receta de fila', b: 3, m: ['>ooo', '.ooo', '.ooo', 'G...'], c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir', 'receta'], rec: ['A'],
       ref: P([rep(3, rec('A'), rep(3, B), G, A, I)], { A: [rep(3, A, R)] }), lim: { repetir: 3 }, holgura: 3, usa: 'receta', h: 'receta',
-      o: 'Guarda «recoger una fila» en la Receta A.', i: 'Bit: «Una función se escribe una vez».',
+      o: 'Guarda «recoger una fila» en la Receta A.', i: 'Bit quiere guardar «recoger una fila» en una receta para no repetirla.',
       cur: ['m3_41', 'm3_42'], ext: ['Función (receta) que contiene un bucle'] }, 11),
     m3({ tt: 'La serpiente', b: 3, m: ['>ooo', 'ooo.', 'G...'], c: ARCA, rec: ['A'],
       ref: P([rec('A'), G, A, G, rec('A'), I, A], { A: [rep(3, A, R)] }), lim: { repetir: 1 }, holgura: 2, usa: 'receta', h: 'receta',
-      o: 'Dos filas iguales, una en cada sentido.', i: 'Los cables forman una serpiente.',
+      o: 'Dos filas iguales, una en cada sentido.', i: 'Los cables de la ciudad forman una serpiente. Algo curioso se mueve dentro.',
       cur: ['m3_41', 'm3_42'], ext: ['Reutilizar una receta en dos sitios distintos'] }, 12),
     m3({ tt: 'La gran serpiente', b: 3, m: ['>ooo', 'ooo.', '.ooo', 'Goo.'], c: ARCA, rec: ['A'],
       ref: P([rep(2, rec('A'), G, A, G, rec('A'), I, A, I)], { A: [rep(3, A, R)] }), lim: { repetir: 2 }, holgura: 2, usa: 'receta', h: 'receta',
-      o: 'Cuatro filas: receta y bucle trabajando juntos.', i: 'La serpiente de cables se ha enrollado.',
+      o: 'Cuatro filas: receta y bucle trabajando juntos.', i: 'La serpiente de cables se ha enrollado. Una lucecita curiosa asoma entre ellos.',
       cur: ['m3_41', 'm3_42'], ext: ['Receta dentro de un bucle anidado'] }, 13),
 
     // ---- Bloque 4. Optimización con límites (mundo espacial) ----
     m3({ tt: 'Pocas tarjetas', b: 4, m: ['>.....', '#####.', '#####.', '#####.', '#####.', 'G.....'], c: ['avanzar', 'girar-d', 'repetir'],
       ref: [rep(3, rep(5, A), G)], lim: { avanzar: 1, 'girar-d': 1, repetir: 2 }, holgura: 0, usa: 'repetir', h: 'optim',
-      o: 'Solo puedes usar una tarjeta Avanzar. ¡Piensa!', i: 'La nave tiene poca memoria: solo caben unas pocas tarjetas.',
+      o: 'Solo puedes usar una tarjeta Avanzar. ¡Piensa!', i: 'Bit y Lumo despegan hacia la estación. La nave tiene poca memoria.',
       cur: ['m3_41', 'm3_42'], ext: ['Retos con límite de instrucciones'] }, 14),
     m3({ tt: 'La torre escalonada', b: 4, m: ['>..######', '##...####', '####...##', '######...', '########G'], c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(4, rep(2, A), G, A, I)], lim: { avanzar: 2, 'girar-d': 1, 'girar-i': 1, repetir: 2 }, holgura: 0, h: 'optim',
-      o: 'Cuatro escalones. Memoria limitada.', i: 'La torre de la estación espacial tiene escalones de dos pasos.',
+      o: 'Cuatro escalones. Memoria limitada.', i: 'La torre de la estación tiene escalones de dos pasos. Caben pocas tarjetas.',
       cur: ['m3_41', 'm3_42'], ext: ['Optimizar bajo restricciones'] }, 15),
     m3({ tt: 'Espiral de sensores', b: 4, m: ESPIRAL, c: ['avanzar', 'girar-d', 'recoger', 'mientras', 'si'], con: ['obstaculo-delante', 'meta-aqui'],
       ref: [mientras(no(MA), [si(OB, [G], [A]), R])], lim: { mientras: 1, si: 1 }, holgura: 1, h: 'cond',
       p: ['Es una espiral hacia el centro y siempre se gira a la derecha.', 'Un único bucle puede decidir y recoger en cada paso.', 'Mientras no estés en la meta: Si obstáculo, girar; si no, avanzar. Después, Recoger.'],
-      o: 'Una espiral con cuatro luces y un solo bucle.', i: 'Los anillos de la estación giran en espiral.',
+      o: 'Una espiral con cuatro luces y un solo bucle.', i: 'Los anillos de la estación giran en espiral. Hay cuatro estrellas por recoger.',
       cur: ['m3_41', 'm3_42'], ext: ['Sensores y objetivos en un solo algoritmo'] }, 16),
 
     // ---- Bloque 5. Depuración avanzada ----
     m3({ tt: 'El sensor equivocado', b: 5, m: CURVAS, c: ['avanzar', 'girar-d', 'mientras', 'si'], con: ['obstaculo-delante', 'agua-delante', 'meta-aqui'],
       ref: [mientras(no(MA), si(OB, [G], [A]))], ini: [mientras(no(MA), si(AG, [G], [A]))], lim: { mientras: 1, si: 1 }, holgura: 1, h: 'depurar',
       p: ['Ejecuta: Lumo choca contra el muro.', 'La condición pregunta por el agua, pero aquí no hay agua.', 'Cambia la condición «agua delante» por «obstáculo delante».'],
-      o: 'El programa pregunta por lo que no debe. Cambia la condición.', i: 'Bit tiene el sensor mal conectado.',
+      o: 'El programa pregunta por lo que no debe. Cambia la condición.', i: 'Algo pequeño se mueve tras Bit, y su sensor no funciona.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar una condición incorrecta'] }, 17),
     m3({ tt: 'La receta que olvida', b: 5, m: ['>ooo', 'ooo.', 'G...'], c: ARCA, rec: ['A'],
       ref: P([rec('A'), G, A, G, rec('A'), I, A], { A: [rep(3, A, R)] }),
       ini: P([rec('A'), G, A, G, rec('A'), I, A], { A: [rep(3, R, A)] }), lim: { repetir: 1 }, holgura: 2, h: 'depurar',
       p: ['Lumo llega a la meta, pero se deja luces.', 'Dentro de la receta, Recoger y Avanzar están en el orden equivocado.', 'Primero avanza hasta la luz; después recoge.'],
-      o: 'Lumo llega, pero se olvida luces. Revisa la receta.', i: 'Un fallo escondido en una receta afecta a todo.',
+      o: 'Lumo llega, pero se olvida luces. Revisa la receta.', i: 'Un fallo se esconde dentro de una receta. Estropea todos sus usos.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar una función: el orden dentro del bucle'] }, 18),
     m3({ tt: 'Ramas cambiadas', b: 5, m: CURVAS, c: ['avanzar', 'girar-d', 'mientras', 'si'], con: ['obstaculo-delante', 'meta-aqui'],
       ref: [mientras(no(MA), si(OB, [G], [A]))], ini: [mientras(no(MA), si(OB, [A], [G]))], lim: { mientras: 1, si: 1 }, holgura: 1, h: 'depurar',
       p: ['Ejecuta: Lumo gira donde debería avanzar.', 'Las dos ramas del «si» están al revés.', 'Si hay muro: girar. Si no: avanzar.'],
-      o: 'Lo que hace «si» y «si no» está al revés.', i: 'Bit ha cruzado dos cables.',
+      o: 'Lo que hace «si» y «si no» está al revés.', i: 'Bit ha cruzado dos cables. Ahora «si» y «si no» hacen lo contrario.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar: ramas de un condicional intercambiadas'] }, 19),
     m3({ tt: 'Falta el «si no»', b: 5, m: CURVAS, c: ['avanzar', 'girar-d', 'mientras', 'si'], con: ['obstaculo-delante', 'meta-aqui'],
       ref: [mientras(no(MA), si(OB, [G], [A]))], ini: [mientras(no(MA), si(OB, [G]))], lim: { mientras: 1, si: 1 }, holgura: 1, h: 'depurar',
       p: ['Lumo se queda parado dando vueltas.', 'Cuando no hay muro, el programa no hace nada.', 'Rellena la parte «si no» con Avanzar.'],
-      o: 'Cuando no hay muro, Lumo no hace nada. ¿Qué falta?', i: 'Bit se ha quedado esperando.',
+      o: 'Cuando no hay muro, Lumo no hace nada. ¿Qué falta?', i: 'Bit se ha quedado esperando, inmóvil. Algo falta en su decisión.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar un bucle que no avanza: falta una rama'] }, 20),
     m3({ tt: 'Anidados desordenados', b: 5, m: ESCALERA, c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, rep(3, A), G, A, I)], ini: [rep(3, rep(3, A), A, G, I)], lim: { repetir: 2 }, holgura: 1, h: 'depurar',
       p: ['Lumo choca en el primer escalón.', 'Después de los tres pasos hay que girar antes de dar el paso corto.', 'Cambia de sitio Avanzar y Girar derecha.'],
-      o: 'El orden dentro del bucle grande no es el correcto.', i: 'La escalera tiene un escalón torcido.',
+      o: 'El orden dentro del bucle grande no es el correcto.', i: 'Un escalón de la torre está torcido. Ordena el interior del bucle grande.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar el orden dentro de un bucle anidado'] }, 21),
 
     // ---- Bloque 6. Grandes desafíos ----
     m3({ tt: 'Ciudad de cristal', b: 6, m: ['>.~.o', '####.', 'G.~.o'],
       c: ['avanzar', 'girar-d', 'saltar', 'recoger', 'repetir', 'si'], con: ['agua-delante', 'obstaculo-delante'],
       ref: [rep(25, si(AG, [S], [si(OB, [G], [A])]), R)], lim: { repetir: 1, si: 2 }, holgura: 2, usa: 'si', h: 'cond',
-      o: 'Observa, decide y recoge, todo en un bucle.', i: 'La ciudad de cristal brilla con baterías en las esquinas.',
+      o: 'Observa, decide y recoge, todo en un bucle.', i: 'En la ciudad de cristal hay baterías en cada esquina. Recógelas con un solo bucle.',
       cur: ['m3_41', 'm3_42'], ext: ['Un algoritmo general para un entorno con huecos, muros y objetos'] }, 22),
     m3({ tt: 'El interruptor tras el vacío', b: 6, m: ['>.~..s.d..G'], c: ['avanzar', 'saltar', 'activar', 'repetir', 'si'], con: ['agua-delante', 'interruptor-aqui'],
       ref: [rep(30, si(AG, [S], [si(IN, [X, A], [A])]))], lim: { repetir: 1, si: 2 }, holgura: 2, usa: 'si', h: 'cond',
-      o: 'Un vacío, un interruptor y una puerta. Una sola solución general.', i: 'Para activar el reactor hay que cruzar el vacío.',
+      o: 'Un vacío, un interruptor y una puerta. Una sola solución general.', i: 'Para activar el reactor hay que cruzar un vacío. Después, un interruptor.',
       cur: ['m3_41', 'm3_42'], ext: ['Combinar sensores distintos'] }, 23),
     m3({ tt: 'Espiral con puerta', b: 6, m: ['>.s..', '####d', '..G#o', 'o###.', '..o..'], c: ['avanzar', 'girar-d', 'recoger', 'activar', 'repetir', 'si'], con: ['obstaculo-delante', 'interruptor-aqui'],
       ref: [rep(30, si(OB, [G], [A]), R, si(IN, [X]))], lim: { repetir: 1, si: 2 }, holgura: 2, usa: 'si', h: 'cond',
       p: ['Es la espiral de antes, pero ahora hay un interruptor y una puerta.', 'Un bucle puede avanzar, recoger y activar «si hay interruptor aquí».', 'Dentro del bucle: Si obstáculo girar / si no avanzar; Recoger; Si interruptor aquí: Activar.'],
-      o: 'La espiral tiene ahora un interruptor y una puerta.', i: 'Los anillos del reactor están sellados.',
+      o: 'La espiral tiene ahora un interruptor y una puerta.', i: 'Los anillos del reactor están sellados. Hay un interruptor y una puerta.',
       cur: ['m3_41', 'm3_42'], ext: ['Algoritmo general con varios sensores'] }, 24),
     m3({ tt: 'El Faro de Bit', b: 6, m: ['>.~.s..', '######d', 'Go.~o..'], c: ['avanzar', 'girar-d', 'saltar', 'recoger', 'activar', 'repetir', 'si'], con: ['agua-delante', 'obstaculo-delante', 'interruptor-aqui'],
       ref: [rep(40, si(AG, [S], [si(OB, [G], [A])]), R, si(IN, [X]))], lim: { repetir: 1, si: 3 }, holgura: 2, usa: 'si', h: 'cond',
       p: ['Hay vacío, muros, luces, un interruptor y una puerta.', 'Un único bucle que mire el entorno puede con todo.', 'Dentro del bucle: Si vacío, saltar; si no, (si muro, girar; si no, avanzar). Recoger. Si interruptor, activar.'],
-      o: 'El último reto del mundo: un algoritmo que lo hace todo.', i: 'Bit: «El faro me enseñó a pensar. Ahora te toca a ti».',
+      o: 'El último reto del mundo: un algoritmo que lo hace todo.', i: 'El reactor late al fondo. Cometa, la soñadora, mira las estrellas desde allí.',
       cur: ['m3_41', 'm3_42', 'saber23'], ext: ['Gran desafío del 3.er ciclo: generalizar un algoritmo para varios obstáculos'] }, 25)
   ];
 });
@@ -1850,39 +3517,39 @@
       m: ['>..~.o.', '######.', '...G##o', 'o#####.', '...~...'],
       ref: [mientras(no(MA), CUERPO())], lim: { mientras: 1, si: 2 }, holgura: 1, h: 'cond',
       p: ['Es una espiral con vacíos y luces.', 'Un solo bucle: si vacío saltar; si no, si muro girar; si no avanzar. Y recoger.', 'Mientras no estés en la meta, repite esa decisión y recoge siempre.'],
-      o: 'Sube al Faro: una espiral con vacíos y luces.', i: 'El Faro Mayor está dentro de una gran espiral. Su luz se apagó.',
+      o: 'Sube al Faro: una espiral con vacíos y luces.', i: 'Lumo y sus amigos llegan al Faro Mayor. Hay que subir por dentro.',
       cur: ['m3_41', 'm3_42', 'saber23'], ext: ['Final: un algoritmo general para recorrer cualquier espiral'] }, 1),
     f({ tt: 'El mecanismo del Faro', c: ARCA, rec: ['A'],
       m: ['>oos', 'oood', '.ooo', 'Goo.'],
       ref: P([rep(2, rec('A'), G, A, G, rec('A'), I, A, I)], { A: [rep(3, A, R), X] }), lim: { repetir: 2, receta: 3 }, holgura: 2, usa: 'receta', h: 'receta',
-      o: 'Cuatro filas, un interruptor y una puerta. Receta y bucles.', i: 'Las lentes del Faro se mueven con un gran mecanismo.',
+      o: 'Cuatro filas, un interruptor y una puerta. Receta y bucles.', i: 'Las lentes del Faro giran con un gran mecanismo. ¡Hay que ponerlo en marcha!',
       cur: ['m3_41', 'm3_42'], ext: ['Final: recetas con varias acciones y bucles anidados'] }, 2),
     f({ tt: 'La luz de Lumo', c: ['avanzar', 'girar-d', 'saltar', 'recoger', 'activar', 'mientras', 'si'], con: ['agua-delante', 'obstaculo-delante', 'interruptor-aqui', 'meta-aqui'],
       m: ['>s.~.o.', '######d', '...G##o', 'o#####.', '...~...'],
       ref: [mientras(no(MA), CUERPO([si(IN, [X])]))], lim: { mientras: 1, si: 3 }, holgura: 2, h: 'cond',
       p: ['Es la espiral del primer piso, pero con interruptor y puerta.', 'Añade al bucle: si hay un interruptor aquí, activar.', 'Mientras no estés en la meta: decidir, recoger y, si interruptor, activar.'],
-      o: 'El último reto: enciende la luz del Faro.', i: 'Lumo está a punto de encender la luz.',
+      o: 'El último reto: enciende la luz del Faro.', i: 'Lumo está a punto de encender la luz. Todos sus amigos esperan.',
       cur: ['m3_41', 'm3_42', 'saber23'], ext: ['Final: un algoritmo que resume todo lo aprendido'] }, 3)
   ];
 
   var secretos = [
     sec({ tt: 'El claro secreto', c: ['avanzar', 'recoger', 'repetir'],
       m: ['>o.o.o.o.G'], ref: [rep(4, A, R, A), A], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Un patrón de tres tarjetas se repite cuatro veces.', i: 'Un claro secreto del bosque.',
+      o: 'Un patrón de tres tarjetas se repite cuatro veces.', i: 'Las luciérnagas guardan un claro secreto. Sus luces forman un dibujo.',
       cur: ['m1_41', 'm1_42'], ext: ['Secreto: patrón de tres acciones'] }, 1, 'primaria-1c', 'bosque'),
     sec({ tt: 'La caverna secreta', c: ['avanzar', 'recoger', 'saltar', 'repetir'],
       m: ['>o.~o.~o.~G'], ref: [A, R, A, rep(2, S, R, A), S], lim: { repetir: 1 }, holgura: 2, usa: 'repetir', h: 'bucle',
-      o: 'Salta, recoge y avanza. ¿Qué parte se repite?', i: 'Una caverna escondida bajo el mar.',
+      o: 'Salta, recoge y avanza. ¿Qué parte se repite?', i: 'Tinta esconde una caverna bajo el mar. Solo los más curiosos la encuentran.',
       cur: ['m2_41', 'm2_42'], ext: ['Secreto: buscar el patrón dentro de una secuencia irregular'] }, 2, 'primaria-2c', 'mar'),
     sec({ tt: 'Memoria mínima', c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir'],
       m: ['>oo', '.oo', '.oo', 'G..'], ref: [rep(3, rep(2, A, R), rep(2, B), G, A, I)],
       lim: { avanzar: 2, retroceder: 1, recoger: 1, 'girar-d': 1, 'girar-i': 1, repetir: 3 }, holgura: 0, h: 'optim',
-      o: 'La misma fábrica, con muy poca memoria.', i: 'Una galaxia secreta con memoria escasa.',
+      o: 'La misma fábrica, con muy poca memoria.', i: 'Una galaxia secreta con muy poca memoria. Bit la recomienda para pensar mucho.',
       cur: ['m3_41', 'm3_42'], ext: ['Secreto: optimizar con límites estrictos'] }, 3, 'primaria-3c', 'espacio'),
     sec({ tt: 'El mecanismo oculto', c: ARCA, rec: ['A'],
       m: ['>oos', 'oood', '.ooo', 'Goo.'],
       ref: P([rep(2, rec('A'), G, A, G, rec('A'), I, A, I)], { A: [rep(3, A, R), X] }), lim: { repetir: 2, receta: 3, activar: 1 }, holgura: 0, usa: 'receta', h: 'receta',
-      o: 'Un mecanismo escondido. ¡Solo un Activar!', i: 'Detrás del Faro hay una sala que nadie conoce.',
+      o: 'Un mecanismo escondido. ¡Solo un Activar!', i: 'Detrás del Faro hay una sala olvidada. Un mecanismo guarda un guiño de luz.',
       cur: ['m3_41', 'm3_42'], ext: ['Secreto: una sola instrucción Activar'] }, 4, 'primaria-3c', 'faro')
   ];
 
@@ -2885,12 +4552,25 @@
   }
 
   // ---------------------------------------------------------------- personajes secundarios
+  // Figuras PROVISIONALES de las chispas y de Conejo (fase 2). En la fase 3 se redibujan con el mismo lenguaje visual que Lumo.
+  function chispaProv(c1, c2) {
+    return '<ellipse cx="50" cy="93" rx="24" ry="4" fill="#000" opacity=".15"/><path d="M50 4q16 18 11 32-3 7-11 7t-11-7Q34 22 50 4z" fill="' + c2 + '"/><ellipse cx="50" cy="64" rx="30" ry="29" fill="' + c1 + '"/>' +
+      '<g fill="#fff"><circle cx="40" cy="58" r="8"/><circle cx="60" cy="58" r="8"/></g><circle cx="41" cy="59" r="4" fill="#2b2140"/><circle cx="61" cy="59" r="4" fill="#2b2140"/><circle cx="42.5" cy="57.5" r="1.5" fill="#fff"/><circle cx="62.5" cy="57.5" r="1.5" fill="#fff"/>' +
+      '<path d="M42 72q8 7 16 0" stroke="#5a2a2a" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="31" cy="68" r="4" fill="#ff9ac8" opacity=".55"/><circle cx="69" cy="68" r="4" fill="#ff9ac8" opacity=".55"/>';
+  }
   var PERSONAJES = {
     'Abuela Chispa': '<circle cx="50" cy="56" r="46" fill="#c9a0ff" opacity=".3"/><path d="M50 2q16 16 11 30-3 7-11 7t-11-7Q34 18 50 2z" fill="#d9a8ff"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="#b784f0"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="url(#gLumoGlow)" opacity=".4"/><g fill="#fff" fill-opacity=".4" stroke="#6a3fa8" stroke-width="3"><circle cx="37" cy="54" r="10"/><circle cx="63" cy="54" r="10"/></g><path d="M47 54h6" stroke="#6a3fa8" stroke-width="3"/><circle cx="37" cy="55" r="4" fill="#2b2140"/><circle cx="63" cy="55" r="4" fill="#2b2140"/><path d="M40 72q10 9 20 0" stroke="#5a2a7a" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="26" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><circle cx="74" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><ellipse cx="36" cy="93" rx="10" ry="5" fill="#8b57c9"/><ellipse cx="64" cy="93" rx="10" ry="5" fill="#8b57c9"/><path d="M30 28q20-12 40 0" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>',
     'Búho Bruma': '<ellipse cx="50" cy="94" rx="30" ry="5" fill="#000" opacity=".15"/><path d="M20 38l-4-22 18 12q16-6 32 0l18-12-4 22q8 22-6 40-12 14-24 14T26 78q-14-18-6-40z" fill="#8b6bd1"/><ellipse cx="50" cy="70" rx="20" ry="20" fill="#d7c8f5"/><g fill="#fff" stroke="#4a3a8a" stroke-width="3"><circle cx="37" cy="48" r="13"/><circle cx="63" cy="48" r="13"/></g><circle cx="38" cy="49" r="6" fill="#2b2140"/><circle cx="62" cy="49" r="6" fill="#2b2140"/><circle cx="40" cy="47" r="2" fill="#fff"/><circle cx="64" cy="47" r="2" fill="#fff"/><path d="M50 54l-5 8h10z" fill="#ffb02e"/><path d="M38 78l6 6M50 82l0 6M62 78l-6 6" stroke="#8b6bd1" stroke-width="3" stroke-linecap="round"/>',
     'Bichito': '<ellipse cx="50" cy="90" rx="22" ry="4" fill="#000" opacity=".15"/><path d="M36 34q-6-14-16-14M64 34q6-14 16-14" stroke="#2d6a3e" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="20" cy="20" r="4" fill="#ff6f91"/><circle cx="80" cy="20" r="4" fill="#ff6f91"/><ellipse cx="50" cy="62" rx="30" ry="28" fill="#6fcf6f"/><path d="M50 36v52" stroke="#3aa55a" stroke-width="3"/><circle cx="38" cy="66" r="5" fill="#2d6a3e"/><circle cx="62" cy="74" r="5" fill="#2d6a3e"/><circle cx="50" cy="52" r="16" fill="#8be08b"/><circle cx="43" cy="50" r="5" fill="#fff"/><circle cx="57" cy="50" r="5" fill="#fff"/><circle cx="44" cy="51" r="2.4" fill="#2b2140"/><circle cx="58" cy="51" r="2.4" fill="#2b2140"/><path d="M43 60q7 6 14 0" stroke="#2d6a3e" stroke-width="3" fill="none" stroke-linecap="round"/>',
     'Tinta': '<ellipse cx="50" cy="94" rx="30" ry="4" fill="#000" opacity=".15"/><g stroke="#ff7fb0" stroke-width="9" stroke-linecap="round" fill="none"><path d="M28 70q-10 12-4 22"/><path d="M40 76q-4 12 2 18"/><path d="M60 76q4 12-2 18"/><path d="M72 70q10 12 4 22"/></g><ellipse cx="50" cy="44" rx="30" ry="34" fill="#ff7fb0"/><ellipse cx="50" cy="44" rx="30" ry="34" fill="url(#gLumoGlow)" opacity=".25"/><g fill="#fff" stroke="#c43b78" stroke-width="3"><circle cx="38" cy="52" r="9"/><circle cx="62" cy="52" r="9"/></g><circle cx="39" cy="53" r="4" fill="#2b2140"/><circle cx="63" cy="53" r="4" fill="#2b2140"/><path d="M42 68q8 7 16 0" stroke="#8c1f52" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M32 22q18-14 36 0" stroke="#ffc0da" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/><circle cx="76" cy="20" r="7" fill="#ffd166"/><path d="M72 20h8M76 16v8" stroke="#a8672d" stroke-width="2.5"/>',
     'Lagarto gigante': '<ellipse cx="50" cy="94" rx="36" ry="4" fill="#000" opacity=".2"/><path d="M8 78q14-24 40-24h20q22 0 26 16l-12 6q-6-6-16-4-24 4-58 6z" fill="#4faf5a"/><path d="M68 54q10-16 22-8-2 12-14 14z" fill="#4faf5a"/><circle cx="82" cy="52" r="5" fill="#fff"/><circle cx="83" cy="53" r="2.4" fill="#2b2140"/><path d="M20 70l6-10 6 10M36 66l6-10 6 10M52 62l6-10 6 10" fill="#ffb02e"/><rect x="26" y="76" width="9" height="14" rx="4" fill="#3d9148"/><rect x="62" y="76" width="9" height="14" rx="4" fill="#3d9148"/>',
+    'Titila': chispaProv('#9fe3a0', '#c8f5c0'),
+    'Brasa': chispaProv('#ff6a4d', '#ffb199'),
+    'Destello': chispaProv('#5ec8ff', '#b4e6ff'),
+    'Ascua': chispaProv('#e0563a', '#ff9a6b'),
+    'Píxel': chispaProv('#4fe0c8', '#a8f5e8'),
+    'Cometa': chispaProv('#b58cff', '#dcc8ff'),
+    'Conejo': '<ellipse cx="50" cy="93" rx="26" ry="4" fill="#000" opacity=".15"/><ellipse cx="38" cy="22" rx="8" ry="20" fill="#f0e6dc"/><ellipse cx="62" cy="22" rx="8" ry="20" fill="#f0e6dc"/><ellipse cx="50" cy="66" rx="30" ry="26" fill="#f7f1ea"/><circle cx="41" cy="60" r="4" fill="#2b2140"/><circle cx="59" cy="60" r="4" fill="#2b2140"/><path d="M44 72q6 5 12 0" stroke="#a8672d" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="50" cy="67" r="3" fill="#ff9ac8"/>',
     'Bit': '<ellipse cx="50" cy="94" rx="26" ry="4" fill="#000" opacity=".15"/><rect x="40" y="2" width="4" height="12" fill="#8d9bb8"/><circle cx="42" cy="4" r="5" fill="#ff5a5f"/><rect x="22" y="14" width="56" height="40" rx="12" fill="#c9d4ea"/><rect x="28" y="22" width="44" height="24" rx="8" fill="#26335e"/><circle cx="40" cy="34" r="6" fill="#5fe0ff"/><circle cx="60" cy="34" r="6" fill="#5fe0ff"/><path d="M42 42q8 4 16 0" stroke="#5fe0ff" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="28" y="56" width="44" height="30" rx="8" fill="#9fb0cf"/><circle cx="50" cy="70" r="7" fill="#ffd166"/><rect x="14" y="58" width="12" height="22" rx="6" fill="#c9d4ea"/><rect x="74" y="58" width="12" height="22" rx="6" fill="#c9d4ea"/><rect x="32" y="86" width="12" height="8" rx="3" fill="#7b8bb0"/><rect x="56" y="86" width="12" height="8" rx="3" fill="#7b8bb0"/>'
   };
   function personaje(nombre) {
@@ -3846,7 +5526,7 @@
       if (aj.voz !== false && ctx.voz) r = ctx.voz.decir(id, { velocidad: infantil ? 0.85 : 0.95 });
       var sinVoz = !r || r.modo === 'subtitulo';
       var texto = linea.texto;
-      if (id.indexOf('n_') === 0 && !infantil && nivel.intro && !repetir) texto = nivel.intro.replace(/^[^:]*:\s*[«"]?/, '').replace(/[»"]$/, '') + '\n' + linea.texto;
+      if (id.indexOf('n_') === 0 && !infantil && nivel.intro && !repetir) texto = nivel.intro.replace(/^[^:«.!?]{2,24}:\s*[«"]?/, '').replace(/[»"]$/, '') + '\n' + linea.texto;
       mostrarTexto(texto, id.indexOf('n_') === 0 && !repetir ? quienIntro() : 'Lumo', sinVoz);
     }
 
@@ -4162,11 +5842,10 @@
   'use strict';
   var UI = root.RumboUI = root.RumboUI || {};
   var h = function () { return UI.h.apply(null, arguments); };
-  var CAT, PR, I, VOCES, LOG, DEM, G, Ar;
+  var CAT, PR, I, VOCES, LOG, DEM, G, Ar, ES;
   var App = UI.App = { pantallas: {}, estado: {}, nivelActual: null };
 
   var ZONA_MUNDO = { 0: 'jardin', 1: 'bosque', 2: 'mar', 3: 'ciudad', 4: 'faro' };
-  var ESCENA_ZONA = { 'C0': 'jardin', 'C1': 'bosque', 'C2': 'mar', 'C3': 'ciudad', 'CF': 'faro' };
 
   function perfil() { return App.estado.perfil; }
   function datos() { return App.estado.datos; }
@@ -4176,7 +5855,7 @@
 
   // ---------------------------------------------------------------- arranque
   function iniciar(raiz) {
-    CAT = root.RumboCatalogo; PR = root.RumboProgreso; I = root.RumboInterprete; VOCES = root.RumboVoces; LOG = root.RumboLogros; DEM = root.RumboDemos; Ar = UI.Arte; G = UI.Guardado;
+    CAT = root.RumboCatalogo; PR = root.RumboProgreso; I = root.RumboInterprete; VOCES = root.RumboVoces; LOG = root.RumboLogros; DEM = root.RumboDemos; ES = root.RumboEscenas; Ar = UI.Arte; G = UI.Guardado;
     CAT.registrarVoces();
     Object.keys(DEM.TEXTOS).forEach(function (c) {
       VOCES.lineas['nc_' + c] = { quien: 'Lumo', texto: DEM.TEXTOS[c].replace(/^[^:]+:\s*/, '') };
@@ -4195,7 +5874,6 @@
     var act = datos().perfiles.filter(function (p) { return p.id === datos().activo; })[0];
     App.estado.perfil = act || null;
     aplicarAjustes();
-    construirDisparos();
     if (!G.persistente()) setTimeout(function () { toast('Este navegador no deja guardar datos: el progreso se perderá al cerrar. Usa «Mi código».', 6000); }, 800);
     if (!datos().ajustes.introVista) intro(function () { ir('portada'); }); else ir('portada');
   }
@@ -4673,66 +6351,37 @@
   }
 
   // ---------------------------------------------------------------- historia: disparadores y escenas
-  var DISPARO = { antes: {}, despues: {} };
-  function construirDisparos() {
-    DISPARO = { antes: {}, despues: {} };
-    function antes(id, e) { (DISPARO.antes[id] = DISPARO.antes[id] || []).push(e); }
-    function despues(id, e) { (DISPARO.despues[id] = DISPARO.despues[id] || []).push(e); }
-    function primero(niv, fn) { return niv.filter(fn)[0]; }
-    var it = CAT.ITINERARIOS;
-    antes(it[3][0], 'C0-01'); antes(it[3][0], 'BV-01'); antes(it[3][1], 'BV-02'); antes(it[3][3], 'BV-03'); antes(it[3][4], 'BV-04'); despues(it[3][it[3].length - 1], 'BV-05'); despues(it[3][it[3].length - 1], 'C0-02'); despues(it[4][it[4].length - 1], 'C0-03'); despues(it[5][it[5].length - 1], 'C0-04');
-    var M = CAT.MUNDOS, x;
-    antes(M[1].niveles[0].id, 'C1-01');
-    if ((x = primero(M[1].niveles, function (n) { return n.tipo === 'depurar'; }))) antes(x.id, 'C1-02');
-    if ((x = primero(M[1].niveles, function (n) { return n.cartas.disponibles.indexOf('repetir') >= 0; }))) antes(x.id, 'C1-03');
-    if ((x = primero(M[1].niveles, function (n) { return n.zona === 'montanas'; }))) antes(x.id, 'C1-04');
-    despues(M[1].niveles[M[1].niveles.length - 1].id, 'C1-05');
-    antes(M[2].niveles[0].id, 'C2-01');
-    if ((x = primero(M[2].niveles, function (n) { return n.cartas.disponibles.indexOf('receta') >= 0; }))) antes(x.id, 'C2-02');
-    if ((x = primero(M[2].niveles, function (n) { return n.zona === 'volcan'; }))) antes(x.id, 'C2-03');
-    if ((x = primero(M[2].niveles, function (n) { return n.tipo === 'depurar'; }))) antes(x.id, 'C2-04');
-    despues(M[2].niveles[M[2].niveles.length - 1].id, 'C2-05');
-    antes(M[3].niveles[0].id, 'C3-01');
-    if ((x = primero(M[3].niveles, function (n) { return n.cartas.disponibles.indexOf('si') >= 0; }))) antes(x.id, 'C3-02');
-    if ((x = primero(M[3].niveles, function (n) { return n.zona === 'espacio'; }))) { antes(x.id, 'C3-03'); antes(x.id, 'C3-04'); }
-    despues(M[3].niveles[M[3].niveles.length - 1].id, 'C3-05');
-    antes(M[4].niveles[0].id, 'CF-01');
-    // El final se ve al terminar el último reto del propio curso (ver escenasPendientes).
-    Object.keys(CAT.FINAL_CURSO).forEach(function (c) { var id = CAT.FINAL_CURSO[c]; ['CF-03', 'CF-04', 'CF-05'].forEach(function (e) { if ((DISPARO.despues[id] || []).indexOf(e) < 0) despues(id, e); }); });
-  }
-  App.disparos = function () { return DISPARO; };
-
-  function escenasPendientes(lista, idNivel) {
+  // Los disparadores, las etapas y las frases de cada escena viven en src/datos/escenas.js (datos + función pura probada).
+  function escenasPendientes(cuando, idNivel) {
     var p = perfil(); if (!p || (App.estado.docente && App.estado.docente.vista)) return [];
-    return (lista || []).filter(function (e) {
-      if (/^BV-/.test(e) && infantil()) return false;   // la presentación de Lumo para Primaria (Infantil tiene sus escenas C0)
-      if (/^C0-/.test(e) && !infantil()) return false;
-      if (/^CF-0[345]$/.test(e) && idNivel && CAT.finalDe(p.curso) !== idNivel) return false;   // el final es el del curso del jugador
-      return !p.vistos.escenas[e];
-    });
+    return ES.pendientes({ cuando: cuando, nivel: idNivel, infantil: infantil(), vistas: p.vistos.escenas, esFinalDelCurso: CAT.finalDe(p.curso) === idNivel });
   }
-  function antesDe(id, fn) { reproducirEscenas(escenasPendientes(DISPARO.antes[id], id), fn); }
-  function despuesDe(id, fn) { reproducirEscenas(escenasPendientes(DISPARO.despues[id], id), fn); }
+  function antesDe(id, fn) { reproducirEscenas(escenasPendientes('antes', id), fn); }
+  function despuesDe(id, fn) { reproducirEscenas(escenasPendientes('despues', id), fn); }
 
-  function lineasDeEscena(e) {
-    return Object.keys(VOCES.lineas).filter(function (k) { return VOCES.lineas[k].escena === e; });
-  }
+  function lineasDeEscena(e) { return ES.lineasDe(e); }
   function reproducirEscenas(lista, fin) {
     if (!lista.length) { fin(); return; }
     var e = lista[0], resto = lista.slice(1);
     var sigue = function () { reproducirEscenas(resto, fin); };
-    PR.marcarEscenaVista(perfil(), e); guardar();
-    if (e === 'CF-04') { creditos(sigue); return; }
-    var lineas = lineasDeEscena(e);
-    if (!lineas.length) { sigue(); return; }
-    escena(e, lineas, sigue);
+    PR.marcarEscenaVista(perfil(), e);
+    (ES.POR_ID[e].marca || []).forEach(function (m) { PR.marcarEscenaVista(perfil(), m); });
+    guardar();
+    mostrarEscena(e, sigue);
   }
-  UI.reproducirEscena = function (id, fin) { var l = lineasDeEscena(id); if (id === 'CF-04') creditos(fin || function () {}); else if (l.length) escena(id, l, fin || function () {}); else if (fin) fin(); };
+  // Una escena con créditos los muestra primero y, si además tiene frases (p. ej. el avance del siguiente mundo), las dice después.
+  function mostrarEscena(id, fin) {
+    var d = ES.POR_ID[id]; if (!d) { fin(); return; }
+    var lineas = lineasDeEscena(id);
+    var dichas = function () { if (lineas.length) escena(id, lineas, fin); else fin(); };
+    if (d.creditos) creditos(d.creditos, dichas); else dichas();
+  }
+  UI.reproducirEscena = function (id, fin) { mostrarEscena(id, fin || function () {}); };
 
   function escena(id, lineas, fin) {
-    var zona = id === 'C2-03' ? 'volcan' : id === 'C3-03' || id === 'C3-04' ? 'espacio' : ESCENA_ZONA[id.slice(0, 2)] || 'jardin';
+    var zona = ES.zonaDe(id);
     var T = Ar.TEMAS[zona];
-    var inf = infantil() || id.indexOf('C0') === 0;
+    var inf = infantil() || (ES.POR_ID[id] && ES.POR_ID[id].etapa === 'infantil');
     var ov = h('div.escena.zona-' + zona, { role: 'dialog', 'aria-label': 'Escena de la historia', style: { '--c1': T.cielo[0], '--c2': T.cielo[1] } });
     var suelo = h('div.escena-suelo', { style: { background: T.c1 } });
     var izq = h('div.act.izq'), der = h('div.act.der');
@@ -4766,10 +6415,10 @@
     mostrar();
   }
 
-  function creditos(fin) {
+  function creditos(datos_, fin) {
     var ov = h('div.escena.creditos.zona-faro');
-    var lista = h('div.cred-lista', h('h2', 'Gracias por encender el Faro'));
-    [['Lumo', 'La chispa que aprendió a pensar'], ['Abuela Chispa', 'La guardiana del Faro'], ['Búho Bruma', 'Bosque encantado'], ['Bichito', 'El error que se hizo amigo'], ['Tinta', 'Mundo submarino'], ['Lagarto gigante', 'Isla volcánica'], ['Bit', 'Ciudad tecnológica']].forEach(function (c) {
+    var lista = h('div.cred-lista', h('h2', datos_.titulo));
+    datos_.filas.forEach(function (c) {
       lista.appendChild(h('div.cred', h('div.cred-av', { html: Ar.personaje(c[0]) }), h('div', h('b', c[0]), h('span', c[1]))));
     });
     ov.appendChild(lista);
@@ -4812,8 +6461,8 @@
     var vistas = Object.keys(p.vistos.escenas);
     var sec4 = h('section', h('h2', 'Álbum de recuerdos'));
     var al = h('div.album');
-    vistas.sort().forEach(function (e) {
-      al.appendChild(h('button.recuerdo', { type: 'button', on: { click: function () { UI.reproducirEscena(e, function () {}); } } }, h('span', e)));
+    vistas.filter(function (e) { return ES.POR_ID[e]; }).sort().forEach(function (e) {
+      al.appendChild(h('button.recuerdo', { type: 'button', on: { click: function () { UI.reproducirEscena(e, function () {}); } } }, h('span', ES.POR_ID[e] ? ES.POR_ID[e].titulo : e)));
     });
     if (!vistas.length) al.appendChild(h('p.nota', 'Aquí aparecerán las escenas de la historia que vayas viendo.'));
     sec4.appendChild(al); cuerpo.appendChild(sec4);
