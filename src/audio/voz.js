@@ -74,6 +74,35 @@
     return mejor;
   }
 
+  // Carácter de cada voz: la voz sintética es la misma, pero cada personaje cambia de tono (pitch) y ritmo (vel).
+  // Multiplican al tono base (1.05) y a la velocidad pedida. Con opciones.caracter=true se aplican; la emoción añade un matiz.
+  var PERFILES = {
+    'Lumo': { tono: 1.2, vel: 1.0 },
+    'Abuela Chispa': { tono: 0.8, vel: 0.85 },
+    'Búho Bruma': { tono: 0.55, vel: 0.8 },
+    'Bichito': { tono: 1.85, vel: 1.2 },
+    'Tinta': { tono: 1.3, vel: 1.05 },
+    'Lagarto gigante': { tono: 0.5, vel: 0.78 },
+    'Bit': { tono: 0.95, vel: 1.1 },
+    'Conejo': { tono: 1.6, vel: 1.15 },
+    'Titila': { tono: 1.35, vel: 1.0 },
+    'Brasa': { tono: 1.0, vel: 1.1 },
+    'Destello': { tono: 1.5, vel: 1.1 },
+    'Ascua': { tono: 0.85, vel: 1.0 },
+    'Píxel': { tono: 1.4, vel: 1.2 },
+    'Cometa': { tono: 1.1, vel: 0.95 }
+  };
+  var MATICES = {
+    alegre: [0.08, 1.05], emocionado: [0.12, 1.1], sorprendido: [0.15, 1.05], ups: [0.1, 1.05], orgulloso: [-0.05, 0.95],
+    tierno: [-0.05, 0.9], tierna: [-0.05, 0.9], sereno: [-0.08, 0.88], serena: [-0.08, 0.88], concentrado: [-0.05, 0.95], travieso: [0.1, 1.1]
+  };
+  // Devuelve {tono, vel} para un personaje y una emoción (valores relativos; 1 = sin cambio).
+  function perfilDeVoz(quien, emocion) {
+    var P = PERFILES[quien] || { tono: 1, vel: 1 }, M = MATICES[emocion] || [0, 1];
+    var tono = Math.max(0.1, Math.min(2, P.tono + M[0])), vel = Math.max(0.5, Math.min(1.6, P.vel * M[1]));
+    return { tono: Math.round(tono * 100) / 100, vel: Math.round(vel * 100) / 100 };
+  }
+
   // entorno: { synth, Utterance, voces, enLinea: fn, audios: {id: url}, Audio }
   function crearVoz(entorno) {
     entorno = entorno || {};
@@ -124,8 +153,9 @@
         var u = new Utterance(linea.texto);
         u.voice = elegida;
         u.lang = elegida.lang;
-        u.rate = opciones.velocidad || 0.9;
-        u.pitch = opciones.tono || 1.05;
+        var pf = opciones.caracter ? perfilDeVoz(linea.quien, opciones.emocion) : { tono: 1, vel: 1 };
+        u.rate = Math.max(0.1, Math.min(2, (opciones.velocidad || 0.9) * pf.vel));
+        u.pitch = opciones.tono || Math.min(2, 1.05 * pf.tono);
         u.volume = opciones.volumen == null ? 1 : opciones.volumen;
         if (opciones.alTerminar) u.onend = opciones.alTerminar;
         synth.speak(u);
@@ -162,6 +192,7 @@
   }
 
   return {
+    PERFILES: PERFILES, perfilDeVoz: perfilDeVoz,
     puntuarVoz: puntuarVoz,
     elegirVoz: elegirVoz,
     crearVoz: crearVoz,

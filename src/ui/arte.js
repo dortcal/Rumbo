@@ -129,15 +129,52 @@
   }
   function objeto(tema, skin) { var T = TEMAS[tema] || TEMAS.jardin; skin = skin || {}; return OBJETOS[skin.obj || T.obj](); }
 
-  // ---------------------------------------------------------------- Lumo
-  var OJO = { E: [3, 0], O: [-3, 0], N: [0, -2.5], S: [0, 2.5] };
-  function boca(expr) {
-    switch (expr) {
-      case 'feliz': return '<path d="M36 61q14 14 28 0z" fill="#7a2a1a" stroke="#7a2a1a" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 65q8 6 16 0" stroke="#ff7f8a" stroke-width="3" fill="none"/>';
-      case 'triste': return '<path d="M39 69q11-9 22 0" stroke="#7a2a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
-      case 'sorpresa': return '<ellipse cx="50" cy="66" rx="6" ry="7.5" fill="#7a2a1a"/>';
-      case 'pensando': return '<path d="M42 66q8 3 16-2" stroke="#7a2a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
-      default: return '<path d="M40 63q10 9 20 0" stroke="#7a2a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
+  // ---------------------------------------------------------------- Lumo (rediseño fase 3)
+  // Una sola figura modular: cuerpo redondo con llama, ojos grandes y brillantes, mejillas, bracitos, pies y brújula dorada en el pecho.
+  // Expresiones: normal, alegre, concentrado, sorprendido, ups, orgulloso, emocionado, tierno.
+  // Nombres antiguos aceptados: feliz→alegre, sorpresa→sorprendido, pensando→concentrado, triste→ups (ya no hay cara triste).
+  var EXPR_ALIAS = { feliz: 'alegre', sorpresa: 'sorprendido', pensando: 'concentrado', triste: 'ups', literal: 'normal', serena: 'tierno', sereno: 'tierno', tierna: 'tierno', sincero: 'tierno', soñador: 'tierno', ilusionado: 'emocionado', divertido: 'alegre', travieso: 'alegre', terco: 'concentrado', curioso: 'sorprendido' };
+  var EXPRESIONES = ['normal', 'alegre', 'concentrado', 'sorprendido', 'ups', 'orgulloso', 'emocionado', 'tierno'];
+  function exprDe(e) { e = EXPR_ALIAS[e] || e; return EXPRESIONES.indexOf(e) >= 0 ? e : 'normal'; }
+  var TINTA = '#7a2a1a';
+  function boca(expr, cx, cy) {
+    cx = cx == null ? 50 : cx; cy = cy == null ? 64 : cy;
+    var t = 'translate(' + (cx - 50) + ' ' + (cy - 64) + ')';
+    var g;
+    switch (exprDe(expr)) {
+      case 'alegre': g = '<path d="M38 60q12 16 24 0z" fill="' + TINTA + '" stroke="' + TINTA + '" stroke-width="2.5" stroke-linejoin="round"/><path d="M43 65q7 5 14 0" stroke="#ff7f8a" stroke-width="3" fill="none"/>'; break;
+      case 'emocionado': g = '<path d="M36 64q14 19 28 0z" fill="' + TINTA + '" stroke="' + TINTA + '" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 71q8 6 16 0" stroke="#ff7f8a" stroke-width="3.5" fill="none"/><rect x="43" y="64" width="14" height="3.2" rx="1.5" fill="#fff"/>'; break;
+      case 'sorprendido': g = '<ellipse cx="50" cy="66" rx="5.5" ry="7" fill="' + TINTA + '"/><ellipse cx="50" cy="68" rx="3" ry="3.4" fill="#ff7f8a"/>'; break;
+      case 'ups': g = '<path d="M38 67q4-6 8 0t8 0 8 0" stroke="' + TINTA + '" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'; break;
+      case 'concentrado': g = '<path d="M42 66h16" stroke="' + TINTA + '" stroke-width="3.6" stroke-linecap="round"/>'; break;
+      case 'orgulloso': g = '<path d="M39 62q11 12 22 0" stroke="' + TINTA + '" stroke-width="3.8" fill="none" stroke-linecap="round"/><path d="M60 62l3-3" stroke="' + TINTA + '" stroke-width="3" stroke-linecap="round"/>'; break;
+      case 'tierno': g = '<path d="M42 63q8 7 16 0" stroke="' + TINTA + '" stroke-width="3.4" fill="none" stroke-linecap="round"/>'; break;
+      default: g = '<path d="M40 63q10 9 20 0" stroke="' + TINTA + '" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
+    }
+    return '<g transform="' + t + '">' + g + '</g>';
+  }
+  // Ojos de frente. cx = centro horizontal; dx,dy = hacia dónde mira la pupila.
+  function ojoFrente(cx, e, dx, dy) {
+    var c = '#2b2140', B = '<circle cx="' + (cx + dx + 2) + '" cy="' + (50 + dy) + '" r="2.2" fill="#fff"/>';
+    switch (e) {
+      case 'alegre': case 'orgulloso': return '<path d="M' + (cx - 8) + ' 54q8-13 16 0" stroke="' + c + '" stroke-width="4.2" fill="none" stroke-linecap="round"/>';
+      case 'tierno': return '<ellipse cx="' + cx + '" cy="53" rx="9" ry="9" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (55 + dy) + '" r="5.6" fill="' + c + '"/><circle cx="' + (cx + dx + 2) + '" cy="' + (52.6 + dy) + '" r="2" fill="#fff"/><path d="M' + (cx - 9.5) + ' 51q9.5-6 19 0v-3h-19z" fill="url(#gLumo)"/><path d="M' + (cx - 9) + ' 50.5q9-5 18 0" stroke="#c9741a" stroke-width="1.8" fill="none"/>';
+      case 'emocionado': return '<ellipse cx="' + cx + '" cy="52" rx="10" ry="11.5" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (53 + dy) + '" r="7" fill="' + c + '"/><circle cx="' + (cx + dx + 2.6) + '" cy="' + (50 + dy) + '" r="2.8" fill="#fff"/><circle cx="' + (cx + dx - 2.4) + '" cy="' + (56 + dy) + '" r="1.5" fill="#fff"/>';
+      case 'sorprendido': return '<ellipse cx="' + cx + '" cy="52" rx="10" ry="12" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (52 + dy) + '" r="3.8" fill="' + c + '"/><circle cx="' + (cx + dx + 1.2) + '" cy="' + (50.6 + dy) + '" r="1.4" fill="#fff"/>';
+      case 'ups': return '<ellipse cx="' + cx + '" cy="52" rx="9.5" ry="10.5" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (53 + dy) + '" r="3" fill="' + c + '"/>';
+      case 'concentrado': return '<ellipse cx="' + cx + '" cy="53" rx="9" ry="7.5" fill="#fff"/><circle cx="' + (cx + dx + 2) + '" cy="' + (54 + dy) + '" r="4.8" fill="' + c + '"/><circle cx="' + (cx + dx + 3.6) + '" cy="' + (52.4 + dy) + '" r="1.7" fill="#fff"/>';
+      default: return '<ellipse cx="' + cx + '" cy="52" rx="9" ry="10" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (53 + dy) + '" r="5.4" fill="' + c + '"/>' + B.replace('r="2.2"', 'r="2"');
+    }
+  }
+  function cejasFrente(e) {
+    var s = 'stroke="' + TINTA + '" stroke-width="3.4" fill="none" stroke-linecap="round"';
+    switch (e) {
+      case 'concentrado': return '<path d="M30 42l14 3M70 42l-14 3" ' + s + '/>';
+      case 'sorprendido': case 'emocionado': return '<path d="M28 35q10-6 18-1M72 35q-10-6-18-1" ' + s + '/>';
+      case 'ups': return '<path d="M29 40q9-6 17-2M71 40q-9-6-17-2" ' + s + '/><path d="M80 40q4 6 0 9q-4-3 0-9z" fill="#7be0ff" stroke="#3a9fd0" stroke-width="1.5"/>';
+      case 'orgulloso': return '<path d="M29 39q9-5 16-1M71 39q-9-5-16-1" ' + s + '/>';
+      case 'tierno': return '<path d="M29 39q9-4 16 0M71 39q-9-4-16 0" ' + s + ' opacity=".7"/>';
+      default: return '';
     }
   }
   var DISFRACES_SVG = {
@@ -150,67 +187,108 @@
   };
   var CAPA = '<path d="M26 52Q10 78 18 92l32-6 32 6q8-14-8-40z" fill="#e8553f"/><path d="M26 52Q20 70 26 84" stroke="#b83a28" stroke-width="3" fill="none"/>';
 
-  // Lumo: viewBox 0 0 100 100. dir: E/O/N/S (hacia dónde mira)
-  //  S = de frente (mira al jugador) · N = de espaldas · E/O = de perfil (tres cuartos).
+  // Bracitos: pose 'bajos' (por defecto), 'arriba' (¡viva!), 'saludo' (una mano arriba), 'pecho' (orgullo), 'recoge' (hacia delante).
+  function brazos(pose) {
+    var f = 'fill="#e0731a"', st = ' stroke="#c9601a" stroke-width="1.6"';
+    switch (pose) {
+      case 'arriba': return '<g class="brazo-i"><ellipse cx="17" cy="48" rx="6.5" ry="10" transform="rotate(-35 17 48)" ' + f + st + '/></g><g class="brazo-d"><ellipse cx="83" cy="48" rx="6.5" ry="10" transform="rotate(35 83 48)" ' + f + st + '/></g>';
+      case 'saludo': return '<ellipse cx="18" cy="72" rx="6" ry="9" transform="rotate(15 18 72)" ' + f + st + '/><g class="brazo-d"><ellipse cx="83" cy="46" rx="6.5" ry="10" transform="rotate(30 83 46)" ' + f + st + '/></g>';
+      case 'pecho': return '<ellipse cx="33" cy="74" rx="6" ry="8" transform="rotate(-30 33 74)" ' + f + st + '/><ellipse cx="67" cy="74" rx="6" ry="8" transform="rotate(30 67 74)" ' + f + st + '/>';
+      case 'recoge': return '<ellipse cx="30" cy="80" rx="6" ry="8" transform="rotate(-20 30 80)" ' + f + st + '/><ellipse cx="70" cy="80" rx="6" ry="8" transform="rotate(20 70 80)" ' + f + st + '/>';
+      default: return '<ellipse cx="17" cy="70" rx="6" ry="9.5" transform="rotate(12 17 70)" ' + f + st + '/><ellipse cx="83" cy="70" rx="6" ry="9.5" transform="rotate(-12 83 70)" ' + f + st + '/>';
+    }
+  }
+
+  // Lumo: viewBox 0 0 100 100. dir: E/O/N/S (hacia dónde mira). S = de frente · N = de espaldas · E/O = de perfil.
+  // op: { dir, expr, disfraz, pose, mira:[dx,dy] }
   function lumo(op) {
     op = op || {};
-    var dir = op.dir || 'S', expr = op.expr || 'normal', d = op.disfraz | 0;
-    var cerrados = expr === 'feliz';
-    var cejas = function (dx) {
-      return expr === 'triste' ? '<path d="M' + (27 + dx) + ' 43l15-6M' + (73 + dx) + ' 43l-15-6" stroke="#7a2a1a" stroke-width="3.5" stroke-linecap="round"/>' :
-        expr === 'sorpresa' ? '<path d="M' + (28 + dx) + ' 36q10-6 18-1M' + (72 + dx) + ' 36q-10-6-18-1" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>' :
-        expr === 'pensando' ? '<path d="M' + (28 + dx) + ' 38q10-5 18 0M' + (56 + dx) + ' 36l16-4" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>' : '';
-    };
-    var ojo = function (cx, rx, ry, px, py) {
-      return '<ellipse cx="' + cx + '" cy="52" rx="' + rx + '" ry="' + ry + '" fill="#fff"/>' +
-        '<circle cx="' + (cx + px) + '" cy="' + (53 + py) + '" r="' + (rx * .56).toFixed(1) + '" fill="#2b2140"/><circle cx="' + (cx + px + 1.6) + '" cy="' + (51 + py) + '" r="1.8" fill="#fff"/>';
-    };
-    var cuerpoBase = '<circle cx="50" cy="56" r="46" fill="url(#gLumoGlow)"/>' +
-      '<g class="llama"><path d="M50 4q14 14 10 26-3 7-10 7t-10-7Q36 18 50 4z" fill="url(#gLlama)"/><path d="M50 14q6 8 3 15-3 4-3 4t-3-4q-3-7 3-15z" fill="#fff3a8" opacity=".85"/></g>';
-    var interior, pies, frontal = '';
+    var dir = op.dir || 'S', e = exprDe(op.expr), d = op.disfraz | 0, mira = op.mira || [0, 1.2];
+    var glow = '<circle cx="50" cy="56" r="46" fill="url(#gLumoGlow)"/>';
+    var llama = '<g class="llama"><path d="M50 3q15 15 11 27-3 7-11 7t-11-7Q35 18 50 3z" fill="url(#gLlama)"/><path d="M50 13q6 8 3 15-3 4-3 4t-3-4q-3-7 3-15z" fill="#fff3a8" opacity=".9"/></g>';
+    var interior, pies, br = (dir === 'N') ? '' : brazos(op.pose);
+    var mejillas = e === 'tierno' || e === 'orgulloso' || e === 'emocionado' ? .85 : .55;
     if (dir === 'N') {
-      // De espaldas: sin cara; se ve la nuca, el remolino de la llama y la mochila-brújula.
-      interior = '<ellipse cx="50" cy="60" rx="35" ry="32" fill="url(#gLumo)"/>' +
-        '<ellipse cx="50" cy="60" rx="35" ry="32" fill="#c8641a" opacity=".22"/>' +
+      interior = '<ellipse cx="50" cy="60" rx="36" ry="32" fill="url(#gLumo)"/><ellipse cx="50" cy="60" rx="36" ry="32" fill="#c8641a" opacity=".2"/>' +
         '<path d="M50 34q-9 4-9 12t9 10 9-6q0-7-7-8" fill="none" stroke="#e0731a" stroke-width="3.5" stroke-linecap="round" opacity=".7"/>' +
-        '<ellipse cx="50" cy="72" rx="15" ry="13" fill="#e8553f"/><ellipse cx="50" cy="72" rx="15" ry="13" fill="none" stroke="#b83a28" stroke-width="3"/><circle cx="50" cy="72" r="4" fill="#ffd166"/>';
+        '<ellipse cx="50" cy="72" rx="15" ry="13" fill="#e8553f"/><ellipse cx="50" cy="72" rx="15" ry="13" fill="none" stroke="#b83a28" stroke-width="3"/><circle cx="50" cy="72" r="4" fill="#ffd166"/>' +
+        '<ellipse cx="15" cy="68" rx="6" ry="9" fill="#e0731a"/><ellipse cx="85" cy="68" rx="6" ry="9" fill="#e0731a"/>';
       pies = '<ellipse cx="36" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="64" cy="91" rx="10" ry="5" fill="#e0731a"/>';
     } else if (dir === 'E' || dir === 'O') {
-      // De perfil: cuerpo más estrecho, ojo cercano grande, ojo lejano pequeño, boca al frente.
-      interior = '<ellipse cx="48" cy="60" rx="31" ry="32" fill="url(#gLumo)"/>' +
-        '<ellipse cx="42" cy="40" rx="11" ry="6" fill="#fff" opacity=".28" transform="rotate(-20 42 40)"/>' +
-        '<circle cx="76" cy="64" r="6" fill="#ff7f8a" opacity=".6"/>' +
-        '<ellipse cx="68" cy="52" rx="8" ry="9.5" fill="#fff"/><circle cx="72" cy="53" r="4.6" fill="#2b2140"/><circle cx="73.4" cy="51" r="1.7" fill="#fff"/>' +
-        '<ellipse cx="52" cy="52" rx="6.5" ry="8" fill="#fff"/><circle cx="55.5" cy="53" r="3.8" fill="#2b2140"/><circle cx="56.8" cy="51.4" r="1.4" fill="#fff"/>' +
-        '<g transform="translate(14 0)">' + cejas(0).replace(/M(\d+)/g, function (m, n) { return m; }) + boca(expr) + '</g>' +
-        '<ellipse cx="30" cy="70" rx="7" ry="10" fill="#e0731a" opacity=".85"/>';
+      var ojoC = e === 'alegre' || e === 'orgulloso' ?
+        '<path d="M60 56q8-13 16 0" stroke="#2b2140" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M47 56q5-9 10 0" stroke="#2b2140" stroke-width="3.4" fill="none" stroke-linecap="round"/>' :
+        '<ellipse cx="68" cy="52" rx="8.5" ry="' + (e === 'concentrado' ? 7 : e === 'sorprendido' || e === 'emocionado' ? 11 : 9.8) + '" fill="#fff"/><circle cx="' + (72 + mira[0] / 2) + '" cy="' + (53 + mira[1]) + '" r="' + (e === 'sorprendido' ? 3.6 : e === 'emocionado' ? 6.6 : 4.8) + '" fill="#2b2140"/><circle cx="' + (73.6 + mira[0] / 2) + '" cy="' + (51 + mira[1]) + '" r="1.8" fill="#fff"/>' +
+        '<ellipse cx="52" cy="52" rx="6.5" ry="8" fill="#fff"/><circle cx="55.5" cy="53" r="3.8" fill="#2b2140"/><circle cx="56.8" cy="51.4" r="1.4" fill="#fff"/>';
+      var ce = e === 'concentrado' ? '<path d="M60 43l16 4" stroke="' + TINTA + '" stroke-width="3.2" stroke-linecap="round"/>' : e === 'sorprendido' || e === 'emocionado' ? '<path d="M60 36q9-5 16-1" stroke="' + TINTA + '" stroke-width="3.2" fill="none" stroke-linecap="round"/>' : e === 'ups' ? '<path d="M82 40q4 6 0 9q-4-3 0-9z" fill="#7be0ff" stroke="#3a9fd0" stroke-width="1.5"/>' : '';
+      interior = '<ellipse cx="48" cy="60" rx="31" ry="32" fill="url(#gLumo)"/><ellipse cx="42" cy="40" rx="11" ry="6" fill="#fff" opacity=".28" transform="rotate(-20 42 40)"/>' +
+        '<circle cx="76" cy="66" r="6" fill="#ff7f8a" opacity="' + mejillas + '"/>' + ojoC + ce + boca(e, 66, 66) +
+        '<ellipse cx="30" cy="70" rx="7" ry="10" fill="#e0731a" opacity=".85"/><path d="M62 78a6 6 0 1 0 0 .1" fill="none"/>';
       pies = '<ellipse cx="42" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="62" cy="91" rx="9" ry="5" fill="#e0731a"/>';
-      if (cerrados) interior = interior.replace('rx="8" ry="9.5"', 'rx="8" ry="6.5"');
-      if (dir === 'O') { interior = '<g transform="translate(100 0) scale(-1 1)">' + interior + '</g>'; pies = '<g transform="translate(100 0) scale(-1 1)">' + pies + '</g>'; }
+      var bp = e === 'emocionado' || op.pose === 'arriba' ? '<ellipse cx="30" cy="50" rx="6" ry="10" transform="rotate(-30 30 50)" fill="#e0731a" stroke="#c9601a" stroke-width="1.6"/>' : '<ellipse cx="50" cy="82" rx="6" ry="8" transform="rotate(-18 50 82)" fill="#e0731a" stroke="#c9601a" stroke-width="1.6"/>';
+      br = bp;
+      if (dir === 'O') { var espejo = function (s) { return '<g transform="translate(100 0) scale(-1 1)">' + s + '</g>'; }; interior = espejo(interior); pies = espejo(pies); br = espejo(br); }
     } else {
-      interior = '<ellipse cx="50" cy="60" rx="35" ry="32" fill="url(#gLumo)"/>' +
+      interior = '<ellipse cx="50" cy="60" rx="36" ry="32" fill="url(#gLumo)"/>' +
         '<ellipse cx="38" cy="40" rx="13" ry="7" fill="#fff" opacity=".28" transform="rotate(-20 38 40)"/>' +
-        '<circle cx="26" cy="64" r="6" fill="#ff7f8a" opacity=".55"/><circle cx="74" cy="64" r="6" fill="#ff7f8a" opacity=".55"/>' +
-        [38, 62].map(function (cx) { return ojo(cx, 9, cerrados ? 7 : 10, 0, 2.2); }).join('') + cejas(0) + boca(expr) +
-        '<g transform="translate(50 84)"><circle r="8" fill="#fff" stroke="#c9741a" stroke-width="2.5"/><path d="M0-6l3 6-3 6-3-6z" fill="#e8553f"/><path d="M0 6l-3-6h6z" fill="#7a8aa8"/></g>';
+        '<circle cx="25" cy="64" r="6.5" fill="#ff7f8a" opacity="' + mejillas + '"/><circle cx="75" cy="64" r="6.5" fill="#ff7f8a" opacity="' + mejillas + '"/>' +
+        ojoFrente(38, e, mira[0], mira[1]) + ojoFrente(62, e, mira[0], mira[1]) + cejasFrente(e) + boca(e) +
+        '<g transform="translate(50 84)"><circle r="8.5" fill="#fff" stroke="#c9741a" stroke-width="2.5"/><circle r="6" fill="#fff6c9"/><path d="M0-6l3 6-3 6-3-6z" fill="#e8553f"/><path d="M0 6l-3-6h6z" fill="#7a8aa8"/></g>';
       pies = '<ellipse cx="34" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="66" cy="91" rx="10" ry="5" fill="#e0731a"/>';
     }
-    return '<svg viewBox="0 0 100 100" class="lumo-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      (d === 3 && dir !== 'N' ? CAPA : '') + cuerpoBase + (d === 3 && dir === 'N' ? CAPA : '') +
-      interior + pies + frontal + (dir === 'N' || dir === 'S' ? (DISFRACES_SVG[d] || '') : (DISFRACES_SVG[d] || '')) + '</svg>';
+    var capaAtras = d === 3 ? CAPA : '';
+    return '<svg viewBox="0 0 100 100" class="lumo-svg" data-expr="' + e + '" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      capaAtras + glow + llama + interior + pies + br + (DISFRACES_SVG[d] || '') + '</svg>';
   }
 
   // ---------------------------------------------------------------- personajes secundarios
+  // Las seis chispas comparten el lenguaje visual de Lumo (cuerpo redondo, llama, ojos grandes, mejillas, bracitos)
+  // y se distinguen por el color y un rasgo propio. Expresiones: normal, alegre, sorprendido, tierno.
+  var CHISPAS_DISENO = {
+    'Titila':   { c1: '#8fdc86', c2: '#d6f7c8', rasgo: '<path d="M50 14q-14-6-20 4 12 6 20-4z" fill="#3aa55a"/><path d="M50 14q12-8 20 2-10 8-20-2z" fill="#2c8745"/>' },
+    'Brasa':    { c1: '#ff7a55', c2: '#ffc2a8', rasgo: '<path d="M36 24l6-12 6 10 6-12 6 12 6-10 2 16z" fill="#c9401f"/>' },
+    'Destello': { c1: '#5ec8ff', c2: '#c4ecff', rasgo: '<path d="M30 22q8-14 22-6 8 4 6 12-10-4-14 2-6-6-14-8z" fill="#2a9ad6"/><circle cx="66" cy="18" r="3" fill="#fff"/>' },
+    'Ascua':    { c1: '#e8603f', c2: '#ffa571', rasgo: '<path d="M34 28q-6-14 2-18 2 10 8 14zM66 28q6-14-2-18-2 10-8 14z" fill="#8c2a1a"/>' },
+    'Píxel':    { c1: '#4fe0c8', c2: '#b6f7ec', rasgo: '<path d="M50 20V6" stroke="#2a8f80" stroke-width="3.5"/><rect x="43" y="-1" width="14" height="14" rx="2" fill="#7affe4" stroke="#2a8f80" stroke-width="2.5"/><rect x="47" y="3" width="6" height="6" fill="#2a8f80"/>' },
+    'Cometa':   { c1: '#b58cff', c2: '#e3d3ff', rasgo: '<path d="M72 18l6-14 3 11 12 1-10 6 3 12-10-8-9 6 3-12-10-5z" fill="#ffd166" stroke="#e8a82e" stroke-width="2" stroke-linejoin="round"/>' }
+  };
+  function chispa(nombre, expr) {
+    var D = CHISPAS_DISENO[nombre]; if (!D) return '';
+    expr = EXPR_ALIAS[expr] || expr;
+    var ojos, boca_;
+    switch (expr) {
+      case 'alegre': case 'emocionado': case 'orgulloso':
+        ojos = '<path d="M31 58q8-12 16 0M53 58q8-12 16 0" stroke="#2b2140" stroke-width="4" fill="none" stroke-linecap="round"/>';
+        boca_ = '<path d="M40 66q10 14 20 0z" fill="#7a2a1a" stroke="#7a2a1a" stroke-width="2" stroke-linejoin="round"/>'; break;
+      case 'sorprendido': case 'ups':
+        ojos = '<ellipse cx="39" cy="58" rx="8.5" ry="10" fill="#fff"/><ellipse cx="61" cy="58" rx="8.5" ry="10" fill="#fff"/><circle cx="39" cy="58" r="3.4" fill="#2b2140"/><circle cx="61" cy="58" r="3.4" fill="#2b2140"/>';
+        boca_ = '<ellipse cx="50" cy="72" rx="4.5" ry="5.5" fill="#7a2a1a"/>'; break;
+      case 'tierno':
+        ojos = '<ellipse cx="39" cy="59" rx="8" ry="8" fill="#fff"/><ellipse cx="61" cy="59" rx="8" ry="8" fill="#fff"/><circle cx="40" cy="60" r="5" fill="#2b2140"/><circle cx="62" cy="60" r="5" fill="#2b2140"/><circle cx="41.6" cy="58" r="1.8" fill="#fff"/><circle cx="63.6" cy="58" r="1.8" fill="#fff"/><path d="M30 55q9-6 18 0M52 55q9-6 18 0" stroke="' + D.c1 + '" stroke-width="3" fill="none"/>';
+        boca_ = '<path d="M44 70q6 5 12 0" stroke="#7a2a1a" stroke-width="3" fill="none" stroke-linecap="round"/>'; break;
+      default:
+        ojos = '<ellipse cx="39" cy="58" rx="8" ry="9" fill="#fff"/><ellipse cx="61" cy="58" rx="8" ry="9" fill="#fff"/><circle cx="40" cy="59" r="4.8" fill="#2b2140"/><circle cx="62" cy="59" r="4.8" fill="#2b2140"/><circle cx="41.6" cy="57" r="1.8" fill="#fff"/><circle cx="63.6" cy="57" r="1.8" fill="#fff"/>';
+        boca_ = '<path d="M43 70q7 6 14 0" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>';
+    }
+    return '<defs><radialGradient id="gCh' + nombre.charCodeAt(0) + '"><stop offset="55%" stop-color="' + D.c1 + '" stop-opacity=".4"/><stop offset="100%" stop-color="' + D.c1 + '" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="58" r="48" fill="url(#gCh' + nombre.charCodeAt(0) + ')"/><ellipse cx="50" cy="93" rx="24" ry="4" fill="#000" opacity=".15"/>' +
+      '<g class="llama"><path d="M50 6q15 15 10 28-3 7-10 7t-10-7Q35 21 50 6z" fill="' + D.c1 + '"/><path d="M50 16q6 8 3 14-3 4-3 4t-3-4q-3-6 3-14z" fill="' + D.c2 + '" opacity=".9"/></g>' +
+      D.rasgo +
+      '<ellipse cx="50" cy="64" rx="33" ry="29" fill="' + D.c1 + '"/><ellipse cx="38" cy="46" rx="11" ry="5.5" fill="#fff" opacity=".3" transform="rotate(-20 38 46)"/>' +
+      '<ellipse cx="17" cy="72" rx="5.5" ry="8.5" transform="rotate(12 17 72)" fill="' + D.c1 + '" stroke="#0002" stroke-width="1.4"/><ellipse cx="83" cy="72" rx="5.5" ry="8.5" transform="rotate(-12 83 72)" fill="' + D.c1 + '" stroke="#0002" stroke-width="1.4"/>' +
+      '<circle cx="27" cy="68" r="5" fill="#ff7f8a" opacity=".55"/><circle cx="73" cy="68" r="5" fill="#ff7f8a" opacity=".55"/>' + ojos + boca_ +
+      '<ellipse cx="38" cy="91" rx="9" ry="4.5" fill="' + D.c1 + '"/><ellipse cx="62" cy="91" rx="9" ry="4.5" fill="' + D.c1 + '"/>';
+  }
   var PERSONAJES = {
-    'Abuela Chispa': '<circle cx="50" cy="56" r="46" fill="#c9a0ff" opacity=".3"/><path d="M50 2q16 16 11 30-3 7-11 7t-11-7Q34 18 50 2z" fill="#d9a8ff"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="#b784f0"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="url(#gLumoGlow)" opacity=".4"/><g fill="#fff" fill-opacity=".4" stroke="#6a3fa8" stroke-width="3"><circle cx="37" cy="54" r="10"/><circle cx="63" cy="54" r="10"/></g><path d="M47 54h6" stroke="#6a3fa8" stroke-width="3"/><circle cx="37" cy="55" r="4" fill="#2b2140"/><circle cx="63" cy="55" r="4" fill="#2b2140"/><path d="M40 72q10 9 20 0" stroke="#5a2a7a" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="26" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><circle cx="74" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><ellipse cx="36" cy="93" rx="10" ry="5" fill="#8b57c9"/><ellipse cx="64" cy="93" rx="10" ry="5" fill="#8b57c9"/><path d="M30 28q20-12 40 0" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>',
+    'Abuela Chispa': '<defs><radialGradient id="gChAb"><stop offset="55%" stop-color="#c9a0ff" stop-opacity=".4"/><stop offset="100%" stop-color="#c9a0ff" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="56" r="48" fill="url(#gChAb)"/><path d="M50 2q16 16 11 30-3 7-11 7t-11-7Q34 18 50 2z" fill="#d9a8ff"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="#b784f0"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="url(#gLumoGlow)" opacity=".4"/><g fill="#fff" fill-opacity=".4" stroke="#6a3fa8" stroke-width="3"><circle cx="37" cy="54" r="10"/><circle cx="63" cy="54" r="10"/></g><path d="M47 54h6" stroke="#6a3fa8" stroke-width="3"/><circle cx="37" cy="55" r="4" fill="#2b2140"/><circle cx="63" cy="55" r="4" fill="#2b2140"/><path d="M40 72q10 9 20 0" stroke="#5a2a7a" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="26" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><circle cx="74" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><ellipse cx="36" cy="93" rx="10" ry="5" fill="#8b57c9"/><ellipse cx="64" cy="93" rx="10" ry="5" fill="#8b57c9"/><path d="M30 28q20-12 40 0" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>',
     'Búho Bruma': '<ellipse cx="50" cy="94" rx="30" ry="5" fill="#000" opacity=".15"/><path d="M20 38l-4-22 18 12q16-6 32 0l18-12-4 22q8 22-6 40-12 14-24 14T26 78q-14-18-6-40z" fill="#8b6bd1"/><ellipse cx="50" cy="70" rx="20" ry="20" fill="#d7c8f5"/><g fill="#fff" stroke="#4a3a8a" stroke-width="3"><circle cx="37" cy="48" r="13"/><circle cx="63" cy="48" r="13"/></g><circle cx="38" cy="49" r="6" fill="#2b2140"/><circle cx="62" cy="49" r="6" fill="#2b2140"/><circle cx="40" cy="47" r="2" fill="#fff"/><circle cx="64" cy="47" r="2" fill="#fff"/><path d="M50 54l-5 8h10z" fill="#ffb02e"/><path d="M38 78l6 6M50 82l0 6M62 78l-6 6" stroke="#8b6bd1" stroke-width="3" stroke-linecap="round"/>',
     'Bichito': '<ellipse cx="50" cy="90" rx="22" ry="4" fill="#000" opacity=".15"/><path d="M36 34q-6-14-16-14M64 34q6-14 16-14" stroke="#2d6a3e" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="20" cy="20" r="4" fill="#ff6f91"/><circle cx="80" cy="20" r="4" fill="#ff6f91"/><ellipse cx="50" cy="62" rx="30" ry="28" fill="#6fcf6f"/><path d="M50 36v52" stroke="#3aa55a" stroke-width="3"/><circle cx="38" cy="66" r="5" fill="#2d6a3e"/><circle cx="62" cy="74" r="5" fill="#2d6a3e"/><circle cx="50" cy="52" r="16" fill="#8be08b"/><circle cx="43" cy="50" r="5" fill="#fff"/><circle cx="57" cy="50" r="5" fill="#fff"/><circle cx="44" cy="51" r="2.4" fill="#2b2140"/><circle cx="58" cy="51" r="2.4" fill="#2b2140"/><path d="M43 60q7 6 14 0" stroke="#2d6a3e" stroke-width="3" fill="none" stroke-linecap="round"/>',
     'Tinta': '<ellipse cx="50" cy="94" rx="30" ry="4" fill="#000" opacity=".15"/><g stroke="#ff7fb0" stroke-width="9" stroke-linecap="round" fill="none"><path d="M28 70q-10 12-4 22"/><path d="M40 76q-4 12 2 18"/><path d="M60 76q4 12-2 18"/><path d="M72 70q10 12 4 22"/></g><ellipse cx="50" cy="44" rx="30" ry="34" fill="#ff7fb0"/><ellipse cx="50" cy="44" rx="30" ry="34" fill="url(#gLumoGlow)" opacity=".25"/><g fill="#fff" stroke="#c43b78" stroke-width="3"><circle cx="38" cy="52" r="9"/><circle cx="62" cy="52" r="9"/></g><circle cx="39" cy="53" r="4" fill="#2b2140"/><circle cx="63" cy="53" r="4" fill="#2b2140"/><path d="M42 68q8 7 16 0" stroke="#8c1f52" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M32 22q18-14 36 0" stroke="#ffc0da" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/><circle cx="76" cy="20" r="7" fill="#ffd166"/><path d="M72 20h8M76 16v8" stroke="#a8672d" stroke-width="2.5"/>',
     'Lagarto gigante': '<ellipse cx="50" cy="94" rx="36" ry="4" fill="#000" opacity=".2"/><path d="M8 78q14-24 40-24h20q22 0 26 16l-12 6q-6-6-16-4-24 4-58 6z" fill="#4faf5a"/><path d="M68 54q10-16 22-8-2 12-14 14z" fill="#4faf5a"/><circle cx="82" cy="52" r="5" fill="#fff"/><circle cx="83" cy="53" r="2.4" fill="#2b2140"/><path d="M20 70l6-10 6 10M36 66l6-10 6 10M52 62l6-10 6 10" fill="#ffb02e"/><rect x="26" y="76" width="9" height="14" rx="4" fill="#3d9148"/><rect x="62" y="76" width="9" height="14" rx="4" fill="#3d9148"/>',
+    'Conejo': '<ellipse cx="50" cy="93" rx="26" ry="4" fill="#000" opacity=".15"/><ellipse cx="38" cy="22" rx="8" ry="20" fill="#f0e6dc"/><ellipse cx="62" cy="22" rx="8" ry="20" fill="#f0e6dc"/><ellipse cx="50" cy="66" rx="30" ry="26" fill="#f7f1ea"/><circle cx="41" cy="60" r="4" fill="#2b2140"/><circle cx="59" cy="60" r="4" fill="#2b2140"/><path d="M44 72q6 5 12 0" stroke="#a8672d" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="50" cy="67" r="3" fill="#ff9ac8"/>',
     'Bit': '<ellipse cx="50" cy="94" rx="26" ry="4" fill="#000" opacity=".15"/><rect x="40" y="2" width="4" height="12" fill="#8d9bb8"/><circle cx="42" cy="4" r="5" fill="#ff5a5f"/><rect x="22" y="14" width="56" height="40" rx="12" fill="#c9d4ea"/><rect x="28" y="22" width="44" height="24" rx="8" fill="#26335e"/><circle cx="40" cy="34" r="6" fill="#5fe0ff"/><circle cx="60" cy="34" r="6" fill="#5fe0ff"/><path d="M42 42q8 4 16 0" stroke="#5fe0ff" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="28" y="56" width="44" height="30" rx="8" fill="#9fb0cf"/><circle cx="50" cy="70" r="7" fill="#ffd166"/><rect x="14" y="58" width="12" height="22" rx="6" fill="#c9d4ea"/><rect x="74" y="58" width="12" height="22" rx="6" fill="#c9d4ea"/><rect x="32" y="86" width="12" height="8" rx="3" fill="#7b8bb0"/><rect x="56" y="86" width="12" height="8" rx="3" fill="#7b8bb0"/>'
   };
-  function personaje(nombre) {
-    if (nombre === 'Lumo') return lumo({ expr: 'feliz', dir: 'S' });
+  function personaje(nombre, op) {
+    if (CHISPAS_DISENO[nombre]) return '<svg viewBox="0 0 100 100" class="pers-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + chispa(nombre, op && op.expr) + '</svg>';
+    if (nombre === 'Lumo') return lumo({ expr: op && op.expr || 'alegre', dir: 'S', pose: op && op.pose });
     return '<svg viewBox="0 0 100 100" class="pers-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + (PERSONAJES[nombre] || '') + '</svg>';
   }
 
@@ -325,9 +403,17 @@
       '<text x="280" y="136" fill="url(#gLogo)" stroke="#fff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">RUMBO</text></g></svg>';
   }
 
+  // Insignia Creative Commons BY-NC-ND (local, sin pedir imágenes a Internet).
+  function insigniaCC() {
+    return '<svg viewBox="0 0 88 31" width="88" height="31" role="img" aria-label="CC BY-NC-ND 4.0"><rect width="88" height="31" rx="3" fill="#aab2ab"/><rect x="1.5" y="1.5" width="85" height="28" rx="2" fill="#fff"/>' +
+      '<rect x="1.5" y="1.5" width="26" height="28" rx="2" fill="#aab2ab"/><circle cx="14.5" cy="15.5" r="10" fill="#fff" stroke="#000" stroke-width="2"/><text x="14.5" y="19.5" font-family="Arial,sans-serif" font-weight="700" font-size="11" text-anchor="middle" fill="#000">cc</text>' +
+      '<text x="57" y="13" font-family="Arial,sans-serif" font-weight="700" font-size="9" text-anchor="middle" fill="#000">BY-NC-ND</text><text x="57" y="24" font-family="Arial,sans-serif" font-size="8" text-anchor="middle" fill="#333">4.0</text></svg>';
+  }
+
   UI.Arte = {
+    insigniaCC: insigniaCC,
     TEMAS: TEMAS, NOMBRES_ZONA: NOMBRES_ZONA, celda: celda, objeto: objeto, interruptor: interruptor, puerta: puerta,
-    lumo: lumo, personaje: personaje, PERSONAJES: Object.keys(PERSONAJES).concat(['Lumo']),
+    lumo: lumo, exprDe: exprDe, EXPRESIONES: EXPRESIONES, personaje: personaje, PERSONAJES: Object.keys(PERSONAJES).concat(Object.keys(CHISPAS_DISENO), ['Lumo']),
     iconoCarta: iconoCarta, CARTA_COLOR: CARTA_COLOR, CARTA_NOMBRE: CARTA_NOMBRE,
     iconoCond: iconoCond, COND_NOMBRE: COND_NOMBRE, insignia: insignia,
     picto: picto, PICTOS: PICTOS, PICTO_NOMBRE: PICTO_NOMBRE,

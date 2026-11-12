@@ -725,13 +725,154 @@
   'use strict';
 
   var lineas = {
-    // ---- Campaña 0: Infantil ----
+    // ---- Campaña 0: Infantil (solo voz e imagen) ----
     c0_01_a: { quien: 'Lumo', escena: 'C0-01', texto: '¡Uy! ¿Dónde estoy?' },
     c0_01_b: { quien: 'Lumo', escena: 'C0-01', texto: 'Soy Lumo. ¿Me ayudas a moverme?' },
+    gc_0_a: { quien: 'Lumo', escena: 'GC-0', texto: '¡Mira! ¡Una luz que parpadea!' },
     c0_02_a: { quien: 'Lumo', escena: 'C0-02', texto: '¡Lo conseguimos! Gracias, amigo.' },
+    c0_02_b: { quien: 'Lumo', escena: 'C0-02', texto: 'Tienes unas orejas muy suaves.' },
+    c0_03_b: { quien: 'Lumo', escena: 'C0-03', texto: '¡Uno, dos, tres! ¡Qué buena fila!' },
     c0_03_a: { quien: 'Lumo', escena: 'C0-03', texto: 'Primero uno, luego otro. ¡Así se llega!' },
     c0_04_a: { quien: 'Lumo', escena: 'C0-04', texto: 'Mira, mi casa.' },
     c0_04_b: { quien: 'Lumo', escena: 'C0-04', texto: 'Tengo que llegar allí.' },
+
+    // ---- Mundo 1: bosque y montañas ----
+    c1_01_b: { quien: 'Búho Bruma', escena: 'C1-01', texto: 'Hmm. Una chispa nueva en mi bosque.' },
+    c1_01_c: { quien: 'Lumo', escena: 'C1-01', texto: 'Me he caído de lejos. ¡Busco a mi familia!' },
+    c1_01_a: { quien: 'Búho Bruma', escena: 'C1-01', texto: 'Las luciérnagas hablan en orden. Escucha su luz.' },
+    c1_01_d: { quien: 'Búho Bruma', escena: 'C1-01', texto: 'Una lucecita se ha perdido por aquí. Se llama Titila.' },
+    c1_01_e: { quien: 'Lumo', escena: 'C1-01', texto: '¡Es de mi familia! Vamos a buscarla.' },
+    c1_06_a: { quien: 'Brasa', escena: 'C1-06', texto: '¡Eh, tú! No necesito ayuda para bajar.' },
+    c1_06_b: { quien: 'Lumo', escena: 'C1-06', texto: '¡Hola! Soy Lumo. ¿Eres de mi familia?' },
+    c1_06_c: { quien: 'Brasa', escena: 'C1-06', texto: 'Soy Brasa. Y puedo sola. ¡Casi siempre!' },
+    c1_06_d: { quien: 'Lumo', escena: 'C1-06', texto: 'Subir juntos es más divertido. Voy ya.' },
+    c1_03_b: { quien: 'Lumo', escena: 'C1-03', texto: 'Subir, subir, subir… ¡siempre igual!' },
+    c1_03_a: { quien: 'Lumo', escena: 'C1-03', texto: '¿Y si repetimos este trozo?' },
+    c1_04_a: { quien: 'Lumo', escena: 'C1-03', texto: 'Repetir tres veces. ¡Así es más corto!' },
+    c1_02_a: { quien: 'Bichito', escena: 'C1-02', texto: '¡Ji, ji! ¿Quién ha movido las tarjetas?' },
+    c1_02_b: { quien: 'Lumo', escena: 'C1-02', texto: '¡Eh! ¿Quién eres tú?' },
+    c1_02_c: { quien: 'Lumo', escena: 'C1-02', texto: 'Un fallo con patas. ¡Vamos a arreglarlo!' },
+    cap1_a_a: { quien: 'Lumo', escena: 'CAP1-A', texto: 'Soy Lumo, de tu familia. Estás a salvo.' },
+    cap1_a_b: { quien: 'Titila', escena: 'CAP1-A', texto: '¡Brillo! ¡Hacía tanto que no brillaba!' },
+    cap1_a_c: { quien: 'Titila', escena: 'CAP1-A', texto: '¡Os espero en el Faro!' },
+    cap1_a_d: { quien: 'Lumo', escena: 'CAP1-A', texto: 'Una ventana encendida. ¡Queda más familia!' },
+    br_2_a: { quien: 'Búho Bruma', escena: 'BR-2', texto: 'Mis luciérnagas vuelven a casa. Gracias, pequeño.' },
+    br_2_b: { quien: 'Búho Bruma', escena: 'BR-2', texto: 'Te presté mi gorra de guía. Quédatela.' },
+    br_2_c: { quien: 'Lumo', escena: 'BR-2', texto: '¡Ahora soy un explorador de verdad!' },
+    cap1_01_a: { quien: 'Brasa', escena: 'CAP1-01', texto: 'Podía bajar sola. Pero… gracias por subir.' },
+    cap1_01_b: { quien: 'Brasa', escena: 'CAP1-01', texto: 'Esto cayó a mi lado. Creo que es tuyo.' },
+    c1_05_a: { quien: 'Lumo', escena: 'CAP1-01', texto: '¡Una pieza de mi brújula! ¡Brilla más!' },
+    cap1_01_c: { quien: 'Brasa', escena: 'CAP1-01', texto: 'Desde aquí se ve el Faro. ¡Mándale un guiño!' },
+    cap1_01_d: { quien: 'Lumo', escena: 'CAP1-01', texto: '¡El Faro me ha contestado! ¡Está despertando!' },
+    cap1_01_e: { quien: 'Brasa', escena: 'CAP1-01', texto: '¡Pues no lo dejemos dormir!' },
+    cap1_02_a: { quien: 'Lumo', escena: 'CAP1-02', texto: 'Bichito está solo y tiene frío.' },
+    cap1_02_b: { quien: 'Bichito', escena: 'CAP1-02', texto: '¿Para mí? ¡Ji, ji!' },
+    cap1_02_c: { quien: 'Lumo', escena: 'CAP1-02', texto: 'Los fallos también necesitan abrigo.' },
+    cap1_03_a: { quien: 'Tinta', escena: 'CAP1-03', texto: '¡Lumo! ¡Tengo un mundo bajo el mar que enseñarte!' },
+    cap1_03_b: { quien: 'Lumo', escena: 'CAP1-03', texto: '¡Allá vamos! El Faro nos espera.' },
+    gc_1_a: { quien: 'Lumo', escena: 'GC-1', texto: 'Esa luz… parpadea como una canción.' },
+
+    // ---- Mundo 2: mar y volcán ----
+    c2_01_a: { quien: 'Tinta', escena: 'C2-01', texto: '¡Bienvenido a mi taller! ¡Todo funciona con instrucciones!' },
+    c2_01_b: { quien: 'Tinta', escena: 'C2-01', texto: 'Construyo un camino de luz para los peces.' },
+    c2_01_c: { quien: 'Lumo', escena: 'C2-01', texto: '¡Qué bien! ¿Has visto a alguien de mi familia?' },
+    c2_01_d: { quien: 'Tinta', escena: 'C2-01', texto: 'Destello juega por aquí. Se esconde muy bien.' },
+    c2_01_e: { quien: 'Lumo', escena: 'C2-01', texto: '¡Pues a buscarlo! Primero, tu camino.' },
+    c2_02_b: { quien: 'Lumo', escena: 'C2-02', texto: 'Otro nicho, otra vez los mismos pasos…' },
+    c2_02_a: { quien: 'Tinta', escena: 'C2-02', texto: 'Una receta se hace una vez y se usa muchas.' },
+    c2_02_c: { quien: 'Lumo', escena: 'C2-02', texto: '¡Un frasco de pasos! Me gusta.' },
+    cap2_a_a: { quien: 'Lumo', escena: 'CAP2-A', texto: '¡Eres Destello! Soy Lumo. Tu familia te busca.' },
+    cap2_a_b: { quien: 'Lumo', escena: 'CAP2-A', texto: 'Otra ventana encendida. ¡Ya van tres!' },
+    tin_2_a: { quien: 'Tinta', escena: 'TIN-2', texto: '¡Mi camino de luz está listo! ¡Mira cómo brilla!' },
+    tin_2_b: { quien: 'Tinta', escena: 'TIN-2', texto: 'Quédate el casco de buceo. Te llevará lejos.' },
+    tin_2_c: { quien: 'Lumo', escena: 'TIN-2', texto: 'Gracias, Tinta. ¡Hasta pronto!' },
+    c2_03_a: { quien: 'Lagarto gigante', escena: 'C2-03', texto: 'Despacio, pequeño. Aquí la tierra aún está caliente.' },
+    c2_03_b: { quien: 'Lumo', escena: 'C2-03', texto: '¡Qué grande eres! ¿Vives aquí?' },
+    c2_03_c: { quien: 'Lagarto gigante', escena: 'C2-03', texto: 'Cuido el corazón del volcán. Pero yo no quepo.' },
+    c2_03_d: { quien: 'Lagarto gigante', escena: 'C2-03', texto: 'Dentro vive Ascua, de tu familia. Gruñe un poco.' },
+    c2_03_e: { quien: 'Lumo', escena: 'C2-03', texto: '¡Yo sí quepo! Déjamelo a mí.' },
+    c2_04_a: { quien: 'Lumo', escena: 'B2-1', texto: 'Algo no encaja. ¿Dónde está el fallo?' },
+    b2_1_a: { quien: 'Lumo', escena: 'B2-1', texto: '¡Bichito! Nos sigue de lejos. ¡Qué curioso!' },
+    b2_2_a: { quien: 'Bichito', escena: 'B2-2', texto: '¡Uy! ¡Ji, ji, ji!' },
+    b2_2_b: { quien: 'Lagarto gigante', escena: 'B2-2', texto: 'Vaya. Su tropiezo ha abierto un camino.' },
+    b2_2_c: { quien: 'Lumo', escena: 'B2-2', texto: '¡A veces un fallo enseña algo nuevo!' },
+    cap2_b_a: { quien: 'Lumo', escena: 'CAP2-B', texto: 'Lo sé. Pero no me iba sin ti.' },
+    cap2_b_b: { quien: 'Ascua', escena: 'CAP2-B', texto: '…Gracias. Pero no se lo digas a nadie.' },
+    cap2_b_c: { quien: 'Ascua', escena: 'CAP2-B', texto: '¡Os espero en el Faro! ¡No tardéis!' },
+    cap2_01_a: { quien: 'Lagarto gigante', escena: 'CAP2-01', texto: 'Toma. Estas gafas protegen del calor del volcán.' },
+    cap2_01_b: { quien: 'Lumo', escena: 'CAP2-01', texto: '¡Me quedan genial! Gracias, Lagarto.' },
+    cap2_01_c: { quien: 'Lumo', escena: 'CAP2-01', texto: '¡Contesta más fuerte! Casi dice la canción entera.' },
+    cap2_01_d: { quien: 'Lagarto gigante', escena: 'CAP2-01', texto: 'La luz tarda en llegar. Pero siempre llega.' },
+    cap2_02_a: { quien: 'Lumo', escena: 'CAP2-02', texto: '¡Una pieza de mi brújula! ¿Quién la dejó?' },
+    c2_05_a: { quien: 'Lumo', escena: 'CAP2-02', texto: 'Gracias, Bichito. Cada fallo me ha enseñado algo.' },
+    cap2_03_a: { quien: 'Bit', escena: 'CAP2-03', texto: 'Saludos. Detecto una chispa visitante. ¿Colaboramos?' },
+    cap2_03_b: { quien: 'Lumo', escena: 'CAP2-03', texto: '¡Hola, Bit! ¡Vamos a tu ciudad!' },
+    ar_2_a: { quien: 'Lumo', escena: 'AR-2', texto: 'Antes, en RUMBO: una tormenta apagó el Faro Mayor.' },
+    ar_2_b: { quien: 'Lumo', escena: 'AR-2', texto: 'Mi brújula se rompió y mi familia se perdió.' },
+    ar_2_c: { quien: 'Lumo', escena: 'AR-2', texto: 'Ya he encontrado a Titila y a Brasa.' },
+    ar_2_d: { quien: 'Lumo', escena: 'AR-2', texto: 'Ahora toca el mar. ¿Me ayudas?' },
+    gc_2_a: { quien: 'Lumo', escena: 'GC-2', texto: 'Otra vez esa luz. Corto, corto, largo.' },
+
+    // ---- Mundo 3: ciudad y espacio ----
+    c3_01_b: { quien: 'Bit', escena: 'C3-01', texto: 'Saludos. Soy Bit. Esta ciudad está sin energía.' },
+    c3_01_c: { quien: 'Lumo', escena: 'C3-01', texto: '¡Hola, Bit! Yo busco a mi familia.' },
+    c3_01_d: { quien: 'Bit', escena: 'C3-01', texto: 'Mi vecina Píxel se perdió entre los cables.' },
+    c3_01_e: { quien: 'Bit', escena: 'C3-01', texto: 'Yo no sé improvisar. ¿Me enseñas?' },
+    c3_01_f: { quien: 'Lumo', escena: 'C3-01', texto: 'Tú me enseñas a pensar. Yo, a improvisar.' },
+    c3_01_a: { quien: 'Bit', escena: 'C3-02', texto: 'Observa, decide, actúa.' },
+    c3_02_a: { quien: 'Bit', escena: 'C3-02', texto: 'Si no hay muro, avanzo. Si hay muro, giro.' },
+    c3_02_b: { quien: 'Lumo', escena: 'C3-02', texto: '¡Es una regla que decide por ti!' },
+    bi_3_a: { quien: 'Bichito', escena: 'BI-3', texto: '¡Yo cuento! ¡Uno, dos, siete, cuatro!' },
+    bi_3_b: { quien: 'Bit', escena: 'BI-3', texto: 'Error detectado. ¡Culpable: Bichito!' },
+    bi_3_c: { quien: 'Lumo', escena: 'BI-3', texto: 'No es culpable. Quería ayudar.' },
+    bi_3_d: { quien: 'Bit', escena: 'BI-3', texto: 'Procesando… Acepto. Errar también es aprender.' },
+    cap3_a_a: { quien: 'Píxel', escena: 'CAP3-A', texto: '¿Y esto? ¿Y eso? ¿Cómo funcionan los cables?' },
+    cap3_a_b: { quien: 'Bit', escena: 'CAP3-A', texto: 'Píxel. Te busqué en 3.482 cables.' },
+    cap3_a_c: { quien: 'Lumo', escena: 'CAP3-A', texto: '¡Es Píxel! Tu familia te echa de menos.' },
+    cap3_a_d: { quien: 'Píxel', escena: 'CAP3-A', texto: '¿Mi familia? ¿Y dónde está? ¿Y cómo vamos?' },
+    cap3_a_e: { quien: 'Lumo', escena: 'CAP3-A', texto: 'Cinco ventanas. ¡Casi está!' },
+    c3_04_b: { quien: 'Bit', escena: 'C3-04', texto: 'La señal de Cometa viene de la estación espacial.' },
+    c3_04_c: { quien: 'Lumo', escena: 'C3-04', texto: '¡Cometa! ¿Otra chispa de mi familia?' },
+    c3_04_d: { quien: 'Bit', escena: 'C3-04', texto: 'Afirmativo. Y la nave tiene poca memoria.' },
+    c3_03_a: { quien: 'Bichito', escena: 'BI-4a', texto: 'No quería romper nada. Solo estaba perdido.' },
+    bi_4a_a: { quien: 'Lumo', escena: 'BI-4a', texto: '¡Eres una chispa! La tormenta te apagó.' },
+    bi_4a_b: { quien: 'Bichito', escena: 'BI-4a', texto: 'Lo desordeno todo buscando el camino a casa.' },
+    bi_4a_c: { quien: 'Lumo', escena: 'BI-4a', texto: 'Tus fallos siempre apuntaban hacia el Faro.' },
+    c3_04_a: { quien: 'Lumo', escena: 'BI-4b', texto: 'Los errores también necesitan amigos.' },
+    bi_4b_a: { quien: 'Lumo', escena: 'BI-4b', texto: 'Ven con nosotros. ¡Encenderemos el Faro juntos!' },
+    bi_4b_b: { quien: 'Bit', escena: 'BI-4b', texto: 'Bichito, bienvenido. Te asigno el asiento de copiloto.' },
+    cap3_b_a: { quien: 'Cometa', escena: 'CAP3-B', texto: 'Shhh… escucha cómo bailan las estrellas.' },
+    cap3_b_b: { quien: 'Lumo', escena: 'CAP3-B', texto: 'Cometa, soy Lumo. Es hora de volver a casa.' },
+    cap3_b_c: { quien: 'Cometa', escena: 'CAP3-B', texto: '¿A casa? Yo creía que el cielo era mi casa.' },
+    cap3_b_d: { quien: 'Bit', escena: 'CAP3-B', texto: 'Reactor activo. Aquí tienes la tercera pieza.' },
+    c3_05_a: { quien: 'Lumo', escena: 'CAP3-B', texto: 'Ya casi está completa.' },
+    bit_2_a: { quien: 'Bit', escena: 'BIT-2', texto: 'Mi ciudad brillará cuando enciendas el Faro.' },
+    bit_2_b: { quien: 'Bit', escena: 'BIT-2', texto: 'La antena te queda bien. Es tuya, para siempre.' },
+    bit_2_c: { quien: 'Lumo', escena: 'BIT-2', texto: '¡Gracias, Bit! Has aprendido a improvisar.' },
+    ar_3_a: { quien: 'Lumo', escena: 'AR-3', texto: 'Antes, en RUMBO: una tormenta apagó el Faro Mayor.' },
+    ar_3_b: { quien: 'Lumo', escena: 'AR-3', texto: 'Mi brújula se rompió. La voy reparando pieza a pieza.' },
+    ar_3_c: { quien: 'Lumo', escena: 'AR-3', texto: 'Cuatro chispas de mi familia ya brillan en el Faro.' },
+    ar_3_d: { quien: 'Lumo', escena: 'AR-3', texto: 'Y un amigo travieso, Bichito, nos sigue de lejos.' },
+    ar_3_e: { quien: 'Lumo', escena: 'AR-3', texto: 'Ahora toca la ciudad de Bit. ¿Me ayudas?' },
+    gc_3_a: { quien: 'Lumo', escena: 'GC-3', texto: 'Corto, corto, largo. ¡Quiere decirme algo!' },
+
+    // ---- El Faro Mayor y el gran final ----
+    cf_01_a: { quien: 'Lumo', escena: 'CF-01', texto: 'Tres piezas. Una brújula entera.' },
+    cf_01_b: { quien: 'Lumo', escena: 'CF-01', texto: 'Ya sé el camino. Subamos al Faro.' },
+    cf_01_c: { quien: 'Bichito', escena: 'CF-01', texto: '¡Ji! ¡Yo subo el primero!' },
+    cf_02_a: { quien: 'Brasa', escena: 'CF-02', texto: '¡Yo seré la primera en brillar!' },
+    cf_02_b: { quien: 'Lumo', escena: 'CF-02', texto: 'Falta el último paso. ¡Con todo lo que sabemos!' },
+    fin_01_a: { quien: 'Lumo', escena: 'FIN-01', texto: '¡Ahora! ¡Que se encienda la luz!' },
+    fin_01_b: { quien: 'Brasa', escena: 'FIN-01', texto: '¡Lo hicimos! ¡Juntos!' },
+    fin_01_c: { quien: 'Bichito', escena: 'FIN-01', texto: '¡Ji, ji! ¡Yo también brillo!' },
+    fin_01_d: { quien: 'Lumo', escena: 'FIN-01', texto: 'Sigues siendo Bichito. Y brillas.' },
+    cf_03_a: { quien: 'Abuela Chispa', escena: 'FIN-02', texto: 'Cada noche te enviaba mis guiños. Sabía que los reconocerías.' },
+    cf_03_b: { quien: 'Lumo', escena: 'FIN-02', texto: 'Eran patrones… ¡los he aprendido!' },
+    cf_03_c: { quien: 'Abuela Chispa', escena: 'FIN-02', texto: 'Nadie te ha dado el camino. Lo has encontrado tú, con cada error.' },
+    fin_02_a: { quien: 'Lumo', escena: 'FIN-02', texto: 'Te he echado mucho de menos, abuela.' },
+    fin_02_b: { quien: 'Abuela Chispa', escena: 'FIN-02', texto: 'Esta corona es para quien enciende el Faro.' },
+    cf_05_a: { quien: 'Lumo', escena: 'FIN-04', texto: 'Ahora te toca a ti guiar a otros.' },
+    fin_04_a: { quien: 'Lumo', escena: 'FIN-04', texto: 'En el Laboratorio puedes crear tus propios retos.' },
 
     // ---- Aventura de bienvenida (para Primaria; Infantil usa las escenas C0) ----
     bv_01_a: { quien: 'Lumo', escena: 'BV-01', texto: '¡Hola! Soy Lumo, una chispa curiosa y muy despistada.' },
@@ -750,33 +891,6 @@
     bv_05_b: { quien: 'Lumo', escena: 'BV-05', texto: 'Con estas tarjetas voy a arreglar mi brújula.' },
     bv_05_c: { quien: 'Lumo', escena: 'BV-05', texto: 'Más allá del bosque me espera el Faro Mayor.' },
     bv_05_d: { quien: 'Lumo', escena: 'BV-05', texto: 'Toda la aventura empieza ahora. ¿Vienes conmigo?' },
-
-    // ---- Campaña 1 ----
-    c1_01_a: { quien: 'Búho Bruma', escena: 'C1-01', texto: 'Las luciérnagas hablan en orden. Escucha su luz.' },
-    c1_02_a: { quien: 'Bichito', escena: 'C1-02', texto: '¡Ji, ji! ¿Quién ha movido las tarjetas?' },
-    c1_03_a: { quien: 'Lumo', escena: 'C1-03', texto: '¿Y si repetimos este trozo?' },
-    c1_04_a: { quien: 'Lumo', escena: 'C1-04', texto: 'Repetir tres veces. ¡Así es más corto!' },
-    c1_05_a: { quien: 'Lumo', escena: 'C1-05', texto: 'La brújula brilla un poquito más.' },
-
-    // ---- Campaña 2 ----
-    c2_01_a: { quien: 'Tinta', escena: 'C2-01', texto: '¡Todo funciona con instrucciones!' },
-    c2_02_a: { quien: 'Tinta', escena: 'C2-02', texto: 'Una receta se hace una vez y se usa muchas.' },
-    c2_03_a: { quien: 'Lagarto gigante', escena: 'C2-03', texto: 'Aquí las piedras se mueven. Piensa antes de empujar.' },
-    c2_04_a: { quien: 'Lumo', escena: 'C2-04', texto: 'Algo no encaja. ¿Dónde está el fallo?' },
-    c2_05_a: { quien: 'Lumo', escena: 'C2-05', texto: 'Cada fallo me ha enseñado algo.' },
-
-    // ---- Campaña 3 ----
-    c3_01_a: { quien: 'Bit', escena: 'C3-01', texto: 'Observa, decide, actúa.' },
-    c3_02_a: { quien: 'Bit', escena: 'C3-02', texto: 'Si hay luz, avanza. Si no, espera.' },
-    c3_03_a: { quien: 'Bichito', escena: 'C3-03', texto: 'No quería romper nada. Solo estaba perdido.' },
-    c3_04_a: { quien: 'Lumo', escena: 'C3-04', texto: 'Los errores también necesitan amigos.' },
-    c3_05_a: { quien: 'Lumo', escena: 'C3-05', texto: 'Ya casi está completa.' },
-
-    // ---- Final ----
-    cf_03_a: { quien: 'Abuela Chispa', escena: 'CF-03', texto: 'Cada noche te enviaba mis destellos. Sabía que los reconocerías.' },
-    cf_03_b: { quien: 'Lumo', escena: 'CF-03', texto: 'Eran patrones… ¡los he aprendido!' },
-    cf_03_c: { quien: 'Abuela Chispa', escena: 'CF-03', texto: 'Nadie te ha dado el camino. Lo has encontrado tú, con cada error.' },
-    cf_05_a: { quien: 'Lumo', escena: 'CF-05', texto: 'Ahora te toca a ti guiar a otros.' },
 
     // ---- Instrucciones de Infantil (voz + imagen) ----
     in_tarjeta: { quien: 'Lumo', texto: 'Pulsa una tarjeta.' },
@@ -806,6 +920,1618 @@
   };
 
   return { version: 1, lineas: lineas };
+});
+
+
+/* ===== src/datos/escenas.js ===== */
+;/*
+ * RUMBO — Escenas de la historia «La luz de Lumo» (v2), dirigidas por datos.
+ *
+ * Cada escena dice cuándo se dispara (antes o después de un reto), para qué etapa, sobre qué fondo y qué frases dice.
+ * Las frases viven en voces-es.js (aquí solo su identificador). Guion completo: docs/guion-v2.md.
+ *
+ * PUESTA EN ESCENA (fase 3): una escena puede traer `pasos` (entradas, acciones, objetos, cámara, sonido; ver src/ui/escena-motor.js).
+ * Si no los trae, el motor los deduce de sus intervenciones («lineas»). {dice:'*'} = la siguiente intervención.
+ *
+ * Reglas de elegibilidad (función pendientes, pura y probada):
+ *   - Infantil solo ve escenas de etapa «infantil»; Primaria, solo las de etapa «primaria».
+ *   - Las escenas FIN-* solo se ven en el último reto de la aventura del propio curso (soloFinalCurso).
+ *   - «siNoVista»: solo si ese otro identificador no se ha visto (resúmenes «Antes, en RUMBO…»).
+ *   - «requiere: guinos»: no se ofrece hasta que exista el guiño visual (fase 4); ver GUINOS_ACTIVOS.
+ */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module === 'object' && module.exports) { module.exports = api; } else { root.RumboEscenas = api; }
+})(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+
+  // Activo desde la fase 4: el Faro del mapa y de la portada hacen el guiño (corto, corto, largo).
+  var GUINOS_ACTIVOS = true;
+
+  var ESCENAS = [
+  {
+    id: 'C0-01',
+    titulo: 'Un vientazo en el valle',
+    etapa: 'infantil',
+    zona: 'jardin',
+    dur: 18,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'i3-01'
+    },
+    pasos: [
+      { fondo: 'jardin' },
+      { entra: 'Lumo', lado: 'izq', modo: 'cae' },
+      { camara: 'sacude' },
+      { dice: '*' },
+      { accion: 'Lumo', haz: 'baila' },
+      { dice: '*' }
+    ],
+    lineas: [
+      {
+        id: 'c0_01_a',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'c0_01_b',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'BV-01',
+    titulo: 'BV-01',
+    etapa: 'primaria',
+    zona: 'jardin',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'i3-01'
+    },
+    lineas: [
+      {
+        id: 'bv_01_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_01_b',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_01_c',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_01_d',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_01_e',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_01_f',
+        emocion: 'normal'
+      }
+    ]
+  },
+  {
+    id: 'BV-02',
+    titulo: 'BV-02',
+    etapa: 'primaria',
+    zona: 'jardin',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'i3-02'
+    },
+    lineas: [
+      {
+        id: 'bv_02_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_02_b',
+        emocion: 'normal'
+      }
+    ]
+  },
+  {
+    id: 'BV-03',
+    titulo: 'BV-03',
+    etapa: 'primaria',
+    zona: 'jardin',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'i3-04'
+    },
+    lineas: [
+      {
+        id: 'bv_03_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_03_b',
+        emocion: 'normal'
+      }
+    ]
+  },
+  {
+    id: 'BV-04',
+    titulo: 'BV-04',
+    etapa: 'primaria',
+    zona: 'jardin',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'i3-05'
+    },
+    lineas: [
+      {
+        id: 'bv_04_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_04_b',
+        emocion: 'normal'
+      }
+    ]
+  },
+  {
+    id: 'GC-0',
+    titulo: 'Una luz que parpadea',
+    etapa: 'infantil',
+    zona: 'jardin',
+    dur: 6,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'i3-01'
+    },
+    lineas: [
+      {
+        id: 'gc_0_a',
+        emocion: 'sorprendido'
+      }
+    ],
+    requiere: 'guinos'
+  },
+  {
+    id: 'BV-05',
+    titulo: 'BV-05',
+    etapa: 'primaria',
+    zona: 'jardin',
+    dur: 15,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'i3-05'
+    },
+    lineas: [
+      {
+        id: 'bv_05_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_05_b',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_05_c',
+        emocion: 'normal'
+      },
+      {
+        id: 'bv_05_d',
+        emocion: 'normal'
+      }
+    ]
+  },
+  {
+    id: 'C0-02',
+    titulo: 'Conejo y la flor',
+    etapa: 'infantil',
+    zona: 'jardin',
+    dur: 20,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'i3-05'
+    },
+    lineas: [
+      {
+        id: 'c0_02_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c0_02_b',
+        emocion: 'tierno'
+      }
+    ]
+  },
+  {
+    id: 'C0-03',
+    titulo: 'El camino de los animales',
+    etapa: 'infantil',
+    zona: 'granja',
+    dur: 20,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'i4-05'
+    },
+    lineas: [
+      {
+        id: 'c0_03_b',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'c0_03_a',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'C0-04',
+    titulo: 'Mira, mi casa',
+    etapa: 'infantil',
+    zona: 'playa',
+    dur: 22,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'i5-05'
+    },
+    lineas: [
+      {
+        id: 'c0_04_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'c0_04_b',
+        emocion: 'emocionado'
+      }
+    ]
+  },
+  {
+    id: 'C1-01',
+    titulo: 'El bosque que parpadea',
+    etapa: 'primaria',
+    zona: 'bosque',
+    dur: 30,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm1-01'
+    },
+    lineas: [
+      {
+        id: 'c1_01_b',
+        emocion: 'sereno'
+      },
+      {
+        id: 'c1_01_c',
+        emocion: 'ups'
+      },
+      {
+        id: 'c1_01_a',
+        emocion: 'sereno'
+      },
+      {
+        id: 'c1_01_d',
+        emocion: 'tierno'
+      },
+      {
+        id: 'c1_01_e',
+        emocion: 'emocionado'
+      }
+    ]
+  },
+  {
+    id: 'GC-1',
+    titulo: 'GC-1',
+    etapa: 'primaria',
+    zona: 'bosque',
+    dur: 6,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-01'
+    },
+    lineas: [
+      {
+        id: 'gc_1_a',
+        emocion: 'sorprendido'
+      }
+    ],
+    requiere: 'guinos'
+  },
+  {
+    id: 'CAP1-A',
+    titulo: 'La lucecita del arroyo',
+    etapa: 'primaria',
+    zona: 'bosque',
+    dur: 28,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-13'
+    },
+    lineas: [
+      {
+        id: 'cap1_a_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap1_a_b',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap1_a_c',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap1_a_d',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'BR-2',
+    titulo: 'La gorra de Bruma',
+    etapa: 'primaria',
+    zona: 'bosque',
+    dur: 15,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-13'
+    },
+    lineas: [
+      {
+        id: 'br_2_a',
+        emocion: 'sereno'
+      },
+      {
+        id: 'br_2_b',
+        emocion: 'tierno'
+      },
+      {
+        id: 'br_2_c',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'C1-06',
+    titulo: 'La voz de la cumbre',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 22,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm1-14'
+    },
+    lineas: [
+      {
+        id: 'c1_06_a',
+        emocion: 'terco'
+      },
+      {
+        id: 'c1_06_b',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c1_06_c',
+        emocion: 'terco'
+      },
+      {
+        id: 'c1_06_d',
+        emocion: 'tierno'
+      }
+    ]
+  },
+  {
+    id: 'C1-03',
+    titulo: 'Siempre lo mismo',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 28,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm1-15'
+    },
+    lineas: [
+      {
+        id: 'c1_03_b',
+        emocion: 'ups'
+      },
+      {
+        id: 'c1_03_a',
+        emocion: 'concentrado'
+      },
+      {
+        id: 'c1_04_a',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'C1-02',
+    titulo: '¿Quién ha movido las tarjetas?',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 20,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm1-18'
+    },
+    lineas: [
+      {
+        id: 'c1_02_a',
+        emocion: 'travieso'
+      },
+      {
+        id: 'c1_02_b',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'c1_02_c',
+        emocion: 'concentrado'
+      }
+    ]
+  },
+  {
+    id: 'CAP1-01',
+    titulo: 'La primera luz',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 32,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-25'
+    },
+    pasos: [
+      { fondo: 'montanas' },
+      { entra: 'Lumo', lado: 'izq', modo: 'salta' },
+      { entra: 'Brasa', lado: 'der', modo: 'desliza' },
+      { dice: '*' },
+      { dice: '*' },
+      { objeto: 'pieza', lado: 'centro', brilla: true },
+      { emocion: 'Lumo', expr: 'emocionado', pose: 'arriba' },
+      { dice: '*' },
+      { dice: '*' },
+      { sonido: 'animo' },
+      { accion: 'Lumo', haz: 'salta' },
+      { dice: '*' },
+      { dice: '*' }
+    ],
+    lineas: [
+      {
+        id: 'cap1_01_a',
+        emocion: 'terco'
+      },
+      {
+        id: 'cap1_01_b',
+        emocion: 'orgulloso'
+      },
+      {
+        id: 'c1_05_a',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'cap1_01_c',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'cap1_01_d',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'cap1_01_e',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'CAP1-02',
+    titulo: 'Una lucecita para Bichito',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 18,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-25'
+    },
+    lineas: [
+      {
+        id: 'cap1_02_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap1_02_b',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap1_02_c',
+        emocion: 'tierno'
+      }
+    ]
+  },
+  {
+    id: 'CAP1-03',
+    titulo: 'Fin del capítulo 1 y avance',
+    etapa: 'primaria',
+    zona: 'montanas',
+    dur: 15,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm1-25'
+    },
+    lineas: [
+      {
+        id: 'cap1_03_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap1_03_b',
+        emocion: 'emocionado'
+      }
+    ],
+    tipo: 'creditos',
+    creditos: {
+      titulo: 'Capítulo 1 · La primera luz',
+      filas: [
+        [
+          'Lumo',
+          'La chispa que busca su camino'
+        ],
+        [
+          'Búho Bruma',
+          'Bosque encantado'
+        ],
+        [
+          'Titila',
+          'Rescatada en el bosque'
+        ],
+        [
+          'Brasa',
+          'Rescatada en las montañas'
+        ],
+        [
+          'Bichito',
+          'El fallo que nos sigue'
+        ]
+      ]
+    }
+  },
+  {
+    id: 'AR-2',
+    titulo: 'Antes, en RUMBO… (hasta el mar)',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 12,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-01'
+    },
+    lineas: [
+      {
+        id: 'ar_2_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'ar_2_b',
+        emocion: 'normal'
+      },
+      {
+        id: 'ar_2_c',
+        emocion: 'orgulloso'
+      },
+      {
+        id: 'ar_2_d',
+        emocion: 'alegre'
+      }
+    ],
+    siNoVista: 'CAP1-03'
+  },
+  {
+    id: 'C2-01',
+    titulo: 'Todo funciona con instrucciones',
+    etapa: 'primaria',
+    zona: 'mar',
+    dur: 30,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-01'
+    },
+    pasos: [
+      { fondo: 'mar' },
+      { entra: 'Tinta', lado: 'der', modo: 'desliza' },
+      { entra: 'Lumo', lado: 'izq', modo: 'salta' },
+      { dice: '*' },
+      { dice: '*' },
+      { dice: '*' },
+      { accion: 'Tinta', haz: 'baila' },
+      { dice: '*' },
+      { dice: '*' }
+    ],
+    lineas: [
+      {
+        id: 'c2_01_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c2_01_b',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'c2_01_c',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c2_01_d',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c2_01_e',
+        emocion: 'emocionado'
+      }
+    ]
+  },
+  {
+    id: 'GC-2',
+    titulo: 'GC-2',
+    etapa: 'primaria',
+    zona: 'mar',
+    dur: 6,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-08'
+    },
+    lineas: [
+      {
+        id: 'gc_2_a',
+        emocion: 'concentrado'
+      }
+    ],
+    requiere: 'guinos'
+  },
+  {
+    id: 'C2-02',
+    titulo: 'Una receta, muchas veces',
+    etapa: 'primaria',
+    zona: 'mar',
+    dur: 22,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-11'
+    },
+    lineas: [
+      {
+        id: 'c2_02_b',
+        emocion: 'ups'
+      },
+      {
+        id: 'c2_02_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c2_02_c',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'CAP2-A',
+    titulo: 'Destello se esconde',
+    etapa: 'primaria',
+    zona: 'mar',
+    dur: 28,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-13'
+    },
+    lineas: [
+      {
+        id: 'cap2_a_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap2_a_b',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'TIN-2',
+    titulo: 'El camino de luz',
+    etapa: 'primaria',
+    zona: 'mar',
+    dur: 15,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-13'
+    },
+    lineas: [
+      {
+        id: 'tin_2_a',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'tin_2_b',
+        emocion: 'tierno'
+      },
+      {
+        id: 'tin_2_c',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'C2-03',
+    titulo: 'El lagarto que no cabe',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 30,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-14'
+    },
+    lineas: [
+      {
+        id: 'c2_03_a',
+        emocion: 'sereno'
+      },
+      {
+        id: 'c2_03_b',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'c2_03_c',
+        emocion: 'sereno'
+      },
+      {
+        id: 'c2_03_d',
+        emocion: 'tierno'
+      },
+      {
+        id: 'c2_03_e',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'B2-1',
+    titulo: 'Alguien nos sigue',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-17'
+    },
+    lineas: [
+      {
+        id: 'c2_04_a',
+        emocion: 'concentrado'
+      },
+      {
+        id: 'b2_1_a',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'B2-2',
+    titulo: 'El fallo que abrió un camino',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 18,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm2-22'
+    },
+    lineas: [
+      {
+        id: 'b2_2_a',
+        emocion: 'ups'
+      },
+      {
+        id: 'b2_2_b',
+        emocion: 'divertido'
+      },
+      {
+        id: 'b2_2_c',
+        emocion: 'emocionado'
+      }
+    ]
+  },
+  {
+    id: 'CAP2-B',
+    titulo: 'Ascua, la gruñona',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 32,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-25'
+    },
+    lineas: [
+      {
+        id: 'cap2_b_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap2_b_b',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap2_b_c',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'CAP2-01',
+    titulo: 'El Faro contesta más fuerte',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 30,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-25'
+    },
+    lineas: [
+      {
+        id: 'cap2_01_a',
+        emocion: 'sereno'
+      },
+      {
+        id: 'cap2_01_b',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap2_01_c',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'cap2_01_d',
+        emocion: 'sereno'
+      }
+    ]
+  },
+  {
+    id: 'CAP2-02',
+    titulo: 'La pieza que volvió',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 18,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-25'
+    },
+    lineas: [
+      {
+        id: 'cap2_02_a',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'c2_05_a',
+        emocion: 'tierno'
+      }
+    ]
+  },
+  {
+    id: 'CAP2-03',
+    titulo: 'Fin del capítulo 2 y avance',
+    etapa: 'primaria',
+    zona: 'volcan',
+    dur: 15,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm2-25'
+    },
+    lineas: [
+      {
+        id: 'cap2_03_a',
+        emocion: 'literal'
+      },
+      {
+        id: 'cap2_03_b',
+        emocion: 'alegre'
+      }
+    ],
+    tipo: 'creditos',
+    creditos: {
+      titulo: 'Capítulo 2 · El corazón del volcán',
+      filas: [
+        [
+          'Tinta',
+          'Mundo submarino'
+        ],
+        [
+          'Destello',
+          'Rescatado en el mar'
+        ],
+        [
+          'Lagarto gigante',
+          'Isla volcánica'
+        ],
+        [
+          'Ascua',
+          'Rescatada en el volcán'
+        ],
+        [
+          'Bichito',
+          'Nos devolvió una pieza'
+        ]
+      ]
+    }
+  },
+  {
+    id: 'AR-3',
+    titulo: 'Antes, en RUMBO… (hasta la ciudad)',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 15,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm3-p1'
+    },
+    lineas: [
+      {
+        id: 'ar_3_a',
+        emocion: 'normal'
+      },
+      {
+        id: 'ar_3_b',
+        emocion: 'normal'
+      },
+      {
+        id: 'ar_3_c',
+        emocion: 'orgulloso'
+      },
+      {
+        id: 'ar_3_d',
+        emocion: 'alegre'
+      },
+      {
+        id: 'ar_3_e',
+        emocion: 'emocionado'
+      }
+    ],
+    siNoVista: 'CAP2-03',
+    marca: [
+      'AR-2'
+    ]
+  },
+  {
+    id: 'C3-01',
+    titulo: 'La ciudad sin energía',
+    etapa: 'primaria',
+    zona: 'ciudad',
+    dur: 30,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm3-p1'
+    },
+    lineas: [
+      {
+        id: 'c3_01_b',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_01_c',
+        emocion: 'alegre'
+      },
+      {
+        id: 'c3_01_d',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_01_e',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_01_f',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'BI-3',
+    titulo: 'Bichito quiere ayudar',
+    etapa: 'primaria',
+    zona: 'ciudad',
+    dur: 28,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm3-04'
+    },
+    lineas: [
+      {
+        id: 'bi_3_a',
+        emocion: 'ilusionado'
+      },
+      {
+        id: 'bi_3_b',
+        emocion: 'literal'
+      },
+      {
+        id: 'bi_3_c',
+        emocion: 'concentrado'
+      },
+      {
+        id: 'bi_3_d',
+        emocion: 'sorprendido'
+      }
+    ]
+  },
+  {
+    id: 'GC-3',
+    titulo: 'GC-3',
+    etapa: 'primaria',
+    zona: 'ciudad',
+    dur: 6,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-05'
+    },
+    lineas: [
+      {
+        id: 'gc_3_a',
+        emocion: 'emocionado'
+      }
+    ],
+    requiere: 'guinos'
+  },
+  {
+    id: 'C3-02',
+    titulo: 'Observa, decide, actúa',
+    etapa: 'primaria',
+    zona: 'ciudad',
+    dur: 25,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm3-06'
+    },
+    lineas: [
+      {
+        id: 'c3_01_a',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_02_a',
+        emocion: 'concentrado'
+      },
+      {
+        id: 'c3_02_b',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'CAP3-A',
+    titulo: 'Píxel entre los cables',
+    etapa: 'primaria',
+    zona: 'ciudad',
+    dur: 28,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-13'
+    },
+    lineas: [
+      {
+        id: 'cap3_a_a',
+        emocion: 'curioso'
+      },
+      {
+        id: 'cap3_a_b',
+        emocion: 'literal'
+      },
+      {
+        id: 'cap3_a_c',
+        emocion: 'alegre'
+      },
+      {
+        id: 'cap3_a_d',
+        emocion: 'curioso'
+      },
+      {
+        id: 'cap3_a_e',
+        emocion: 'orgulloso'
+      }
+    ]
+  },
+  {
+    id: 'C3-04',
+    titulo: 'Rumbo a la estación',
+    etapa: 'primaria',
+    zona: 'espacio',
+    dur: 20,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'm3-14'
+    },
+    lineas: [
+      {
+        id: 'c3_04_b',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_04_c',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'c3_04_d',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'BI-4a',
+    titulo: 'Una chispa sin luz',
+    etapa: 'primaria',
+    zona: 'espacio',
+    dur: 30,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-21'
+    },
+    lineas: [
+      {
+        id: 'c3_03_a',
+        emocion: 'sincero'
+      },
+      {
+        id: 'bi_4a_a',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'bi_4a_b',
+        emocion: 'sincero'
+      },
+      {
+        id: 'bi_4a_c',
+        emocion: 'tierno'
+      }
+    ]
+  },
+  {
+    id: 'BI-4b',
+    titulo: 'Un amigo más',
+    etapa: 'primaria',
+    zona: 'espacio',
+    dur: 16,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-21'
+    },
+    lineas: [
+      {
+        id: 'c3_04_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'bi_4b_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'bi_4b_b',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'CAP3-B',
+    titulo: 'Cometa y el reactor',
+    etapa: 'primaria',
+    zona: 'espacio',
+    dur: 32,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-25'
+    },
+    lineas: [
+      {
+        id: 'cap3_b_a',
+        emocion: 'soñador'
+      },
+      {
+        id: 'cap3_b_b',
+        emocion: 'tierno'
+      },
+      {
+        id: 'cap3_b_c',
+        emocion: 'soñador'
+      },
+      {
+        id: 'cap3_b_d',
+        emocion: 'literal'
+      },
+      {
+        id: 'c3_05_a',
+        emocion: 'emocionado'
+      }
+    ]
+  },
+  {
+    id: 'BIT-2',
+    titulo: 'La antena de Bit',
+    etapa: 'primaria',
+    zona: 'espacio',
+    dur: 16,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'm3-25'
+    },
+    lineas: [
+      {
+        id: 'bit_2_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'bit_2_b',
+        emocion: 'literal'
+      },
+      {
+        id: 'bit_2_c',
+        emocion: 'alegre'
+      }
+    ]
+  },
+  {
+    id: 'CF-01',
+    titulo: 'La brújula completa',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 28,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'f-01'
+    },
+    lineas: [
+      {
+        id: 'cf_01_a',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'cf_01_b',
+        emocion: 'orgulloso'
+      },
+      {
+        id: 'cf_01_c',
+        emocion: 'ilusionado'
+      }
+    ]
+  },
+  {
+    id: 'CF-02',
+    titulo: 'Todos a sus puestos',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 20,
+    dispara: {
+      cuando: 'antes',
+      nivel: 'f-03'
+    },
+    lineas: [
+      {
+        id: 'cf_02_a',
+        emocion: 'orgulloso'
+      },
+      {
+        id: 'cf_02_b',
+        emocion: 'concentrado'
+      }
+    ]
+  },
+  {
+    id: 'FIN-01',
+    titulo: 'El Faro se enciende',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 35,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'f-03'
+    },
+    pasos: [
+      { fondo: 'faro' },
+      { entra: 'Lumo', lado: 'izq', modo: 'salta' },
+      { entra: 'Brasa', lado: 'der', modo: 'desliza' },
+      { dice: '*' },
+      { camara: 'acerca' },
+      { objeto: 'luz', lado: 'centro', brilla: true },
+      { sonido: 'victoria' },
+      { dice: '*' },
+      { entra: 'Bichito', lado: 'centro', modo: 'salta' },
+      { dice: '*' },
+      { dice: '*' }
+    ],
+    lineas: [
+      {
+        id: 'fin_01_a',
+        emocion: 'concentrado'
+      },
+      {
+        id: 'fin_01_b',
+        emocion: 'emocionado'
+      },
+      {
+        id: 'fin_01_c',
+        emocion: 'ilusionado'
+      },
+      {
+        id: 'fin_01_d',
+        emocion: 'tierno'
+      }
+    ],
+    soloFinalCurso: true
+  },
+  {
+    id: 'FIN-02',
+    titulo: 'La abuela Chispa',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 35,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'f-03'
+    },
+    pasos: [
+      { fondo: 'faro' },
+      { entra: 'Abuela Chispa', lado: 'der', modo: 'desliza' },
+      { entra: 'Lumo', lado: 'izq', modo: 'desliza' },
+      { dice: '*' },
+      { dice: '*' },
+      { dice: '*' },
+      { dice: '*' },
+      { objeto: 'estrella', lado: 'centro', brilla: true },
+      { sonido: 'victoria' },
+      { dice: '*' }
+    ],
+    lineas: [
+      {
+        id: 'cf_03_a',
+        emocion: 'serena'
+      },
+      {
+        id: 'cf_03_b',
+        emocion: 'sorprendido'
+      },
+      {
+        id: 'cf_03_c',
+        emocion: 'serena'
+      },
+      {
+        id: 'fin_02_a',
+        emocion: 'tierno'
+      },
+      {
+        id: 'fin_02_b',
+        emocion: 'tierna'
+      }
+    ],
+    soloFinalCurso: true
+  },
+  {
+    id: 'FIN-03',
+    titulo: 'Gracias por encender el Faro',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: null,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'f-03'
+    },
+    lineas: [],
+    soloFinalCurso: true,
+    tipo: 'creditos',
+    creditos: {
+      titulo: 'Gracias por encender el Faro',
+      filas: [
+        [
+          'Búho Bruma',
+          'Bosque encantado · «Las luciérnagas hablaban en orden.»'
+        ],
+        [
+          'Brasa',
+          'Reino de las montañas · «Subir juntos es más divertido.»'
+        ],
+        [
+          'Tinta',
+          'Mundo submarino · «Una receta se usa muchas veces.»'
+        ],
+        [
+          'Lagarto gigante',
+          'Isla volcánica · «Hasta un fallo puede abrir un camino.»'
+        ],
+        [
+          'Bit',
+          'Ciudad tecnológica · «Observa, decide, actúa.»'
+        ],
+        [
+          'Cometa',
+          'Mundo espacial · «Los errores también necesitan amigos.»'
+        ],
+        [
+          'Abuela Chispa',
+          'El Faro Mayor · La guardiana del Faro'
+        ],
+        [
+          'Bichito',
+          'El Faro Mayor · El fallo que volvió a brillar'
+        ]
+      ]
+    }
+  },
+  {
+    id: 'FIN-04',
+    titulo: 'Ahora te toca a ti',
+    etapa: 'primaria',
+    zona: 'faro',
+    dur: 20,
+    dispara: {
+      cuando: 'despues',
+      nivel: 'f-03'
+    },
+    lineas: [
+      {
+        id: 'cf_05_a',
+        emocion: 'alegre'
+      },
+      {
+        id: 'fin_04_a',
+        emocion: 'emocionado'
+      }
+    ],
+    soloFinalCurso: true,
+    final: true
+  }
+];
+
+  // Hitos del guiño de la abuela (corto, corto, largo). «respuesta»: el Faro contesta; «encendido»: el final.
+  var GUINOS = [
+  {
+    id: 'G-01',
+    tipo: 'guino',
+    infantil: 'i3-01',
+    primaria: 'm1-01'
+  },
+  {
+    id: 'G-02',
+    tipo: 'guino',
+    primaria: 'm1-13'
+  },
+  {
+    id: 'G-03',
+    tipo: 'guino',
+    infantil: 'i5-04',
+    primaria: 'm1-17'
+  },
+  {
+    id: 'G-I2',
+    tipo: 'guino',
+    infantil: 'i4-05'
+  },
+  {
+    id: 'R-1',
+    tipo: 'respuesta',
+    primaria: 'm1-25'
+  },
+  {
+    id: 'G-04',
+    tipo: 'guino',
+    primaria: 'm2-08'
+  },
+  {
+    id: 'G-05',
+    tipo: 'guino',
+    primaria: 'm2-13'
+  },
+  {
+    id: 'R-2',
+    tipo: 'respuesta',
+    primaria: 'm2-25'
+  },
+  {
+    id: 'G-06',
+    tipo: 'guino',
+    primaria: 'm3-05'
+  },
+  {
+    id: 'G-07',
+    tipo: 'guino',
+    primaria: 'm3-13'
+  },
+  {
+    id: 'G-08',
+    tipo: 'guino',
+    primaria: 'm3-25'
+  },
+  {
+    id: 'R-3',
+    tipo: 'encendido',
+    primaria: 'f-03'
+  }
+];
+
+  // Las seis chispas de la familia de Lumo: se rescatan en el último reto de su zona y encienden una ventana del Faro.
+  var CHISPAS = [
+  {
+    id: 'titila',
+    nombre: 'Titila',
+    zona: 'bosque',
+    meta: 'm1-13',
+    ventana: 1,
+    anuncio: 'C1-01',
+    rescate: 'CAP1-A'
+  },
+  {
+    id: 'brasa',
+    nombre: 'Brasa',
+    zona: 'montanas',
+    meta: 'm1-25',
+    ventana: 2,
+    anuncio: 'C1-06',
+    rescate: 'CAP1-01'
+  },
+  {
+    id: 'destello',
+    nombre: 'Destello',
+    zona: 'mar',
+    meta: 'm2-13',
+    ventana: 3,
+    anuncio: 'C2-01',
+    rescate: 'CAP2-A'
+  },
+  {
+    id: 'ascua',
+    nombre: 'Ascua',
+    zona: 'volcan',
+    meta: 'm2-25',
+    ventana: 4,
+    anuncio: 'C2-03',
+    rescate: 'CAP2-B'
+  },
+  {
+    id: 'pixel',
+    nombre: 'Píxel',
+    zona: 'ciudad',
+    meta: 'm3-13',
+    ventana: 5,
+    anuncio: 'C3-01',
+    rescate: 'CAP3-A'
+  },
+  {
+    id: 'cometa',
+    nombre: 'Cometa',
+    zona: 'espacio',
+    meta: 'm3-25',
+    ventana: 6,
+    anuncio: 'C3-04',
+    rescate: 'CAP3-B'
+  }
+];
+
+  var POR_ID = {};
+  ESCENAS.forEach(function (e) { POR_ID[e.id] = e; });
+
+  function zonaDe(id) { return POR_ID[id] ? POR_ID[id].zona : 'jardin'; }
+  function lineasDe(id) { return POR_ID[id] ? POR_ID[id].lineas.map(function (l) { return l.id; }) : []; }
+
+  /*
+   * Escenas que corresponde reproducir ahora.
+   * o: { cuando: 'antes'|'despues', nivel, infantil: bool, vistas: {id: true}, esFinalDelCurso: bool, guinosActivos: bool }
+   */
+  function pendientes(o) {
+    var vistas = o.vistas || {};
+    var activos = o.guinosActivos == null ? GUINOS_ACTIVOS : o.guinosActivos;
+    return ESCENAS.filter(function (e) {
+      if (e.dispara.cuando !== o.cuando || e.dispara.nivel !== o.nivel) return false;
+      if ((e.etapa === 'infantil') !== !!o.infantil) return false;
+      if (e.soloFinalCurso && !o.esFinalDelCurso) return false;
+      if (e.requiere === 'guinos' && !activos) return false;
+      if (e.siNoVista && vistas[e.siNoVista]) return false;
+      return !vistas[e.id];
+    }).map(function (e) { return e.id; });
+  }
+
+  return { ESCENAS: ESCENAS, POR_ID: POR_ID, GUINOS: GUINOS, CHISPAS: CHISPAS, zonaDe: zonaDe, lineasDe: lineasDe, pendientes: pendientes,
+    get GUINOS_ACTIVOS() { return GUINOS_ACTIVOS; } };
 });
 
 
@@ -1237,67 +2963,67 @@
     // ======== 3 años: Pequeños exploradores (una o dos acciones) ========
     inf({ id: 'i3-01', it: 3, tt: 'La flor', z: 'jardin', skin: { meta: 'flor' },
       m: ['>G'], c: ['avanzar'], ref: [A],
-      o: 'Ayuda a Lumo a llegar hasta la flor.', i: 'Lumo quiere oler una flor.',
+      o: 'Ayuda a Lumo a llegar hasta la flor.', i: 'Lumo ve una flor enorme. ¡Vamos a olerla!',
       cur: ['inf14'], ext: ['Asociar una imagen con una acción', 'Causa y efecto: pulso y Lumo se mueve'] }),
     inf({ id: 'i3-02', it: 3, tt: 'La zanahoria', z: 'jardin', skin: { meta: 'zanahoria' },
       m: ['>.G'], c: ['avanzar'], ref: [A, A],
-      o: 'Lleva a Lumo hasta la zanahoria.', i: 'Lumo tiene mucha hambre.',
+      o: 'Lleva a Lumo hasta la zanahoria.', i: 'Conejo tiene hambre. Lumo busca su zanahoria.',
       cur: ['inf14', 'inf15'], ext: ['Repetir una misma acción dos veces'] }),
     inf({ id: 'i3-03', it: 3, tt: 'Hacia arriba', z: 'jardin', skin: { meta: 'arbol' },
       m: ['G', '^'], c: ['avanzar', 'girar-d'], ref: [A], huecos: 1,
-      o: 'Lleva a Lumo hasta el árbol.', i: 'El árbol está arriba.',
+      o: 'Lleva a Lumo hasta el árbol.', i: 'El árbol está arriba. ¡Hay sombra fresquita!',
       cur: ['inf14', 'inf11'], ext: ['Elegir entre dos tarjetas'] }),
     inf({ id: 'i3-04', it: 3, tt: 'Un giro', z: 'jardin', skin: { meta: 'casa' },
       m: ['>.', 'G.'], c: ['avanzar', 'girar-d'], ref: [G, A],
-      o: 'Gira y llega hasta la casa.', i: 'La casa está abajo.',
+      o: 'Gira y llega hasta la casa.', i: 'Conejo vive en la casita de abajo. ¡Vamos!',
       cur: ['inf14'], ext: ['Primer giro: la dirección cambia con una tarjeta'] }),
     inf({ id: 'i3-05', it: 3, tt: 'La fruta', z: 'jardin', skin: { meta: 'casa', obj: 'fruta' },
       m: ['>oG'], c: ['avanzar', 'recoger'], ref: [A, R, A],
-      o: 'Recoge la fruta del camino y ve a la casa.', i: 'Lumo ha encontrado una fruta.',
+      o: 'Recoge la fruta del camino y ve a la casa.', i: 'Una fruta rica para Conejo. Recógela y sigue.',
       cur: ['inf11', 'inf15'], ext: ['Orden: avanzar, recoger y seguir avanzando'] }),
 
     // ======== 4 años: Aventureros del camino (dos a cuatro tarjetas) ========
     inf({ id: 'i4-01', it: 4, tt: 'El camino torcido', z: 'granja', skin: { meta: 'casa' },
       m: ['>.', '#G'], c: ['avanzar', 'girar-d'], ref: [A, G, A],
-      o: 'Sigue el camino hasta la casa.', i: 'El camino tiene una curva.',
+      o: 'Sigue el camino hasta la casa.', i: 'El camino de la granja hace una curva.',
       cur: ['inf14', 'inf15'], ext: ['Secuencia de tres acciones'] }),
     inf({ id: 'i4-02', it: 4, tt: 'La zanahoria del camino', z: 'granja', skin: { meta: 'casa', obj: 'zanahoria' },
       m: ['>oG'], c: ['avanzar', 'recoger'], ref: [A, R, A],
-      o: 'Recoge la zanahoria y llega a la casa.', i: 'Hay una zanahoria en medio.',
+      o: 'Recoge la zanahoria y llega a la casa.', i: 'Una zanahoria en el camino. ¡Cógela!',
       cur: ['inf11', 'inf15'], ext: ['Ordenar acciones: mover, recoger, mover'] }),
     inf({ id: 'i4-03', it: 4, tt: 'Ordena las tarjetas', z: 'granja', skin: { meta: 'casa' }, tipo: 'depurar',
       m: ['>.#', '#.#', '#G#'], c: ['avanzar', 'girar-d'], ref: [A, G, A, A], ini: [A, A, G, A],
-      o: 'Las tarjetas están desordenadas. Ponlas bien.', i: 'Alguien ha movido las tarjetas.',
+      o: 'Las tarjetas están desordenadas. Ponlas bien.', i: 'Un bichito travieso ha movido las tarjetas.',
       cur: ['inf15'], ext: ['Detectar un error de orden y corregirlo'] }),
     inf({ id: 'i4-04', it: 4, tt: 'Cuidado con el agua', z: 'granja', skin: { meta: 'casa' },
       m: ['>.~', '#G#'], c: ['avanzar', 'girar-d'], ref: [A, G, A],
-      o: 'Evita el agua y llega a la casa.', i: 'El agua está fría.',
+      o: 'Evita el agua y llega a la casa.', i: 'El agua está fría. Rodéala sin mojarte.',
       cur: ['inf14', 'inf15'], ext: ['Anticipar el resultado antes de ejecutar'] }),
     inf({ id: 'i4-05', it: 4, tt: 'Recoge y gira', z: 'granja', skin: { meta: 'casa', obj: 'zanahoria' },
       m: ['>o', '#G'], c: ['avanzar', 'recoger', 'girar-d'], ref: [A, R, G, A],
-      o: 'Recoge la zanahoria, gira y llega.', i: 'Un camino pequeño con una sorpresa.',
+      o: 'Recoge la zanahoria, gira y llega.', i: 'Tras la curva hay una sorpresa.',
       cur: ['inf11', 'inf14', 'inf15'], ext: ['Secuencia de cuatro acciones con tres tarjetas distintas'] }),
 
     // ======== 5 años: Guardianes de los patrones (tres a siete tarjetas) ========
     inf({ id: 'i5-01', it: 5, tt: 'Planifica el camino', z: 'playa', skin: { meta: 'cofre' },
       m: ['>..', '##.', '##G'], c: ['avanzar', 'girar-d', 'girar-i'], ref: [A, A, G, A, A],
-      o: 'Planea el camino hasta el cofre.', i: 'Un cofre en la playa.',
+      o: 'Planea el camino hasta el cofre.', i: 'Un cofre brillante en la playa. ¡Planea el camino!',
       cur: ['inf14', 'inf15'], ext: ['Planificar antes de actuar', 'Anticipar el resultado de una secuencia'] }),
     inf({ id: 'i5-02', it: 5, tt: '¿Qué movimiento falta?', z: 'playa', skin: { meta: 'cofre' }, tipo: 'depurar',
       m: ['>..', '##.', '##G'], c: ['avanzar', 'girar-d', 'girar-i'], ref: [A, A, G, A, A], ini: [A, A, A, A],
-      o: 'A la secuencia le falta una tarjeta. Colócala.', i: 'Una tarjeta se ha caído.',
+      o: 'A la secuencia le falta una tarjeta. Colócala.', i: 'Una tarjeta se ha caído. ¿Cuál falta?',
       cur: ['inf15'], ext: ['Completar una secuencia: qué falta'] }),
     inf({ id: 'i5-03', it: 5, tt: 'Encuentra el error', z: 'playa', skin: { meta: 'cofre' }, tipo: 'depurar',
       m: ['#.G', '>.#'], c: ['avanzar', 'girar-d', 'girar-i'], ref: [A, I, A, G, A], ini: [A, G, A, G, A],
-      o: 'Una tarjeta está mal. Cámbiala.', i: 'Lumo se ha equivocado de giro.',
+      o: 'Una tarjeta está mal. Cámbiala.', i: 'Lumo se ha despistado con un giro.',
       cur: ['inf15'], ext: ['Detectar y corregir un error en una secuencia'] }),
     inf({ id: 'i5-04', it: 5, tt: 'Repite el patrón', z: 'playa', skin: { meta: 'cofre', obj: 'concha' },
       m: ['>oooG'], c: ['avanzar', 'recoger'], ref: [A, R, A, R, A, R, A], ini: [A, R, A, R],
-      o: 'Sigue el patrón: avanza, recoge, avanza, recoge…', i: 'Las conchas siguen un patrón.',
+      o: 'Sigue el patrón: avanza, recoge, avanza, recoge…', i: 'Las conchas siguen un patrón. ¡Míralas bien!',
       cur: ['inf11', 'inf15'], ext: ['Reconocer y continuar un patrón repetitivo'] }),
     inf({ id: 'i5-05', it: 5, tt: 'El tesoro', z: 'playa', skin: { meta: 'cofre', obj: 'concha' },
       m: ['>.o', '##.', '..G'], c: ['avanzar', 'recoger', 'girar-d', 'girar-i'], ref: [A, A, R, G, A, A],
-      o: 'Recoge la concha y llega al tesoro.', i: 'El tesoro está cerca.',
+      o: 'Recoge la concha y llega al tesoro.', i: 'El tesoro está cerca. Recoge la concha.',
       cur: ['inf11', 'inf14', 'inf15'], ext: ['Planificar un recorrido con un objetivo intermedio'] })
   ];
 });
@@ -1334,106 +3060,106 @@
   return [
     // ---- Bloque 1. Primeros movimientos ----
     m1({ tt: 'El primer paso', b: 1, m: ['>..G'], c: ['avanzar'], ref: [A, A, A],
-      o: 'Lleva a Lumo hasta la meta.', i: 'Lumo despierta en el bosque. Su brújula brilla poquito.',
+      o: 'Lleva a Lumo hasta la meta.', i: 'Lumo ha caído en el bosque. Las luciérnagas señalan la puerta de luz.',
       cur: ['m1_41', 'saber23'], ext: ['Una tarjeta = una acción'] }, 1),
     m1({ tt: 'Hacia abajo', b: 1, m: ['v', '.', '.', '.', 'G'], c: ['avanzar'], ref: [A, A, A, A],
-      o: 'Lumo mira hacia abajo. Llévalo a la meta.', i: 'Las luciérnagas se han ido por el camino.',
+      o: 'Lumo mira hacia abajo. Llévalo a la meta.', i: 'Las luciérnagas se alejan hacia abajo. ¡Síguelas!',
       cur: ['m1_41', 'saber23'], ext: ['La dirección de Lumo importa'] }, 2),
     m1({ tt: 'Marcha atrás', b: 1, m: ['G..>.'], c: ['avanzar', 'retroceder'], ref: [B, B, B],
-      o: 'La meta está detrás. Usa una tarjeta nueva.', i: 'Lumo se ha pasado de camino.',
+      o: 'La meta está detrás. Usa una tarjeta nueva.', i: 'Lumo se ha pasado de camino. Hay que volver un paso.',
       p: ['La meta está a la espalda de Lumo.', 'Retroceder mueve a Lumo hacia atrás sin girar.', 'Necesitas tres tarjetas de Retroceder.'],
       cur: ['m1_41', 'saber23'], ext: ['Retroceder: una nueva instrucción'] }, 3),
 
     // ---- Bloque 2. Giros y secuencias ----
     m1({ tt: 'La primera curva', b: 2, m: ['>..', '##.', '##G'], c: ['avanzar', 'girar-d'], ref: [A, A, G, A, A], h: 'giro',
-      o: 'Gira a la derecha cuando llegues a la esquina.', i: 'El camino del bosque da una curva.',
+      o: 'Gira a la derecha cuando llegues a la esquina.', i: 'Búho Bruma avisa de que el sendero gira. Lumo debe girar con él.',
       cur: ['m1_41', 'saber23'], ext: ['Giro a la derecha', 'Secuencia de cinco instrucciones'] }, 4),
     m1({ tt: 'Curva hacia arriba', b: 2, m: ['##G', '##.', '>..'], c: ALL, ref: [A, A, I, A, A], h: 'giro',
-      o: 'Ahora el camino sube. Gira a la izquierda.', i: 'Otra curva, pero hacia el otro lado.',
+      o: 'Ahora el camino sube. Gira a la izquierda.', i: 'Bruma vuela delante. Esta curva va hacia el otro lado.',
       cur: ['m1_41', 'saber23'], ext: ['Giro a la izquierda'] }, 5),
     m1({ tt: 'El camino en S', b: 2, m: ['>..', '##.', 'G..'], c: ALL, ref: [A, A, G, A, A, G, A, A], h: 'giro',
-      o: 'Sigue el camino en forma de S.', i: 'El sendero zigzaguea entre los árboles.',
+      o: 'Sigue el camino en forma de S.', i: 'El sendero zigzaguea entre los árboles como una serpiente de luz.',
       cur: ['m1_41', 'm1_42', 'saber23'], ext: ['Secuencias más largas: ocho instrucciones'] }, 6),
 
     // ---- Bloque 3. Orientación ----
     m1({ tt: 'Lumo mira hacia abajo', b: 3, m: ['v..G'], c: ALL, ref: [I, A, A, A], h: 'giro',
-      o: 'Lumo mira hacia abajo, pero la meta está a su izquierda… ¡de la pantalla!', i: 'Lumo tiene que pensar desde su propio sitio.',
+      o: 'Lumo mira hacia abajo, pero la meta está a su izquierda… ¡de la pantalla!', i: 'Desde donde mira Lumo, la puerta de luz queda a su izquierda.',
       p: ['Imagina que eres Lumo y mira hacia donde mira él.', 'La meta queda a su izquierda: ¿qué giro necesitas?', 'Gira primero, luego avanza tres veces.'],
       cur: ['m1_41', 'saber23'], ext: ['Orientación: izquierda y derecha desde el punto de vista de Lumo'] }, 7),
     m1({ tt: 'Dar la vuelta', b: 3, m: ['^', '.', '.', 'G'], c: ALL, ref: [I, I, A, A, A], h: 'giro',
-      o: 'La meta está detrás. Hazle dar la vuelta.', i: 'Lumo se ha dado la vuelta sin querer.',
+      o: 'La meta está detrás. Hazle dar la vuelta.', i: 'Un ruido sorprende a Lumo y se da la vuelta. La puerta quedó atrás.',
       p: ['La meta está justo detrás de Lumo.', 'Para dar la vuelta hacen falta dos giros.', 'Gira dos veces y avanza tres.'],
       cur: ['m1_41', 'saber23'], ext: ['Dos giros seguidos = media vuelta'] }, 8),
 
     // ---- Bloque 4. Recogida de objetos ----
     m1({ tt: 'La primera luciérnaga', b: 4, m: ['>.o.G'], c: ORI, ref: [A, A, R, A, A], h: 'obj',
-      o: 'Recoge la luciérnaga antes de llegar a la meta.', i: 'Una luciérnaga está atrapada.',
+      o: 'Recoge la luciérnaga antes de llegar a la meta.', i: 'Una luciérnaga se ha enredado en las ramas. Bruma pide ayuda.',
       cur: ['m1_41', 'saber23'], ext: ['Recoger: una nueva instrucción'] }, 9),
     m1({ tt: 'Dos seguidas', b: 4, m: ['>oo.G'], c: ORI, ref: [A, R, A, R, A, A], h: 'obj',
-      o: 'Hay dos luciérnagas seguidas. Recoge las dos.', i: 'Siguen una detrás de otra.',
+      o: 'Hay dos luciérnagas seguidas. Recoge las dos.', i: 'Dos luciérnagas más, una detrás de otra. ¡Bruma ya casi las tiene!',
       cur: ['m1_41', 'm1_42'], ext: ['Reconocer una pareja de acciones que se repite'] }, 10),
     m1({ tt: 'Recoger y girar', b: 4, m: ['..G', '>o.'], c: ORI, ref: [A, R, A, I, A], h: 'obj',
-      o: 'Recoge la luciérnaga y sube hasta la meta.', i: 'La meta está arriba, pero la luz está en el camino.',
+      o: 'Recoge la luciérnaga y sube hasta la meta.', i: 'La última luciérnaga brilla en el camino. La puerta de luz está arriba.',
       cur: ['m1_41', 'saber23'], ext: ['Combinar recogida y giro'] }, 11),
 
     // ---- Bloque 5. Obstáculos ----
     m1({ tt: 'Un muro en medio', b: 5, m: ['>#G', '...'], c: ALL, ref: [G, A, I, A, A, I, A], h: 'obs',
-      o: 'Hay un muro. Rodéalo por abajo.', i: 'Un muro de piedra bloquea el camino.',
+      o: 'Hay un muro. Rodéalo por abajo.', i: 'Un muro de piedra tapa el sendero. Bruma propone rodearlo.',
       cur: ['m1_41', 'm1_42'], ext: ['Planificar un rodeo antes de ejecutar'] }, 12),
     m1({ tt: 'Cuidado con el agua', b: 5, m: ['>.~G', '....'], c: ALL, ref: [A, G, A, I, A, A, I, A], h: 'obs',
-      o: 'No pises el agua. Busca otro camino.', i: 'Un arroyo cruza el bosque.',
+      o: 'No pises el agua. Busca otro camino.', i: 'Un arroyo cruza el bosque. Al otro lado, una lucecita tímida espera.',
       cur: ['m1_41', 'm1_42'], ext: ['Anticipar el resultado: el agua detiene a Lumo'] }, 13),
     m1({ tt: '¡A saltar!', b: 5, m: ['>.~G'], c: ['avanzar', 'saltar'], ref: [A, S], h: 'saltar',
-      o: 'Salta el arroyo con una tarjeta nueva.', i: 'En las montañas, saltar será muy útil.',
+      o: 'Salta el arroyo con una tarjeta nueva.', i: 'Lumo sube a las montañas. Desde la cumbre alguien grita: «¡Yo puedo sola!»',
       cur: ['m1_41', 'saber23'], ext: ['Saltar: una instrucción que hace en un paso lo que antes costaba ocho'] }, 14),
 
     // ---- Bloque 6. Patrones y repetición ----
     m1({ tt: 'Escalera repetida', b: 6, m: ['>.##', '#..#', '##..', '###G'], c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, A, G, A, I)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'La escalera repite un patrón. Usa Repetir.', i: 'La escalera de piedra repite siempre lo mismo.',
+      o: 'La escalera repite un patrón. Usa Repetir.', i: 'La escalera de piedra repite siempre el mismo paso. Brasa sigue gritando.',
       cur: ['m1_41', 'm1_42', 'saber23'], ext: ['Primera repetición visual: repetir un patrón varias veces'] }, 15),
     m1({ tt: 'Luciérnagas en fila', b: 6, m: ['>ooooG'], c: ['avanzar', 'recoger', 'repetir'],
       ref: [rep(4, A, R), A], lim: { repetir: 1 }, holgura: 1, h: 'bucle',
-      o: 'Cuatro luciérnagas. ¿Qué se repite?', i: 'Cuatro luces en fila, igual que cuatro notas.',
+      o: 'Cuatro luciérnagas. ¿Qué se repite?', i: 'Cuatro luces en fila suenan como cuatro notas de una canción.',
       cur: ['m1_41', 'm1_42'], ext: ['Bucle con dos acciones'] }, 16),
     m1({ tt: 'Piedras del río', b: 6, m: ['>~.~.~.G'], c: ['avanzar', 'saltar', 'repetir'],
       ref: [rep(3, S), A], lim: { repetir: 1 }, holgura: 1, h: 'bucle',
-      o: 'Cruza el río saltando de piedra en piedra.', i: 'Hay piedras para cruzar el río, una sí y otra no.',
+      o: 'Cruza el río saltando de piedra en piedra.', i: 'El río se cruza por piedras: una sí y otra no. ¡Hay un patrón!',
       cur: ['m1_41', 'm1_42'], ext: ['Repetir una sola acción'] }, 17),
 
     // ---- Bloque 7. Depuración ----
     m1({ tt: 'Tarjetas cambiadas', b: 7, m: ['>..', '##.', '##G'], c: ALL, ref: [A, A, G, A, A], ini: [A, G, A, A, A], h: 'depurar',
-      o: 'Bichito ha desordenado el programa. Arréglalo.', i: '¡Ji, ji! Bichito ha cambiado las tarjetas de sitio.',
+      o: 'Bichito ha desordenado el programa. Arréglalo.', i: 'Bichito se ríe, ha desordenado el programa de Lumo. ¡Ordénalo!',
       cur: ['m1_41', 'm1_42', 'm1_cm'], ext: ['Depurar: instrucciones desordenadas'] }, 18),
     m1({ tt: 'Giro equivocado', b: 7, m: ['####G', '####.', '>....'], c: ALL, ref: [A, A, A, A, I, A, A], ini: [A, A, A, A, G, A, A], h: 'depurar',
-      o: 'Hay una tarjeta que no es la correcta. Cámbiala.', i: 'Bichito ha cambiado un giro.',
+      o: 'Hay una tarjeta que no es la correcta. Cámbiala.', i: 'Bichito se esconde tras una roca. Ha cambiado un giro.',
       cur: ['m1_41', 'm1_42', 'm1_cm'], ext: ['Depurar: una instrucción incorrecta'] }, 19),
     m1({ tt: 'Falta una tarjeta', b: 7, m: ['>..', '##.', 'G..'], c: ALL, ref: [A, A, G, A, A, G, A, A], ini: [A, A, G, A, A, G, A], h: 'depurar',
-      o: 'Al programa le falta algo para llegar. Complétalo.', i: 'Bichito se ha comido una tarjeta.',
+      o: 'Al programa le falta algo para llegar. Complétalo.', i: 'Bichito se ha llevado una tarjeta. Al programa le falta algo.',
       cur: ['m1_41', 'm1_42', 'm1_cm'], ext: ['Depurar: una instrucción que falta'] }, 20),
 
     // ---- Bloque 8. Mecanismos ----
     m1({ tt: 'La puerta de piedra', b: 8, m: ['>.s.dG'], c: ['avanzar', 'activar'], ref: [A, A, X, A, A, A], h: 'mecanismo',
-      o: 'Pisa el interruptor y actívalo para abrir la puerta.', i: 'Una puerta cierra el paso al faro.',
+      o: 'Pisa el interruptor y actívalo para abrir la puerta.', i: 'Una puerta de hielo cierra el paso a la cumbre. Hay un interruptor.',
       cur: ['m1_41', 'saber23'], ext: ['Activar un mecanismo: causa y efecto'] }, 21),
     m1({ tt: 'El interruptor escondido', b: 8, m: ['#s##', '>.dG'], c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'activar'],
       ref: [A, I, A, X, B, G, A, A], holgura: 2, h: 'mecanismo',
-      o: 'El interruptor está en un hueco. Actívalo y vuelve.', i: 'El interruptor se esconde en un hueco.',
+      o: 'El interruptor está en un hueco. Actívalo y vuelve.', i: 'El interruptor se ha escondido en un hueco. Actívalo y regresa.',
       cur: ['m1_41', 'm1_42'], ext: ['Planificar el orden: ir, activar, volver'] }, 22),
 
     // ---- Bloque 10. Grandes desafíos ----
     m1({ tt: 'El gran salto', b: 10, m: ['>o.~o.~G'], c: ['avanzar', 'recoger', 'saltar', 'repetir'],
       ref: [A, rep(2, R, A, S)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'optim',
-      o: 'Recoge las dos luces saltando. ¡Busca el patrón!', i: 'En las montañas, las luces están sobre abismos.',
+      o: 'Recoge las dos luces saltando. ¡Busca el patrón!', i: 'Las luces del camino flotan sobre abismos. Sus saltos repiten un ritmo.',
       cur: ['m1_41', 'm1_42'], ext: ['Encontrar un patrón dentro de una secuencia más larga'] }, 23),
     m1({ tt: 'Bucle mal contado', b: 10, m: ['>ooooG'], c: ['avanzar', 'recoger', 'repetir'],
       ref: [rep(4, A, R), A], ini: [rep(3, A, R), A], lim: { repetir: 1 }, holgura: 1, h: 'depurar',
       p: ['El bucle repite poco: ejecútalo y mira dónde se queda Lumo.', 'Hay cuatro luces. ¿Cuántas veces se repite el bucle?', 'Cambia el número de Repetir a 4.'],
-      o: 'El bucle no repite las veces justas. Corrígelo.', i: 'La brújula de Lumo cuenta mal.',
+      o: 'El bucle no repite las veces justas. Corrígelo.', i: 'Bichito ha tocado el número de la repetición. ¡Ahora cuenta mal!',
       cur: ['m1_41', 'm1_42', 'm1_cm'], ext: ['Depurar un bucle: cambiar el número de repeticiones'] }, 24),
     m1({ tt: 'La escalera de luz', b: 10, m: ['>o###', '#.o##', '##.o#', '###.G'], c: ['avanzar', 'recoger', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, A, R, G, A, I), A], lim: { repetir: 1 }, holgura: 2, usa: 'repetir', h: 'optim',
-      o: 'Tres luces en escalera. ¡Encuentra el patrón!', i: 'La última escalera lleva a la cumbre.',
+      o: 'Tres luces en escalera. ¡Encuentra el patrón!', i: 'La última escalera lleva a la cumbre. Allí espera Brasa.',
       cur: ['m1_41', 'm1_42', 'm1_cm'], ext: ['Gran desafío: patrón de cinco tarjetas repetido tres veces'] }, 25)
   ];
 });
@@ -1476,127 +3202,127 @@
     // ---- Bloque 1. Bucles para recorridos largos ----
     m2({ tt: 'El camino largo', b: 1, m: ['>.........G'], c: ['avanzar', 'repetir'],
       ref: [rep(10, A)], lim: { repetir: 1 }, holgura: 1, h: 'bucle',
-      o: 'Diez pasos son muchos. ¿Hay una forma más corta?', i: 'Tinta ha construido un túnel submarino larguísimo.',
+      o: 'Diez pasos son muchos. ¿Hay una forma más corta?', i: 'Tinta ha excavado un túnel larguísimo para sus máquinas.',
       cur: ['m2_41', 'm2_42', 'saber23'], ext: ['Repetir con una cantidad grande'] }, 1),
     m2({ tt: 'Dos tramos', b: 1, m: ['>.....', '#####.', '#####.', '#####G'], c: MOV,
       ref: [rep(5, A), G, rep(3, A)], lim: { repetir: 2 }, holgura: 1, h: 'bucle',
-      o: 'Cada tramo es una repetición distinta.', i: 'El túnel tiene un codo.',
+      o: 'Cada tramo es una repetición distinta.', i: 'El túnel de Tinta hace un codo. Ella dibuja el plano con sus tentáculos.',
       cur: ['m2_41', 'm2_42'], ext: ['Dos bucles con cantidades diferentes'] }, 2),
     m2({ tt: 'Escalera grande', b: 1, m: ['>.####', '#..###', '##..##', '###..#', '####..', '#####G'], c: MOV,
       ref: [rep(5, A, G, A, I)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Una escalera enorme. ¡Hay un patrón que se repite!', i: 'Las escaleras de coral nunca se acaban.',
+      o: 'Una escalera enorme. ¡Hay un patrón que se repite!', i: 'Las escaleras de coral de Tinta nunca se acaban. Siempre repiten lo mismo.',
       cur: ['m2_41', 'm2_42'], ext: ['Reconocer un patrón de cuatro tarjetas'] }, 3),
 
     // ---- Bloque 2. Bucles y patrones ----
     m2({ tt: 'Anillo de coral', b: 2, m: ['>...', '###.', '###.', 'G...'], c: MOV,
       ref: [rep(3, A, A, A, G)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Tres lados iguales. Repite el patrón.', i: 'Un anillo de coral rodea la isla.',
+      o: 'Tres lados iguales. Repite el patrón.', i: 'Tinta rodea la isla con un anillo de coral. Tiene tres lados iguales.',
       cur: ['m2_41', 'm2_42'], ext: ['Patrón con avance y giro repetido tres veces'] }, 4),
     m2({ tt: 'Tres tramos', b: 2, m: ['>...##', '###.##', '###.##', '###.##', '###.##', '###..G'], c: MOV,
       ref: [rep(3, A), G, rep(5, A), I, rep(2, A)], lim: { repetir: 3 }, holgura: 1, h: 'bucle',
-      o: 'Cada tramo tiene su número de pasos.', i: 'Tinta dibuja el recorrido en la arena.',
+      o: 'Cada tramo tiene su número de pasos.', i: 'Tinta dibuja el recorrido en la arena. Cada tramo mide distinto.',
       cur: ['m2_41', 'm2_42'], ext: ['Tres bucles con tres cantidades distintas'] }, 5),
     m2({ tt: 'Luces con huecos', b: 2, m: ['>.o.o.oG'], c: BASE,
       ref: [rep(3, A, A, R), A], lim: { repetir: 1 }, holgura: 1, h: 'bucle',
-      o: 'Las luces están cada dos casillas.', i: 'Las medusas brillan de dos en dos.',
+      o: 'Las luces están cada dos casillas.', i: 'Las perlas brillan de dos en dos, como las medusas. Tinta las necesita.',
       cur: ['m2_41', 'm2_42'], ext: ['Patrón de tres acciones'] }, 6),
     m2({ tt: 'Recoge y cruza', b: 2, m: ['>ooo~.~.G'], c: ['avanzar', 'recoger', 'saltar', 'repetir'],
       ref: [rep(3, A, R), rep(2, S), A], lim: { repetir: 2 }, holgura: 1, h: 'bucle',
-      o: 'Dos trozos distintos: recoger y saltar.', i: 'Perlas primero, corrientes después.',
+      o: 'Dos trozos distintos: recoger y saltar.', i: 'Perlas primero, corrientes después. Tinta recoge y salta con Lumo.',
       cur: ['m2_41', 'm2_42'], ext: ['Descomponer en dos partes y repetir cada una'] }, 7),
     m2({ tt: 'Dunas de arena', b: 2, m: ['>..####', '##...##', '####...', '######G'], c: MOV,
       ref: [rep(3, A, A, G, A, I)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Un zigzag que se repite. Cuenta los zigzags.', i: 'Las dunas submarinas suben y bajan.',
+      o: 'Un zigzag que se repite. Cuenta los zigzags.', i: 'Las dunas submarinas suben y bajan, suben y bajan. ¡Cuenta los zigzags!',
       cur: ['m2_41', 'm2_42'], ext: ['Patrón de cinco tarjetas'] }, 8),
 
     // ---- Bloque 3. Descomponer problemas ----
     m2({ tt: 'Tres salas', b: 3, m: ['>.os.d.oG'], c: ['avanzar', 'recoger', 'activar', 'repetir'],
       ref: [A, A, R, A, X, rep(4, A), R, A], lim: { repetir: 1 }, holgura: 2, h: 'mecanismo',
       p: ['Divide el problema: primera luz, interruptor, segunda luz.', 'Resuelve cada parte por separado y luego júntalas.', 'Después de activar, hay un tramo largo: usa Repetir.'],
-      o: 'Resuelve cada parte por separado y júntalas.', i: 'Una puerta separa dos salas del barco hundido.',
+      o: 'Resuelve cada parte por separado y júntalas.', i: 'Dentro del barco hundido hay dos salas y una puerta. Resuelve cada sala.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Descomposición: dividir un problema en partes más sencillas'] }, 9),
     m2({ tt: 'Los nichos', b: 3, m: NICHOS, c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir'],
       ref: [rep(3, A, A, G, A, R, B, I), A, A], lim: { repetir: 1 }, holgura: 2, h: 'bucle',
-      o: 'Tres nichos con perlas. Cada visita es igual.', i: 'Cada nicho esconde una perla.',
+      o: 'Tres nichos con perlas. Cada visita es igual.', i: 'Tinta guarda sus perlas en tres nichos. Cada visita es igual.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Descomposición: una visita al nicho se repite tres veces'] }, 10),
 
     // ---- Bloque 4. Recetas (bloques reutilizables) ----
     m2({ tt: 'La receta del nicho', b: 4, m: NICHOS, c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'receta'], rec: ['A'],
       ref: P([A, A, rec('A'), A, A, rec('A'), A, A, rec('A'), A, A], { A: NICHO_REC }), holgura: 3, usa: 'receta', h: 'receta',
-      o: 'Guarda la visita al nicho en la Receta A.', i: 'Tinta: «Una receta se hace una vez y se usa muchas».',
+      o: 'Guarda la visita al nicho en la Receta A.', i: 'Tinta tiene un truco, guardar la visita al nicho en una receta.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Receta: un bloque reutilizable (función) con nombre'] }, 11),
     m2({ tt: 'Dos recetas', b: 4, m: NICHOS_ARR, c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'receta'], rec: ['A', 'B'],
       ref: P([A, A, rec('A'), A, A, rec('B'), A, A, rec('A'), A, A], { A: [G, A, R, B, I], B: [I, A, R, B, G] }), holgura: 4, usa: 'receta', h: 'receta',
       p: ['Hay nichos arriba y nichos abajo.', 'Una receta sirve para los de abajo y otra para los de arriba.', 'La Receta A gira a la derecha; la B, a la izquierda.'],
-      o: 'Nichos arriba y abajo: usa dos recetas.', i: 'Algunos nichos están por encima del camino.',
+      o: 'Nichos arriba y abajo: usa dos recetas.', i: 'Algunos nichos están arriba y otros abajo. Hacen falta dos recetas.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Dos recetas distintas'] }, 12),
     m2({ tt: 'Cinco nichos', b: 4, m: ['>...........G', '##o#o#o#o#o##'],
       c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir', 'receta'], rec: ['A'],
       ref: P([rep(5, A, A, rec('A')), A, A], { A: NICHO_REC }), lim: { repetir: 1 }, holgura: 2, usa: 'receta', h: 'receta',
-      o: 'Cinco nichos. Receta dentro de un bucle.', i: 'La grieta es larga y tiene muchos nichos.',
+      o: 'Cinco nichos. Receta dentro de un bucle.', i: 'La grieta tiene muchos nichos. En uno juega Destello, escondido.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Receta dentro de un bucle'] }, 13),
 
     // ---- Bloque 5. Mecanismos (isla volcánica) ----
     m2({ tt: 'La puerta de lava', b: 5, m: ['>.s.d.....G'], c: ['avanzar', 'activar', 'repetir'],
       ref: [A, A, X, A, A, rep(6, A)], lim: { repetir: 1 }, holgura: 1, h: 'mecanismo',
-      o: 'Abre la puerta y cruza el largo pasillo.', i: 'El lagarto gigante guarda una puerta de roca.',
+      o: 'Abre la puerta y cruza el largo pasillo.', i: 'El lagarto gigante guarda el volcán. Él no cabe en los túneles, pero Lumo sí.',
       cur: ['m2_41', 'm2_42'], ext: ['Mecanismo y bucle en el mismo programa'] }, 14),
     m2({ tt: 'Puerta y barrera', b: 5, m: ['>.s.d.b.G'], c: ['avanzar', 'activar', 'saltar', 'repetir'],
       ref: [A, A, X, rep(3, A), S, A], lim: { repetir: 1 }, holgura: 1, h: 'mecanismo',
-      o: 'Una puerta que se abre y una barrera que se salta.', i: 'Dos obstáculos de lava, dos soluciones distintas.',
+      o: 'Una puerta que se abre y una barrera que se salta.', i: 'Lava y una barrera. El lagarto señala dos formas de pasar.',
       cur: ['m2_41', 'm2_42'], ext: ['Elegir la acción adecuada para cada obstáculo'] }, 15),
     m2({ tt: 'Cruzar la lava', b: 5, m: ['>o.s.d.~.G'], c: ['avanzar', 'recoger', 'activar', 'saltar', 'repetir'],
       ref: [A, R, A, A, X, rep(3, A), S, A], lim: { repetir: 1 }, holgura: 2, h: 'mecanismo',
-      o: 'Luz, interruptor, puerta y lava. Un paso cada vez.', i: 'El camino del volcán tiene de todo.',
+      o: 'Luz, interruptor, puerta y lava. Un paso cada vez.', i: 'Luz, interruptor, puerta y lava. El lagarto aconseja ir despacio, paso a paso.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Planificar varios objetivos en orden'] }, 16),
 
     // ---- Bloque 6. Depuración y optimización ----
     m2({ tt: 'Un tramo corto', b: 6, m: ['>...##', '###.##', '###.##', '###.##', '###.##', '###..G'], c: MOV,
       ref: [rep(3, A), G, rep(5, A), I, rep(2, A)], ini: [rep(3, A), G, rep(4, A), I, rep(2, A)], lim: { repetir: 3 }, holgura: 1, h: 'depurar',
       p: ['Ejecuta el programa y mira dónde se detiene Lumo.', 'Uno de los bucles repite menos veces de las necesarias.', 'Cuenta las casillas del segundo tramo: son cinco.'],
-      o: 'Un bucle repite menos veces de las necesarias.', i: 'Bichito ha cambiado un número.',
+      o: 'Un bucle repite menos veces de las necesarias.', i: 'Desde lejos, Bichito ha cambiado un número del bucle.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Depurar: corregir el número de repeticiones'] }, 17),
     m2({ tt: 'Luces en mal orden', b: 6, m: ['>.o.o.oG'], c: BASE,
       ref: [rep(3, A, A, R), A], ini: [rep(3, A, R, A), A], lim: { repetir: 1 }, holgura: 1, h: 'depurar',
       p: ['Mira por dónde pasa Lumo: ¿recoge las luces?', 'Dentro del bucle, Recoger se ejecuta en el sitio equivocado.', 'Avanza dos veces y después recoge.'],
-      o: 'Lumo pasa de largo sin recoger. Arregla el bucle.', i: 'Las medusas se esconden si se las busca tarde.',
+      o: 'Lumo pasa de largo sin recoger. Arregla el bucle.', i: 'Las gemas del volcán brillan y se esconden. Lumo pasa de largo sin recogerlas.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Depurar: orden de las tarjetas dentro de un bucle'] }, 18),
     m2({ tt: 'Falta recoger', b: 6, m: ['>ooo~.~.G'], c: ['avanzar', 'recoger', 'saltar', 'repetir'],
       ref: [rep(3, A, R), rep(2, S), A], ini: [rep(3, A), rep(2, S), A], lim: { repetir: 2 }, holgura: 1, h: 'depurar',
       p: ['Lumo llega a la meta, pero ¿se deja algo?', 'Faltan perlas por recoger: el primer bucle solo avanza.', 'Añade Recoger dentro del primer bucle.'],
-      o: 'Lumo llega, pero deja las perlas. ¿Qué falta?', i: 'Una perla sin recoger es una pista perdida.',
+      o: 'Lumo llega, pero deja las perlas. ¿Qué falta?', i: 'Lumo llega a la meta, pero deja gemas atrás. ¿Qué falta?',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Depurar: una instrucción que falta dentro de un bucle'] }, 19),
     m2({ tt: 'Receta rota', b: 6, m: NICHOS, c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'receta'], rec: ['A'],
       ref: P([A, A, rec('A'), A, A, rec('A'), A, A, rec('A'), A, A], { A: NICHO_REC }),
       ini: P([A, A, rec('A'), A, A, rec('A'), A, A, rec('A'), A, A], { A: [G, A, R, I, B] }), holgura: 3, usa: 'receta', h: 'depurar',
       p: ['La receta se usa tres veces, así que su error se repite tres veces.', 'Mira la Receta A: Lumo sale del nicho en la dirección equivocada.', 'Después de retroceder se gira a la izquierda; no al revés.'],
-      o: 'La receta tiene un fallo. Arréglala una vez.', i: 'Un fallo en una receta se repite cada vez que se usa.',
+      o: 'La receta tiene un fallo. Arréglala una vez.', i: 'Bichito ha toqueteado la receta. Su fallo se repite cada vez que se usa.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Depurar una receta: corregir en un solo sitio'] }, 20),
     m2({ tt: 'Demasiadas tarjetas', b: 6, m: ['>...', '###.', '###.', 'G...'], c: MOV, tipo: 'optimizar',
       ref: [rep(3, A, A, A, G)], ini: [A, A, A, G, A, A, A, G, A, A, A], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'optim',
-      o: 'Funciona, pero tiene demasiadas tarjetas. Acórtalo.', i: 'Tinta: «Un programa corto es un programa elegante».',
+      o: 'Funciona, pero tiene demasiadas tarjetas. Acórtalo.', i: 'El programa funciona, pero es larguísimo. El lagarto pide uno más corto.',
       cur: ['m2_41', 'm2_42'], ext: ['Optimizar: reducir tarjetas sin cambiar el resultado'] }, 21),
 
     // ---- Bloque 7. Condiciones (anticipación) ----
     m2({ tt: 'Gira si hay muro', b: 7, m: ['>....', '####.', 'G....'], c: ['avanzar', 'girar-d', 'repetir', 'si'], con: ['obstaculo-delante'],
       ref: [rep(20, si(OB, [G], [A]))], lim: { repetir: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
-      o: 'Si hay un muro delante, gira. Si no, avanza.', i: 'El lagarto gigante: «Aquí las paredes mandan».',
+      o: 'Si hay un muro delante, gira. Si no, avanza.', i: 'El lagarto avisa de que en estos túneles aparecen paredes sin avisar.',
       cur: ['m2_41', 'm2_42'], ext: ['Primera condición: si ocurre algo, haz una cosa; si no, otra'] }, 22),
     m2({ tt: 'Salta si hay lava', b: 7, m: ['>.~.~.~.G'], c: ['avanzar', 'saltar', 'repetir', 'si'], con: ['agua-delante'],
       ref: [rep(8, si(AG, [S], [A]))], lim: { repetir: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
-      o: 'Si hay lava delante, salta. Si no, avanza.', i: 'Los ríos de lava aparecen cada dos casillas.',
+      o: 'Si hay lava delante, salta. Si no, avanza.', i: 'Los ríos de lava aparecen cada dos casillas. Lumo debe decidir sobre la marcha.',
       cur: ['m2_41', 'm2_42'], ext: ['Condición para decidir entre dos acciones'] }, 23),
 
     // ---- Bloque 10. Grandes desafíos ----
     m2({ tt: 'Los túneles del volcán', b: 10, m: ['>.o..', '####.', '..G#o', 'o###.', '..o..'], c: ['avanzar', 'girar-d', 'recoger', 'repetir', 'si'], con: ['obstaculo-delante'],
       ref: [rep(30, si(OB, [G], [A]), R)], lim: { repetir: 1, si: 1 }, holgura: 2, usa: 'si', h: 'cond',
       p: ['El camino es una espiral y todos los giros son a la derecha.', 'Usa una condición: si hay muro, gira; si no, avanza. Y recoge siempre.', 'Mete la condición y Recoger dentro de un bucle largo.'],
-      o: 'Una espiral con cuatro luces. Un programa que decide.', i: 'Los túneles forman una espiral hacia el corazón del volcán.',
+      o: 'Una espiral con cuatro luces. Un programa que decide.', i: 'Los túneles forman una espiral hacia el corazón del volcán. Algo brilla dentro.',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Condición y bucle juntos: un algoritmo que decide por sí mismo'] }, 24),
     m2({ tt: 'El corazón del volcán', b: 10, m: ['>o.~o.~s.d.G'], c: ['avanzar', 'saltar', 'recoger', 'activar', 'repetir', 'si'], con: ['agua-delante'],
       ref: [rep(15, si(AG, [S], [A]), R, X)], lim: { repetir: 1, si: 1 }, holgura: 2, usa: 'si', h: 'cond',
       p: ['Hay lava, luces, un interruptor y una puerta.', 'Un único bucle puede encargarse de todo: salta si hay lava, y recoge y activa siempre.', 'Dentro del bucle: Si lava, saltar; si no, avanzar. Después Recoger y Activar.'],
-      o: 'Un solo bucle que lo haga todo.', i: 'El corazón del volcán late. ¡Último reto del mundo!',
+      o: 'Un solo bucle que lo haga todo.', i: 'El corazón del volcán late flojito. Allí gruñe Ascua: «¡Dejadme en paz!»',
       cur: ['m2_41', 'm2_42', 'm2_cm'], ext: ['Gran desafío: descomponer, generalizar y automatizar'] }, 25)
   ];
 });
@@ -1653,154 +3379,154 @@
     // ---- Bloque 0. Calentamiento (repaso de secuencias, giros, recoger y primer bucle) ----
     cal({ tt: 'Primeros pasos en la ciudad', m: ['>...G'], c: ['avanzar', 'girar-d', 'girar-i'],
       ref: [A, A, A, A], holgura: 1, h: 'seq',
-      o: 'Lleva a Lumo hasta la meta.', i: 'Bit enseña a Lumo las calles de la ciudad tecnológica.',
+      o: 'Lleva a Lumo hasta la meta.', i: 'Bit, el robot de la ciudad, enseña sus calles a Lumo. ¡Primer paseo!',
       cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: secuencia corta'] }, 1),
     cal({ tt: 'Doblar la esquina', m: ['>..', '##.', '##G'], c: ['avanzar', 'girar-d', 'girar-i'],
       ref: [A, A, G, A, A], holgura: 1, h: 'giro',
-      o: 'Gira en la esquina para llegar a la meta.', i: 'Las calles tienen esquinas.',
+      o: 'Gira en la esquina para llegar a la meta.', i: 'En la ciudad todas las calles hacen esquina. Bit marca el giro.',
       cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: giros'] }, 2),
     cal({ tt: 'Paneles en la acera', m: ['>.o.o.G'], c: ['avanzar', 'girar-d', 'girar-i', 'recoger'],
       ref: [A, A, R, A, A, R, A, A], holgura: 2, h: 'obj',
-      o: 'Recoge los dos paneles solares y llega a la meta.', i: 'Hay paneles solares por recoger.',
+      o: 'Recoge los dos paneles solares y llega a la meta.', i: 'Los paneles solares están apagados. Bit necesita dos para arrancar.',
       cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: recoger objetos'] }, 3),
     cal({ tt: 'Repite el paso', m: ['>......G'], c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(7, A)], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Usa Repetir en lugar de muchas tarjetas.', i: 'Una calle recta y muy larga.',
+      o: 'Usa Repetir en lugar de muchas tarjetas.', i: 'Una calle recta y larguísima. ¿Cuántas tarjetas iguales harán falta?',
       cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: un bucle sencillo'] }, 4),
     cal({ tt: 'Calle con vueltas', m: ['>...', '###.', 'G...'], c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, A), G, rep(2, A), G, rep(3, A)], lim: { repetir: 3 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Tres tramos: usa Repetir en cada uno.', i: 'La calle hace una S.',
+      o: 'Tres tramos: usa Repetir en cada uno.', i: 'La calle hace una S con tres tramos. Bit cuenta cada uno.',
       cur: ['m3_41', 'm3_42'], ext: ['Calentamiento: varios bucles seguidos'] }, 5),
 
     // ---- Bloque 1. Bucles anidados ----
     m3({ tt: 'La escalera larga', b: 1, m: ESCALERA, c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, rep(3, A), G, A, I)], lim: { repetir: 2 }, holgura: 1, usa: 'repetir', h: 'bucle',
       p: ['Cada escalón es igual: tres pasos, giro, un paso, giro.', 'Ahora los tres pasos también se repiten: un bucle dentro de otro.', 'Repite tres veces: [Repetir 3 veces Avanzar], girar, avanzar, girar.'],
-      o: 'Un bucle dentro de otro bucle.', i: 'Bit, el robot de la ciudad, ha construido una escalera con escalones largos.',
+      o: 'Un bucle dentro de otro bucle.', i: 'Bit ha construido una escalera de escalones largos. Hay dos cuentas a la vez.',
       cur: ['m3_41', 'm3_42', 'saber23'], ext: ['Bucles anidados: un bucle dentro de otro'] }, 1),
     m3({ tt: 'Filas de paneles', b: 1, m: ['>oo', '.oo', 'G..'], c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir'],
       ref: [rep(2, rep(2, A, R), rep(2, B), G, A, I)], lim: { repetir: 3 }, holgura: 2, usa: 'repetir', h: 'bucle',
       p: ['Cada fila se recorre igual: ir recogiendo y volver.', 'Ir y recoger se repite dos veces; volver, también.', 'Mete eso dentro de otro bucle que baje una fila.'],
-      o: 'Recoge cada fila y vuelve. Dos bucles dentro de uno.', i: 'Los paneles solares están en filas. Hay que recogerlos todos.',
+      o: 'Recoge cada fila y vuelve. Dos bucles dentro de uno.', i: 'Los paneles solares están en filas. Hay que recoger cada fila y volver.',
       cur: ['m3_41', 'm3_42'], ext: ['Descomponer: una fila se repite para cada fila'] }, 2),
     m3({ tt: 'La plaza grande', b: 1, m: PLAZA, c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, rep(4, A), G)], lim: { repetir: 2 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Tres lados iguales. Cada lado, cuatro pasos.', i: 'La plaza central es un cuadrado enorme.',
+      o: 'Tres lados iguales. Cada lado, cuatro pasos.', i: 'La plaza central es un cuadrado enorme. Bit quiere recorrerla entera.',
       cur: ['m3_41', 'm3_42'], ext: ['Bucle anidado: lados y pasos'] }, 3),
     m3({ tt: 'La cuenta falla', b: 1, m: PLAZA, c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, rep(4, A), G)], ini: [rep(3, rep(3, A), G)], lim: { repetir: 2 }, holgura: 1, h: 'depurar',
       p: ['Ejecuta y fíjate dónde se queda Lumo.', 'Los lados miden cuatro pasos, no tres.', 'Cambia el número del bucle interior.'],
-      o: 'El bucle de dentro cuenta mal. Corrígelo.', i: 'Bit se ha equivocado al contar.',
+      o: 'El bucle de dentro cuenta mal. Corrígelo.', i: 'Bichito quiso ayudar a Bit a contar. Ahora el bucle de dentro cuenta mal.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar un bucle anidado'] }, 4),
     m3({ tt: 'La fábrica larga', b: 1, m: FILAS3, c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir'], tipo: 'optimizar',
       ref: [rep(3, rep(2, A, R), rep(2, B), G, A, I)],
       ini: [rep(2, A, R), rep(2, B), G, A, I, rep(2, A, R), rep(2, B), G, A, I, rep(2, A, R), rep(2, B), G, A],
       lim: { repetir: 3 }, holgura: 2, usa: 'repetir', h: 'optim',
-      o: 'Funciona, pero se repite tres veces lo mismo. Acórtalo.', i: 'Bit: «Si lo repites, ponlo en un bucle».',
+      o: 'Funciona, pero se repite tres veces lo mismo. Acórtalo.', i: 'Funciona, pero repite tres veces lo mismo. Bit propone un bucle.',
       cur: ['m3_41', 'm3_42'], ext: ['Optimizar: detectar una secuencia que se repite y automatizarla'] }, 5),
 
     // ---- Bloque 2. Condiciones y sensores ----
     m3({ tt: 'Hasta el muro', b: 2, m: ['>.......G'], c: ['avanzar', 'mientras'], con: ['obstaculo-delante'],
       ref: [mientras(no(OB), [A])], lim: { mientras: 1 }, holgura: 1, h: 'cond',
-      o: 'Avanza mientras no haya un muro delante.', i: 'Bit: «Observa, decide, actúa».',
+      o: 'Avanza mientras no haya un muro delante.', i: 'Bit repite su lema, «observa, decide, actúa». Hoy toca avanzar mientras no haya muro.',
       p: ['No hace falta contar los pasos.', 'Mientras no haya un muro delante, Lumo avanza.', 'Elige Mientras, pon la condición «no hay obstáculo» y dentro Avanzar.'],
       cur: ['m3_41', 'm3_42'], ext: ['Bucle «mientras» con un sensor: se repite hasta que algo ocurre'] }, 6),
     m3({ tt: 'Camino con curvas', b: 2, m: CURVAS, c: ['avanzar', 'girar-d', 'mientras', 'si'], con: ['obstaculo-delante', 'meta-aqui'],
       ref: [mientras(no(MA), si(OB, [G], [A]))], lim: { mientras: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
       p: ['Todas las curvas son a la derecha y siempre acaban en un muro.', 'Si hay un muro delante, gira; si no, avanza.', 'Mientras no estés en la meta: Si obstáculo, girar; si no, avanzar.'],
-      o: 'Si hay muro, gira; si no, avanza. Hasta llegar a la meta.', i: 'La ciudad tiene un laberinto de calles.',
+      o: 'Si hay muro, gira; si no, avanza. Hasta llegar a la meta.', i: 'Bit conoce cada calle del laberinto, pero no sabe decidir en los cruces.',
       cur: ['m3_41', 'm3_42'], ext: ['Condicional si / si no dentro de un bucle'] }, 7),
     m3({ tt: 'Recoge o avanza', b: 2, m: ['>.o..oo.o.G'], c: ['avanzar', 'recoger', 'repetir', 'si'], con: ['objeto-aqui'],
       ref: [rep(30, si(OA, [R], [A]))], lim: { repetir: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
       p: ['Hay luces en sitios distintos y no hace falta contarlos.', 'Si hay una luz aquí, recógela; si no, avanza.', 'Dentro de un bucle largo: Si objeto aquí, recoger; si no, avanzar.'],
-      o: 'Si hay una luz, recógela. Si no, avanza.', i: 'Hay baterías esparcidas por la calle.',
+      o: 'Si hay una luz, recógela. Si no, avanza.', i: 'Hay baterías esparcidas por la calle. Bit las necesita todas.',
       cur: ['m3_41', 'm3_42'], ext: ['Un algoritmo que funciona sin saber dónde están los objetos'] }, 8),
     m3({ tt: 'Interruptor automático', b: 2, m: ['>..s..d..G'], c: ['avanzar', 'activar', 'repetir', 'si'], con: ['interruptor-aqui'],
       ref: [rep(12, si(IN, [X, A], [A]))], lim: { repetir: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
-      o: 'Activa el interruptor si estás encima. Si no, avanza.', i: 'La puerta del taller se abre con un interruptor.',
+      o: 'Activa el interruptor si estás encima. Si no, avanza.', i: 'La puerta del taller de Bit solo se abre con un interruptor.',
       cur: ['m3_41', 'm3_42'], ext: ['Sensor de interruptor'] }, 9),
     m3({ tt: 'Lava o muro', b: 2, m: ['>.~..', '####.', 'G.~..'], c: ['avanzar', 'girar-d', 'saltar', 'repetir', 'si'], con: ['agua-delante', 'obstaculo-delante'],
       ref: [rep(20, si(AG, [S], [si(OB, [G], [A])]))], lim: { repetir: 1, si: 2 }, holgura: 1, usa: 'si', h: 'cond',
       p: ['Hay dos cosas que mirar: agua y muro.', 'Primero pregunta por el agua; si no hay, pregunta por el muro.', 'Si agua: saltar; si no: (si muro: girar; si no: avanzar).'],
-      o: 'Si hay vacío, salta; si hay muro, gira; si no, avanza.', i: 'Unos huecos de energía cortan las calles.',
+      o: 'Si hay vacío, salta; si hay muro, gira; si no, avanza.', i: 'Unos huecos de energía cortan las calles. Hay que saltar o girar.',
       cur: ['m3_41', 'm3_42'], ext: ['Condicionales combinados (una condición dentro de otra)'] }, 10),
 
     // ---- Bloque 3. Funciones (recetas) ----
     m3({ tt: 'Receta de fila', b: 3, m: ['>ooo', '.ooo', '.ooo', 'G...'], c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir', 'receta'], rec: ['A'],
       ref: P([rep(3, rec('A'), rep(3, B), G, A, I)], { A: [rep(3, A, R)] }), lim: { repetir: 3 }, holgura: 3, usa: 'receta', h: 'receta',
-      o: 'Guarda «recoger una fila» en la Receta A.', i: 'Bit: «Una función se escribe una vez».',
+      o: 'Guarda «recoger una fila» en la Receta A.', i: 'Bit quiere guardar «recoger una fila» en una receta para no repetirla.',
       cur: ['m3_41', 'm3_42'], ext: ['Función (receta) que contiene un bucle'] }, 11),
     m3({ tt: 'La serpiente', b: 3, m: ['>ooo', 'ooo.', 'G...'], c: ARCA, rec: ['A'],
       ref: P([rec('A'), G, A, G, rec('A'), I, A], { A: [rep(3, A, R)] }), lim: { repetir: 1 }, holgura: 2, usa: 'receta', h: 'receta',
-      o: 'Dos filas iguales, una en cada sentido.', i: 'Los cables forman una serpiente.',
+      o: 'Dos filas iguales, una en cada sentido.', i: 'Los cables de la ciudad forman una serpiente. Algo curioso se mueve dentro.',
       cur: ['m3_41', 'm3_42'], ext: ['Reutilizar una receta en dos sitios distintos'] }, 12),
     m3({ tt: 'La gran serpiente', b: 3, m: ['>ooo', 'ooo.', '.ooo', 'Goo.'], c: ARCA, rec: ['A'],
       ref: P([rep(2, rec('A'), G, A, G, rec('A'), I, A, I)], { A: [rep(3, A, R)] }), lim: { repetir: 2 }, holgura: 2, usa: 'receta', h: 'receta',
-      o: 'Cuatro filas: receta y bucle trabajando juntos.', i: 'La serpiente de cables se ha enrollado.',
+      o: 'Cuatro filas: receta y bucle trabajando juntos.', i: 'La serpiente de cables se ha enrollado. Una lucecita curiosa asoma entre ellos.',
       cur: ['m3_41', 'm3_42'], ext: ['Receta dentro de un bucle anidado'] }, 13),
 
     // ---- Bloque 4. Optimización con límites (mundo espacial) ----
     m3({ tt: 'Pocas tarjetas', b: 4, m: ['>.....', '#####.', '#####.', '#####.', '#####.', 'G.....'], c: ['avanzar', 'girar-d', 'repetir'],
       ref: [rep(3, rep(5, A), G)], lim: { avanzar: 1, 'girar-d': 1, repetir: 2 }, holgura: 0, usa: 'repetir', h: 'optim',
-      o: 'Solo puedes usar una tarjeta Avanzar. ¡Piensa!', i: 'La nave tiene poca memoria: solo caben unas pocas tarjetas.',
+      o: 'Solo puedes usar una tarjeta Avanzar. ¡Piensa!', i: 'Bit y Lumo despegan hacia la estación. La nave tiene poca memoria.',
       cur: ['m3_41', 'm3_42'], ext: ['Retos con límite de instrucciones'] }, 14),
     m3({ tt: 'La torre escalonada', b: 4, m: ['>..######', '##...####', '####...##', '######...', '########G'], c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(4, rep(2, A), G, A, I)], lim: { avanzar: 2, 'girar-d': 1, 'girar-i': 1, repetir: 2 }, holgura: 0, h: 'optim',
-      o: 'Cuatro escalones. Memoria limitada.', i: 'La torre de la estación espacial tiene escalones de dos pasos.',
+      o: 'Cuatro escalones. Memoria limitada.', i: 'La torre de la estación tiene escalones de dos pasos. Caben pocas tarjetas.',
       cur: ['m3_41', 'm3_42'], ext: ['Optimizar bajo restricciones'] }, 15),
     m3({ tt: 'Espiral de sensores', b: 4, m: ESPIRAL, c: ['avanzar', 'girar-d', 'recoger', 'mientras', 'si'], con: ['obstaculo-delante', 'meta-aqui'],
       ref: [mientras(no(MA), [si(OB, [G], [A]), R])], lim: { mientras: 1, si: 1 }, holgura: 1, h: 'cond',
       p: ['Es una espiral hacia el centro y siempre se gira a la derecha.', 'Un único bucle puede decidir y recoger en cada paso.', 'Mientras no estés en la meta: Si obstáculo, girar; si no, avanzar. Después, Recoger.'],
-      o: 'Una espiral con cuatro luces y un solo bucle.', i: 'Los anillos de la estación giran en espiral.',
+      o: 'Una espiral con cuatro luces y un solo bucle.', i: 'Los anillos de la estación giran en espiral. Hay cuatro estrellas por recoger.',
       cur: ['m3_41', 'm3_42'], ext: ['Sensores y objetivos en un solo algoritmo'] }, 16),
 
     // ---- Bloque 5. Depuración avanzada ----
     m3({ tt: 'El sensor equivocado', b: 5, m: CURVAS, c: ['avanzar', 'girar-d', 'mientras', 'si'], con: ['obstaculo-delante', 'agua-delante', 'meta-aqui'],
       ref: [mientras(no(MA), si(OB, [G], [A]))], ini: [mientras(no(MA), si(AG, [G], [A]))], lim: { mientras: 1, si: 1 }, holgura: 1, h: 'depurar',
       p: ['Ejecuta: Lumo choca contra el muro.', 'La condición pregunta por el agua, pero aquí no hay agua.', 'Cambia la condición «agua delante» por «obstáculo delante».'],
-      o: 'El programa pregunta por lo que no debe. Cambia la condición.', i: 'Bit tiene el sensor mal conectado.',
+      o: 'El programa pregunta por lo que no debe. Cambia la condición.', i: 'Algo pequeño se mueve tras Bit, y su sensor no funciona.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar una condición incorrecta'] }, 17),
     m3({ tt: 'La receta que olvida', b: 5, m: ['>ooo', 'ooo.', 'G...'], c: ARCA, rec: ['A'],
       ref: P([rec('A'), G, A, G, rec('A'), I, A], { A: [rep(3, A, R)] }),
       ini: P([rec('A'), G, A, G, rec('A'), I, A], { A: [rep(3, R, A)] }), lim: { repetir: 1 }, holgura: 2, h: 'depurar',
       p: ['Lumo llega a la meta, pero se deja luces.', 'Dentro de la receta, Recoger y Avanzar están en el orden equivocado.', 'Primero avanza hasta la luz; después recoge.'],
-      o: 'Lumo llega, pero se olvida luces. Revisa la receta.', i: 'Un fallo escondido en una receta afecta a todo.',
+      o: 'Lumo llega, pero se olvida luces. Revisa la receta.', i: 'Un fallo se esconde dentro de una receta. Estropea todos sus usos.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar una función: el orden dentro del bucle'] }, 18),
     m3({ tt: 'Ramas cambiadas', b: 5, m: CURVAS, c: ['avanzar', 'girar-d', 'mientras', 'si'], con: ['obstaculo-delante', 'meta-aqui'],
       ref: [mientras(no(MA), si(OB, [G], [A]))], ini: [mientras(no(MA), si(OB, [A], [G]))], lim: { mientras: 1, si: 1 }, holgura: 1, h: 'depurar',
       p: ['Ejecuta: Lumo gira donde debería avanzar.', 'Las dos ramas del «si» están al revés.', 'Si hay muro: girar. Si no: avanzar.'],
-      o: 'Lo que hace «si» y «si no» está al revés.', i: 'Bit ha cruzado dos cables.',
+      o: 'Lo que hace «si» y «si no» está al revés.', i: 'Bit ha cruzado dos cables. Ahora «si» y «si no» hacen lo contrario.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar: ramas de un condicional intercambiadas'] }, 19),
     m3({ tt: 'Falta el «si no»', b: 5, m: CURVAS, c: ['avanzar', 'girar-d', 'mientras', 'si'], con: ['obstaculo-delante', 'meta-aqui'],
       ref: [mientras(no(MA), si(OB, [G], [A]))], ini: [mientras(no(MA), si(OB, [G]))], lim: { mientras: 1, si: 1 }, holgura: 1, h: 'depurar',
       p: ['Lumo se queda parado dando vueltas.', 'Cuando no hay muro, el programa no hace nada.', 'Rellena la parte «si no» con Avanzar.'],
-      o: 'Cuando no hay muro, Lumo no hace nada. ¿Qué falta?', i: 'Bit se ha quedado esperando.',
+      o: 'Cuando no hay muro, Lumo no hace nada. ¿Qué falta?', i: 'Bit se ha quedado esperando, inmóvil. Algo falta en su decisión.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar un bucle que no avanza: falta una rama'] }, 20),
     m3({ tt: 'Anidados desordenados', b: 5, m: ESCALERA, c: ['avanzar', 'girar-d', 'girar-i', 'repetir'],
       ref: [rep(3, rep(3, A), G, A, I)], ini: [rep(3, rep(3, A), A, G, I)], lim: { repetir: 2 }, holgura: 1, h: 'depurar',
       p: ['Lumo choca en el primer escalón.', 'Después de los tres pasos hay que girar antes de dar el paso corto.', 'Cambia de sitio Avanzar y Girar derecha.'],
-      o: 'El orden dentro del bucle grande no es el correcto.', i: 'La escalera tiene un escalón torcido.',
+      o: 'El orden dentro del bucle grande no es el correcto.', i: 'Un escalón de la torre está torcido. Ordena el interior del bucle grande.',
       cur: ['m3_41', 'm3_42'], ext: ['Depurar el orden dentro de un bucle anidado'] }, 21),
 
     // ---- Bloque 6. Grandes desafíos ----
     m3({ tt: 'Ciudad de cristal', b: 6, m: ['>.~.o', '####.', 'G.~.o'],
       c: ['avanzar', 'girar-d', 'saltar', 'recoger', 'repetir', 'si'], con: ['agua-delante', 'obstaculo-delante'],
       ref: [rep(25, si(AG, [S], [si(OB, [G], [A])]), R)], lim: { repetir: 1, si: 2 }, holgura: 2, usa: 'si', h: 'cond',
-      o: 'Observa, decide y recoge, todo en un bucle.', i: 'La ciudad de cristal brilla con baterías en las esquinas.',
+      o: 'Observa, decide y recoge, todo en un bucle.', i: 'En la ciudad de cristal hay baterías en cada esquina. Recógelas con un solo bucle.',
       cur: ['m3_41', 'm3_42'], ext: ['Un algoritmo general para un entorno con huecos, muros y objetos'] }, 22),
     m3({ tt: 'El interruptor tras el vacío', b: 6, m: ['>.~..s.d..G'], c: ['avanzar', 'saltar', 'activar', 'repetir', 'si'], con: ['agua-delante', 'interruptor-aqui'],
       ref: [rep(30, si(AG, [S], [si(IN, [X, A], [A])]))], lim: { repetir: 1, si: 2 }, holgura: 2, usa: 'si', h: 'cond',
-      o: 'Un vacío, un interruptor y una puerta. Una sola solución general.', i: 'Para activar el reactor hay que cruzar el vacío.',
+      o: 'Un vacío, un interruptor y una puerta. Una sola solución general.', i: 'Para activar el reactor hay que cruzar un vacío. Después, un interruptor.',
       cur: ['m3_41', 'm3_42'], ext: ['Combinar sensores distintos'] }, 23),
     m3({ tt: 'Espiral con puerta', b: 6, m: ['>.s..', '####d', '..G#o', 'o###.', '..o..'], c: ['avanzar', 'girar-d', 'recoger', 'activar', 'repetir', 'si'], con: ['obstaculo-delante', 'interruptor-aqui'],
       ref: [rep(30, si(OB, [G], [A]), R, si(IN, [X]))], lim: { repetir: 1, si: 2 }, holgura: 2, usa: 'si', h: 'cond',
       p: ['Es la espiral de antes, pero ahora hay un interruptor y una puerta.', 'Un bucle puede avanzar, recoger y activar «si hay interruptor aquí».', 'Dentro del bucle: Si obstáculo girar / si no avanzar; Recoger; Si interruptor aquí: Activar.'],
-      o: 'La espiral tiene ahora un interruptor y una puerta.', i: 'Los anillos del reactor están sellados.',
+      o: 'La espiral tiene ahora un interruptor y una puerta.', i: 'Los anillos del reactor están sellados. Hay un interruptor y una puerta.',
       cur: ['m3_41', 'm3_42'], ext: ['Algoritmo general con varios sensores'] }, 24),
     m3({ tt: 'El Faro de Bit', b: 6, m: ['>.~.s..', '######d', 'Go.~o..'], c: ['avanzar', 'girar-d', 'saltar', 'recoger', 'activar', 'repetir', 'si'], con: ['agua-delante', 'obstaculo-delante', 'interruptor-aqui'],
       ref: [rep(40, si(AG, [S], [si(OB, [G], [A])]), R, si(IN, [X]))], lim: { repetir: 1, si: 3 }, holgura: 2, usa: 'si', h: 'cond',
       p: ['Hay vacío, muros, luces, un interruptor y una puerta.', 'Un único bucle que mire el entorno puede con todo.', 'Dentro del bucle: Si vacío, saltar; si no, (si muro, girar; si no, avanzar). Recoger. Si interruptor, activar.'],
-      o: 'El último reto del mundo: un algoritmo que lo hace todo.', i: 'Bit: «El faro me enseñó a pensar. Ahora te toca a ti».',
+      o: 'El último reto del mundo: un algoritmo que lo hace todo.', i: 'El reactor late al fondo. Cometa, la soñadora, mira las estrellas desde allí.',
       cur: ['m3_41', 'm3_42', 'saber23'], ext: ['Gran desafío del 3.er ciclo: generalizar un algoritmo para varios obstáculos'] }, 25)
   ];
 });
@@ -1850,39 +3576,39 @@
       m: ['>..~.o.', '######.', '...G##o', 'o#####.', '...~...'],
       ref: [mientras(no(MA), CUERPO())], lim: { mientras: 1, si: 2 }, holgura: 1, h: 'cond',
       p: ['Es una espiral con vacíos y luces.', 'Un solo bucle: si vacío saltar; si no, si muro girar; si no avanzar. Y recoger.', 'Mientras no estés en la meta, repite esa decisión y recoge siempre.'],
-      o: 'Sube al Faro: una espiral con vacíos y luces.', i: 'El Faro Mayor está dentro de una gran espiral. Su luz se apagó.',
+      o: 'Sube al Faro: una espiral con vacíos y luces.', i: 'Lumo y sus amigos llegan al Faro Mayor. Hay que subir por dentro.',
       cur: ['m3_41', 'm3_42', 'saber23'], ext: ['Final: un algoritmo general para recorrer cualquier espiral'] }, 1),
     f({ tt: 'El mecanismo del Faro', c: ARCA, rec: ['A'],
       m: ['>oos', 'oood', '.ooo', 'Goo.'],
       ref: P([rep(2, rec('A'), G, A, G, rec('A'), I, A, I)], { A: [rep(3, A, R), X] }), lim: { repetir: 2, receta: 3 }, holgura: 2, usa: 'receta', h: 'receta',
-      o: 'Cuatro filas, un interruptor y una puerta. Receta y bucles.', i: 'Las lentes del Faro se mueven con un gran mecanismo.',
+      o: 'Cuatro filas, un interruptor y una puerta. Receta y bucles.', i: 'Las lentes del Faro giran con un gran mecanismo. ¡Hay que ponerlo en marcha!',
       cur: ['m3_41', 'm3_42'], ext: ['Final: recetas con varias acciones y bucles anidados'] }, 2),
     f({ tt: 'La luz de Lumo', c: ['avanzar', 'girar-d', 'saltar', 'recoger', 'activar', 'mientras', 'si'], con: ['agua-delante', 'obstaculo-delante', 'interruptor-aqui', 'meta-aqui'],
       m: ['>s.~.o.', '######d', '...G##o', 'o#####.', '...~...'],
       ref: [mientras(no(MA), CUERPO([si(IN, [X])]))], lim: { mientras: 1, si: 3 }, holgura: 2, h: 'cond',
       p: ['Es la espiral del primer piso, pero con interruptor y puerta.', 'Añade al bucle: si hay un interruptor aquí, activar.', 'Mientras no estés en la meta: decidir, recoger y, si interruptor, activar.'],
-      o: 'El último reto: enciende la luz del Faro.', i: 'Lumo está a punto de encender la luz.',
+      o: 'El último reto: enciende la luz del Faro.', i: 'Lumo está a punto de encender la luz. Todos sus amigos esperan.',
       cur: ['m3_41', 'm3_42', 'saber23'], ext: ['Final: un algoritmo que resume todo lo aprendido'] }, 3)
   ];
 
   var secretos = [
     sec({ tt: 'El claro secreto', c: ['avanzar', 'recoger', 'repetir'],
       m: ['>o.o.o.o.G'], ref: [rep(4, A, R, A), A], lim: { repetir: 1 }, holgura: 1, usa: 'repetir', h: 'bucle',
-      o: 'Un patrón de tres tarjetas se repite cuatro veces.', i: 'Un claro secreto del bosque.',
+      o: 'Un patrón de tres tarjetas se repite cuatro veces.', i: 'Las luciérnagas guardan un claro secreto. Sus luces forman un dibujo.',
       cur: ['m1_41', 'm1_42'], ext: ['Secreto: patrón de tres acciones'] }, 1, 'primaria-1c', 'bosque'),
     sec({ tt: 'La caverna secreta', c: ['avanzar', 'recoger', 'saltar', 'repetir'],
       m: ['>o.~o.~o.~G'], ref: [A, R, A, rep(2, S, R, A), S], lim: { repetir: 1 }, holgura: 2, usa: 'repetir', h: 'bucle',
-      o: 'Salta, recoge y avanza. ¿Qué parte se repite?', i: 'Una caverna escondida bajo el mar.',
+      o: 'Salta, recoge y avanza. ¿Qué parte se repite?', i: 'Tinta esconde una caverna bajo el mar. Solo los más curiosos la encuentran.',
       cur: ['m2_41', 'm2_42'], ext: ['Secreto: buscar el patrón dentro de una secuencia irregular'] }, 2, 'primaria-2c', 'mar'),
     sec({ tt: 'Memoria mínima', c: ['avanzar', 'retroceder', 'girar-d', 'girar-i', 'recoger', 'repetir'],
       m: ['>oo', '.oo', '.oo', 'G..'], ref: [rep(3, rep(2, A, R), rep(2, B), G, A, I)],
       lim: { avanzar: 2, retroceder: 1, recoger: 1, 'girar-d': 1, 'girar-i': 1, repetir: 3 }, holgura: 0, h: 'optim',
-      o: 'La misma fábrica, con muy poca memoria.', i: 'Una galaxia secreta con memoria escasa.',
+      o: 'La misma fábrica, con muy poca memoria.', i: 'Una galaxia secreta con muy poca memoria. Bit la recomienda para pensar mucho.',
       cur: ['m3_41', 'm3_42'], ext: ['Secreto: optimizar con límites estrictos'] }, 3, 'primaria-3c', 'espacio'),
     sec({ tt: 'El mecanismo oculto', c: ARCA, rec: ['A'],
       m: ['>oos', 'oood', '.ooo', 'Goo.'],
       ref: P([rep(2, rec('A'), G, A, G, rec('A'), I, A, I)], { A: [rep(3, A, R), X] }), lim: { repetir: 2, receta: 3, activar: 1 }, holgura: 0, usa: 'receta', h: 'receta',
-      o: 'Un mecanismo escondido. ¡Solo un Activar!', i: 'Detrás del Faro hay una sala que nadie conoce.',
+      o: 'Un mecanismo escondido. ¡Solo un Activar!', i: 'Detrás del Faro hay una sala olvidada. Un mecanismo guarda un guiño de luz.',
       cur: ['m3_41', 'm3_42'], ext: ['Secreto: una sola instrucción Activar'] }, 4, 'primaria-3c', 'faro')
   ];
 
@@ -2084,6 +3810,140 @@
     cursoDe: cursoDe, finalDe: finalDe, FINAL_CURSO: FINAL_CURSO, mundoDe: mundoDe, posicion: posicion, siguiente: siguiente,
     cartasNuevas: cartasNuevas, registrarVoces: registrarVoces, total: total, DSL: DSL
   };
+});
+
+
+/* ===== src/datos/victoria.js ===== */
+;/*
+ * RUMBO — Victoria con historia (fase 6). Funciones puras: no tocan el DOM ni el azar.
+ *
+ *   avance(zona, hecho)       → línea de avance narrativo de la pantalla de resultados (solo Primaria).
+ *   celebracion(nivel, est)   → qué celebración ve el jugador: depende del tipo de reto, de las estrellas y de la
+ *                               posición en la zona (rotación fija), así dos jugadores ven lo mismo.
+ *   faroPequeno(hecho)        → ventanas encendidas del Faro en miniatura.
+ *   paginasDiario(perfil)     → páginas del diario de Lumo (se calculan desde retos superados y escenas vistas).
+ * Guion: docs/guion-v2.md §11. Nada de esto cambia estrellas, validación ni reglas.
+ */
+(function (root, factory) {
+  var api;
+  if (typeof module === 'object' && module.exports) {
+    api = factory(require('./catalogo.js'), require('./escenas.js'));
+    module.exports = api;
+  } else {
+    root.RumboVictoria = factory(root.RumboCatalogo, root.RumboEscenas);
+  }
+})(typeof self !== 'undefined' ? self : this, function (CAT, ES) {
+  'use strict';
+
+  // «Faltan {n} retos para …» y el mensaje al llegar (guion §11.1).
+  var METAS = {
+    bosque: { falta: 'llegar hasta Titila', llega: '¡Has encontrado a Titila!' },
+    montanas: { falta: 'llegar hasta Brasa', llega: '¡Has llegado a la cumbre con Brasa!' },
+    mar: { falta: 'encontrar a Destello', llega: '¡Has encontrado a Destello!' },
+    volcan: { falta: 'llegar hasta Ascua', llega: '¡Has llegado al corazón del volcán!' },
+    ciudad: { falta: 'encontrar a Píxel', llega: '¡Has encontrado a Píxel!' },
+    espacio: { falta: 'llegar hasta Cometa', llega: '¡Has llegado a Cometa y al reactor!' },
+    faro: { falta: 'encender el Faro', llega: '¡El Faro está encendido!' }
+  };
+
+  // Retos que cuentan para el avance de una zona: los de su mundo, sin los calentamientos de la ciudad (m3-p1…p5).
+  function retosDeZona(zona) {
+    var r = [];
+    CAT.MUNDOS.forEach(function (m) {
+      if (m.id === 0) return;
+      m.niveles.forEach(function (n) { if (n.zona === zona && !/^m3-p\d/.test(n.id)) r.push(n.id); });
+    });
+    return r;
+  }
+
+  function avance(zona, hecho) {
+    var m = METAS[zona]; if (!m) return null;
+    var ids = retosDeZona(zona);
+    var faltan = ids.filter(function (id) { return !hecho(id); }).length;
+    var texto = faltan === 0 ? m.llega
+      : (faltan === 1 ? 'Falta 1 reto' : 'Faltan ' + faltan + ' retos') + ' para ' + m.falta + '.';
+    return { zona: zona, faltan: faltan, total: ids.length, llegado: faltan === 0, texto: texto };
+  }
+
+  var BAILES = ['voltereta', 'brujula', 'zona', 'abrazo'];
+
+  // Amigo que abraza a Lumo en cada zona.
+  function amigoDe(zona) {
+    var ch = ES.CHISPAS.filter(function (c) { return c.zona === zona; })[0];
+    if (ch) return ch.nombre;
+    return zona === 'faro' ? 'Abuela Chispa' : 'Conejo';
+  }
+
+  /*
+   * nivelId: reto superado; est: estrellas (1–3). Devuelve
+   *   { baile, especial, chispa, bichito, zona }
+   * especial: 'chispa-al-faro' (último reto de zona con chispa) | 'faro-encendido' (f-03) | null.
+   */
+  function celebracion(nivelId, est) {
+    var n = CAT.POR_ID[nivelId]; if (!n) return { baile: 'voltereta', especial: null, chispa: null, bichito: false, zona: 'jardin' };
+    var zona = n.zona, pos = 0, enZona = [];
+    var mundo = CAT.MUNDOS[n.mundo];
+    if (mundo) { enZona = mundo.niveles.filter(function (x) { return x.zona === zona; }); pos = enZona.indexOf(n); }
+    var chispa = ES.CHISPAS.filter(function (c) { return c.meta === nivelId; })[0] || null;
+    var especial = nivelId === 'f-03' ? 'faro-encendido' : chispa ? 'chispa-al-faro' : null;
+    return {
+      baile: BAILES[(Math.max(0, pos) + (est || 1)) % BAILES.length],
+      especial: especial,
+      chispa: chispa ? chispa.id : null,
+      bichito: n.tipo === 'depurar',
+      zona: zona
+    };
+  }
+
+  // Ventanas del Faro encendidas: una por chispa cuyo reto-meta está superado; luz final al superar f-03.
+  function faroPequeno(hecho) {
+    var enc = ES.CHISPAS.filter(function (c) { return hecho(c.meta); });
+    return { encendidas: enc.length, total: ES.CHISPAS.length, nueva: null, luzFinal: !!hecho('f-03') };
+  }
+
+  /*
+   * Diario de Lumo (guion §11.2). `perfil`: { niveles:{id:{completado}}, vistos:{escenas:{}} }.
+   * Cada página: { id, titulo, personaje, texto, abierta, escena } (escena = identificador a repetir, o null).
+   * Infantil: solo páginas con `infantil: true` y sin texto.
+   */
+  var PAGINAS = [
+    { id: 'lumo', titulo: 'Lumo y su brújula', pj: 'Lumo', texto: 'Soy Lumo, la chispa más pequeña de mi familia.', siempre: true, infantil: true, escena: null },
+    { id: 'conejo', titulo: 'Conejo', pj: 'Conejo', texto: 'Conejo salta mucho. Y le encantan las zanahorias.', nivel: 'i3-02', infantil: true, escena: 'C0-02' },
+    { id: 'bruma', titulo: 'Búho Bruma', pj: 'Búho Bruma', texto: 'Bruma habla poco. Pero siempre sabe dónde está el camino.', nivel: 'm1-13', escena: 'BR-2' },
+    { id: 'titila', titulo: 'Titila', pj: 'Titila', texto: 'Titila brilla con timidez. Su luz es la más suave.', nivel: 'm1-13', escena: 'CAP1-A' },
+    { id: 'brasa', titulo: 'Brasa', pj: 'Brasa', texto: 'Brasa dice que puede sola. Y casi siempre puede.', nivel: 'm1-25', escena: 'CAP1-01' },
+    { id: 'tinta', titulo: 'Tinta', pj: 'Tinta', texto: 'Tinta construye de todo. Hasta recetas de pasos.', nivel: 'm2-13', escena: 'TIN-2' },
+    { id: 'destello', titulo: 'Destello', pj: 'Destello', texto: 'Destello se esconde muy bien. ¡Pero lo encontré!', nivel: 'm2-13', escena: 'CAP2-A' },
+    { id: 'lagarto', titulo: 'Lagarto gigante', pj: 'Lagarto gigante', texto: 'El lagarto gigante es lento y sabio. Cuida el volcán.', nivel: 'm2-25', escena: 'C2-03' },
+    { id: 'ascua', titulo: 'Ascua', pj: 'Ascua', texto: 'Ascua gruñe mucho. Pero brilla más que nadie.', nivel: 'm2-25', escena: 'CAP2-B' },
+    { id: 'bit', titulo: 'Bit', pj: 'Bit', texto: 'Bit dice las cosas tal cual. Y aprende a improvisar.', nivel: 'm3-25', escena: 'BIT-2' },
+    { id: 'pixel', titulo: 'Píxel', pj: 'Píxel', texto: 'Píxel pregunta todo. Así se aprende.', nivel: 'm3-13', escena: 'CAP3-A' },
+    { id: 'cometa', titulo: 'Cometa', pj: 'Cometa', texto: 'Cometa mira las estrellas. Dice que bailan.', nivel: 'm3-25', escena: 'CAP3-B' },
+    { id: 'bichito1', titulo: 'Bichito (1)', pj: 'Bichito', texto: 'Me desordena las tarjetas. ¡Ji, ji!', escena: 'C1-02' },
+    { id: 'bichito2', titulo: 'Bichito (2)', pj: 'Bichito', texto: 'Nos sigue de lejos.', escena: 'B2-1' },
+    { id: 'bichito3', titulo: 'Bichito (3)', pj: 'Bichito', texto: 'Quiso ayudar y se equivocó.', escena: 'BI-3' },
+    { id: 'bichito4', titulo: 'Bichito (4)', pj: 'Bichito', texto: 'Es una chispa sin luz. Solo busca su casa.', escena: 'BI-4a' },
+    { id: 'bichito5', titulo: 'Bichito (5)', pj: 'Bichito', texto: '¡Ya brilla! Sigue siendo Bichito.', escena: 'FIN-01' },
+    { id: 'brujula1', titulo: 'La brújula (1)', pj: 'Lumo', texto: 'Tengo una pieza. Faltan dos.', escena: 'CAP1-01' },
+    { id: 'brujula2', titulo: 'La brújula (2)', pj: 'Lumo', texto: 'Dos piezas. Falta una.', escena: 'CAP2-02' },
+    { id: 'brujula3', titulo: 'La brújula (3)', pj: 'Lumo', texto: '¡Ya está completa!', escena: 'CAP3-B' },
+    { id: 'guino', titulo: 'El guiño de luz', pj: 'Lumo', texto: 'Corto, corto, largo. ¿Quién me llama?', infantil: true, nivel: 'i3-01', escena: null, nivelPrim: 'm1-01' },
+    { id: 'abuela', titulo: 'Abuela Chispa', pj: 'Abuela Chispa', texto: 'Mi abuela me esperaba. Siempre me guiaba.', nivel: 'f-03', escena: 'FIN-02' }
+  ];
+
+  function paginasDiario(perfil, infantil) {
+    var vistas = (perfil.vistos && perfil.vistos.escenas) || {};
+    var hecho = function (id) { return !!(perfil.niveles[id] && perfil.niveles[id].completado); };
+    return PAGINAS.filter(function (p) { return !infantil || p.infantil; }).map(function (p) {
+      var nv = !infantil && p.nivelPrim ? p.nivelPrim : p.nivel;
+      var abierta = !!p.siempre || (nv && hecho(nv)) || (p.escena && !!vistas[p.escena]);
+      return { id: p.id, titulo: p.titulo, personaje: p.pj, texto: infantil ? '' : (p.id === 'guino' && vistas['FIN-02'] ? 'Corto, corto, largo. Era la abuela.' : p.texto), abierta: abierta,
+        escena: abierta && p.escena && ES.POR_ID[p.escena] ? p.escena : null };
+    });
+  }
+
+  return { METAS: METAS, retosDeZona: retosDeZona, avance: avance, celebracion: celebracion, amigoDe: amigoDe, faroPequeno: faroPequeno,
+    PAGINAS: PAGINAS, paginasDiario: paginasDiario, BAILES: BAILES };
 });
 
 
@@ -2535,6 +4395,35 @@
     return mejor;
   }
 
+  // Carácter de cada voz: la voz sintética es la misma, pero cada personaje cambia de tono (pitch) y ritmo (vel).
+  // Multiplican al tono base (1.05) y a la velocidad pedida. Con opciones.caracter=true se aplican; la emoción añade un matiz.
+  var PERFILES = {
+    'Lumo': { tono: 1.2, vel: 1.0 },
+    'Abuela Chispa': { tono: 0.8, vel: 0.85 },
+    'Búho Bruma': { tono: 0.55, vel: 0.8 },
+    'Bichito': { tono: 1.85, vel: 1.2 },
+    'Tinta': { tono: 1.3, vel: 1.05 },
+    'Lagarto gigante': { tono: 0.5, vel: 0.78 },
+    'Bit': { tono: 0.95, vel: 1.1 },
+    'Conejo': { tono: 1.6, vel: 1.15 },
+    'Titila': { tono: 1.35, vel: 1.0 },
+    'Brasa': { tono: 1.0, vel: 1.1 },
+    'Destello': { tono: 1.5, vel: 1.1 },
+    'Ascua': { tono: 0.85, vel: 1.0 },
+    'Píxel': { tono: 1.4, vel: 1.2 },
+    'Cometa': { tono: 1.1, vel: 0.95 }
+  };
+  var MATICES = {
+    alegre: [0.08, 1.05], emocionado: [0.12, 1.1], sorprendido: [0.15, 1.05], ups: [0.1, 1.05], orgulloso: [-0.05, 0.95],
+    tierno: [-0.05, 0.9], tierna: [-0.05, 0.9], sereno: [-0.08, 0.88], serena: [-0.08, 0.88], concentrado: [-0.05, 0.95], travieso: [0.1, 1.1]
+  };
+  // Devuelve {tono, vel} para un personaje y una emoción (valores relativos; 1 = sin cambio).
+  function perfilDeVoz(quien, emocion) {
+    var P = PERFILES[quien] || { tono: 1, vel: 1 }, M = MATICES[emocion] || [0, 1];
+    var tono = Math.max(0.1, Math.min(2, P.tono + M[0])), vel = Math.max(0.5, Math.min(1.6, P.vel * M[1]));
+    return { tono: Math.round(tono * 100) / 100, vel: Math.round(vel * 100) / 100 };
+  }
+
   // entorno: { synth, Utterance, voces, enLinea: fn, audios: {id: url}, Audio }
   function crearVoz(entorno) {
     entorno = entorno || {};
@@ -2585,8 +4474,9 @@
         var u = new Utterance(linea.texto);
         u.voice = elegida;
         u.lang = elegida.lang;
-        u.rate = opciones.velocidad || 0.9;
-        u.pitch = opciones.tono || 1.05;
+        var pf = opciones.caracter ? perfilDeVoz(linea.quien, opciones.emocion) : { tono: 1, vel: 1 };
+        u.rate = Math.max(0.1, Math.min(2, (opciones.velocidad || 0.9) * pf.vel));
+        u.pitch = opciones.tono || Math.min(2, 1.05 * pf.tono);
         u.volume = opciones.volumen == null ? 1 : opciones.volumen;
         if (opciones.alTerminar) u.onend = opciones.alTerminar;
         synth.speak(u);
@@ -2623,11 +4513,112 @@
   }
 
   return {
+    PERFILES: PERFILES, perfilDeVoz: perfilDeVoz,
     puntuarVoz: puntuarVoz,
     elegirVoz: elegirVoz,
     crearVoz: crearVoz,
     crearDesdeNavegador: crearDesdeNavegador
   };
+});
+
+
+/* ===== src/audio/musica-datos.js ===== */
+;/*
+ * RUMBO — Piezas de música por zona (datos + generador puro de eventos, probado en Node).
+ *
+ * Cada zona tiene su propia pieza de 4 compases (16 pulsos) que se repite: tonalidad, escala, tempo, timbres, melodía y
+ * acompañamiento propios. El motivo del Faro —«corto, corto, largo», el guiño de la abuela— aparece en la pieza del Faro,
+ * en la del mapa (cada cuatro vueltas) y como sonido suelto (efecto «guino»).
+ *
+ * Una melodía es una lista de [grado, pulsos]: grado = posición en la escala (0 = tónica; 7 en pentatónica = octava),
+ * null = silencio. Los acordes son grados de la escala, uno por compás.
+ */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api; else root.RumboMusicaDatos = api;
+})(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+
+  var PENTA = [0, 2, 4, 7, 9], MENOR = [0, 3, 5, 7, 10], DORICA = [0, 2, 3, 7, 9], FRIGIA = [0, 1, 5, 7, 8], LIDIA = [0, 2, 4, 6, 7, 9, 11];
+
+  // Motivo del guiño: tres notas iguales, dos cortas y una larga (en pulsos).
+  var MOTIVO_FARO = [[7, 0.5], [7, 0.5], [7, 1.5]];
+
+  var PIEZAS = {
+    jardin: { bpm: 96, tonica: 60, escala: PENTA, lead: 'triangle', bajo: 'sine', acordes: [0, 2, 3, 2], bajoPatron: 'pulso', perc: null,
+      melodia: [[0, 1], [2, 1], [4, 1], [2, 1], [3, 1], [2, 0.5], [1, 0.5], [0, 2], [4, 1], [5, 1], [6, 1], [5, 1], [4, 1], [2, 1], [0, 2]] },
+    granja: { bpm: 108, tonica: 55, escala: PENTA, lead: 'square', bajo: 'triangle', acordes: [0, 0, 3, 4], bajoPatron: 'oompa', perc: 'suave', vol: 0.5,
+      melodia: [[2, 0.5], [2, 0.5], [4, 1], [2, 1], [0, 1], [1, 0.5], [2, 0.5], [3, 1], [1, 1], [null, 1], [4, 0.5], [4, 0.5], [5, 1], [4, 1], [2, 1], [3, 1], [0, 1], [null, 2]] },
+    playa: { bpm: 84, tonica: 62, escala: PENTA, lead: 'sine', bajo: 'sine', acordes: [0, 3, 2, 3], bajoPatron: 'larga', perc: null, eco: true,
+      melodia: [[4, 1.5], [3, 0.5], [2, 1], [3, 1], [4, 2], [null, 1], [5, 1], [4, 1.5], [2, 0.5], [3, 2], [2, 1], [1, 1], [4, 2]] },
+    bosque: { bpm: 72, tonica: 50, escala: DORICA, lead: 'sine', bajo: 'sine', acordes: [0, 2, 0, 3], bajoPatron: 'larga', perc: null, pings: true,
+      melodia: [[4, 2], [null, 1], [3, 1], [2, 2], [null, 2], [4, 1], [5, 1], [3, 2], [2, 1], [1, 1], [0, 2]] },
+    montanas: { bpm: 66, tonica: 45, escala: MENOR, lead: 'triangle', bajo: 'sine', acordes: [0, 4, 3, 4], bajoPatron: 'larga', perc: null, quintas: true,
+      melodia: [[7, 2], [8, 2], [7, 1], [5, 1], [4, 2], [3, 2], [5, 2], [4, 1], [3, 1], [2, 2]] },
+    mar: { bpm: 70, tonica: 52, escala: LIDIA, lead: 'sine', bajo: 'sine', acordes: [0, 3, 4, 3], bajoPatron: 'larga', perc: null, vib: true, eco: true,
+      melodia: [[7, 2], [8, 1], [9, 1], [8, 2], [7, 1], [6, 1], [4, 2], [null, 2], [9, 2], [8, 1], [7, 1]] },
+    volcan: { bpm: 104, tonica: 40, escala: FRIGIA, lead: 'sawtooth', bajo: 'sawtooth', acordes: [0, 0, 1, 0], bajoPatron: 'sincopa', perc: 'fuerte', vol: 0.6,
+      melodia: [[7, 0.5], [null, 0.5], [7, 0.5], [8, 0.5], [9, 1], [7, 1], [null, 1], [10, 0.5], [9, 0.5], [7, 1], [null, 1], [8, 0.5], [7, 0.5], [5, 1], [7, 2], [null, 1], [7, 2], [null, 1]] },
+    ciudad: { bpm: 112, tonica: 48, escala: MENOR, lead: 'square', bajo: 'square', acordes: [0, 3, 2, 4], bajoPatron: 'pulso', perc: 'fuerte', arpegio: true, vol: 0.38,
+      melodia: [[7, 0.5], [9, 0.5], [8, 0.5], [7, 0.5], [5, 1], [null, 1], [7, 0.5], [9, 0.5], [10, 0.5], [9, 0.5], [8, 2], [null, 2], [7, 0.5], [9, 0.5], [8, 1], [5, 2], [null, 2]] },
+    espacio: { bpm: 60, tonica: 53, escala: PENTA, lead: 'sine', bajo: 'sine', acordes: [0, 2, 4, 2], bajoPatron: 'larga', perc: null, pings: true, quintas: true,
+      melodia: [[9, 3], [null, 1], [8, 2], [null, 2], [7, 3], [null, 1], [5, 2], [null, 2]] },
+    faro: { bpm: 68, tonica: 55, escala: PENTA, lead: 'triangle', bajo: 'sine', acordes: [0, 2, 3, 0], bajoPatron: 'larga', perc: null, motivo: 'cada', eco: true,
+      melodia: [[null, 4], [4, 2], [3, 1], [2, 1], [3, 2], [2, 1], [1, 1], [0, 4]] },
+    mapa: { bpm: 92, tonica: 60, escala: PENTA, lead: 'triangle', bajo: 'sine', acordes: [0, 3, 4, 0], bajoPatron: 'pulso', perc: null, motivo: 'cuarta',
+      melodia: [[4, 1], [4, 0.5], [5, 0.5], [6, 1], [4, 1], [2, 2], [3, 1], [2, 1], [4, 2], [3, 1], [2, 1], [0, 2], [null, 2]] }
+  };
+
+  function midi(zona, grado) {
+    var P = PIEZAS[zona], e = P.escala, n = e.length, o = Math.floor(grado / n), i = ((grado % n) + n) % n;
+    return P.tonica + e[i] + 12 * o;
+  }
+  function frecuencia(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+  function duracionPulso(zona) { return 60 / PIEZAS[zona].bpm; }
+
+  /*
+   * Eventos del compás `n` (0-3 dentro de la pieza) de la vuelta `vuelta`. Tiempos en pulsos desde el inicio del compás.
+   * Voces: lead, bajo, pad, ping, kick, hat, motivo.
+   */
+  function eventosCompas(zona, n, vuelta) {
+    var P = PIEZAS[zona]; if (!P) return [];
+    n = ((n % 4) + 4) % 4; vuelta = vuelta | 0;
+    var ev = [], t = 0, ini = n * 4, fin = ini + 4;
+    // melodía: se recorre acumulando pulsos para saber qué notas caen en este compás
+    P.melodia.forEach(function (nota) {
+      var a = t, b = t + nota[1]; t = b;
+      if (nota[0] == null) return;
+      if (a >= ini && a < fin) ev.push({ voz: 'lead', t: a - ini, dur: Math.min(nota[1], fin - a) * 1.05, midi: midi(zona, nota[0]) });
+    });
+    // motivo del Faro: en la pieza del Faro, cada vuelta en el compás 3; en el mapa, cada cuarta vuelta
+    var conMotivo = P.motivo === 'cada' ? n === 3 : P.motivo === 'cuarta' ? (n === 3 && vuelta % 4 === 3) : false;
+    if (conMotivo) {
+      ev = ev.filter(function (e) { return e.voz !== 'lead' || e.t < 0; });
+      var tt = 0; MOTIVO_FARO.forEach(function (m) { ev.push({ voz: 'motivo', t: tt, dur: m[1], midi: midi(zona, m[0]) }); tt += m[1]; });
+    }
+    var raiz = P.acordes[n];
+    // bajo
+    var bm = midi(zona, raiz) - 12;
+    if (P.bajoPatron === 'larga') ev.push({ voz: 'bajo', t: 0, dur: 4, midi: bm });
+    else if (P.bajoPatron === 'pulso') [0, 2].forEach(function (b) { ev.push({ voz: 'bajo', t: b, dur: 1.6, midi: bm }); });
+    else if (P.bajoPatron === 'oompa') [0, 1, 2, 3].forEach(function (b) { ev.push({ voz: 'bajo', t: b, dur: 0.8, midi: b % 2 ? bm + 7 : bm }); });
+    else if (P.bajoPatron === 'sincopa') [0, 1.5, 2, 3.5].forEach(function (b) { ev.push({ voz: 'bajo', t: b, dur: 0.6, midi: bm }); });
+    // pad: tríada suave (raíz, tercera, quinta de la escala)
+    ev.push({ voz: 'pad', t: 0, dur: 4, midi: midi(zona, raiz) + (P.quintas ? 7 : 0) }, { voz: 'pad', t: 0, dur: 4, midi: midi(zona, raiz + 2) }, { voz: 'pad', t: 0, dur: 4, midi: midi(zona, raiz + 4) });
+    // arpegio rápido (ciudad)
+    if (P.arpegio) for (var k = 0; k < 8; k++) ev.push({ voz: 'ping', t: k * 0.5, dur: 0.4, midi: midi(zona, raiz + [0, 2, 4, 2][k % 4] + 7) });
+    // destellos sueltos (bosque, espacio): cuatro notas altas deterministas
+    if (P.pings) [0.75, 1.5, 2.5, 3.25].forEach(function (b, i) { ev.push({ voz: 'ping', t: b, dur: 0.5, midi: midi(zona, 12 + ((n + i + vuelta) * 3) % 8) }); });
+    // percusión
+    if (P.perc) {
+      [0, 2].forEach(function (b) { ev.push({ voz: 'kick', t: b, dur: 0.2, midi: 0 }); });
+      if (P.perc === 'fuerte') for (var h = 0; h < 8; h++) ev.push({ voz: 'hat', t: h * 0.5 + 0.25, dur: 0.05, midi: 0 });
+      else ev.push({ voz: 'hat', t: 1, dur: 0.05, midi: 0 }, { voz: 'hat', t: 3, dur: 0.05, midi: 0 });
+    }
+    return ev;
+  }
+
+  return { PIEZAS: PIEZAS, MOTIVO_FARO: MOTIVO_FARO, midi: midi, frecuencia: frecuencia, duracionPulso: duracionPulso, eventosCompas: eventosCompas };
 });
 
 
@@ -2813,15 +4804,52 @@
   }
   function objeto(tema, skin) { var T = TEMAS[tema] || TEMAS.jardin; skin = skin || {}; return OBJETOS[skin.obj || T.obj](); }
 
-  // ---------------------------------------------------------------- Lumo
-  var OJO = { E: [3, 0], O: [-3, 0], N: [0, -2.5], S: [0, 2.5] };
-  function boca(expr) {
-    switch (expr) {
-      case 'feliz': return '<path d="M36 61q14 14 28 0z" fill="#7a2a1a" stroke="#7a2a1a" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 65q8 6 16 0" stroke="#ff7f8a" stroke-width="3" fill="none"/>';
-      case 'triste': return '<path d="M39 69q11-9 22 0" stroke="#7a2a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
-      case 'sorpresa': return '<ellipse cx="50" cy="66" rx="6" ry="7.5" fill="#7a2a1a"/>';
-      case 'pensando': return '<path d="M42 66q8 3 16-2" stroke="#7a2a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
-      default: return '<path d="M40 63q10 9 20 0" stroke="#7a2a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
+  // ---------------------------------------------------------------- Lumo (rediseño fase 3)
+  // Una sola figura modular: cuerpo redondo con llama, ojos grandes y brillantes, mejillas, bracitos, pies y brújula dorada en el pecho.
+  // Expresiones: normal, alegre, concentrado, sorprendido, ups, orgulloso, emocionado, tierno.
+  // Nombres antiguos aceptados: feliz→alegre, sorpresa→sorprendido, pensando→concentrado, triste→ups (ya no hay cara triste).
+  var EXPR_ALIAS = { feliz: 'alegre', sorpresa: 'sorprendido', pensando: 'concentrado', triste: 'ups', literal: 'normal', serena: 'tierno', sereno: 'tierno', tierna: 'tierno', sincero: 'tierno', soñador: 'tierno', ilusionado: 'emocionado', divertido: 'alegre', travieso: 'alegre', terco: 'concentrado', curioso: 'sorprendido' };
+  var EXPRESIONES = ['normal', 'alegre', 'concentrado', 'sorprendido', 'ups', 'orgulloso', 'emocionado', 'tierno'];
+  function exprDe(e) { e = EXPR_ALIAS[e] || e; return EXPRESIONES.indexOf(e) >= 0 ? e : 'normal'; }
+  var TINTA = '#7a2a1a';
+  function boca(expr, cx, cy) {
+    cx = cx == null ? 50 : cx; cy = cy == null ? 64 : cy;
+    var t = 'translate(' + (cx - 50) + ' ' + (cy - 64) + ')';
+    var g;
+    switch (exprDe(expr)) {
+      case 'alegre': g = '<path d="M38 60q12 16 24 0z" fill="' + TINTA + '" stroke="' + TINTA + '" stroke-width="2.5" stroke-linejoin="round"/><path d="M43 65q7 5 14 0" stroke="#ff7f8a" stroke-width="3" fill="none"/>'; break;
+      case 'emocionado': g = '<path d="M36 64q14 19 28 0z" fill="' + TINTA + '" stroke="' + TINTA + '" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 71q8 6 16 0" stroke="#ff7f8a" stroke-width="3.5" fill="none"/><rect x="43" y="64" width="14" height="3.2" rx="1.5" fill="#fff"/>'; break;
+      case 'sorprendido': g = '<ellipse cx="50" cy="66" rx="5.5" ry="7" fill="' + TINTA + '"/><ellipse cx="50" cy="68" rx="3" ry="3.4" fill="#ff7f8a"/>'; break;
+      case 'ups': g = '<path d="M38 67q4-6 8 0t8 0 8 0" stroke="' + TINTA + '" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'; break;
+      case 'concentrado': g = '<path d="M42 66h16" stroke="' + TINTA + '" stroke-width="3.6" stroke-linecap="round"/>'; break;
+      case 'orgulloso': g = '<path d="M39 62q11 12 22 0" stroke="' + TINTA + '" stroke-width="3.8" fill="none" stroke-linecap="round"/><path d="M60 62l3-3" stroke="' + TINTA + '" stroke-width="3" stroke-linecap="round"/>'; break;
+      case 'tierno': g = '<path d="M42 63q8 7 16 0" stroke="' + TINTA + '" stroke-width="3.4" fill="none" stroke-linecap="round"/>'; break;
+      default: g = '<path d="M40 63q10 9 20 0" stroke="' + TINTA + '" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
+    }
+    return '<g transform="' + t + '">' + g + '</g>';
+  }
+  // Ojos de frente. cx = centro horizontal; dx,dy = hacia dónde mira la pupila.
+  function ojoFrente(cx, e, dx, dy) {
+    var c = '#2b2140', B = '<circle cx="' + (cx + dx + 2) + '" cy="' + (50 + dy) + '" r="2.2" fill="#fff"/>';
+    switch (e) {
+      case 'alegre': case 'orgulloso': return '<path d="M' + (cx - 8) + ' 54q8-13 16 0" stroke="' + c + '" stroke-width="4.2" fill="none" stroke-linecap="round"/>';
+      case 'tierno': return '<ellipse cx="' + cx + '" cy="53" rx="9" ry="9" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (55 + dy) + '" r="5.6" fill="' + c + '"/><circle cx="' + (cx + dx + 2) + '" cy="' + (52.6 + dy) + '" r="2" fill="#fff"/><path d="M' + (cx - 9.5) + ' 51q9.5-6 19 0v-3h-19z" fill="url(#gLumo)"/><path d="M' + (cx - 9) + ' 50.5q9-5 18 0" stroke="#c9741a" stroke-width="1.8" fill="none"/>';
+      case 'emocionado': return '<ellipse cx="' + cx + '" cy="52" rx="10" ry="11.5" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (53 + dy) + '" r="7" fill="' + c + '"/><circle cx="' + (cx + dx + 2.6) + '" cy="' + (50 + dy) + '" r="2.8" fill="#fff"/><circle cx="' + (cx + dx - 2.4) + '" cy="' + (56 + dy) + '" r="1.5" fill="#fff"/>';
+      case 'sorprendido': return '<ellipse cx="' + cx + '" cy="52" rx="10" ry="12" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (52 + dy) + '" r="3.8" fill="' + c + '"/><circle cx="' + (cx + dx + 1.2) + '" cy="' + (50.6 + dy) + '" r="1.4" fill="#fff"/>';
+      case 'ups': return '<ellipse cx="' + cx + '" cy="52" rx="9.5" ry="10.5" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (53 + dy) + '" r="3" fill="' + c + '"/>';
+      case 'concentrado': return '<ellipse cx="' + cx + '" cy="53" rx="9" ry="7.5" fill="#fff"/><circle cx="' + (cx + dx + 2) + '" cy="' + (54 + dy) + '" r="4.8" fill="' + c + '"/><circle cx="' + (cx + dx + 3.6) + '" cy="' + (52.4 + dy) + '" r="1.7" fill="#fff"/>';
+      default: return '<ellipse cx="' + cx + '" cy="52" rx="9" ry="10" fill="#fff"/><circle cx="' + (cx + dx) + '" cy="' + (53 + dy) + '" r="5.4" fill="' + c + '"/>' + B.replace('r="2.2"', 'r="2"');
+    }
+  }
+  function cejasFrente(e) {
+    var s = 'stroke="' + TINTA + '" stroke-width="3.4" fill="none" stroke-linecap="round"';
+    switch (e) {
+      case 'concentrado': return '<path d="M30 42l14 3M70 42l-14 3" ' + s + '/>';
+      case 'sorprendido': case 'emocionado': return '<path d="M28 35q10-6 18-1M72 35q-10-6-18-1" ' + s + '/>';
+      case 'ups': return '<path d="M29 40q9-6 17-2M71 40q-9-6-17-2" ' + s + '/><path d="M80 40q4 6 0 9q-4-3 0-9z" fill="#7be0ff" stroke="#3a9fd0" stroke-width="1.5"/>';
+      case 'orgulloso': return '<path d="M29 39q9-5 16-1M71 39q-9-5-16-1" ' + s + '/>';
+      case 'tierno': return '<path d="M29 39q9-4 16 0M71 39q-9-4-16 0" ' + s + ' opacity=".7"/>';
+      default: return '';
     }
   }
   var DISFRACES_SVG = {
@@ -2834,67 +4862,108 @@
   };
   var CAPA = '<path d="M26 52Q10 78 18 92l32-6 32 6q8-14-8-40z" fill="#e8553f"/><path d="M26 52Q20 70 26 84" stroke="#b83a28" stroke-width="3" fill="none"/>';
 
-  // Lumo: viewBox 0 0 100 100. dir: E/O/N/S (hacia dónde mira)
-  //  S = de frente (mira al jugador) · N = de espaldas · E/O = de perfil (tres cuartos).
+  // Bracitos: pose 'bajos' (por defecto), 'arriba' (¡viva!), 'saludo' (una mano arriba), 'pecho' (orgullo), 'recoge' (hacia delante).
+  function brazos(pose) {
+    var f = 'fill="#e0731a"', st = ' stroke="#c9601a" stroke-width="1.6"';
+    switch (pose) {
+      case 'arriba': return '<g class="brazo-i"><ellipse cx="17" cy="48" rx="6.5" ry="10" transform="rotate(-35 17 48)" ' + f + st + '/></g><g class="brazo-d"><ellipse cx="83" cy="48" rx="6.5" ry="10" transform="rotate(35 83 48)" ' + f + st + '/></g>';
+      case 'saludo': return '<ellipse cx="18" cy="72" rx="6" ry="9" transform="rotate(15 18 72)" ' + f + st + '/><g class="brazo-d"><ellipse cx="83" cy="46" rx="6.5" ry="10" transform="rotate(30 83 46)" ' + f + st + '/></g>';
+      case 'pecho': return '<ellipse cx="33" cy="74" rx="6" ry="8" transform="rotate(-30 33 74)" ' + f + st + '/><ellipse cx="67" cy="74" rx="6" ry="8" transform="rotate(30 67 74)" ' + f + st + '/>';
+      case 'recoge': return '<ellipse cx="30" cy="80" rx="6" ry="8" transform="rotate(-20 30 80)" ' + f + st + '/><ellipse cx="70" cy="80" rx="6" ry="8" transform="rotate(20 70 80)" ' + f + st + '/>';
+      default: return '<ellipse cx="17" cy="70" rx="6" ry="9.5" transform="rotate(12 17 70)" ' + f + st + '/><ellipse cx="83" cy="70" rx="6" ry="9.5" transform="rotate(-12 83 70)" ' + f + st + '/>';
+    }
+  }
+
+  // Lumo: viewBox 0 0 100 100. dir: E/O/N/S (hacia dónde mira). S = de frente · N = de espaldas · E/O = de perfil.
+  // op: { dir, expr, disfraz, pose, mira:[dx,dy] }
   function lumo(op) {
     op = op || {};
-    var dir = op.dir || 'S', expr = op.expr || 'normal', d = op.disfraz | 0;
-    var cerrados = expr === 'feliz';
-    var cejas = function (dx) {
-      return expr === 'triste' ? '<path d="M' + (27 + dx) + ' 43l15-6M' + (73 + dx) + ' 43l-15-6" stroke="#7a2a1a" stroke-width="3.5" stroke-linecap="round"/>' :
-        expr === 'sorpresa' ? '<path d="M' + (28 + dx) + ' 36q10-6 18-1M' + (72 + dx) + ' 36q-10-6-18-1" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>' :
-        expr === 'pensando' ? '<path d="M' + (28 + dx) + ' 38q10-5 18 0M' + (56 + dx) + ' 36l16-4" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>' : '';
-    };
-    var ojo = function (cx, rx, ry, px, py) {
-      return '<ellipse cx="' + cx + '" cy="52" rx="' + rx + '" ry="' + ry + '" fill="#fff"/>' +
-        '<circle cx="' + (cx + px) + '" cy="' + (53 + py) + '" r="' + (rx * .56).toFixed(1) + '" fill="#2b2140"/><circle cx="' + (cx + px + 1.6) + '" cy="' + (51 + py) + '" r="1.8" fill="#fff"/>';
-    };
-    var cuerpoBase = '<circle cx="50" cy="56" r="46" fill="url(#gLumoGlow)"/>' +
-      '<g class="llama"><path d="M50 4q14 14 10 26-3 7-10 7t-10-7Q36 18 50 4z" fill="url(#gLlama)"/><path d="M50 14q6 8 3 15-3 4-3 4t-3-4q-3-7 3-15z" fill="#fff3a8" opacity=".85"/></g>';
-    var interior, pies, frontal = '';
+    var dir = op.dir || 'S', e = exprDe(op.expr), d = op.disfraz | 0, mira = op.mira || [0, 1.2];
+    var glow = '<circle cx="50" cy="56" r="46" fill="url(#gLumoGlow)"/>';
+    var llama = '<g class="llama"><path d="M50 3q15 15 11 27-3 7-11 7t-11-7Q35 18 50 3z" fill="url(#gLlama)"/><path d="M50 13q6 8 3 15-3 4-3 4t-3-4q-3-7 3-15z" fill="#fff3a8" opacity=".9"/></g>';
+    var interior, pies, br = (dir === 'N') ? '' : brazos(op.pose);
+    var mejillas = e === 'tierno' || e === 'orgulloso' || e === 'emocionado' ? .85 : .55;
     if (dir === 'N') {
-      // De espaldas: sin cara; se ve la nuca, el remolino de la llama y la mochila-brújula.
-      interior = '<ellipse cx="50" cy="60" rx="35" ry="32" fill="url(#gLumo)"/>' +
-        '<ellipse cx="50" cy="60" rx="35" ry="32" fill="#c8641a" opacity=".22"/>' +
+      interior = '<ellipse cx="50" cy="60" rx="36" ry="32" fill="url(#gLumo)"/><ellipse cx="50" cy="60" rx="36" ry="32" fill="#c8641a" opacity=".2"/>' +
         '<path d="M50 34q-9 4-9 12t9 10 9-6q0-7-7-8" fill="none" stroke="#e0731a" stroke-width="3.5" stroke-linecap="round" opacity=".7"/>' +
-        '<ellipse cx="50" cy="72" rx="15" ry="13" fill="#e8553f"/><ellipse cx="50" cy="72" rx="15" ry="13" fill="none" stroke="#b83a28" stroke-width="3"/><circle cx="50" cy="72" r="4" fill="#ffd166"/>';
+        '<ellipse cx="50" cy="72" rx="15" ry="13" fill="#e8553f"/><ellipse cx="50" cy="72" rx="15" ry="13" fill="none" stroke="#b83a28" stroke-width="3"/><circle cx="50" cy="72" r="4" fill="#ffd166"/>' +
+        '<ellipse cx="15" cy="68" rx="6" ry="9" fill="#e0731a"/><ellipse cx="85" cy="68" rx="6" ry="9" fill="#e0731a"/>';
       pies = '<ellipse cx="36" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="64" cy="91" rx="10" ry="5" fill="#e0731a"/>';
     } else if (dir === 'E' || dir === 'O') {
-      // De perfil: cuerpo más estrecho, ojo cercano grande, ojo lejano pequeño, boca al frente.
-      interior = '<ellipse cx="48" cy="60" rx="31" ry="32" fill="url(#gLumo)"/>' +
-        '<ellipse cx="42" cy="40" rx="11" ry="6" fill="#fff" opacity=".28" transform="rotate(-20 42 40)"/>' +
-        '<circle cx="76" cy="64" r="6" fill="#ff7f8a" opacity=".6"/>' +
-        '<ellipse cx="68" cy="52" rx="8" ry="9.5" fill="#fff"/><circle cx="72" cy="53" r="4.6" fill="#2b2140"/><circle cx="73.4" cy="51" r="1.7" fill="#fff"/>' +
-        '<ellipse cx="52" cy="52" rx="6.5" ry="8" fill="#fff"/><circle cx="55.5" cy="53" r="3.8" fill="#2b2140"/><circle cx="56.8" cy="51.4" r="1.4" fill="#fff"/>' +
-        '<g transform="translate(14 0)">' + cejas(0).replace(/M(\d+)/g, function (m, n) { return m; }) + boca(expr) + '</g>' +
-        '<ellipse cx="30" cy="70" rx="7" ry="10" fill="#e0731a" opacity=".85"/>';
+      var ojoC = e === 'alegre' || e === 'orgulloso' ?
+        '<path d="M60 56q8-13 16 0" stroke="#2b2140" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M47 56q5-9 10 0" stroke="#2b2140" stroke-width="3.4" fill="none" stroke-linecap="round"/>' :
+        '<ellipse cx="68" cy="52" rx="8.5" ry="' + (e === 'concentrado' ? 7 : e === 'sorprendido' || e === 'emocionado' ? 11 : 9.8) + '" fill="#fff"/><circle cx="' + (72 + mira[0] / 2) + '" cy="' + (53 + mira[1]) + '" r="' + (e === 'sorprendido' ? 3.6 : e === 'emocionado' ? 6.6 : 4.8) + '" fill="#2b2140"/><circle cx="' + (73.6 + mira[0] / 2) + '" cy="' + (51 + mira[1]) + '" r="1.8" fill="#fff"/>' +
+        '<ellipse cx="52" cy="52" rx="6.5" ry="8" fill="#fff"/><circle cx="55.5" cy="53" r="3.8" fill="#2b2140"/><circle cx="56.8" cy="51.4" r="1.4" fill="#fff"/>';
+      var ce = e === 'concentrado' ? '<path d="M60 43l16 4" stroke="' + TINTA + '" stroke-width="3.2" stroke-linecap="round"/>' : e === 'sorprendido' || e === 'emocionado' ? '<path d="M60 36q9-5 16-1" stroke="' + TINTA + '" stroke-width="3.2" fill="none" stroke-linecap="round"/>' : e === 'ups' ? '<path d="M82 40q4 6 0 9q-4-3 0-9z" fill="#7be0ff" stroke="#3a9fd0" stroke-width="1.5"/>' : '';
+      interior = '<ellipse cx="48" cy="60" rx="31" ry="32" fill="url(#gLumo)"/><ellipse cx="42" cy="40" rx="11" ry="6" fill="#fff" opacity=".28" transform="rotate(-20 42 40)"/>' +
+        '<circle cx="76" cy="66" r="6" fill="#ff7f8a" opacity="' + mejillas + '"/>' + ojoC + ce + boca(e, 66, 66) +
+        '<ellipse cx="30" cy="70" rx="7" ry="10" fill="#e0731a" opacity=".85"/><path d="M62 78a6 6 0 1 0 0 .1" fill="none"/>';
       pies = '<ellipse cx="42" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="62" cy="91" rx="9" ry="5" fill="#e0731a"/>';
-      if (cerrados) interior = interior.replace('rx="8" ry="9.5"', 'rx="8" ry="6.5"');
-      if (dir === 'O') { interior = '<g transform="translate(100 0) scale(-1 1)">' + interior + '</g>'; pies = '<g transform="translate(100 0) scale(-1 1)">' + pies + '</g>'; }
+      var bp = e === 'emocionado' || op.pose === 'arriba' ? '<ellipse cx="30" cy="50" rx="6" ry="10" transform="rotate(-30 30 50)" fill="#e0731a" stroke="#c9601a" stroke-width="1.6"/>' : '<ellipse cx="50" cy="82" rx="6" ry="8" transform="rotate(-18 50 82)" fill="#e0731a" stroke="#c9601a" stroke-width="1.6"/>';
+      br = bp;
+      if (dir === 'O') { var espejo = function (s) { return '<g transform="translate(100 0) scale(-1 1)">' + s + '</g>'; }; interior = espejo(interior); pies = espejo(pies); br = espejo(br); }
     } else {
-      interior = '<ellipse cx="50" cy="60" rx="35" ry="32" fill="url(#gLumo)"/>' +
+      interior = '<ellipse cx="50" cy="60" rx="36" ry="32" fill="url(#gLumo)"/>' +
         '<ellipse cx="38" cy="40" rx="13" ry="7" fill="#fff" opacity=".28" transform="rotate(-20 38 40)"/>' +
-        '<circle cx="26" cy="64" r="6" fill="#ff7f8a" opacity=".55"/><circle cx="74" cy="64" r="6" fill="#ff7f8a" opacity=".55"/>' +
-        [38, 62].map(function (cx) { return ojo(cx, 9, cerrados ? 7 : 10, 0, 2.2); }).join('') + cejas(0) + boca(expr) +
-        '<g transform="translate(50 84)"><circle r="8" fill="#fff" stroke="#c9741a" stroke-width="2.5"/><path d="M0-6l3 6-3 6-3-6z" fill="#e8553f"/><path d="M0 6l-3-6h6z" fill="#7a8aa8"/></g>';
+        '<circle cx="25" cy="64" r="6.5" fill="#ff7f8a" opacity="' + mejillas + '"/><circle cx="75" cy="64" r="6.5" fill="#ff7f8a" opacity="' + mejillas + '"/>' +
+        ojoFrente(38, e, mira[0], mira[1]) + ojoFrente(62, e, mira[0], mira[1]) + cejasFrente(e) + boca(e) +
+        '<g transform="translate(50 84)"><circle r="8.5" fill="#fff" stroke="#c9741a" stroke-width="2.5"/><circle r="6" fill="#fff6c9"/><path d="M0-6l3 6-3 6-3-6z" fill="#e8553f"/><path d="M0 6l-3-6h6z" fill="#7a8aa8"/></g>';
       pies = '<ellipse cx="34" cy="91" rx="10" ry="5" fill="#e0731a"/><ellipse cx="66" cy="91" rx="10" ry="5" fill="#e0731a"/>';
     }
-    return '<svg viewBox="0 0 100 100" class="lumo-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      (d === 3 && dir !== 'N' ? CAPA : '') + cuerpoBase + (d === 3 && dir === 'N' ? CAPA : '') +
-      interior + pies + frontal + (dir === 'N' || dir === 'S' ? (DISFRACES_SVG[d] || '') : (DISFRACES_SVG[d] || '')) + '</svg>';
+    var capaAtras = d === 3 ? CAPA : '';
+    return '<svg viewBox="0 0 100 100" class="lumo-svg" data-expr="' + e + '" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      capaAtras + glow + llama + interior + pies + br + (DISFRACES_SVG[d] || '') + '</svg>';
   }
 
   // ---------------------------------------------------------------- personajes secundarios
+  // Las seis chispas comparten el lenguaje visual de Lumo (cuerpo redondo, llama, ojos grandes, mejillas, bracitos)
+  // y se distinguen por el color y un rasgo propio. Expresiones: normal, alegre, sorprendido, tierno.
+  var CHISPAS_DISENO = {
+    'Titila':   { c1: '#8fdc86', c2: '#d6f7c8', rasgo: '<path d="M50 14q-14-6-20 4 12 6 20-4z" fill="#3aa55a"/><path d="M50 14q12-8 20 2-10 8-20-2z" fill="#2c8745"/>' },
+    'Brasa':    { c1: '#ff7a55', c2: '#ffc2a8', rasgo: '<path d="M36 24l6-12 6 10 6-12 6 12 6-10 2 16z" fill="#c9401f"/>' },
+    'Destello': { c1: '#5ec8ff', c2: '#c4ecff', rasgo: '<path d="M30 22q8-14 22-6 8 4 6 12-10-4-14 2-6-6-14-8z" fill="#2a9ad6"/><circle cx="66" cy="18" r="3" fill="#fff"/>' },
+    'Ascua':    { c1: '#e8603f', c2: '#ffa571', rasgo: '<path d="M34 28q-6-14 2-18 2 10 8 14zM66 28q6-14-2-18-2 10-8 14z" fill="#8c2a1a"/>' },
+    'Píxel':    { c1: '#4fe0c8', c2: '#b6f7ec', rasgo: '<path d="M50 20V6" stroke="#2a8f80" stroke-width="3.5"/><rect x="43" y="-1" width="14" height="14" rx="2" fill="#7affe4" stroke="#2a8f80" stroke-width="2.5"/><rect x="47" y="3" width="6" height="6" fill="#2a8f80"/>' },
+    'Cometa':   { c1: '#b58cff', c2: '#e3d3ff', rasgo: '<path d="M72 18l6-14 3 11 12 1-10 6 3 12-10-8-9 6 3-12-10-5z" fill="#ffd166" stroke="#e8a82e" stroke-width="2" stroke-linejoin="round"/>' }
+  };
+  function chispa(nombre, expr) {
+    var D = CHISPAS_DISENO[nombre]; if (!D) return '';
+    expr = EXPR_ALIAS[expr] || expr;
+    var ojos, boca_;
+    switch (expr) {
+      case 'alegre': case 'emocionado': case 'orgulloso':
+        ojos = '<path d="M31 58q8-12 16 0M53 58q8-12 16 0" stroke="#2b2140" stroke-width="4" fill="none" stroke-linecap="round"/>';
+        boca_ = '<path d="M40 66q10 14 20 0z" fill="#7a2a1a" stroke="#7a2a1a" stroke-width="2" stroke-linejoin="round"/>'; break;
+      case 'sorprendido': case 'ups':
+        ojos = '<ellipse cx="39" cy="58" rx="8.5" ry="10" fill="#fff"/><ellipse cx="61" cy="58" rx="8.5" ry="10" fill="#fff"/><circle cx="39" cy="58" r="3.4" fill="#2b2140"/><circle cx="61" cy="58" r="3.4" fill="#2b2140"/>';
+        boca_ = '<ellipse cx="50" cy="72" rx="4.5" ry="5.5" fill="#7a2a1a"/>'; break;
+      case 'tierno':
+        ojos = '<ellipse cx="39" cy="59" rx="8" ry="8" fill="#fff"/><ellipse cx="61" cy="59" rx="8" ry="8" fill="#fff"/><circle cx="40" cy="60" r="5" fill="#2b2140"/><circle cx="62" cy="60" r="5" fill="#2b2140"/><circle cx="41.6" cy="58" r="1.8" fill="#fff"/><circle cx="63.6" cy="58" r="1.8" fill="#fff"/><path d="M30 55q9-6 18 0M52 55q9-6 18 0" stroke="' + D.c1 + '" stroke-width="3" fill="none"/>';
+        boca_ = '<path d="M44 70q6 5 12 0" stroke="#7a2a1a" stroke-width="3" fill="none" stroke-linecap="round"/>'; break;
+      default:
+        ojos = '<ellipse cx="39" cy="58" rx="8" ry="9" fill="#fff"/><ellipse cx="61" cy="58" rx="8" ry="9" fill="#fff"/><circle cx="40" cy="59" r="4.8" fill="#2b2140"/><circle cx="62" cy="59" r="4.8" fill="#2b2140"/><circle cx="41.6" cy="57" r="1.8" fill="#fff"/><circle cx="63.6" cy="57" r="1.8" fill="#fff"/>';
+        boca_ = '<path d="M43 70q7 6 14 0" stroke="#7a2a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>';
+    }
+    return '<defs><radialGradient id="gCh' + nombre.charCodeAt(0) + '"><stop offset="55%" stop-color="' + D.c1 + '" stop-opacity=".4"/><stop offset="100%" stop-color="' + D.c1 + '" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="58" r="48" fill="url(#gCh' + nombre.charCodeAt(0) + ')"/><ellipse cx="50" cy="93" rx="24" ry="4" fill="#000" opacity=".15"/>' +
+      '<g class="llama"><path d="M50 6q15 15 10 28-3 7-10 7t-10-7Q35 21 50 6z" fill="' + D.c1 + '"/><path d="M50 16q6 8 3 14-3 4-3 4t-3-4q-3-6 3-14z" fill="' + D.c2 + '" opacity=".9"/></g>' +
+      D.rasgo +
+      '<ellipse cx="50" cy="64" rx="33" ry="29" fill="' + D.c1 + '"/><ellipse cx="38" cy="46" rx="11" ry="5.5" fill="#fff" opacity=".3" transform="rotate(-20 38 46)"/>' +
+      '<ellipse cx="17" cy="72" rx="5.5" ry="8.5" transform="rotate(12 17 72)" fill="' + D.c1 + '" stroke="#0002" stroke-width="1.4"/><ellipse cx="83" cy="72" rx="5.5" ry="8.5" transform="rotate(-12 83 72)" fill="' + D.c1 + '" stroke="#0002" stroke-width="1.4"/>' +
+      '<circle cx="27" cy="68" r="5" fill="#ff7f8a" opacity=".55"/><circle cx="73" cy="68" r="5" fill="#ff7f8a" opacity=".55"/>' + ojos + boca_ +
+      '<ellipse cx="38" cy="91" rx="9" ry="4.5" fill="' + D.c1 + '"/><ellipse cx="62" cy="91" rx="9" ry="4.5" fill="' + D.c1 + '"/>';
+  }
   var PERSONAJES = {
-    'Abuela Chispa': '<circle cx="50" cy="56" r="46" fill="#c9a0ff" opacity=".3"/><path d="M50 2q16 16 11 30-3 7-11 7t-11-7Q34 18 50 2z" fill="#d9a8ff"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="#b784f0"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="url(#gLumoGlow)" opacity=".4"/><g fill="#fff" fill-opacity=".4" stroke="#6a3fa8" stroke-width="3"><circle cx="37" cy="54" r="10"/><circle cx="63" cy="54" r="10"/></g><path d="M47 54h6" stroke="#6a3fa8" stroke-width="3"/><circle cx="37" cy="55" r="4" fill="#2b2140"/><circle cx="63" cy="55" r="4" fill="#2b2140"/><path d="M40 72q10 9 20 0" stroke="#5a2a7a" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="26" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><circle cx="74" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><ellipse cx="36" cy="93" rx="10" ry="5" fill="#8b57c9"/><ellipse cx="64" cy="93" rx="10" ry="5" fill="#8b57c9"/><path d="M30 28q20-12 40 0" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>',
+    'Abuela Chispa': '<defs><radialGradient id="gChAb"><stop offset="55%" stop-color="#c9a0ff" stop-opacity=".4"/><stop offset="100%" stop-color="#c9a0ff" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="56" r="48" fill="url(#gChAb)"/><path d="M50 2q16 16 11 30-3 7-11 7t-11-7Q34 18 50 2z" fill="#d9a8ff"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="#b784f0"/><ellipse cx="50" cy="62" rx="36" ry="32" fill="url(#gLumoGlow)" opacity=".4"/><g fill="#fff" fill-opacity=".4" stroke="#6a3fa8" stroke-width="3"><circle cx="37" cy="54" r="10"/><circle cx="63" cy="54" r="10"/></g><path d="M47 54h6" stroke="#6a3fa8" stroke-width="3"/><circle cx="37" cy="55" r="4" fill="#2b2140"/><circle cx="63" cy="55" r="4" fill="#2b2140"/><path d="M40 72q10 9 20 0" stroke="#5a2a7a" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="26" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><circle cx="74" cy="68" r="5" fill="#ff9ac8" opacity=".6"/><ellipse cx="36" cy="93" rx="10" ry="5" fill="#8b57c9"/><ellipse cx="64" cy="93" rx="10" ry="5" fill="#8b57c9"/><path d="M30 28q20-12 40 0" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>',
     'Búho Bruma': '<ellipse cx="50" cy="94" rx="30" ry="5" fill="#000" opacity=".15"/><path d="M20 38l-4-22 18 12q16-6 32 0l18-12-4 22q8 22-6 40-12 14-24 14T26 78q-14-18-6-40z" fill="#8b6bd1"/><ellipse cx="50" cy="70" rx="20" ry="20" fill="#d7c8f5"/><g fill="#fff" stroke="#4a3a8a" stroke-width="3"><circle cx="37" cy="48" r="13"/><circle cx="63" cy="48" r="13"/></g><circle cx="38" cy="49" r="6" fill="#2b2140"/><circle cx="62" cy="49" r="6" fill="#2b2140"/><circle cx="40" cy="47" r="2" fill="#fff"/><circle cx="64" cy="47" r="2" fill="#fff"/><path d="M50 54l-5 8h10z" fill="#ffb02e"/><path d="M38 78l6 6M50 82l0 6M62 78l-6 6" stroke="#8b6bd1" stroke-width="3" stroke-linecap="round"/>',
     'Bichito': '<ellipse cx="50" cy="90" rx="22" ry="4" fill="#000" opacity=".15"/><path d="M36 34q-6-14-16-14M64 34q6-14 16-14" stroke="#2d6a3e" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="20" cy="20" r="4" fill="#ff6f91"/><circle cx="80" cy="20" r="4" fill="#ff6f91"/><ellipse cx="50" cy="62" rx="30" ry="28" fill="#6fcf6f"/><path d="M50 36v52" stroke="#3aa55a" stroke-width="3"/><circle cx="38" cy="66" r="5" fill="#2d6a3e"/><circle cx="62" cy="74" r="5" fill="#2d6a3e"/><circle cx="50" cy="52" r="16" fill="#8be08b"/><circle cx="43" cy="50" r="5" fill="#fff"/><circle cx="57" cy="50" r="5" fill="#fff"/><circle cx="44" cy="51" r="2.4" fill="#2b2140"/><circle cx="58" cy="51" r="2.4" fill="#2b2140"/><path d="M43 60q7 6 14 0" stroke="#2d6a3e" stroke-width="3" fill="none" stroke-linecap="round"/>',
     'Tinta': '<ellipse cx="50" cy="94" rx="30" ry="4" fill="#000" opacity=".15"/><g stroke="#ff7fb0" stroke-width="9" stroke-linecap="round" fill="none"><path d="M28 70q-10 12-4 22"/><path d="M40 76q-4 12 2 18"/><path d="M60 76q4 12-2 18"/><path d="M72 70q10 12 4 22"/></g><ellipse cx="50" cy="44" rx="30" ry="34" fill="#ff7fb0"/><ellipse cx="50" cy="44" rx="30" ry="34" fill="url(#gLumoGlow)" opacity=".25"/><g fill="#fff" stroke="#c43b78" stroke-width="3"><circle cx="38" cy="52" r="9"/><circle cx="62" cy="52" r="9"/></g><circle cx="39" cy="53" r="4" fill="#2b2140"/><circle cx="63" cy="53" r="4" fill="#2b2140"/><path d="M42 68q8 7 16 0" stroke="#8c1f52" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M32 22q18-14 36 0" stroke="#ffc0da" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/><circle cx="76" cy="20" r="7" fill="#ffd166"/><path d="M72 20h8M76 16v8" stroke="#a8672d" stroke-width="2.5"/>',
     'Lagarto gigante': '<ellipse cx="50" cy="94" rx="36" ry="4" fill="#000" opacity=".2"/><path d="M8 78q14-24 40-24h20q22 0 26 16l-12 6q-6-6-16-4-24 4-58 6z" fill="#4faf5a"/><path d="M68 54q10-16 22-8-2 12-14 14z" fill="#4faf5a"/><circle cx="82" cy="52" r="5" fill="#fff"/><circle cx="83" cy="53" r="2.4" fill="#2b2140"/><path d="M20 70l6-10 6 10M36 66l6-10 6 10M52 62l6-10 6 10" fill="#ffb02e"/><rect x="26" y="76" width="9" height="14" rx="4" fill="#3d9148"/><rect x="62" y="76" width="9" height="14" rx="4" fill="#3d9148"/>',
+    'Conejo': '<ellipse cx="50" cy="93" rx="26" ry="4" fill="#000" opacity=".15"/><ellipse cx="38" cy="22" rx="8" ry="20" fill="#f0e6dc"/><ellipse cx="62" cy="22" rx="8" ry="20" fill="#f0e6dc"/><ellipse cx="50" cy="66" rx="30" ry="26" fill="#f7f1ea"/><circle cx="41" cy="60" r="4" fill="#2b2140"/><circle cx="59" cy="60" r="4" fill="#2b2140"/><path d="M44 72q6 5 12 0" stroke="#a8672d" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="50" cy="67" r="3" fill="#ff9ac8"/>',
     'Bit': '<ellipse cx="50" cy="94" rx="26" ry="4" fill="#000" opacity=".15"/><rect x="40" y="2" width="4" height="12" fill="#8d9bb8"/><circle cx="42" cy="4" r="5" fill="#ff5a5f"/><rect x="22" y="14" width="56" height="40" rx="12" fill="#c9d4ea"/><rect x="28" y="22" width="44" height="24" rx="8" fill="#26335e"/><circle cx="40" cy="34" r="6" fill="#5fe0ff"/><circle cx="60" cy="34" r="6" fill="#5fe0ff"/><path d="M42 42q8 4 16 0" stroke="#5fe0ff" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="28" y="56" width="44" height="30" rx="8" fill="#9fb0cf"/><circle cx="50" cy="70" r="7" fill="#ffd166"/><rect x="14" y="58" width="12" height="22" rx="6" fill="#c9d4ea"/><rect x="74" y="58" width="12" height="22" rx="6" fill="#c9d4ea"/><rect x="32" y="86" width="12" height="8" rx="3" fill="#7b8bb0"/><rect x="56" y="86" width="12" height="8" rx="3" fill="#7b8bb0"/>'
   };
-  function personaje(nombre) {
-    if (nombre === 'Lumo') return lumo({ expr: 'feliz', dir: 'S' });
+  function personaje(nombre, op) {
+    if (CHISPAS_DISENO[nombre]) return '<svg viewBox="0 0 100 100" class="pers-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + chispa(nombre, op && op.expr) + '</svg>';
+    if (nombre === 'Lumo') return lumo({ expr: op && op.expr || 'alegre', dir: 'S', pose: op && op.pose });
     return '<svg viewBox="0 0 100 100" class="pers-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + (PERSONAJES[nombre] || '') + '</svg>';
   }
 
@@ -3009,9 +5078,17 @@
       '<text x="280" y="136" fill="url(#gLogo)" stroke="#fff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">RUMBO</text></g></svg>';
   }
 
+  // Insignia Creative Commons BY-NC-ND (local, sin pedir imágenes a Internet).
+  function insigniaCC() {
+    return '<svg viewBox="0 0 88 31" width="88" height="31" role="img" aria-label="CC BY-NC-ND 4.0"><rect width="88" height="31" rx="3" fill="#aab2ab"/><rect x="1.5" y="1.5" width="85" height="28" rx="2" fill="#fff"/>' +
+      '<rect x="1.5" y="1.5" width="26" height="28" rx="2" fill="#aab2ab"/><circle cx="14.5" cy="15.5" r="10" fill="#fff" stroke="#000" stroke-width="2"/><text x="14.5" y="19.5" font-family="Arial,sans-serif" font-weight="700" font-size="11" text-anchor="middle" fill="#000">cc</text>' +
+      '<text x="57" y="13" font-family="Arial,sans-serif" font-weight="700" font-size="9" text-anchor="middle" fill="#000">BY-NC-ND</text><text x="57" y="24" font-family="Arial,sans-serif" font-size="8" text-anchor="middle" fill="#333">4.0</text></svg>';
+  }
+
   UI.Arte = {
+    insigniaCC: insigniaCC,
     TEMAS: TEMAS, NOMBRES_ZONA: NOMBRES_ZONA, celda: celda, objeto: objeto, interruptor: interruptor, puerta: puerta,
-    lumo: lumo, personaje: personaje, PERSONAJES: Object.keys(PERSONAJES).concat(['Lumo']),
+    lumo: lumo, exprDe: exprDe, EXPRESIONES: EXPRESIONES, personaje: personaje, PERSONAJES: Object.keys(PERSONAJES).concat(Object.keys(CHISPAS_DISENO), ['Lumo']),
     iconoCarta: iconoCarta, CARTA_COLOR: CARTA_COLOR, CARTA_NOMBRE: CARTA_NOMBRE,
     iconoCond: iconoCond, COND_NOMBRE: COND_NOMBRE, insignia: insignia,
     picto: picto, PICTOS: PICTOS, PICTO_NOMBRE: PICTO_NOMBRE,
@@ -3038,7 +5115,7 @@
     try {
       ctx = new AC();
       maestro = ctx.createGain(); maestro.gain.value = 0.8; maestro.connect(ctx.destination);
-      musicaGain = ctx.createGain(); musicaGain.gain.value = 0.10; musicaGain.connect(maestro);
+      musicaGain = ctx.createGain(); musicaGain.gain.value = 0.09; musicaGain.connect(maestro);
     } catch (e) { ctx = null; }
   }
   function nota(f, t0, dur, tipo, vol, destino, glide) {
@@ -3052,6 +5129,8 @@
     o.connect(g); g.connect(destino || maestro); o.start(t0); o.stop(t0 + dur + 0.05);
   }
   var F = { do4: 261.63, re4: 293.66, mi4: 329.63, sol4: 392, la4: 440, do5: 523.25, re5: 587.33, mi5: 659.25, sol5: 783.99, do6: 1046.5 };
+  var MD = function () { return root.RumboMusicaDatos; };
+  function campana(f, t, dur, vol, destino) { nota(f, t, dur, 'triangle', vol, destino); nota(f * 2, t, dur * 0.7, 'sine', vol * 0.35, destino); }
 
   var EFECTOS = {
     toque: function (t) { nota(660, t, .08, 'triangle', .15); },
@@ -3068,46 +5147,83 @@
     estrella: function (t) { [F.do5, F.mi5, F.sol5, F.do6].forEach(function (f, i) { nota(f, t + i * .1, .25, 'triangle', .2); }); },
     victoria: function (t) { [F.do5, F.mi5, F.sol5, F.do6, F.sol5, F.do6].forEach(function (f, i) { nota(f, t + i * .11, .3, 'triangle', .22); }); },
     desbloqueo: function (t) { [F.sol4, F.do5, F.mi5, F.sol5, F.do6].forEach(function (f, i) { nota(f, t + i * .08, .3, 'sine', .2); }); },
-    animo: function (t) { nota(F.mi4, t, .18, 'sine', .16); nota(F.sol4, t + .16, .24, 'sine', .16); }
+    animo: function (t) { nota(F.mi4, t, .18, 'sine', .16); nota(F.sol4, t + .16, .24, 'sine', .16); },
+    // ---- sonidos de la historia ----
+    // El guiño de la abuela: corto, corto, largo (el motivo del Faro).
+    guino: function (t) { var d = 0.2, tt = t; MD().MOTIVO_FARO.forEach(function (m) { campana(F.sol5, tt, m[1] * d * 1.5, .22); tt += m[1] * d * 1.4; }); },
+    // Una chispa de la familia aparece: destello ascendente.
+    chispa: function (t) { [F.mi5, F.sol5, F.do6, 1318.5].forEach(function (f, i) { campana(f, t + i * .07, .35, .14); }); },
+    // Pieza de la brújula: clic metálico y acorde que brilla.
+    pieza: function (t) { nota(1800, t, .04, 'square', .08); [F.do5, F.mi5, F.sol5, F.do6].forEach(function (f) { campana(f, t + .08, .9, .12); }); },
+    // Se enciende una ventana del Faro: barrido y acorde cálido.
+    faro: function (t) { nota(220, t, .5, 'sine', .16, null, 880); [F.sol4, F.do5, F.mi5, F.sol5].forEach(function (f, i) { campana(f, t + .4 + i * .05, 1.2, .13); }); },
+    // Alguien llega a la escena.
+    aparece: function (t) { nota(400, t, .12, 'sine', .14, null, 800); },
+    // Abuela Chispa: dos notas graves y cálidas.
+    abuela: function (t) { campana(F.do4, t, .9, .16); campana(F.sol4, t + .18, 1.1, .14); },
+    // Bichito se ríe: chillidos cortos y subidos de tono.
+    bichito: function (t) { [900, 1300, 1000, 1500, 1200].forEach(function (f, i) { nota(f, t + i * .07, .08, 'square', .1, null, f * 1.25); }); }
   };
   function sfx(n) {
     if (!sfxOn) return; iniciar(); if (!ctx || !EFECTOS[n]) return;
     EFECTOS[n](ctx.currentTime + 0.01);
   }
 
-  // Escalas y compases propios de cada zona (acordes lentos y un arpegio suave).
-  var MUSICA = {
-    jardin: { bpm: 84, esc: [0, 2, 4, 7, 9], base: 60, onda: 'triangle' },
-    granja: { bpm: 90, esc: [0, 2, 4, 7, 9], base: 62, onda: 'triangle' },
-    playa: { bpm: 80, esc: [0, 2, 4, 7, 9], base: 64, onda: 'sine' },
-    bosque: { bpm: 72, esc: [0, 3, 5, 7, 10], base: 57, onda: 'sine' },
-    montanas: { bpm: 66, esc: [0, 2, 5, 7, 9], base: 55, onda: 'triangle' },
-    mar: { bpm: 70, esc: [0, 2, 4, 7, 11], base: 59, onda: 'sine' },
-    volcan: { bpm: 96, esc: [0, 3, 5, 6, 7], base: 52, onda: 'sawtooth' },
-    ciudad: { bpm: 100, esc: [0, 2, 4, 7, 9], base: 60, onda: 'square' },
-    espacio: { bpm: 64, esc: [0, 2, 7, 9, 14], base: 58, onda: 'sine' },
-    faro: { bpm: 68, esc: [0, 4, 7, 9, 12], base: 60, onda: 'triangle' },
-    mapa: { bpm: 78, esc: [0, 2, 4, 7, 9], base: 60, onda: 'triangle' }
-  };
-  function midi(n) { return 440 * Math.pow(2, (n - 69) / 12); }
-  function tic() {
-    var m = MUSICA[zonaActual]; if (!m || !ctx || !musOn) return;
-    var t = ctx.currentTime + 0.05, dur = 60 / m.bpm;
-    var g = (paso * 7 + (paso >> 2)) % m.esc.length;
-    var n1 = m.base + m.esc[g] + (paso % 8 === 0 ? -12 : 0);
-    nota(midi(n1), t, dur * 1.6, m.onda, m.onda === 'square' || m.onda === 'sawtooth' ? .35 : .9, musicaGain);
-    if (paso % 2 === 1) nota(midi(m.base + 12 + m.esc[(g + 2) % m.esc.length]), t + dur / 2, dur, 'sine', .5, musicaGain);
-    paso++;
+  // ---------------------------------------------------------------- música: secuenciador de las piezas de musica-datos.js
+  var ruido = null;
+  function bufferRuido() {
+    if (ruido || !ctx) return ruido;
+    ruido = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate);
+    var d = ruido.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    return ruido;
+  }
+  function golpe(tipo, t, vol) {
+    if (!ctx) return;
+    if (tipo === 'kick') { nota(130, t, .22, 'sine', vol * 1.6, musicaGain, 40); return; }
+    var src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    src.buffer = bufferRuido(); f.type = 'highpass'; f.frequency.value = 6000;
+    g.gain.setValueAtTime(vol * 0.5, t); g.gain.exponentialRampToValueAtTime(0.0001, t + .05);
+    src.connect(f); f.connect(g); g.connect(musicaGain); src.start(t); src.stop(t + .06);
+  }
+  function suave(f, t, dur, tipo, vol, destino) {   // ataque lento, para pads
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = tipo; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(vol, t + Math.min(0.6, dur / 3)); g.gain.linearRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(destino); o.start(t); o.stop(t + dur + .05);
+  }
+  var seq = { zona: null, compas: 0, proximo: 0, timer: null };
+  function planificarCompas(zona, n, vuelta, t0) {
+    var M = MD(), P = M.PIEZAS[zona], pulso = M.duracionPulso(zona), vol = P.vol || 1;
+    M.eventosCompas(zona, n, vuelta).forEach(function (e) {
+      var t = t0 + e.t * pulso, d = e.dur * pulso, f = M.frecuencia(e.midi);
+      switch (e.voz) {
+        case 'lead': nota(f, t, d, P.lead, .5 * vol, musicaGain); if (P.eco) nota(f, t + pulso * .75, d, P.lead, .16 * vol, musicaGain); break;
+        case 'motivo': campana(f, t, d * 1.4, .55, musicaGain); break;
+        case 'bajo': nota(f, t, d, P.bajo, .55 * vol, musicaGain); break;
+        case 'pad': suave(f, t, d, 'sine', .22, musicaGain); break;
+        case 'ping': nota(f, t, d, 'sine', .3, musicaGain); break;
+        case 'kick': case 'hat': golpe(e.voz, t, .5 * vol); break;
+      }
+    });
+  }
+  function planificar() {
+    if (!ctx || !musOn || !seq.zona || !MD().PIEZAS[seq.zona]) return;
+    var pulso = MD().duracionPulso(seq.zona);
+    while (seq.proximo < ctx.currentTime + 0.6) {
+      planificarCompas(seq.zona, seq.compas % 4, Math.floor(seq.compas / 4), seq.proximo);
+      seq.proximo += 4 * pulso; seq.compas++;
+    }
   }
   function musica(zona) {
     if (zona === zonaActual) return;
     detener(); zonaActual = zona;
     if (!zona || !musOn) return;
     iniciar(); if (!ctx) return;
-    var m = MUSICA[zona] || MUSICA.mapa;
-    tic(); timer = setInterval(tic, 60000 / m.bpm);
+    if (!MD().PIEZAS[zona]) zona = 'mapa';
+    seq.zona = zona; seq.compas = 0; seq.proximo = ctx.currentTime + 0.08;
+    planificar(); timer = seq.timer = setInterval(planificar, 150);
   }
-  function detener() { if (timer) clearInterval(timer); timer = null; }
+  function detener() { if (timer) clearInterval(timer); timer = null; seq.zona = null; }
   function ajustar(o) {
     sfxOn = o.sonido !== false;
     var antes = musOn; musOn = o.musica !== false;
@@ -3115,9 +5231,304 @@
     else if (!antes && zonaActual) { var z = zonaActual; zonaActual = null; musica(z); }
   }
 
-  UI.Sonido = { iniciar: iniciar, sfx: sfx, musica: musica, detener: detener, ajustar: ajustar };
+  // Para comprobar el nivel real de salida (pruebas y diagnóstico): analizador conectado a la salida maestra.
+  function analizador() {
+    iniciar(); if (!ctx) return null;
+    if (!seq.an) { seq.an = ctx.createAnalyser(); seq.an.fftSize = 2048; maestro.connect(seq.an); }
+    return seq.an;
+  }
+  UI.Sonido = { analizador: analizador, iniciar: iniciar, sfx: sfx, musica: musica, detener: detener, ajustar: ajustar };
   // Un primer gesto desbloquea el audio del navegador.
   ['pointerdown', 'keydown'].forEach(function (e) { root.addEventListener && root.addEventListener(e, iniciar, { once: true, passive: true }); });
+})(typeof self !== 'undefined' ? self : this);
+
+
+/* ===== src/ui/escena-motor.js ===== */
+;/*
+ * RUMBO — Motor de escenas de la historia (fase 3).
+ *
+ * Reproduce una escena de src/datos/escenas.js con un escenario por capas (cielo, fondo lejano, fondo medio, suelo y primer plano),
+ * personajes de cuerpo entero que entran, salen, se mueven y cambian de gesto, y partículas de luz.
+ *
+ * Una escena puede traer `pasos` (puesta en escena a mano). Si no los trae, el motor los deduce de sus `lineas`:
+ * Lumo entra por la izquierda, el interlocutor por la derecha y cada frase lleva su emoción.
+ *
+ * Pasos reconocidos (todos opcionales):
+ *   {fondo:'bosque'}                       cambia de zona (fundido)
+ *   {entra:'Titila', lado:'der'|'izq'|'centro', modo:'salta'|'cae'|'desliza'}
+ *   {sale:'Titila'}
+ *   {emocion:'Lumo', expr:'sorprendido', pose:'arriba'}
+ *   {accion:'Lumo', haz:'salta'|'baila'|'tiembla'|'gira'|'asiente'|'mira'}
+ *   {objeto:'pieza'|'brujula'|'luz'|'flor'|'zanahoria', lado:'centro', brilla:true}
+ *   {camara:'acerca'|'aleja'|'sacude'}
+ *   {sonido:'victoria'}
+ *   {espera:600}
+ *   {dice:'*'}                            la siguiente frase de `lineas` (con su emoción); también vale {dice:'id_de_frase', emocion:'alegre'}
+ * Con «reducir animaciones» activado no hay desplazamientos ni partículas: los personajes aparecen y desaparecen con un corte limpio.
+ */
+(function (root) {
+  'use strict';
+  var UI = root.RumboUI = root.RumboUI || {};
+  var Ar = function () { return UI.Arte; };
+
+  // ---------------------------------------------------------------- fondos por capas
+  function azar(seed) { var s = seed || 7; return function () { s = (s * 16807) % 2147483647; return s / 2147483647; }; }
+  function colinas(color, y, amp, seed, ancho) {
+    var r = azar(seed), d = 'M0 600V' + y, x = 0; ancho = ancho || 1200;
+    while (x < ancho) { var w = 120 + r() * 160; d += 'Q' + (x + w / 2) + ' ' + (y - amp * (.4 + r())) + ' ' + (x + w) + ' ' + (y + (r() - .5) * amp * .4); x += w; }
+    return '<path d="' + d + 'V600z" fill="' + color + '"/>';
+  }
+  function arboles(color, n, y, seed, alto) {
+    var r = azar(seed), s = '';
+    for (var i = 0; i < n; i++) {
+      var x = (i + r() * .8) * 1300 / n - 40, h = (alto || 150) * (.7 + r() * .6), w = h * .55;
+      s += '<g transform="translate(' + x.toFixed(0) + ' ' + y + ')"><rect x="-6" y="-' + (h * .3).toFixed(0) + '" width="12" height="' + (h * .35).toFixed(0) + '" fill="' + color + '" opacity=".9"/>' +
+        '<path d="M0 -' + h.toFixed(0) + 'L' + (w * .7).toFixed(0) + ' -' + (h * .3).toFixed(0) + 'H-' + (w * .7).toFixed(0) + 'z" fill="' + color + '"/><path d="M0 -' + (h * .75).toFixed(0) + 'L' + w.toFixed(0) + ' -' + (h * .12).toFixed(0) + 'H-' + w.toFixed(0) + 'z" fill="' + color + '"/></g>';
+    }
+    return s;
+  }
+  function picos(color, nieve, y, seed) {
+    var r = azar(seed), s = '', x = -60;
+    while (x < 1260) {
+      var w = 200 + r() * 160, h = 150 + r() * 170;
+      s += '<path d="M' + x + ' ' + y + 'L' + (x + w / 2) + ' ' + (y - h).toFixed(0) + 'L' + (x + w) + ' ' + y + 'z" fill="' + color + '"/>';
+      if (nieve) s += '<path d="M' + (x + w / 2 - w * .17).toFixed(0) + ' ' + (y - h * .66).toFixed(0) + 'L' + (x + w / 2) + ' ' + (y - h).toFixed(0) + 'L' + (x + w / 2 + w * .17).toFixed(0) + ' ' + (y - h * .66).toFixed(0) + 'l-14 12-12-10-14 10z" fill="#fff" opacity=".92"/>';
+      x += w * .62;
+    }
+    return s;
+  }
+  function ciudad(color, ventana, y, seed) {
+    var r = azar(seed), s = '', x = -10;
+    while (x < 1220) {
+      var w = 50 + r() * 70, h = 120 + r() * 220;
+      s += '<rect x="' + x.toFixed(0) + '" y="' + (y - h).toFixed(0) + '" width="' + w.toFixed(0) + '" height="' + h.toFixed(0) + '" fill="' + color + '"/>';
+      for (var vy = y - h + 14; vy < y - 14; vy += 26) for (var vx = x + 8; vx < x + w - 14; vx += 20) if (r() > .45) s += '<rect x="' + vx.toFixed(0) + '" y="' + vy.toFixed(0) + '" width="9" height="12" rx="2" fill="' + ventana + '" opacity="' + (.5 + r() * .5).toFixed(2) + '"/>';
+      x += w + 6 + r() * 14;
+    }
+    return s;
+  }
+  function estrellas(n, seed, color) {
+    var r = azar(seed), s = '';
+    for (var i = 0; i < n; i++) s += '<circle class="titila" cx="' + (r() * 1200).toFixed(0) + '" cy="' + (r() * 420).toFixed(0) + '" r="' + (1 + r() * 2.4).toFixed(1) + '" fill="' + (color || '#fff') + '" opacity="' + (.5 + r() * .5).toFixed(2) + '" style="animation-delay:' + (r() * 3).toFixed(1) + 's"/>';
+    return s;
+  }
+  function burbujas(n, seed) {
+    var r = azar(seed), s = '';
+    for (var i = 0; i < n; i++) s += '<circle class="burbuja" cx="' + (r() * 1200).toFixed(0) + '" cy="' + (200 + r() * 380).toFixed(0) + '" r="' + (4 + r() * 10).toFixed(0) + '" fill="none" stroke="#fff" stroke-width="2.5" opacity=".5" style="animation-delay:' + (r() * 5).toFixed(1) + 's"/>';
+    return s;
+  }
+  function flores(colores, n, y, seed) {
+    var r = azar(seed), s = '';
+    for (var i = 0; i < n; i++) { var x = r() * 1200, c = colores[i % colores.length]; s += '<g transform="translate(' + x.toFixed(0) + ' ' + (y + r() * 60).toFixed(0) + ')"><path d="M0 0v-26" stroke="#3f8f3a" stroke-width="4"/><circle cy="-30" r="9" fill="' + c + '"/><circle cy="-30" r="3.5" fill="#ffd93d"/></g>'; }
+    return s;
+  }
+  function rocas(color, n, y, seed) {
+    var r = azar(seed), s = '';
+    for (var i = 0; i < n; i++) { var x = r() * 1200, w = 40 + r() * 70; s += '<path d="M' + x.toFixed(0) + ' ' + y + 'q' + (w * .1).toFixed(0) + ' -' + (w * .7).toFixed(0) + ' ' + (w * .5).toFixed(0) + ' -' + (w * .72).toFixed(0) + 'q' + (w * .45).toFixed(0) + ' ' + (w * .1).toFixed(0) + ' ' + (w * .55).toFixed(0) + ' ' + (w * .72).toFixed(0) + 'z" fill="' + color + '"/>'; }
+    return s;
+  }
+  function faroGrande(x, y, escala, lucesEncendidas) {
+    var v = '';
+    for (var i = 0; i < 6; i++) v += '<rect x="' + (-13 + (i % 2) * 14) + '" y="' + (-250 + Math.floor(i / 2) * 60 + 20) + '" width="12" height="18" rx="5" fill="' + (i < lucesEncendidas ? '#ffe27a' : '#46506f') + '"/>';
+    return '<g transform="translate(' + x + ' ' + y + ') scale(' + escala + ')"><path d="M-46 0l12-260h68l12 260z" fill="#f4f1ea"/><path d="M-40 -60h80l-3 30h-74zM-34 -150h68l-3 26h-62zM-28 -240h56l-2 22h-52z" fill="#e8553f"/>' + v +
+      '<rect x="-36" y="-310" width="72" height="50" rx="8" fill="#2b3558"/><rect x="-26" y="-302" width="52" height="34" rx="6" fill="' + (lucesEncendidas > 0 ? '#ffe27a' : '#46506f') + '"/><path d="M-44 -310l44-40 44 40z" fill="#e8553f"/></g>';
+  }
+  var FONDOS = {
+    jardin: function () { return { lejos: colinas('#a6dd8a', 360, 60, 3) + '<circle cx="980" cy="120" r="46" fill="#fff4a8"/>', medio: colinas('#8fd172', 430, 40, 5) + arboles('#6cbd5a', 7, 440, 11, 120), cerca: flores(['#ff7fb0', '#ffd93d', '#ffffff', '#c79bff'], 26, 520, 9) }; },
+    granja: function () { return { lejos: colinas('#e8d28a', 360, 50, 4) + '<circle cx="1000" cy="110" r="44" fill="#fff0a0"/>', medio: colinas('#d6c070', 440, 36, 8) + '<g transform="translate(220 430)"><rect x="-50" y="-70" width="100" height="70" fill="#d0553f"/><path d="M-62 -70l62-46 62 46z" fill="#8d3a2c"/><rect x="-14" y="-40" width="28" height="40" fill="#f5e6c0"/></g>', cerca: flores(['#ffd93d', '#ffffff'], 18, 530, 12) }; },
+    playa: function () { return { lejos: '<rect y="300" width="1200" height="120" fill="#4ec3e8"/><path d="M0 330q150-20 300 0t300 0 300 0 300 0V420H0z" fill="#7ad7f2"/>', medio: colinas('#f3e1a4', 450, 30, 6), cerca: rocas('#c9b27a', 6, 560, 4) }; },
+    bosque: function () { return { lejos: arboles('#134034', 11, 400, 3, 210) + '<circle cx="220" cy="90" r="40" fill="#d8f3c8" opacity=".85"/>', medio: arboles('#1e5c43', 8, 470, 7, 180), cerca: arboles('#0e3228', 5, 600, 13, 260) + flores(['#ffe27a'], 14, 540, 21) }; },
+    montanas: function () { return { lejos: picos('#7e8ccb', true, 430, 3), medio: picos('#a99fd0', true, 500, 9) + colinas('#d7d2e8', 520, 30, 5), cerca: rocas('#8b84ab', 7, 600, 8) }; },
+    mar: function () { return { lejos: '<path d="M0 120q150-30 300 0t300 0 300 0 300 0V600H0z" fill="#1f86b5" opacity=".6"/>' + burbujas(14, 5), medio: '<path d="M0 400q100-30 200 0t200 0 200 0 200 0 200 0 200 0V600H0z" fill="#e9d095"/>' + '<g fill="#ff7a7a"><path d="M150 430q-20-60 10-90 6 40 24 50 4-30 20-44 4 50-16 84z"/></g><g fill="#ffb347"><path d="M880 440q-14-70 18-96 4 36 20 44 8-26 24-34 0 56-20 86z"/></g>', cerca: burbujas(10, 12) + rocas('#c9b27a', 5, 590, 6) }; },
+    volcan: function () { return { lejos: '<path d="M300 440L520 150h160L900 440z" fill="#3a1f26"/><path d="M520 150h160l-14 30q-66 22-132 0z" fill="#ff6a2e"/><path d="M590 180q-8 90-30 180M610 180q4 100 20 200" stroke="#ff8a3c" stroke-width="10" fill="none" stroke-linecap="round"/>' + estrellas(26, 7, '#ffcf9a'), medio: picos('#4a2a2f', false, 520, 4), cerca: rocas('#2b171c', 8, 600, 3) }; },
+    ciudad: function () { return { lejos: ciudad('#2a3a74', '#9fe8ff', 440, 5) + estrellas(20, 9), medio: ciudad('#1a2550', '#ffe27a', 520, 8), cerca: '<rect y="560" width="1200" height="40" fill="#10183a"/><path d="M0 570h1200" stroke="#7be0ff" stroke-width="3" stroke-dasharray="30 18"/>' }; },
+    espacio: function () { return { lejos: estrellas(70, 3) + '<circle cx="940" cy="140" r="70" fill="#b58cff"/><ellipse cx="940" cy="140" rx="116" ry="20" fill="none" stroke="#ffd166" stroke-width="7" transform="rotate(-14 940 140)"/><circle cx="260" cy="110" r="28" fill="#5ec8ff"/>', medio: colinas('#4b4784', 500, 40, 5), cerca: rocas('#3a3768', 6, 600, 2) + estrellas(10, 8, '#ffd166') }; },
+    faro: function () { return { lejos: estrellas(40, 4, '#ffe9b0') + '<circle cx="1000" cy="110" r="50" fill="#fff0c8" opacity=".9"/>', medio: colinas('#2e3a68', 450, 34, 6) + faroGrande(640, 470, 1.15, 6), cerca: colinas('#1d2548', 560, 24, 3) }; }
+  };
+  function capasDeFondo(zona) { return (FONDOS[zona] || FONDOS.jardin)(); }
+  var SUELOS = { mar: ['#e9d095', '#d9bd7d'], faro: ['#3b4778', '#2a3560'], ciudad: ['#2b3768', '#1e2850'], espacio: ['#4b4784', '#3a3768'] };
+  var CIELO_NOCHE = { bosque: 1, montanas: 0, mar: 1, volcan: 1, ciudad: 1, espacio: 1, faro: 1 };
+
+  var CHISPAS_NOM = ['Titila', 'Brasa', 'Destello', 'Ascua', 'Píxel', 'Cometa'];
+  // ---------------------------------------------------------------- objetos de escena
+  var OBJ = {
+    pieza: '<circle cx="50" cy="50" r="30" fill="none" stroke="#ffd166" stroke-width="8" stroke-dasharray="46 20" stroke-linecap="round"/><circle cx="50" cy="50" r="8" fill="#ffd166"/>',
+    brujula: '<circle cx="50" cy="50" r="34" fill="#fff" stroke="#c9741a" stroke-width="6"/><circle cx="50" cy="50" r="27" fill="#fff6c9"/><path d="M50 26l9 24-9 24-9-24z" fill="#e8553f"/><path d="M50 74l-9-24h18z" fill="#7a8aa8"/><circle cx="50" cy="50" r="4" fill="#2b2140"/>',
+    luz: '<circle cx="50" cy="50" r="40" fill="url(#gLumoGlow)"/><path d="M50 14q16 18 11 32-3 7-11 7t-11-7Q34 32 50 14z" fill="#ffd93d"/><ellipse cx="50" cy="64" rx="18" ry="16" fill="#ffb22e"/>',
+    flor: '<path d="M50 90V54" stroke="#3f8f3a" stroke-width="6"/><g fill="#ff7fb0"><circle cx="50" cy="30" r="14"/><circle cx="32" cy="42" r="14"/><circle cx="68" cy="42" r="14"/><circle cx="38" cy="58" r="12"/><circle cx="62" cy="58" r="12"/></g><circle cx="50" cy="44" r="11" fill="#ffd93d"/>',
+    zanahoria: '<path d="M50 86L36 38q14-12 28 0z" fill="#ff8a2e"/><path d="M50 40q-18-18-10-30 10 8 10 30zM50 40q18-18 10-30-10 8-10 30z" fill="#3aa55a"/>',
+    estrella: '<path d="M50 8l12 28 30 3-23 20 7 30-26-16-26 16 7-30-23-20 30-3z" fill="#ffd166" stroke="#e8a82e" stroke-width="3" stroke-linejoin="round"/>'
+  };
+
+  // ---------------------------------------------------------------- pasos automáticos
+  function ladoDe(quien, i) { return quien === 'Lumo' ? 'izq' : 'der'; }
+  function deducirPasos(def, lineas) {
+    var pasos = [{ fondo: def.zona }, { entra: 'Lumo', lado: 'izq', modo: 'salta' }], dentro = { Lumo: true };
+    lineas.forEach(function (l) {
+      var q = l.quien;
+      if (!dentro[q]) { pasos.push({ entra: q, lado: 'der', modo: 'desliza' }); dentro[q] = true; }
+      pasos.push({ dice: l.id, emocion: l.emocion });
+    });
+    return pasos;
+  }
+
+  // ---------------------------------------------------------------- reproducción
+  /*
+   * opciones: { def, lineas:[{id,quien,texto,emocion}], infantil, reducir, voz:{decir(id,op)->{modo}, parar()}, sonido:{sfx(n), musica(z)},
+   *             vocesOn:bool, h(fn de creación de nodos), fin() }
+   */
+  function reproducir(op) {
+    var h = op.h, def = op.def, reducir = !!op.reducir, inf = !!op.infantil, S = op.sonido || {};
+    var pasos = def.pasos && def.pasos.length ? def.pasos : deducirPasos(def, op.lineas);
+    var porId = {}; op.lineas.forEach(function (l) { porId[l.id] = l; });
+
+    var ov = h('div.escena.motor' + (reducir ? '.sin-mov' : ''), { role: 'dialog', 'aria-label': 'Escena de la historia' });
+    var cielo = h('div.esc-cielo'), lejos = h('div.esc-capa.lejos'), medio = h('div.esc-capa.medio'), cerca = h('div.esc-capa.cerca'), particulas = h('div.esc-particulas');
+    var suelo = h('div.esc-suelo'), escenario = h('div.esc-escenario'), objetos = h('div.esc-objetos'), burbuja = h('div.escena-burbuja'), nombre = h('div.escena-nombre'), txt = h('div.escena-texto');
+    var vel = h('div.esc-velo');
+    burbuja.appendChild(nombre); burbuja.appendChild(txt);
+    var sig = h('button.btn-grande.principal.b-sig-esc', { type: 'button', 'aria-label': 'Siguiente', on: { click: pulsar } }, UI.svgEl(UI.ICON.sig, 'ic'));
+    var saltar = h('button.btn-txt.b-saltar', { type: 'button', on: { click: cerrar } }, 'Saltar escena');
+    [cielo, lejos, medio, suelo, escenario, cerca, objetos, particulas, vel, burbuja, sig, saltar].forEach(function (n) { ov.appendChild(n); });
+    burbuja.classList.add('oculta');
+    document.body.appendChild(ov);
+
+    var sigLinea = 0, cerrado = false, actores = {}, esperando = null, zonaActual = null, saltarEspera = false;
+
+    function aplicarZona(z) {
+      var T = Ar().TEMAS[z] || Ar().TEMAS.jardin, c = capasDeFondo(z);
+      zonaActual = z;
+      ov.className = ov.className.replace(/\bzona-\S+/g, '').trim() + ' zona-' + z;
+      cielo.style.background = 'linear-gradient(' + T.cielo[0] + ',' + T.cielo[1] + ')';
+      var svg = function (x) { return '<svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">' + x + '</svg>'; };
+      var G = SUELOS[z] || [T.c1, T.c2]; suelo.style.background = 'linear-gradient(' + G[0] + ',' + G[1] + ')'; suelo.style.filter = CIELO_NOCHE[z] && !SUELOS[z] ? 'brightness(.5) saturate(.9)' : 'none';
+      lejos.innerHTML = svg(c.lejos); medio.innerHTML = svg(c.medio); cerca.innerHTML = svg(c.cerca);
+      if (!reducir) {
+        var p = '', r = azar(z.length * 31 + 5), col = CIELO_NOCHE[z] ? '#ffe9a0' : '#fffbe0';
+        for (var i = 0; i < 16; i++) p += '<i style="left:' + (r() * 100).toFixed(0) + '%;top:' + (30 + r() * 60).toFixed(0) + '%;animation-delay:' + (r() * 6).toFixed(1) + 's;animation-duration:' + (5 + r() * 5).toFixed(1) + 's;background:' + col + '"></i>';
+        particulas.innerHTML = p;
+      } else particulas.innerHTML = '';
+      if (S.musica) S.musica(z);
+    }
+
+    function dibujar(a, expr, pose) {
+      a.expr = expr || a.expr; if (pose !== undefined) a.pose = pose;
+      a.cuerpo.innerHTML = a.nombre === 'Lumo' ? Ar().lumo({ expr: a.expr, pose: a.pose, dir: a.dir || 'S', disfraz: op.disfraz || 0 }) :
+        Ar().personaje(a.nombre, { expr: a.expr });
+    }
+    function entra(nombre_, lado, modo) {
+      if (actores[nombre_]) return;
+      var a = { nombre: nombre_, lado: lado, expr: 'normal', pose: '', dir: lado === 'der' ? 'O' : 'S' };
+      a.dir = nombre_ === 'Lumo' ? 'S' : 'S';
+      a.el = h('div.act.pos-' + lado + (reducir ? '' : '.entra-' + (modo || 'desliza')));
+      a.cuerpo = h('div.act-cuerpo'); a.el.appendChild(a.cuerpo);
+      escenario.appendChild(a.el); actores[nombre_] = a; dibujar(a, nombre_ === 'Lumo' ? 'alegre' : 'normal');
+      if (S.sfx) S.sfx(nombre_ === 'Bichito' ? 'bichito' : nombre_ === 'Abuela Chispa' ? 'abuela' : CHISPAS_NOM.indexOf(nombre_) >= 0 ? 'chispa' : nombre_ === 'Lumo' ? (modo === 'salta' ? 'salto' : 'aparece') : 'aparece');
+    }
+    function sale(nombre_) {
+      var a = actores[nombre_]; if (!a) return; delete actores[nombre_];
+      if (reducir) { if (a.el.parentNode) a.el.parentNode.removeChild(a.el); return; }
+      a.el.classList.add('sale'); setTimeout(function () { if (a.el.parentNode) a.el.parentNode.removeChild(a.el); }, 600);
+    }
+    function haz(nombre_, que) {
+      var a = actores[nombre_]; if (!a || reducir) return;
+      a.cuerpo.className = 'act-cuerpo'; void a.cuerpo.offsetWidth; a.cuerpo.classList.add('a-' + que);
+    }
+    function exprDeEmocion(nombre_, emo) {
+      if (nombre_ === 'Lumo') return Ar().exprDe(emo);
+      var e = Ar().exprDe(emo); return ['normal', 'alegre', 'sorprendido', 'tierno'].indexOf(e) >= 0 ? e : (e === 'emocionado' || e === 'orgulloso' ? 'alegre' : e === 'ups' ? 'sorprendido' : 'normal');
+    }
+    function esperar(ms) {
+      return new Promise(function (ok) {
+        var t = setTimeout(done, reducir ? Math.min(ms, 150) : ms); saltarEspera = false;
+        function done() { clearTimeout(t); esperando = null; ok(); }
+        esperando = done;
+      });
+    }
+    function pulsar() { if (esperando) { var f = esperando; esperando = null; f(); } else if (aDecir) { var g = aDecir; aDecir = null; g(); } }
+    var aDecir = null;
+    function esperarPulsacion() { return new Promise(function (ok) { aDecir = ok; }); }
+
+    function hablar(l, emo) {
+      if (!actores[l.quien]) entra(l.quien, l.quien === 'Lumo' ? 'izq' : 'der', 'desliza');
+      var a = actores[l.quien];
+      Object.keys(actores).forEach(function (k) { actores[k].el.classList.toggle('habla', k === l.quien); });
+      Object.keys(actores).forEach(function (k) { var o = actores[k]; if (k !== l.quien && (o.expr === 'concentrado' || o.expr === 'ups')) dibujar(o, 'normal'); });
+      if (a) { dibujar(a, exprDeEmocion(l.quien, emo || l.emocion)); if (!reducir) haz(l.quien, 'habla'); }
+      burbuja.classList.remove('oculta'); nombre.textContent = l.quien;
+      var r = op.vocesOn !== false && op.voz ? op.voz.decir(l.id, { velocidad: inf ? .85 : .95, caracter: true, emocion: emo || l.emocion }) : null;
+      var sinVoz = !r || r.modo === 'subtitulo';
+      txt.textContent = (!inf || sinVoz) ? l.texto : '';
+      burbuja.classList.toggle('sin-texto', inf && !sinVoz);
+      S.sfx && S.sfx('toque');
+    }
+
+    async function ejecutar(p) {
+      if (p.dice) { var l = p.dice === '*' ? op.lineas[sigLinea++] : porId[p.dice]; if (!l) return; hablar(l, p.emocion || l.emocion); await esperarPulsacion(); return; }
+      if (p.fondo) { if (p.fondo !== zonaActual) { if (!reducir) { vel.classList.add('on'); await esperar(260); } aplicarZona(p.fondo); vel.classList.remove('on'); } return; }
+      if (p.entra) { entra(p.entra, p.lado || 'der', p.modo); if (!reducir) await esperar(520); return; }
+      if (p.sale) { sale(p.sale); if (!reducir) await esperar(400); return; }
+      if (p.emocion) { var a = actores[p.emocion]; if (a) dibujar(a, exprDeEmocion(p.emocion, p.expr), p.pose || ''); return; }
+      if (p.accion) { haz(p.accion, p.haz || 'salta'); await esperar(700); return; }
+      if (p.objeto) {
+        var o = h('div.esc-obj.pos-' + (p.lado || 'centro') + (p.brilla ? '.brilla' : ''), { html: '<svg viewBox="0 0 100 100" aria-hidden="true">' + (OBJ[p.objeto] || OBJ.estrella) + '</svg>' });
+        objetos.innerHTML = ''; objetos.appendChild(o); S.sfx && S.sfx(p.objeto === 'pieza' || p.objeto === 'brujula' ? 'pieza' : p.objeto === 'luz' ? 'faro' : 'animo'); await esperar(700); return;
+      }
+      if (p.camara) { ov.classList.remove('cam-acerca', 'cam-aleja', 'cam-sacude'); void ov.offsetWidth; ov.classList.add('cam-' + p.camara); await esperar(600); return; }
+      if (p.sonido) { S.sfx && S.sfx(p.sonido); return; }
+      if (p.espera) { await esperar(p.espera); return; }
+    }
+    function cerrar() {
+      if (cerrado) return; cerrado = true; if (op.voz) op.voz.parar();
+      if (ov.parentNode) ov.parentNode.removeChild(ov); op.fin();
+    }
+    (async function correr() {
+      try {
+        for (var i = 0; i < pasos.length && !cerrado; i++) await ejecutar(pasos[i]);
+      } catch (e) { if (root.console) console.error('Escena', def.id, e); }
+      cerrar();
+    })();
+    return { cerrar: cerrar, el: ov };
+  }
+
+
+  // ---------------------------------------------------------------- paisaje reutilizable (tablero, senderos) y Faro del mapa
+  var FAUNA = {
+    jardin: ['<path d="M0 0q-9-10-12-2 0 7 12 2zM0 0q9-10 12-2 0 7-12 2z" fill="#ff9ac8"/><path d="M0 0v6" stroke="#5a2a4a" stroke-width="2"/>', 'mariposa'],
+    granja: ['<path d="M0 0q-9-10-12-2 0 7 12 2zM0 0q9-10 12-2 0 7-12 2z" fill="#ffd166"/><path d="M0 0v6" stroke="#5a4a2a" stroke-width="2"/>', 'mariposa'],
+    playa: ['<path d="M-14 0q7-9 14 0 7-9 14 0" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/>', 'gaviota'],
+    mar: ['<path d="M-14 0q8-9 18-3l8-5v16l-8-5q-10 6-18-3z" fill="#ffb347"/><circle cx="-8" cy="-1" r="1.6" fill="#2b2140"/>', 'pez'],
+    bosque: ['<circle r="3.2" fill="#fffbc0"/>', 'luciernaga']
+  };
+  /* paisaje(zona, {reducir, nivel}) -> div.paisaje con cielo, capas, suelo, partículas y fauna. Se pone detrás de otro contenido. */
+  function paisaje(zona, op) {
+    op = op || {};
+    var T = Ar().TEMAS[zona] || Ar().TEMAS.jardin, c = capasDeFondo(zona), r = azar(zona.length * 17 + 3);
+    var svg = function (x) { return '<svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">' + x + '</svg>'; };
+    var G = SUELOS[zona] || [T.c1, T.c2];
+    var el = document.createElement('div'); el.className = 'paisaje zona-' + zona;
+    var fauna = '';
+    if (!op.reducir) {
+      var f = FAUNA[zona], col = CIELO_NOCHE[zona] ? '#ffe9a0' : '#fffbe0';
+      for (var i = 0; i < 14; i++) fauna += '<i class="mota" style="left:' + (r() * 100).toFixed(0) + '%;top:' + (35 + r() * 60).toFixed(0) + '%;animation-delay:' + (r() * 6).toFixed(1) + 's;animation-duration:' + (5 + r() * 5).toFixed(1) + 's;background:' + col + '"></i>';
+      if (f) for (var j = 0; j < 3; j++) fauna += '<svg class="fauna ' + f[1] + '" viewBox="-16 -14 32 28" style="top:' + (22 + j * 17 + r() * 8).toFixed(0) + '%;animation-delay:-' + (r() * 14).toFixed(1) + 's;animation-duration:' + (16 + r() * 8).toFixed(0) + 's" aria-hidden="true">' + f[0] + '</svg>';
+    }
+    el.innerHTML = '<div class="pa-cielo" style="background:linear-gradient(' + T.cielo[0] + ',' + T.cielo[1] + ')"></div>' +
+      '<div class="pa-capa">' + svg(c.lejos) + '</div><div class="pa-capa">' + svg(c.medio) + '</div>' +
+      '<div class="pa-suelo" style="background:linear-gradient(' + G[0] + ',' + G[1] + ');' + (CIELO_NOCHE[zona] && !SUELOS[zona] ? 'filter:brightness(.5) saturate(.9)' : '') + '"></div>' +
+      '<div class="pa-capa cerca">' + svg(c.cerca) + '</div>' + fauna;
+    return el;
+  }
+  /* Faro Mayor para el mapa: `encendidas` ventanas iluminadas (0-6). La linterna hace el guiño «corto, corto, largo». */
+  function faroSvg(encendidas) {
+    var v = '';
+    for (var i = 0; i < 6; i++) v += '<rect x="' + (i % 2 ? 52 : 36) + '" y="' + (110 + Math.floor(i / 3) * 0 + (i >> 1) * 34) + '" width="12" height="20" rx="6" class="faro-v' + (i < encendidas ? ' on' : '') + '" fill="' + (i < encendidas ? '#ffe27a' : '#46506f') + '"/>';
+    return '<svg viewBox="0 0 100 260" class="faro-svg" aria-hidden="true"><defs><radialGradient id="gFaroLuz"><stop offset="0" stop-color="#fff3a8" stop-opacity=".95"/><stop offset="1" stop-color="#ffd166" stop-opacity="0"/></radialGradient></defs>' +
+      '<ellipse cx="50" cy="252" rx="44" ry="7" fill="#000" opacity=".2"/><path d="M26 250l8-170h32l8 170z" fill="#f4f1ea"/><path d="M28 215h44l-2 22H30zM31 150h38l-2 22H33zM34 100h32l-1 18H35z" fill="#e8553f"/>' + v +
+      '<circle cx="50" cy="52" r="46" fill="url(#gFaroLuz)" class="faro-halo"/><rect x="30" y="38" width="40" height="40" rx="7" fill="#2b3558"/><rect x="36" y="44" width="28" height="28" rx="5" class="faro-luz" fill="#ffe27a"/><path d="M26 40l24-24 24 24z" fill="#e8553f"/></svg>';
+  }
+
+  UI.Escenas = { paisaje: paisaje, faroSvg: faroSvg, reproducir: reproducir, deducirPasos: deducirPasos, capasDeFondo: capasDeFondo, OBJETOS: OBJ };
 })(typeof self !== 'undefined' ? self : this);
 
 
@@ -3200,7 +5611,7 @@
     var vel = op.velocidad || 1;
     var cancelado = false, pausado = false, reanudar = null, corriendo = false;
     var pos = { x: nivel.inicio.x, y: nivel.inicio.y, dir: nivel.inicio.dir };
-    var expr = 'normal';
+    var expr = 'normal', pose = '';
 
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', '0 0 ' + (ancho * CELDA) + ' ' + (alto * CELDA));
@@ -3227,7 +5638,7 @@
     var gAros = svg.querySelectorAll('.lumo-aro'), ang = ANGULO[pos.dir], gLumo = svg.querySelector('.lumo'), gIn = svg.querySelector('.lumo-in'), gCara = svg.querySelector('.lumo-cara'), gEf = svg.querySelector('.efectos');
 
     function dibujarLumo() {
-      var s = A().lumo({ dir: pos.dir, expr: expr, disfraz: disfraz });
+      var s = A().lumo({ dir: pos.dir, expr: expr, disfraz: disfraz, pose: pose });
       gCara.innerHTML = s.replace('class="lumo-svg"', 'class="lumo-svg" x="2" y="-4" width="60" height="60"');
     }
     // Anillo de rumbo: rota de verdad (por el camino corto) hacia donde mira Lumo.
@@ -3266,7 +5677,7 @@
     function reiniciar() {
       cancelado = true; pausado = false; if (reanudar) { reanudar(); reanudar = null; }
       pos = { x: nivel.inicio.x, y: nivel.inicio.y, dir: nivel.inicio.dir };
-      expr = 'normal';
+      expr = 'normal'; pose = '';
       gIn.classList.remove('hop', 'bump', 'caer', 'giro-w', 'alegre');
       gIn.style.opacity = '';
       ang = ANGULO[pos.dir]; girarAros(0);
@@ -3298,7 +5709,7 @@
         if (cb.alPaso) cb.alPaso(p, i);
         var d = dur(1);
         if (p.evento === 'control') { await espera(Math.round(d * .45)); continue; }
-        expr = 'normal';
+        expr = 'normal'; pose = '';
         switch (p.evento) {
           case 'mover':
             S && S.sfx('paso'); colocar(p.a.x, p.a.y, d); pos = { x: p.a.x, y: p.a.y, dir: p.a.dir };
@@ -3317,7 +5728,7 @@
             var o = svg.querySelector('.obj[data-x="' + p.de.x + '"][data-y="' + p.de.y + '"]');
             if (o) o.classList.add('recogido');
             recogidos++; svg.dataset.recogidos = recogidos;
-            chispas(p.de.x, p.de.y); expr = 'feliz'; dibujarLumo(); anim('hop', d);
+            chispas(p.de.x, p.de.y); expr = 'alegre'; pose = 'recoge'; dibujarLumo(); anim('hop', d);
             if (cb.alRecoger) cb.alRecoger(recogidos);
             await espera(d); break;
           }
@@ -3336,7 +5747,7 @@
           case 'choque': {
             S && S.sfx('choque');
             var dirM = p.t === 'retroceder' ? OPUESTA[p.de.dir] : p.de.dir, dd = DELTA[dirM];
-            expr = 'sorpresa'; dibujarLumo();
+            expr = 'ups'; dibujarLumo();
             colocar(p.de.x + dd[0] * .35, p.de.y + dd[1] * .35, d * .3);
             await espera(d * .3);
             colocar(p.de.x, p.de.y, d * .4); anim('bump', d * .5);
@@ -3355,7 +5766,7 @@
       if (cancelado) { return { cancelado: true }; }
       if (resultado.ok) {
         S && S.sfx('victoria');
-        expr = 'feliz'; dibujarLumo(); anim('alegre', 900); chispas(pos.x, pos.y);
+        expr = 'emocionado'; pose = 'arriba'; dibujarLumo(); anim('alegre', 900); chispas(pos.x, pos.y);
         svg.dataset.estado = 'victoria';
         await espera(900);
       } else {
@@ -3843,17 +6254,17 @@
     function hablar(id, repetir) {
       var linea = VOCES && VOCES.lineas[id]; if (!linea) return;
       var r = null;
-      if (aj.voz !== false && ctx.voz) r = ctx.voz.decir(id, { velocidad: infantil ? 0.85 : 0.95 });
+      if (aj.voz !== false && ctx.voz) r = ctx.voz.decir(id, { velocidad: infantil ? 0.85 : 0.95, caracter: true });
       var sinVoz = !r || r.modo === 'subtitulo';
       var texto = linea.texto;
-      if (id.indexOf('n_') === 0 && !infantil && nivel.intro && !repetir) texto = nivel.intro.replace(/^[^:]*:\s*[«"]?/, '').replace(/[»"]$/, '') + '\n' + linea.texto;
+      if (id.indexOf('n_') === 0 && !infantil && nivel.intro && !repetir) texto = nivel.intro.replace(/^[^:«.!?]{2,24}:\s*[«"]?/, '').replace(/[»"]$/, '') + '\n' + linea.texto;
       mostrarTexto(texto, id.indexOf('n_') === 0 && !repetir ? quienIntro() : 'Lumo', sinVoz);
     }
 
     // ----------------------------- escena y editor
     var escenaEl = h('div.j-escena');
     var contObjetos = h('div.j-objetos', { hidden: true });
-    var escenaCaja = h('div.j-escena-caja', escenaEl, contObjetos);
+    var escenaCaja = h('div.j-escena-caja', UI.Escenas.paisaje(zona, { reducir: !!aj.reducir }), escenaEl, contObjetos);
     var progEl = h('div.j-prog');
     var cuenta = h('span.cuenta');
     var aviso = h('div.aviso', { role: 'status', 'aria-live': 'polite' });
@@ -4031,15 +6442,37 @@
       else t3 = 'Resuélvelo con ' + I.contarTarjetas(nivel.referencia) + ' tarjetas o menos';
       return ['Superar el reto', 'Usar ' + nivel.estrellas.s2max + ' tarjetas o menos', t3];
     }
+    function ES_CH(id) { var c = root.RumboEscenas.CHISPAS.filter(function (x) { return x.id === id; })[0]; return c ? c.nombre : 'Lumo'; }
     function resultados(est, tarjetas, info, nuevos, nuevosDisf) {
       var ov = h('div.resultado' + (infantil ? '.infantil' : ''), { role: 'dialog', 'aria-label': 'Reto superado' });
       var tarj = h('div.res-tarjeta');
-      tarj.appendChild(h('div.res-lumo', { html: UI.Arte.lumo({ expr: 'feliz', dir: 'S', disfraz: disfraz }) }));
+      var VI = root.RumboVictoria, historia = !ctx.sinRegistro && VI && nivel.mundo !== 'sec' && CAT.POR_ID[nivel.id];
+      var cel = historia ? VI.celebracion(nivel.id, est) : null;
+      var cab = h('div.res-cabeza' + (cel ? '.baile-' + cel.baile : ''));
+      cab.appendChild(h('div.res-lumo', { html: UI.Arte.lumo({ expr: 'emocionado', pose: 'arriba', dir: 'S', disfraz: disfraz }) }));
+      if (cel && cel.baile === 'abrazo') cab.appendChild(h('div.res-amigo', { 'aria-hidden': 'true', html: UI.Arte.personaje(VI.amigoDe(cel.zona), { expr: 'alegre' }) }));
+      if (cel && cel.bichito) cab.appendChild(h('div.res-bichito', { 'aria-hidden': 'true' }, h('div.rb-pj', { html: UI.Arte.personaje('Bichito') }), infantil ? null : h('span.rb-ji', '¡Ji, ji!')));
+      var faroRes = null;
+      if (cel && !infantil && nivel.mundo >= 1) {
+        var fp = VI.faroPequeno(function (id) { return PR.hecho(perfil, id); });
+        var vuela = cel.especial === 'chispa-al-faro' && !aj.reducir;
+        faroRes = h('div.res-faro' + (fp.luzFinal ? '.encendido' : ''), { 'aria-hidden': 'true', html: UI.Escenas.faroSvg(vuela ? fp.encendidas - 1 : fp.encendidas) });
+        if (vuela) {
+          cab.appendChild(h('div.res-chispa-vuela', { html: UI.Arte.personaje(ES_CH(cel.chispa), { expr: 'alegre' }) }));
+          setTimeout(function () { if (vivo && faroRes) faroRes.innerHTML = UI.Escenas.faroSvg(fp.encendidas); }, 1700);
+        }
+        cab.appendChild(faroRes);
+      }
+      tarj.appendChild(cab);
       tarj.appendChild(h('h2', ctx.sinRegistro ? '¡Resuelto!' : infantil ? '¡Muy bien!' : '¡Reto superado!'));
       var fila = h('div.res-estrellas');
       var n = infantil ? 1 : 3;
       for (var i = 0; i < n; i++) fila.appendChild(h('span.est' + (i < est ? '.ganada' : '') , { style: { 'animation-delay': (0.3 + i * 0.35) + 's' } }, UI.svgEl(UI.Arte.estrella(i < est, infantil ? 96 : 64), '')));
       tarj.appendChild(fila);
+      if (!infantil && historia && nivel.mundo >= 1) {
+        var av = VI.avance(nivel.zona, function (id) { return PR.hecho(perfil, id); });
+        if (av) tarj.appendChild(h('div.res-avance' + (av.llegado ? '.llegado' : ''), av.texto));
+      }
       if (!infantil) {
         var t = textoEstrellas();
         tarj.appendChild(h('div.res-info', 'Has usado ' + tarjetas + (tarjetas === 1 ? ' tarjeta.' : ' tarjetas.')));
@@ -4162,11 +6595,10 @@
   'use strict';
   var UI = root.RumboUI = root.RumboUI || {};
   var h = function () { return UI.h.apply(null, arguments); };
-  var CAT, PR, I, VOCES, LOG, DEM, G, Ar;
+  var CAT, PR, I, VOCES, LOG, DEM, G, Ar, ES;
   var App = UI.App = { pantallas: {}, estado: {}, nivelActual: null };
 
   var ZONA_MUNDO = { 0: 'jardin', 1: 'bosque', 2: 'mar', 3: 'ciudad', 4: 'faro' };
-  var ESCENA_ZONA = { 'C0': 'jardin', 'C1': 'bosque', 'C2': 'mar', 'C3': 'ciudad', 'CF': 'faro' };
 
   function perfil() { return App.estado.perfil; }
   function datos() { return App.estado.datos; }
@@ -4176,7 +6608,7 @@
 
   // ---------------------------------------------------------------- arranque
   function iniciar(raiz) {
-    CAT = root.RumboCatalogo; PR = root.RumboProgreso; I = root.RumboInterprete; VOCES = root.RumboVoces; LOG = root.RumboLogros; DEM = root.RumboDemos; Ar = UI.Arte; G = UI.Guardado;
+    CAT = root.RumboCatalogo; PR = root.RumboProgreso; I = root.RumboInterprete; VOCES = root.RumboVoces; LOG = root.RumboLogros; DEM = root.RumboDemos; ES = root.RumboEscenas; Ar = UI.Arte; G = UI.Guardado;
     CAT.registrarVoces();
     Object.keys(DEM.TEXTOS).forEach(function (c) {
       VOCES.lineas['nc_' + c] = { quien: 'Lumo', texto: DEM.TEXTOS[c].replace(/^[^:]+:\s*/, '') };
@@ -4195,7 +6627,6 @@
     var act = datos().perfiles.filter(function (p) { return p.id === datos().activo; })[0];
     App.estado.perfil = act || null;
     aplicarAjustes();
-    construirDisparos();
     if (!G.persistente()) setTimeout(function () { toast('Este navegador no deja guardar datos: el progreso se perderá al cerrar. Usa «Mi código».', 6000); }, 800);
     if (!datos().ajustes.introVista) intro(function () { ir('portada'); }); else ir('portada');
   }
@@ -4277,10 +6708,11 @@
       bs.appendChild(boton('Jugar', 'principal', function () { ir('jugadores'); }, '<svg viewBox="0 0 32 32"><path d="M8 5l18 11L8 27z" fill="#fff"/></svg>'));
     }
     centro.appendChild(bs);
+    cont.appendChild(h('div.portada-faro', { html: UI.Escenas.faroSvg(0) }));
     cont.appendChild(centro);
     cont.appendChild(h('div.portada-licencia',
       h('a.cc-logo', { href: 'https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es', target: '_blank', rel: 'license noopener noreferrer', 'aria-label': 'Licencia Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0' },
-        h('img', { src: 'https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png', alt: 'CC BY-NC-ND 4.0', width: '88', height: '31', loading: 'lazy' })),
+        UI.svgEl(Ar.insigniaCC(), 'cc-ins')),
       h('p', 'Diseñado por David OZC · © 2026 David. Uso gratuito en centros educativos.'),
       h('p.cc-texto', 'Licencia CC BY-NC-ND 4.0: Reconocimiento · NoComercial · SinObraDerivada.')));
     cont.appendChild(h('div.portada-pie',
@@ -4479,21 +6911,31 @@
           h('span', bv.completa ? 'Repetir' : bv.hechos ? 'Continuar' : '¡Empezar!'))));
       if (PR.debeRecomendarBienvenida(p)) recomendarBienvenida();
     }
-    var grid = h('div.mundos' + (infantil() ? '.uno' : ''));
+    var arch = !infantil();
+    if (arch) setTimeout(function () { UI.Sonido.sfx('guino'); }, 300);   // suena a la vez que el primer guiño visual del Faro
+    var grid = h('div.mundos' + (infantil() ? '.uno' : '.archipielago'));
     var opc = opcionesDocente();
+    var chispasHalladas = ES.CHISPAS.filter(function (c) { return p.vistos.escenas[c.rescate]; }).length;
+    var sigP = PR.siguientePendiente(p), mundoActual = sigP && CAT.POR_ID[sigP] ? CAT.POR_ID[sigP].mundo : null;
+    var POS = { 1: [16, 66], 2: [45, 79], 3: [75, 60], 4: [50, 29] };
+    if (arch) {
+      grid.appendChild(h('div.mar-fondo', { html: '<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="sendero" vector-effect="non-scaling-stroke" d="M16 66Q30 84 44 76T75 60Q72 40 50 28" fill="none"/></svg>' + '<i class="ola o1"></i><i class="ola o2"></i><i class="barquito"></i>' }));
+    }
     pestanaMundos().forEach(function (m) {
       var M = CAT.MUNDOS[m], abierto = PR.mundoAbierto(p, m, opc);
       var comp = PR.completadosMundo(p, m), tot = M.niveles.length;
       var est = m === 0 ? null : PR.estrellasMundo(p, m);
-      var cls = 'mundo-tarjeta' + (abierto ? '' : '.cerrado') + (comp === tot ? '.completo' : '');
-      var tarj = h('button.' + cls, { type: 'button', style: { '--col': M.color }, 'aria-disabled': String(!abierto), on: { click: function () {
+      var cls = 'mundo-tarjeta' + (arch ? '.isla' : '') + (m === 4 ? '.faro-isla' : '') + (abierto ? '' : '.cerrado') + (comp === tot ? '.completo' : '');
+      var arte = m === 4 ? h('div.mt-arte.faro-arte', { html: UI.Escenas.faroSvg(chispasHalladas) + '<div class="faro-cont">' + chispasHalladas + ' de ' + ES.CHISPAS.length + ' luces</div>' }) : h('div.mt-arte', { html: miniaturaMundo(m) });
+      var tarj = h('button.' + cls, { type: 'button', style: arch ? { '--col': M.color, left: POS[m][0] + '%', top: POS[m][1] + '%' } : { '--col': M.color }, 'aria-disabled': String(!abierto), on: { click: function () {
         if (!abierto) { UI.Sonido.sfx('choque'); toast(m === 4 ? 'El Faro se abre al terminar el Mundo 3.' : 'Termina el mundo anterior para abrir este.'); return; }
         UI.Sonido.sfx('toque'); ir('mundo', { mundo: m }); } } },
-        h('div.mt-arte', { html: miniaturaMundo(m) }),
-        h('div.mt-info', h('div.mt-nombre', M.nombre), h('div.mt-edad', M.edades), h('p.mt-desc', M.descripcion),
+        arte,
+        h('div.mt-info', h('div.mt-nombre', M.nombre), h('div.mt-edad', M.edades), arch ? null : h('p.mt-desc', M.descripcion),
           h('div.barra', h('i', { style: { width: Math.round(comp / tot * 100) + '%' } })),
           h('div.mt-prog', comp + ' de ' + tot + (est != null ? ' · ★ ' + est + '/' + (tot * 3) : ''))),
-        abierto ? null : h('div.mt-candado', UI.svgEl(Ar.candado(), '')));
+        abierto ? null : h('div.mt-candado', UI.svgEl(Ar.candado(), '')),
+        (arch && mundoActual === m) ? h('div.lumo-marca', { html: Ar.lumo({ expr: 'alegre', dir: 'S', disfraz: p.disfraz, pose: 'saludo' }) }) : null);
       grid.appendChild(tarj);
     });
     cont.appendChild(grid);
@@ -4547,7 +6989,7 @@
     var opc = opcionesDocente();
     cont.style.setProperty('--col', M.color);
     cont.classList.add('zona-' + M.zonas[0]);
-    nubes(cont);
+    cont.appendChild(UI.Escenas.paisaje(M.zonas[0], { reducir: !!datos().ajustes.reducir }));
     UI.Sonido.musica(M.zonas[0]);
     cont.appendChild(cabecera(M.nombre, { atras: function () { ir('mapa'); } }));
     var cuerpo = h('div.niveles-cuerpo');
@@ -4595,6 +7037,12 @@
       }
     }
     cont.appendChild(cuerpo);
+    // Sendero: une cada nodo con el siguiente; el primero de cada fila no lleva tramo por la izquierda.
+    setTimeout(function () {
+      Array.prototype.forEach.call(cuerpo.querySelectorAll('.ruta'), function (r) {
+        var prev = null; Array.prototype.forEach.call(r.children, function (n) { var t = n.offsetTop; n.classList.toggle('ini-fila', prev === null || t > prev + 4); prev = t; });
+      });
+    }, 0);
   });
 
   // ---------------------------------------------------------------- jugar un nivel
@@ -4673,103 +7121,53 @@
   }
 
   // ---------------------------------------------------------------- historia: disparadores y escenas
-  var DISPARO = { antes: {}, despues: {} };
-  function construirDisparos() {
-    DISPARO = { antes: {}, despues: {} };
-    function antes(id, e) { (DISPARO.antes[id] = DISPARO.antes[id] || []).push(e); }
-    function despues(id, e) { (DISPARO.despues[id] = DISPARO.despues[id] || []).push(e); }
-    function primero(niv, fn) { return niv.filter(fn)[0]; }
-    var it = CAT.ITINERARIOS;
-    antes(it[3][0], 'C0-01'); antes(it[3][0], 'BV-01'); antes(it[3][1], 'BV-02'); antes(it[3][3], 'BV-03'); antes(it[3][4], 'BV-04'); despues(it[3][it[3].length - 1], 'BV-05'); despues(it[3][it[3].length - 1], 'C0-02'); despues(it[4][it[4].length - 1], 'C0-03'); despues(it[5][it[5].length - 1], 'C0-04');
-    var M = CAT.MUNDOS, x;
-    antes(M[1].niveles[0].id, 'C1-01');
-    if ((x = primero(M[1].niveles, function (n) { return n.tipo === 'depurar'; }))) antes(x.id, 'C1-02');
-    if ((x = primero(M[1].niveles, function (n) { return n.cartas.disponibles.indexOf('repetir') >= 0; }))) antes(x.id, 'C1-03');
-    if ((x = primero(M[1].niveles, function (n) { return n.zona === 'montanas'; }))) antes(x.id, 'C1-04');
-    despues(M[1].niveles[M[1].niveles.length - 1].id, 'C1-05');
-    antes(M[2].niveles[0].id, 'C2-01');
-    if ((x = primero(M[2].niveles, function (n) { return n.cartas.disponibles.indexOf('receta') >= 0; }))) antes(x.id, 'C2-02');
-    if ((x = primero(M[2].niveles, function (n) { return n.zona === 'volcan'; }))) antes(x.id, 'C2-03');
-    if ((x = primero(M[2].niveles, function (n) { return n.tipo === 'depurar'; }))) antes(x.id, 'C2-04');
-    despues(M[2].niveles[M[2].niveles.length - 1].id, 'C2-05');
-    antes(M[3].niveles[0].id, 'C3-01');
-    if ((x = primero(M[3].niveles, function (n) { return n.cartas.disponibles.indexOf('si') >= 0; }))) antes(x.id, 'C3-02');
-    if ((x = primero(M[3].niveles, function (n) { return n.zona === 'espacio'; }))) { antes(x.id, 'C3-03'); antes(x.id, 'C3-04'); }
-    despues(M[3].niveles[M[3].niveles.length - 1].id, 'C3-05');
-    antes(M[4].niveles[0].id, 'CF-01');
-    // El final se ve al terminar el último reto del propio curso (ver escenasPendientes).
-    Object.keys(CAT.FINAL_CURSO).forEach(function (c) { var id = CAT.FINAL_CURSO[c]; ['CF-03', 'CF-04', 'CF-05'].forEach(function (e) { if ((DISPARO.despues[id] || []).indexOf(e) < 0) despues(id, e); }); });
-  }
-  App.disparos = function () { return DISPARO; };
-
-  function escenasPendientes(lista, idNivel) {
+  // Los disparadores, las etapas y las frases de cada escena viven en src/datos/escenas.js (datos + función pura probada).
+  function escenasPendientes(cuando, idNivel) {
     var p = perfil(); if (!p || (App.estado.docente && App.estado.docente.vista)) return [];
-    return (lista || []).filter(function (e) {
-      if (/^BV-/.test(e) && infantil()) return false;   // la presentación de Lumo para Primaria (Infantil tiene sus escenas C0)
-      if (/^C0-/.test(e) && !infantil()) return false;
-      if (/^CF-0[345]$/.test(e) && idNivel && CAT.finalDe(p.curso) !== idNivel) return false;   // el final es el del curso del jugador
-      return !p.vistos.escenas[e];
-    });
+    return ES.pendientes({ cuando: cuando, nivel: idNivel, infantil: infantil(), vistas: p.vistos.escenas, esFinalDelCurso: CAT.finalDe(p.curso) === idNivel });
   }
-  function antesDe(id, fn) { reproducirEscenas(escenasPendientes(DISPARO.antes[id], id), fn); }
-  function despuesDe(id, fn) { reproducirEscenas(escenasPendientes(DISPARO.despues[id], id), fn); }
+  function antesDe(id, fn) { reproducirEscenas(escenasPendientes('antes', id), fn); }
+  function despuesDe(id, fn) { reproducirEscenas(escenasPendientes('despues', id), fn); }
 
-  function lineasDeEscena(e) {
-    return Object.keys(VOCES.lineas).filter(function (k) { return VOCES.lineas[k].escena === e; });
-  }
+  function lineasDeEscena(e) { return ES.lineasDe(e); }
   function reproducirEscenas(lista, fin) {
     if (!lista.length) { fin(); return; }
     var e = lista[0], resto = lista.slice(1);
     var sigue = function () { reproducirEscenas(resto, fin); };
-    PR.marcarEscenaVista(perfil(), e); guardar();
-    if (e === 'CF-04') { creditos(sigue); return; }
-    var lineas = lineasDeEscena(e);
-    if (!lineas.length) { sigue(); return; }
-    escena(e, lineas, sigue);
+    PR.marcarEscenaVista(perfil(), e);
+    (ES.POR_ID[e].marca || []).forEach(function (m) { PR.marcarEscenaVista(perfil(), m); });
+    guardar();
+    mostrarEscena(e, sigue);
   }
-  UI.reproducirEscena = function (id, fin) { var l = lineasDeEscena(id); if (id === 'CF-04') creditos(fin || function () {}); else if (l.length) escena(id, l, fin || function () {}); else if (fin) fin(); };
+  // Una escena con créditos los muestra primero y, si además tiene frases (p. ej. el avance del siguiente mundo), las dice después.
+  function mostrarEscena(id, fin) {
+    var d = ES.POR_ID[id]; if (!d) { fin(); return; }
+    var lineas = lineasDeEscena(id);
+    var dichas = function () { if (lineas.length) escena(id, lineas, fin); else fin(); };
+    if (d.creditos) creditos(d.creditos, dichas); else dichas();
+  }
+  UI.reproducirEscena = function (id, fin) { mostrarEscena(id, fin || function () {}); };
 
+  // La escena la dirige el motor src/ui/escena-motor.js (fondos por capas, personajes de cuerpo entero, pasos).
   function escena(id, lineas, fin) {
-    var zona = id === 'C2-03' ? 'volcan' : id === 'C3-03' || id === 'C3-04' ? 'espacio' : ESCENA_ZONA[id.slice(0, 2)] || 'jardin';
-    var T = Ar.TEMAS[zona];
-    var inf = infantil() || id.indexOf('C0') === 0;
-    var ov = h('div.escena.zona-' + zona, { role: 'dialog', 'aria-label': 'Escena de la historia', style: { '--c1': T.cielo[0], '--c2': T.cielo[1] } });
-    var suelo = h('div.escena-suelo', { style: { background: T.c1 } });
-    var izq = h('div.act.izq'), der = h('div.act.der');
-    var burbuja = h('div.escena-burbuja'), nombre = h('div.escena-nombre'), txt = h('div.escena-texto');
-    burbuja.appendChild(nombre); burbuja.appendChild(txt);
-    var cerrado = false, i = 0;
-    var sig = h('button.btn-grande.principal.b-sig-esc', { type: 'button', 'aria-label': 'Siguiente', on: { click: avanzar } }, UI.svgEl(UI.ICON.sig, 'ic'));
-    var saltar = h('button.btn-txt.b-saltar', { type: 'button', on: { click: cerrar } }, 'Saltar escena');
-    ov.appendChild(h('i.nube.n1')); ov.appendChild(h('i.nube.n2'));
-    ov.appendChild(suelo); ov.appendChild(izq); ov.appendChild(der); ov.appendChild(burbuja); ov.appendChild(sig); ov.appendChild(saltar);
-    document.body.appendChild(ov);
-    UI.Sonido.musica(zona);
-    function cerrar() {
-      if (cerrado) return; cerrado = true; App.estado.voz.parar();
-      if (ov.parentNode) ov.parentNode.removeChild(ov); fin();
-    }
-    function mostrar() {
-      var id_ = lineas[i], l = VOCES.lineas[id_];
-      var quien = l.quien;
-      var avatarL = Ar.personaje('Lumo'), otro = quien !== 'Lumo' ? Ar.personaje(quien) : null;
-      izq.innerHTML = avatarL; der.innerHTML = otro || '';
-      izq.classList.toggle('habla', quien === 'Lumo'); der.classList.toggle('habla', quien !== 'Lumo');
-      nombre.textContent = quien;
-      var r = datos().ajustes.voz !== false ? App.estado.voz.decir(id_, { velocidad: inf ? 0.85 : 0.95 }) : null;
-      var sinVoz = !r || r.modo === 'subtitulo';
-      txt.textContent = (!inf || sinVoz) ? l.texto : '';
-      burbuja.classList.toggle('sin-texto', inf && !sinVoz);
-      UI.Sonido.sfx('toque');
-    }
-    function avanzar() { i++; if (i >= lineas.length) cerrar(); else mostrar(); }
-    mostrar();
+    var d = ES.POR_ID[id];
+    var inf = infantil() || (d && d.etapa === 'infantil');
+    var datos_ = lineas.map(function (lid, k) {
+      var l = VOCES.lineas[lid], emo = null;
+      (d.lineas || []).forEach(function (x) { if (x.id === lid) emo = x.emocion; });
+      return { id: lid, quien: l.quien, texto: l.texto, emocion: emo };
+    });
+    UI.Escenas.reproducir({
+      def: d, lineas: datos_, infantil: inf, h: h, disfraz: perfil() ? perfil().disfraz : 0,
+      reducir: !!(datos().ajustes && datos().ajustes.reducir),
+      vocesOn: datos().ajustes.voz !== false, voz: App.estado.voz, sonido: UI.Sonido, fin: fin
+    });
   }
 
-  function creditos(fin) {
+  function creditos(datos_, fin) {
     var ov = h('div.escena.creditos.zona-faro');
-    var lista = h('div.cred-lista', h('h2', 'Gracias por encender el Faro'));
-    [['Lumo', 'La chispa que aprendió a pensar'], ['Abuela Chispa', 'La guardiana del Faro'], ['Búho Bruma', 'Bosque encantado'], ['Bichito', 'El error que se hizo amigo'], ['Tinta', 'Mundo submarino'], ['Lagarto gigante', 'Isla volcánica'], ['Bit', 'Ciudad tecnológica']].forEach(function (c) {
+    var lista = h('div.cred-lista', h('h2', datos_.titulo));
+    datos_.filas.forEach(function (c) {
       lista.appendChild(h('div.cred', h('div.cred-av', { html: Ar.personaje(c[0]) }), h('div', h('b', c[0]), h('span', c[1]))));
     });
     ov.appendChild(lista);
@@ -4808,15 +7206,22 @@
     var piezas = [PR.mundoCompleto(p, 1), PR.mundoCompleto(p, 2), PR.mundoCompleto(p, 3), PR.hecho(p, 'f-03')];
     var sec3 = h('section', h('h2', 'La brújula de Lumo'), h('div.brujula', piezas.map(function (v, i) { return UI.svgEl(Ar.brujulaPieza(i + 1, v), ''); })));
     cuerpo.appendChild(sec3);
-    // Álbum de recuerdos
-    var vistas = Object.keys(p.vistos.escenas);
-    var sec4 = h('section', h('h2', 'Álbum de recuerdos'));
-    var al = h('div.album');
-    vistas.sort().forEach(function (e) {
-      al.appendChild(h('button.recuerdo', { type: 'button', on: { click: function () { UI.reproducirEscena(e, function () {}); } } }, h('span', e)));
+    // Diario de Lumo (sustituye al álbum): una página por chispa y por amigo; se calcula desde retos superados y escenas vistas.
+    var inf = PR.esInfantil(p), VI = root.RumboVictoria;
+    var pags = VI.paginasDiario(p, inf);
+    var sec4 = h('section.diario', h('h2', 'El diario de Lumo'));
+    var dl = h('div.diario-paginas');
+    pags.forEach(function (pg, i) {
+      var abre = pg.escena ? function () { UI.reproducirEscena(pg.escena, function () {}); } : null;
+      var tag = abre ? 'button' : 'div';
+      var art = pg.abierta ? Ar.personaje(pg.personaje, { expr: 'alegre' }) : Ar.personaje(pg.personaje, { expr: 'normal' });
+      dl.appendChild(h(tag + '.pagina' + (pg.abierta ? '' : '.cerrada') + (abre ? '.rejugable' : '') + (i % 2 ? '.der' : ''),
+        Object.assign({ 'aria-label': pg.abierta ? pg.titulo + (abre ? ': volver a ver la escena' : '') : 'Página aún cerrada' }, abre ? { type: 'button', on: { click: abre } } : {}),
+        h('div.pg-dibujo', { html: art }),
+        h('div.pg-texto', h('b', pg.abierta ? pg.titulo : '???'), pg.abierta && pg.texto ? h('span', '«' + pg.texto + '»') : null,
+          abre ? h('i.pg-ver', inf ? '▶' : '▶ Volver a ver') : null)));
     });
-    if (!vistas.length) al.appendChild(h('p.nota', 'Aquí aparecerán las escenas de la historia que vayas viendo.'));
-    sec4.appendChild(al); cuerpo.appendChild(sec4);
+    sec4.appendChild(dl); cuerpo.appendChild(sec4);
     cont.appendChild(cuerpo);
   });
 

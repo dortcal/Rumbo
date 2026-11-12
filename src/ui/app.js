@@ -6,11 +6,10 @@
   'use strict';
   var UI = root.RumboUI = root.RumboUI || {};
   var h = function () { return UI.h.apply(null, arguments); };
-  var CAT, PR, I, VOCES, LOG, DEM, G, Ar;
+  var CAT, PR, I, VOCES, LOG, DEM, G, Ar, ES;
   var App = UI.App = { pantallas: {}, estado: {}, nivelActual: null };
 
   var ZONA_MUNDO = { 0: 'jardin', 1: 'bosque', 2: 'mar', 3: 'ciudad', 4: 'faro' };
-  var ESCENA_ZONA = { 'C0': 'jardin', 'C1': 'bosque', 'C2': 'mar', 'C3': 'ciudad', 'CF': 'faro' };
 
   function perfil() { return App.estado.perfil; }
   function datos() { return App.estado.datos; }
@@ -20,7 +19,7 @@
 
   // ---------------------------------------------------------------- arranque
   function iniciar(raiz) {
-    CAT = root.RumboCatalogo; PR = root.RumboProgreso; I = root.RumboInterprete; VOCES = root.RumboVoces; LOG = root.RumboLogros; DEM = root.RumboDemos; Ar = UI.Arte; G = UI.Guardado;
+    CAT = root.RumboCatalogo; PR = root.RumboProgreso; I = root.RumboInterprete; VOCES = root.RumboVoces; LOG = root.RumboLogros; DEM = root.RumboDemos; ES = root.RumboEscenas; Ar = UI.Arte; G = UI.Guardado;
     CAT.registrarVoces();
     Object.keys(DEM.TEXTOS).forEach(function (c) {
       VOCES.lineas['nc_' + c] = { quien: 'Lumo', texto: DEM.TEXTOS[c].replace(/^[^:]+:\s*/, '') };
@@ -39,7 +38,6 @@
     var act = datos().perfiles.filter(function (p) { return p.id === datos().activo; })[0];
     App.estado.perfil = act || null;
     aplicarAjustes();
-    construirDisparos();
     if (!G.persistente()) setTimeout(function () { toast('Este navegador no deja guardar datos: el progreso se perderá al cerrar. Usa «Mi código».', 6000); }, 800);
     if (!datos().ajustes.introVista) intro(function () { ir('portada'); }); else ir('portada');
   }
@@ -121,10 +119,11 @@
       bs.appendChild(boton('Jugar', 'principal', function () { ir('jugadores'); }, '<svg viewBox="0 0 32 32"><path d="M8 5l18 11L8 27z" fill="#fff"/></svg>'));
     }
     centro.appendChild(bs);
+    cont.appendChild(h('div.portada-faro', { html: UI.Escenas.faroSvg(0) }));
     cont.appendChild(centro);
     cont.appendChild(h('div.portada-licencia',
       h('a.cc-logo', { href: 'https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es', target: '_blank', rel: 'license noopener noreferrer', 'aria-label': 'Licencia Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0' },
-        h('img', { src: 'https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png', alt: 'CC BY-NC-ND 4.0', width: '88', height: '31', loading: 'lazy' })),
+        UI.svgEl(Ar.insigniaCC(), 'cc-ins')),
       h('p', 'Diseñado por David OZC · © 2026 David. Uso gratuito en centros educativos.'),
       h('p.cc-texto', 'Licencia CC BY-NC-ND 4.0: Reconocimiento · NoComercial · SinObraDerivada.')));
     cont.appendChild(h('div.portada-pie',
@@ -323,21 +322,31 @@
           h('span', bv.completa ? 'Repetir' : bv.hechos ? 'Continuar' : '¡Empezar!'))));
       if (PR.debeRecomendarBienvenida(p)) recomendarBienvenida();
     }
-    var grid = h('div.mundos' + (infantil() ? '.uno' : ''));
+    var arch = !infantil();
+    if (arch) setTimeout(function () { UI.Sonido.sfx('guino'); }, 300);   // suena a la vez que el primer guiño visual del Faro
+    var grid = h('div.mundos' + (infantil() ? '.uno' : '.archipielago'));
     var opc = opcionesDocente();
+    var chispasHalladas = ES.CHISPAS.filter(function (c) { return p.vistos.escenas[c.rescate]; }).length;
+    var sigP = PR.siguientePendiente(p), mundoActual = sigP && CAT.POR_ID[sigP] ? CAT.POR_ID[sigP].mundo : null;
+    var POS = { 1: [16, 66], 2: [45, 79], 3: [75, 60], 4: [50, 29] };
+    if (arch) {
+      grid.appendChild(h('div.mar-fondo', { html: '<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="sendero" vector-effect="non-scaling-stroke" d="M16 66Q30 84 44 76T75 60Q72 40 50 28" fill="none"/></svg>' + '<i class="ola o1"></i><i class="ola o2"></i><i class="barquito"></i>' }));
+    }
     pestanaMundos().forEach(function (m) {
       var M = CAT.MUNDOS[m], abierto = PR.mundoAbierto(p, m, opc);
       var comp = PR.completadosMundo(p, m), tot = M.niveles.length;
       var est = m === 0 ? null : PR.estrellasMundo(p, m);
-      var cls = 'mundo-tarjeta' + (abierto ? '' : '.cerrado') + (comp === tot ? '.completo' : '');
-      var tarj = h('button.' + cls, { type: 'button', style: { '--col': M.color }, 'aria-disabled': String(!abierto), on: { click: function () {
+      var cls = 'mundo-tarjeta' + (arch ? '.isla' : '') + (m === 4 ? '.faro-isla' : '') + (abierto ? '' : '.cerrado') + (comp === tot ? '.completo' : '');
+      var arte = m === 4 ? h('div.mt-arte.faro-arte', { html: UI.Escenas.faroSvg(chispasHalladas) + '<div class="faro-cont">' + chispasHalladas + ' de ' + ES.CHISPAS.length + ' luces</div>' }) : h('div.mt-arte', { html: miniaturaMundo(m) });
+      var tarj = h('button.' + cls, { type: 'button', style: arch ? { '--col': M.color, left: POS[m][0] + '%', top: POS[m][1] + '%' } : { '--col': M.color }, 'aria-disabled': String(!abierto), on: { click: function () {
         if (!abierto) { UI.Sonido.sfx('choque'); toast(m === 4 ? 'El Faro se abre al terminar el Mundo 3.' : 'Termina el mundo anterior para abrir este.'); return; }
         UI.Sonido.sfx('toque'); ir('mundo', { mundo: m }); } } },
-        h('div.mt-arte', { html: miniaturaMundo(m) }),
-        h('div.mt-info', h('div.mt-nombre', M.nombre), h('div.mt-edad', M.edades), h('p.mt-desc', M.descripcion),
+        arte,
+        h('div.mt-info', h('div.mt-nombre', M.nombre), h('div.mt-edad', M.edades), arch ? null : h('p.mt-desc', M.descripcion),
           h('div.barra', h('i', { style: { width: Math.round(comp / tot * 100) + '%' } })),
           h('div.mt-prog', comp + ' de ' + tot + (est != null ? ' · ★ ' + est + '/' + (tot * 3) : ''))),
-        abierto ? null : h('div.mt-candado', UI.svgEl(Ar.candado(), '')));
+        abierto ? null : h('div.mt-candado', UI.svgEl(Ar.candado(), '')),
+        (arch && mundoActual === m) ? h('div.lumo-marca', { html: Ar.lumo({ expr: 'alegre', dir: 'S', disfraz: p.disfraz, pose: 'saludo' }) }) : null);
       grid.appendChild(tarj);
     });
     cont.appendChild(grid);
@@ -391,7 +400,7 @@
     var opc = opcionesDocente();
     cont.style.setProperty('--col', M.color);
     cont.classList.add('zona-' + M.zonas[0]);
-    nubes(cont);
+    cont.appendChild(UI.Escenas.paisaje(M.zonas[0], { reducir: !!datos().ajustes.reducir }));
     UI.Sonido.musica(M.zonas[0]);
     cont.appendChild(cabecera(M.nombre, { atras: function () { ir('mapa'); } }));
     var cuerpo = h('div.niveles-cuerpo');
@@ -439,6 +448,12 @@
       }
     }
     cont.appendChild(cuerpo);
+    // Sendero: une cada nodo con el siguiente; el primero de cada fila no lleva tramo por la izquierda.
+    setTimeout(function () {
+      Array.prototype.forEach.call(cuerpo.querySelectorAll('.ruta'), function (r) {
+        var prev = null; Array.prototype.forEach.call(r.children, function (n) { var t = n.offsetTop; n.classList.toggle('ini-fila', prev === null || t > prev + 4); prev = t; });
+      });
+    }, 0);
   });
 
   // ---------------------------------------------------------------- jugar un nivel
@@ -517,103 +532,53 @@
   }
 
   // ---------------------------------------------------------------- historia: disparadores y escenas
-  var DISPARO = { antes: {}, despues: {} };
-  function construirDisparos() {
-    DISPARO = { antes: {}, despues: {} };
-    function antes(id, e) { (DISPARO.antes[id] = DISPARO.antes[id] || []).push(e); }
-    function despues(id, e) { (DISPARO.despues[id] = DISPARO.despues[id] || []).push(e); }
-    function primero(niv, fn) { return niv.filter(fn)[0]; }
-    var it = CAT.ITINERARIOS;
-    antes(it[3][0], 'C0-01'); antes(it[3][0], 'BV-01'); antes(it[3][1], 'BV-02'); antes(it[3][3], 'BV-03'); antes(it[3][4], 'BV-04'); despues(it[3][it[3].length - 1], 'BV-05'); despues(it[3][it[3].length - 1], 'C0-02'); despues(it[4][it[4].length - 1], 'C0-03'); despues(it[5][it[5].length - 1], 'C0-04');
-    var M = CAT.MUNDOS, x;
-    antes(M[1].niveles[0].id, 'C1-01');
-    if ((x = primero(M[1].niveles, function (n) { return n.tipo === 'depurar'; }))) antes(x.id, 'C1-02');
-    if ((x = primero(M[1].niveles, function (n) { return n.cartas.disponibles.indexOf('repetir') >= 0; }))) antes(x.id, 'C1-03');
-    if ((x = primero(M[1].niveles, function (n) { return n.zona === 'montanas'; }))) antes(x.id, 'C1-04');
-    despues(M[1].niveles[M[1].niveles.length - 1].id, 'C1-05');
-    antes(M[2].niveles[0].id, 'C2-01');
-    if ((x = primero(M[2].niveles, function (n) { return n.cartas.disponibles.indexOf('receta') >= 0; }))) antes(x.id, 'C2-02');
-    if ((x = primero(M[2].niveles, function (n) { return n.zona === 'volcan'; }))) antes(x.id, 'C2-03');
-    if ((x = primero(M[2].niveles, function (n) { return n.tipo === 'depurar'; }))) antes(x.id, 'C2-04');
-    despues(M[2].niveles[M[2].niveles.length - 1].id, 'C2-05');
-    antes(M[3].niveles[0].id, 'C3-01');
-    if ((x = primero(M[3].niveles, function (n) { return n.cartas.disponibles.indexOf('si') >= 0; }))) antes(x.id, 'C3-02');
-    if ((x = primero(M[3].niveles, function (n) { return n.zona === 'espacio'; }))) { antes(x.id, 'C3-03'); antes(x.id, 'C3-04'); }
-    despues(M[3].niveles[M[3].niveles.length - 1].id, 'C3-05');
-    antes(M[4].niveles[0].id, 'CF-01');
-    // El final se ve al terminar el último reto del propio curso (ver escenasPendientes).
-    Object.keys(CAT.FINAL_CURSO).forEach(function (c) { var id = CAT.FINAL_CURSO[c]; ['CF-03', 'CF-04', 'CF-05'].forEach(function (e) { if ((DISPARO.despues[id] || []).indexOf(e) < 0) despues(id, e); }); });
-  }
-  App.disparos = function () { return DISPARO; };
-
-  function escenasPendientes(lista, idNivel) {
+  // Los disparadores, las etapas y las frases de cada escena viven en src/datos/escenas.js (datos + función pura probada).
+  function escenasPendientes(cuando, idNivel) {
     var p = perfil(); if (!p || (App.estado.docente && App.estado.docente.vista)) return [];
-    return (lista || []).filter(function (e) {
-      if (/^BV-/.test(e) && infantil()) return false;   // la presentación de Lumo para Primaria (Infantil tiene sus escenas C0)
-      if (/^C0-/.test(e) && !infantil()) return false;
-      if (/^CF-0[345]$/.test(e) && idNivel && CAT.finalDe(p.curso) !== idNivel) return false;   // el final es el del curso del jugador
-      return !p.vistos.escenas[e];
-    });
+    return ES.pendientes({ cuando: cuando, nivel: idNivel, infantil: infantil(), vistas: p.vistos.escenas, esFinalDelCurso: CAT.finalDe(p.curso) === idNivel });
   }
-  function antesDe(id, fn) { reproducirEscenas(escenasPendientes(DISPARO.antes[id], id), fn); }
-  function despuesDe(id, fn) { reproducirEscenas(escenasPendientes(DISPARO.despues[id], id), fn); }
+  function antesDe(id, fn) { reproducirEscenas(escenasPendientes('antes', id), fn); }
+  function despuesDe(id, fn) { reproducirEscenas(escenasPendientes('despues', id), fn); }
 
-  function lineasDeEscena(e) {
-    return Object.keys(VOCES.lineas).filter(function (k) { return VOCES.lineas[k].escena === e; });
-  }
+  function lineasDeEscena(e) { return ES.lineasDe(e); }
   function reproducirEscenas(lista, fin) {
     if (!lista.length) { fin(); return; }
     var e = lista[0], resto = lista.slice(1);
     var sigue = function () { reproducirEscenas(resto, fin); };
-    PR.marcarEscenaVista(perfil(), e); guardar();
-    if (e === 'CF-04') { creditos(sigue); return; }
-    var lineas = lineasDeEscena(e);
-    if (!lineas.length) { sigue(); return; }
-    escena(e, lineas, sigue);
+    PR.marcarEscenaVista(perfil(), e);
+    (ES.POR_ID[e].marca || []).forEach(function (m) { PR.marcarEscenaVista(perfil(), m); });
+    guardar();
+    mostrarEscena(e, sigue);
   }
-  UI.reproducirEscena = function (id, fin) { var l = lineasDeEscena(id); if (id === 'CF-04') creditos(fin || function () {}); else if (l.length) escena(id, l, fin || function () {}); else if (fin) fin(); };
+  // Una escena con créditos los muestra primero y, si además tiene frases (p. ej. el avance del siguiente mundo), las dice después.
+  function mostrarEscena(id, fin) {
+    var d = ES.POR_ID[id]; if (!d) { fin(); return; }
+    var lineas = lineasDeEscena(id);
+    var dichas = function () { if (lineas.length) escena(id, lineas, fin); else fin(); };
+    if (d.creditos) creditos(d.creditos, dichas); else dichas();
+  }
+  UI.reproducirEscena = function (id, fin) { mostrarEscena(id, fin || function () {}); };
 
+  // La escena la dirige el motor src/ui/escena-motor.js (fondos por capas, personajes de cuerpo entero, pasos).
   function escena(id, lineas, fin) {
-    var zona = id === 'C2-03' ? 'volcan' : id === 'C3-03' || id === 'C3-04' ? 'espacio' : ESCENA_ZONA[id.slice(0, 2)] || 'jardin';
-    var T = Ar.TEMAS[zona];
-    var inf = infantil() || id.indexOf('C0') === 0;
-    var ov = h('div.escena.zona-' + zona, { role: 'dialog', 'aria-label': 'Escena de la historia', style: { '--c1': T.cielo[0], '--c2': T.cielo[1] } });
-    var suelo = h('div.escena-suelo', { style: { background: T.c1 } });
-    var izq = h('div.act.izq'), der = h('div.act.der');
-    var burbuja = h('div.escena-burbuja'), nombre = h('div.escena-nombre'), txt = h('div.escena-texto');
-    burbuja.appendChild(nombre); burbuja.appendChild(txt);
-    var cerrado = false, i = 0;
-    var sig = h('button.btn-grande.principal.b-sig-esc', { type: 'button', 'aria-label': 'Siguiente', on: { click: avanzar } }, UI.svgEl(UI.ICON.sig, 'ic'));
-    var saltar = h('button.btn-txt.b-saltar', { type: 'button', on: { click: cerrar } }, 'Saltar escena');
-    ov.appendChild(h('i.nube.n1')); ov.appendChild(h('i.nube.n2'));
-    ov.appendChild(suelo); ov.appendChild(izq); ov.appendChild(der); ov.appendChild(burbuja); ov.appendChild(sig); ov.appendChild(saltar);
-    document.body.appendChild(ov);
-    UI.Sonido.musica(zona);
-    function cerrar() {
-      if (cerrado) return; cerrado = true; App.estado.voz.parar();
-      if (ov.parentNode) ov.parentNode.removeChild(ov); fin();
-    }
-    function mostrar() {
-      var id_ = lineas[i], l = VOCES.lineas[id_];
-      var quien = l.quien;
-      var avatarL = Ar.personaje('Lumo'), otro = quien !== 'Lumo' ? Ar.personaje(quien) : null;
-      izq.innerHTML = avatarL; der.innerHTML = otro || '';
-      izq.classList.toggle('habla', quien === 'Lumo'); der.classList.toggle('habla', quien !== 'Lumo');
-      nombre.textContent = quien;
-      var r = datos().ajustes.voz !== false ? App.estado.voz.decir(id_, { velocidad: inf ? 0.85 : 0.95 }) : null;
-      var sinVoz = !r || r.modo === 'subtitulo';
-      txt.textContent = (!inf || sinVoz) ? l.texto : '';
-      burbuja.classList.toggle('sin-texto', inf && !sinVoz);
-      UI.Sonido.sfx('toque');
-    }
-    function avanzar() { i++; if (i >= lineas.length) cerrar(); else mostrar(); }
-    mostrar();
+    var d = ES.POR_ID[id];
+    var inf = infantil() || (d && d.etapa === 'infantil');
+    var datos_ = lineas.map(function (lid, k) {
+      var l = VOCES.lineas[lid], emo = null;
+      (d.lineas || []).forEach(function (x) { if (x.id === lid) emo = x.emocion; });
+      return { id: lid, quien: l.quien, texto: l.texto, emocion: emo };
+    });
+    UI.Escenas.reproducir({
+      def: d, lineas: datos_, infantil: inf, h: h, disfraz: perfil() ? perfil().disfraz : 0,
+      reducir: !!(datos().ajustes && datos().ajustes.reducir),
+      vocesOn: datos().ajustes.voz !== false, voz: App.estado.voz, sonido: UI.Sonido, fin: fin
+    });
   }
 
-  function creditos(fin) {
+  function creditos(datos_, fin) {
     var ov = h('div.escena.creditos.zona-faro');
-    var lista = h('div.cred-lista', h('h2', 'Gracias por encender el Faro'));
-    [['Lumo', 'La chispa que aprendió a pensar'], ['Abuela Chispa', 'La guardiana del Faro'], ['Búho Bruma', 'Bosque encantado'], ['Bichito', 'El error que se hizo amigo'], ['Tinta', 'Mundo submarino'], ['Lagarto gigante', 'Isla volcánica'], ['Bit', 'Ciudad tecnológica']].forEach(function (c) {
+    var lista = h('div.cred-lista', h('h2', datos_.titulo));
+    datos_.filas.forEach(function (c) {
       lista.appendChild(h('div.cred', h('div.cred-av', { html: Ar.personaje(c[0]) }), h('div', h('b', c[0]), h('span', c[1]))));
     });
     ov.appendChild(lista);
@@ -652,15 +617,22 @@
     var piezas = [PR.mundoCompleto(p, 1), PR.mundoCompleto(p, 2), PR.mundoCompleto(p, 3), PR.hecho(p, 'f-03')];
     var sec3 = h('section', h('h2', 'La brújula de Lumo'), h('div.brujula', piezas.map(function (v, i) { return UI.svgEl(Ar.brujulaPieza(i + 1, v), ''); })));
     cuerpo.appendChild(sec3);
-    // Álbum de recuerdos
-    var vistas = Object.keys(p.vistos.escenas);
-    var sec4 = h('section', h('h2', 'Álbum de recuerdos'));
-    var al = h('div.album');
-    vistas.sort().forEach(function (e) {
-      al.appendChild(h('button.recuerdo', { type: 'button', on: { click: function () { UI.reproducirEscena(e, function () {}); } } }, h('span', e)));
+    // Diario de Lumo (sustituye al álbum): una página por chispa y por amigo; se calcula desde retos superados y escenas vistas.
+    var inf = PR.esInfantil(p), VI = root.RumboVictoria;
+    var pags = VI.paginasDiario(p, inf);
+    var sec4 = h('section.diario', h('h2', 'El diario de Lumo'));
+    var dl = h('div.diario-paginas');
+    pags.forEach(function (pg, i) {
+      var abre = pg.escena ? function () { UI.reproducirEscena(pg.escena, function () {}); } : null;
+      var tag = abre ? 'button' : 'div';
+      var art = pg.abierta ? Ar.personaje(pg.personaje, { expr: 'alegre' }) : Ar.personaje(pg.personaje, { expr: 'normal' });
+      dl.appendChild(h(tag + '.pagina' + (pg.abierta ? '' : '.cerrada') + (abre ? '.rejugable' : '') + (i % 2 ? '.der' : ''),
+        Object.assign({ 'aria-label': pg.abierta ? pg.titulo + (abre ? ': volver a ver la escena' : '') : 'Página aún cerrada' }, abre ? { type: 'button', on: { click: abre } } : {}),
+        h('div.pg-dibujo', { html: art }),
+        h('div.pg-texto', h('b', pg.abierta ? pg.titulo : '???'), pg.abierta && pg.texto ? h('span', '«' + pg.texto + '»') : null,
+          abre ? h('i.pg-ver', inf ? '▶' : '▶ Volver a ver') : null)));
     });
-    if (!vistas.length) al.appendChild(h('p.nota', 'Aquí aparecerán las escenas de la historia que vayas viendo.'));
-    sec4.appendChild(al); cuerpo.appendChild(sec4);
+    sec4.appendChild(dl); cuerpo.appendChild(sec4);
     cont.appendChild(cuerpo);
   });
 

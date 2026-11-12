@@ -209,6 +209,10 @@ body.contraste .btn-grande,body.contraste .btn-ic{outline:3px solid #000}
 /* ----- animaciones del escenario ----- */
 .lumo{transition-property:transform;transition-timing-function:ease-in-out;transition-duration:0ms}
 .lumo-in{transform-box:fill-box;transform-origin:50% 100%}
+.lumo-in:not(.hop):not(.bump):not(.caer):not(.giro-w):not(.alegre){animation:respira 2.6s ease-in-out infinite}
+@keyframes respira{50%{transform:scale(1.025,.975)}}
+.lumo-svg .brazo-i,.lumo-svg .brazo-d{transform-box:fill-box;transform-origin:50% 90%;animation:saluda .7s ease-in-out infinite alternate}
+@keyframes saluda{to{transform:rotate(-14deg)}}
 .lumo-in.hop{animation:hop var(--ms,500ms) ease-in-out}.lumo-in.bump{animation:bump var(--ms,300ms) ease-out}.lumo-in.caer{animation:caer var(--ms,600ms) ease-in forwards}.lumo-in.giro-w{animation:giro-cuerpo var(--ms,400ms) ease-in-out}.lumo-in.alegre{animation:baila .45s ease-in-out 2}
 /* anillo de rumbo bajo Lumo: la flecha indica siempre hacia dónde mira */
 .lumo-rumbo{pointer-events:none}
@@ -216,7 +220,7 @@ body.contraste .btn-grande,body.contraste .btn-ic{outline:3px solid #000}
 .aro-base{fill:rgba(255,255,255,.28);stroke:rgba(255,255,255,.75);stroke-width:2.5;stroke-dasharray:3 5}
 .aro-flecha{fill:#ffd93d;stroke:#b86a00;stroke-width:2.5;stroke-linejoin:round;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.35))}
 @keyframes giro-cuerpo{0%{transform:scale(1,1)}22%{transform:scale(.55,1.04) translateY(-4px)}50%{transform:scale(.18,1.06) translateY(-8px)}78%{transform:scale(.55,1.04) translateY(-4px)}100%{transform:scale(1,1)}}
-@keyframes hop{0%,100%{transform:translateY(0) scale(1)}40%{transform:translateY(-26px) scale(.96,1.06)}}
+@keyframes hop{0%{transform:translateY(0) scale(1.12,.86)}18%{transform:translateY(0) scale(.92,1.1)}45%{transform:translateY(-26px) scale(.94,1.08)}78%{transform:translateY(0) scale(1.1,.88)}100%{transform:translateY(0) scale(1)}}
 @keyframes bump{0%{transform:scale(1.15,.85)}100%{transform:scale(1)}}
 @keyframes caer{to{transform:translateY(14px) scale(.15);opacity:0}}
 @keyframes wiggle{25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
@@ -329,7 +333,7 @@ details.doc-caja>summary{font:800 1.2rem var(--titulo);cursor:pointer;color:var(
 body.reducir .intro-capa.on .intro-img,body.reducir .intro-brillos i{animation:none}
 @media (prefers-reduced-motion:reduce){.intro-capa.on .intro-img,.intro-brillos i{animation:none}}
 
-body.reducir .lumo-in.giro-w{animation:none!important}body.reducir .lumo-aro{transition:none!important}
+body.reducir .lumo-in,body.reducir .lumo-svg .brazo-i,body.reducir .lumo-svg .brazo-d{animation:none!important}body.reducir .lumo-in.giro-w{animation:none!important}body.reducir .lumo-aro{transition:none!important}
 @media (prefers-reduced-motion:reduce){.lumo-in.giro-w{animation:none}.lumo-aro{transition:none}}
 
 /* ----- aventura de bienvenida (Primaria) ----- */
@@ -347,3 +351,129 @@ body.reducir .lumo-in.giro-w{animation:none!important}body.reducir .lumo-aro{tra
 .modal.fin-bienvenida .res-acciones{justify-content:center;gap:12px;flex-wrap:wrap}
 .modal.fin-bienvenida .bv-lumo.baila svg{animation:baila .6s ease-in-out 4}
 body.reducir .modal.fin-bienvenida .bv-lumo svg{animation:none}
+
+/* ----- motor de escenas (fase 3) ----- */
+.escena.motor{background:#10183a}
+.esc-cielo,.esc-capa,.esc-particulas,.esc-escenario,.esc-objetos,.esc-velo{position:absolute;inset:0;pointer-events:none}
+.esc-capa svg{position:absolute;left:0;bottom:0;width:100%;height:100%}
+.esc-suelo{position:absolute;left:0;right:0;bottom:0;height:23%;border-top:6px solid rgba(255,255,255,.25);box-shadow:inset 0 14px 18px -10px rgba(0,0,0,.25);pointer-events:none}
+.esc-capa.lejos{transition:transform 1.2s ease}.esc-capa.medio{transition:transform 1.2s ease}.esc-capa svg{height:100%}
+.escena.motor.cam-acerca .esc-escenario{animation:camAcerca 1.2s ease forwards}.escena.motor.cam-aleja .esc-escenario{animation:camAleja 1.2s ease forwards}.escena.motor.cam-sacude{animation:sacude .5s}
+@keyframes camAcerca{to{transform:scale(1.18) translateY(4%)}}@keyframes camAleja{from{transform:scale(1.18)}to{transform:scale(1)}}
+@keyframes sacude{20%{transform:translate(-8px,3px)}40%{transform:translate(8px,-3px)}60%{transform:translate(-5px,2px)}80%{transform:translate(4px,-2px)}}
+.esc-velo{background:#10183a;opacity:0;transition:opacity .26s}.esc-velo.on{opacity:1}
+.esc-particulas i{position:absolute;width:7px;height:7px;border-radius:50%;opacity:0;box-shadow:0 0 10px 3px rgba(255,236,150,.8);animation:motas 7s ease-in-out infinite}
+@keyframes motas{0%{opacity:0;transform:translateY(0)}25%{opacity:.9}100%{opacity:0;transform:translate(24px,-90px)}}
+.titila{animation:titila 2.6s ease-in-out infinite}@keyframes titila{50%{opacity:.25}}
+.burbuja{animation:sube 8s linear infinite}@keyframes sube{to{transform:translateY(-200px);opacity:0}}
+.escena.motor .act{position:absolute;bottom:17%;width:min(32vw,36vh,300px);height:min(32vw,36vh,300px);transition:transform .35s,left .6s,right .6s,opacity .5s;filter:drop-shadow(0 10px 6px rgba(0,0,0,.35));pointer-events:none}
+.escena.motor .act.pos-izq{left:9%}.escena.motor .act.pos-der{right:9%}.escena.motor .act.pos-centro{left:50%;margin-left:min(-16vw,-18vh)}
+.escena.motor .act.habla{transform:translateY(-12px) scale(1.07);z-index:2}
+.escena.motor .act-cuerpo{width:100%;height:100%;transform-origin:50% 100%;animation:respira 2.6s ease-in-out infinite}
+.escena.motor .act-cuerpo svg{width:100%;height:100%;overflow:visible}
+.escena.motor .act-cuerpo.a-habla{animation:hablaSalto .45s ease-out}.escena.motor .act-cuerpo.a-salta{animation:hop .7s ease-in-out}
+.escena.motor .act-cuerpo.a-baila{animation:baila .9s ease-in-out 2}.escena.motor .act-cuerpo.a-tiembla{animation:tiembla .5s linear}.escena.motor .act-cuerpo.a-gira{animation:giraVuelta .8s ease-in-out}.escena.motor .act-cuerpo.a-asiente{animation:asiente .6s ease-in-out}
+@keyframes hablaSalto{30%{transform:translateY(-8px) scale(.97,1.05)}70%{transform:translateY(0) scale(1.04,.96)}}
+@keyframes baila{25%{transform:rotate(-8deg) translateY(-10px)}75%{transform:rotate(8deg) translateY(-10px)}}
+@keyframes tiembla{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes giraVuelta{50%{transform:scaleX(.1)}}
+@keyframes asiente{40%{transform:translateY(8px) scale(1.03,.95)}}
+.escena.motor .act.entra-desliza.pos-der{animation:entraDer .6s ease-out}.escena.motor .act.entra-desliza.pos-izq{animation:entraIzq .6s ease-out}
+.escena.motor .act.entra-salta{animation:entraSalta .7s ease-out}.escena.motor .act.entra-cae{animation:entraCae .7s cubic-bezier(.3,1.5,.5,1)}
+.escena.motor .act.sale{opacity:0;transform:translateY(20px)}
+@keyframes entraDer{from{transform:translateX(60vw);opacity:0}}@keyframes entraIzq{from{transform:translateX(-60vw);opacity:0}}
+@keyframes entraSalta{0%{transform:translateY(-60vh) scale(.8,1.2);opacity:0}60%{opacity:1}75%{transform:translateY(0) scale(1.15,.85)}100%{transform:translateY(0)}}
+@keyframes entraCae{from{transform:translateY(-80vh) rotate(-40deg);opacity:0}}
+.esc-obj{position:absolute;bottom:42%;width:min(18vw,20vh,160px);height:min(18vw,20vh,160px);animation:objFlota 2.4s ease-in-out infinite}
+.esc-obj.pos-centro{left:50%;margin-left:min(-9vw,-10vh)}.esc-obj.pos-izq{left:30%}.esc-obj.pos-der{right:30%}
+.esc-obj.brilla{filter:drop-shadow(0 0 14px #ffe27a) drop-shadow(0 0 30px #ffd166)}.esc-obj svg{width:100%;height:100%}
+@keyframes objFlota{50%{transform:translateY(-12px)}}
+.escena.motor .escena-burbuja{z-index:4;bottom:3.5%;transition:opacity .25s}.escena.motor .escena-burbuja.oculta{opacity:0}
+.escena.motor .b-sig-esc,.escena.motor .b-saltar{z-index:5}
+.escena.motor.sin-mov .act,.escena.motor.sin-mov .act-cuerpo,.escena.motor.sin-mov .esc-obj,.escena.motor.sin-mov .titila,.escena.motor.sin-mov .burbuja{animation:none!important;transition:none!important}
+body.reducir .escena.motor .act,body.reducir .escena.motor .act-cuerpo,body.reducir .escena.motor .esc-obj,body.reducir .esc-particulas i,body.reducir .titila,body.reducir .burbuja{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){.escena.motor .act,.escena.motor .act-cuerpo,.esc-particulas i,.titila,.burbuja{animation:none!important}}
+
+/* ----- fase 4: paisaje reutilizable, archipiélago, senderos ----- */
+.paisaje{position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none;z-index:0}
+.paisaje .pa-cielo{position:absolute;inset:0}
+.paisaje .pa-capa{position:absolute;inset:0}.paisaje .pa-capa svg{position:absolute;left:0;bottom:0;width:100%;height:100%}
+.paisaje .pa-suelo{position:absolute;left:0;right:0;bottom:0;height:34%;border-top:5px solid rgba(255,255,255,.25)}
+.paisaje .mota{position:absolute;width:6px;height:6px;border-radius:50%;opacity:0;box-shadow:0 0 9px 3px rgba(255,236,150,.8);animation:motas 7s ease-in-out infinite}
+.paisaje .fauna{position:absolute;left:-8%;width:34px;height:30px;animation:cruza 20s linear infinite}
+.paisaje .fauna.mariposa{animation-name:cruzaAletea}.paisaje .fauna.pez{animation-name:cruzaPez}
+@keyframes cruza{from{transform:translateX(0)}to{transform:translateX(125vw)}}
+@keyframes cruzaAletea{0%{transform:translate(0,0) scaleY(1)}25%{transform:translate(30vw,-14px) scaleY(.6)}50%{transform:translate(60vw,10px) scaleY(1)}75%{transform:translate(90vw,-12px) scaleY(.6)}100%{transform:translate(125vw,0) scaleY(1)}}
+@keyframes cruzaPez{0%{transform:translate(0,0)}50%{transform:translate(60vw,18px)}100%{transform:translate(125vw,0)}}
+.j-escena-caja{overflow:hidden;background:none}.j-escena-caja>.j-escena,.j-escena-caja>.j-objetos{position:relative;z-index:1}.j-escena-caja>.j-objetos{position:absolute}
+.juego.infantil .paisaje .fauna{display:none}
+body.reducir .paisaje .mota,body.reducir .paisaje .fauna,body.reducir .faro-luz,body.reducir .barquito,body.reducir .ola{animation:none!important}
+@media (prefers-reduced-motion:reduce){.paisaje .mota,.paisaje .fauna,.faro-luz,.barquito,.ola{animation:none!important}}
+.p-mundo>.paisaje{position:fixed;border-radius:0;z-index:0}.p-mundo>*:not(.paisaje){position:relative;z-index:1}
+.p-mundo .itinerario{background:rgba(255,255,255,.82);backdrop-filter:blur(2px)}
+/* sendero entre nodos */
+.ruta{gap:16px 22px}
+.nodo+.nodo::before{content:"";position:absolute;right:100%;top:46%;width:22px;border-top:6px dotted var(--col,#f2a93b);opacity:.85;transform:translateY(-50%)}
+.nodo.ini-fila::before{display:none}
+.nodo.hecho+.nodo::before{border-top-style:solid}
+/* archipiélago */
+.archipielago{position:relative;display:block;max-width:1100px;height:min(54vh,520px);margin:6px auto;border-radius:30px;overflow:hidden;padding:0;background:linear-gradient(#7fd3f2,#2f9fd0 60%,#1d78b0);box-shadow:var(--sombra),inset 0 0 0 4px rgba(255,255,255,.5)}
+.mar-fondo{position:absolute;inset:0;pointer-events:none}.mar-fondo svg{position:absolute;inset:0;width:100%;height:100%}
+.sendero{stroke:#fff;stroke-width:5;stroke-dasharray:2 14;stroke-linecap:round;opacity:.8}
+.ola{position:absolute;left:-10%;width:120%;height:26px;border-radius:50%;border-top:4px solid rgba(255,255,255,.35);animation:oleaje 7s ease-in-out infinite}.ola.o1{top:30%}.ola.o2{top:88%;animation-delay:-3s}
+@keyframes oleaje{50%{transform:translateX(5%)}}
+.barquito{position:absolute;left:8%;top:34%;width:44px;height:30px;background:linear-gradient(#fff 55%,#e8553f 55%);clip-path:polygon(0 60%,100% 60%,85% 100%,15% 100%,50% 60%,50% 0,70% 60%);animation:navega 22s linear infinite}
+@keyframes navega{from{transform:translateX(0)}to{transform:translateX(70vw)}}
+.mundo-tarjeta.isla{position:absolute;transform:translate(-50%,-50%);width:min(23%,240px);min-width:150px;background:rgba(255,255,255,.92);border-radius:50% 50% 30px 30px/38% 38% 30px 30px;overflow:visible;text-align:center;border-bottom:8px solid var(--col)}
+.mundo-tarjeta.isla:hover{transform:translate(-50%,-52%)}.mundo-tarjeta.isla:active{transform:translate(-50%,-48%)}
+.isla .mt-arte{height:78px;border-radius:50% 50% 0 0/80% 80% 0 0;overflow:hidden;margin:0 6px}
+.isla .mt-info{padding:6px 12px 10px}.isla .mt-nombre{font-size:1.05rem}.isla .mt-edad{font-size:.85rem}.isla .mt-prog{font-size:.85rem}
+.mundo-tarjeta.faro-isla{width:min(20%,210px);min-width:150px}.faro-arte{height:150px!important;background:linear-gradient(#18204a,#e9a64c)!important;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.faro-arte .faro-svg{height:128px;width:auto}.faro-cont{font:800 .75rem var(--texto);color:#fff;margin-bottom:2px;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.faro-luz{animation:guino 9s ease-in-out infinite;filter:drop-shadow(0 0 6px #ffe27a)}.faro-halo{animation:guinoHalo 9s ease-in-out infinite}
+@keyframes guino{0%,100%{opacity:.35}1%,3.3%{opacity:1}4.5%,6.6%{opacity:.35}7.5%,10%{opacity:1}11.5%,13.3%{opacity:.35}14%,23%{opacity:1}26%{opacity:.35}}
+@keyframes guinoHalo{0%,100%{opacity:.1}1%,3.3%{opacity:.9}4.5%,6.6%{opacity:.1}7.5%,10%{opacity:.9}11.5%,13.3%{opacity:.1}14%,23%{opacity:.9}26%{opacity:.1}}
+.faro-v.on{filter:drop-shadow(0 0 3px #ffe27a)}
+.lumo-marca{position:absolute;left:-14px;top:-20px;width:62px;height:62px;animation:flota 2.4s ease-in-out infinite;filter:drop-shadow(0 4px 3px rgba(0,0,0,.3));pointer-events:none}.lumo-marca svg{width:100%;height:100%;overflow:visible}
+.cc-ins{display:inline-block}.cc-ins svg{display:block}
+@media (max-width:760px){.archipielago{height:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}.archipielago .mar-fondo{display:none}.mundo-tarjeta.isla{position:relative;left:auto!important;top:auto!important;transform:none!important;width:auto;min-width:0}}
+.mundo-tarjeta.faro-isla.cerrado{filter:saturate(.55) brightness(.92)}
+.faro-isla .faro-arte{border-radius:50% 50% 0 0/36% 36% 0 0}
+@media (max-height:820px){.faro-arte{height:108px!important}.faro-arte .faro-svg{height:90px}.isla .mt-arte{height:60px}.isla .mt-info{padding:4px 10px 8px}}
+.portada-faro{position:absolute;right:7%;bottom:9%;width:min(13vw,150px);opacity:.95;pointer-events:none;z-index:0}.portada-faro svg{width:100%;height:auto;display:block}
+@media (max-width:900px){.portada-faro{display:none}}
+
+/* ===== Fase 6: victoria con historia ===== */
+.res-cabeza{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:10px;min-height:130px}
+.resultado.infantil .res-cabeza{min-height:190px}
+.res-cabeza .res-lumo{animation:none}
+.res-cabeza.baile-voltereta .res-lumo{animation:resVoltereta 1.1s ease-in-out 2}
+.res-cabeza.baile-brujula .res-lumo{animation:resGiro 1.4s ease-in-out 1}
+.res-cabeza.baile-zona .res-lumo{animation:baila .6s ease-in-out 4}
+.res-cabeza.baile-abrazo .res-lumo{animation:resAbrazoL 1s ease-out both}
+@keyframes resVoltereta{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(-38px) rotate(180deg)}70%{transform:translateY(-38px) rotate(360deg)}85%{transform:translateY(0) rotate(360deg)}}
+@keyframes resGiro{0%{transform:rotate(0) scale(1)}50%{transform:rotate(360deg) scale(1.12)}100%{transform:rotate(720deg) scale(1)}}
+@keyframes resAbrazoL{from{transform:translateX(-30px)}to{transform:translateX(8px)}}
+.res-amigo{width:104px;height:104px;animation:resAbrazoA 1s ease-out both}.res-amigo svg{width:100%;height:100%;overflow:visible}
+@keyframes resAbrazoA{from{transform:translateX(40px);opacity:0}to{transform:translateX(-10px);opacity:1}}
+.res-bichito{position:absolute;right:-6px;bottom:0;display:flex;align-items:flex-end;gap:4px;animation:resBichito 2.6s ease-in .8s both}
+.rb-pj{width:62px;height:62px}.rb-pj svg{width:100%;height:100%;overflow:visible}
+.rb-ji{background:#fff;border:2px solid #6fcf6f;border-radius:12px;padding:1px 8px;font-weight:800;font-size:.8rem;color:#2d6a3e;margin-bottom:34px}
+@keyframes resBichito{0%{transform:translateX(-30px);opacity:0}15%{transform:translateX(0);opacity:1}55%{transform:translateX(0) rotate(0)}60%{transform:translateX(0) rotate(-8deg)}65%{transform:translateX(0) rotate(8deg)}100%{transform:translateX(150px) rotate(0);opacity:0}}
+.res-faro{width:56px;height:140px;margin-left:6px;flex:none}.res-faro svg{width:100%;height:100%;overflow:visible}
+.res-faro.encendido .faro-halo{opacity:1!important;animation:none}
+.res-chispa-vuela{position:absolute;left:50%;bottom:50px;width:54px;height:54px;animation:resVuela 1.6s ease-in-out .1s both;z-index:2}
+.res-chispa-vuela svg{width:100%;height:100%;overflow:visible}
+@keyframes resVuela{0%{transform:translate(-20px,0) scale(1)}60%{transform:translate(60px,-70px) scale(1.2)}100%{transform:translate(130px,-30px) scale(.4);opacity:0}}
+.res-avance{font-weight:800;color:#5b3fa0;background:#f3edff;border-radius:14px;padding:5px 14px;font-size:.98rem}
+.res-avance.llegado{background:#fff3c4;color:#8a5a00}
+body.reducir .res-cabeza .res-lumo,body.reducir .res-amigo,body.reducir .res-bichito,body.reducir .res-chispa-vuela{animation:none!important}
+body.reducir .res-bichito{display:none}
+@media (max-height:800px){.res-cabeza{min-height:110px}.res-faro{height:116px;width:46px}.res-cabeza .res-lumo{width:110px;height:110px}}
+.diario-paginas{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.pagina{display:flex;align-items:center;gap:10px;background:#fffaf0;border:2px solid #e8d9b5;border-radius:18px;padding:8px 12px;text-align:left;font:inherit;color:inherit;box-shadow:0 3px 0 #e8d9b5}
+.pagina.der{background:#f6f3ff;border-color:#d8cdf5;box-shadow:0 3px 0 #d8cdf5}
+.pagina.rejugable{cursor:pointer}.pagina.rejugable:hover,.pagina.rejugable:focus-visible{transform:translateY(-2px)}
+.pagina.cerrada{opacity:.55}.pagina.cerrada .pg-dibujo{filter:grayscale(1) brightness(.5)}
+.pg-dibujo{width:64px;height:64px;flex:none}.pg-dibujo svg{width:100%;height:100%;overflow:visible}
+.pg-texto{display:flex;flex-direction:column;gap:2px}.pg-texto span{font-size:.92rem}.pg-ver{font-style:normal;font-weight:800;font-size:.8rem;color:#5b3fa0}
