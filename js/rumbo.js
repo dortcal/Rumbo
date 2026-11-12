@@ -733,6 +733,24 @@
     c0_04_a: { quien: 'Lumo', escena: 'C0-04', texto: 'Mira, mi casa.' },
     c0_04_b: { quien: 'Lumo', escena: 'C0-04', texto: 'Tengo que llegar allí.' },
 
+    // ---- Aventura de bienvenida (para Primaria; Infantil usa las escenas C0) ----
+    bv_01_a: { quien: 'Lumo', escena: 'BV-01', texto: '¡Hola! Soy Lumo, una chispa curiosa y muy despistada.' },
+    bv_01_b: { quien: 'Lumo', escena: 'BV-01', texto: 'Mi brújula se ha roto y me he perdido cerca del Faro Mayor.' },
+    bv_01_c: { quien: 'Lumo', escena: 'BV-01', texto: 'Yo solo no sé encontrar el camino. ¡Necesito que me des órdenes!' },
+    bv_01_d: { quien: 'Lumo', escena: 'BV-01', texto: 'Cada tarjeta es una orden. Las pones en fila y yo las sigo.' },
+    bv_01_e: { quien: 'Lumo', escena: 'BV-01', texto: 'Cuando estén listas, pulsa el botón verde.' },
+    bv_01_f: { quien: 'Lumo', escena: 'BV-01', texto: 'Si te atascas, toca la bombilla naranja. ¡Te echaré una mano!' },
+    bv_02_a: { quien: 'Lumo', escena: 'BV-02', texto: '¡Muy bien! Ahora hacen falta dos pasos.' },
+    bv_02_b: { quien: 'Lumo', escena: 'BV-02', texto: 'Las órdenes se cumplen una tras otra, en el mismo orden.' },
+    bv_03_a: { quien: 'Lumo', escena: 'BV-03', texto: 'Mira bajo mis pies: la flecha amarilla indica hacia dónde miro.' },
+    bv_03_b: { quien: 'Lumo', escena: 'BV-03', texto: 'Para cambiar de dirección tengo que girar. ¡Prueba la tarjeta de giro!' },
+    bv_04_a: { quien: 'Lumo', escena: 'BV-04', texto: '¡Una fruta! Está justo en mi camino.' },
+    bv_04_b: { quien: 'Lumo', escena: 'BV-04', texto: 'Primero la recojo y después sigo andando. El orden importa.' },
+    bv_05_a: { quien: 'Lumo', escena: 'BV-05', texto: '¡Lo hemos conseguido! Ya sabes mover, girar y recoger.' },
+    bv_05_b: { quien: 'Lumo', escena: 'BV-05', texto: 'Con estas tarjetas voy a arreglar mi brújula.' },
+    bv_05_c: { quien: 'Lumo', escena: 'BV-05', texto: 'Más allá del bosque me espera el Faro Mayor.' },
+    bv_05_d: { quien: 'Lumo', escena: 'BV-05', texto: 'Toda la aventura empieza ahora. ¿Vienes conmigo?' },
+
     // ---- Campaña 1 ----
     c1_01_a: { quien: 'Búho Bruma', escena: 'C1-01', texto: 'Las luciérnagas hablan en orden. Escucha su luz.' },
     c1_02_a: { quien: 'Bichito', escena: 'C1-02', texto: '¡Ji, ji! ¿Quién ha movido las tarjetas?' },
@@ -1234,9 +1252,9 @@
       o: 'Gira y llega hasta la casa.', i: 'La casa está abajo.',
       cur: ['inf14'], ext: ['Primer giro: la dirección cambia con una tarjeta'] }),
     inf({ id: 'i3-05', it: 3, tt: 'La fruta', z: 'jardin', skin: { meta: 'casa', obj: 'fruta' },
-      m: [')G'], c: ['avanzar', 'recoger'], ref: [R, A],
-      o: 'Recoge la fruta y ve a la casa.', i: 'Lumo ha encontrado una fruta.',
-      cur: ['inf11', 'inf15'], ext: ['Orden: primero recoger, luego avanzar'] }),
+      m: ['>oG'], c: ['avanzar', 'recoger'], ref: [A, R, A],
+      o: 'Recoge la fruta del camino y ve a la casa.', i: 'Lumo ha encontrado una fruta.',
+      cur: ['inf11', 'inf15'], ext: ['Orden: avanzar, recoger y seguir avanzando'] }),
 
     // ======== 4 años: Aventureros del camino (dos a cuatro tarjetas) ========
     inf({ id: 'i4-01', it: 4, tt: 'El camino torcido', z: 'granja', skin: { meta: 'casa' },
@@ -4622,10 +4640,30 @@
     p.bienvenida = 'aceptada'; guardar();
     jugarNivel(b.siguiente || CAT.BIENVENIDA[0]);
   }
+  // Cierre de la aventura de bienvenida: anima a empezar la historia con el reto que le toca a su curso.
+  function finBienvenida() {
+    var p = perfil(); if (!p || document.querySelector('.modal.fin-bienvenida')) return;
+    var sig = PR.siguientePendiente(p), M = sig && CAT.POR_ID[sig] ? CAT.mundoDe(sig) : null;
+    var ov = h('div.modal.fin-bienvenida', { role: 'dialog', 'aria-label': 'Aventura de bienvenida completada' });
+    function cerrar() { if (App.estado.voz) App.estado.voz.parar(); if (ov.parentNode) ov.parentNode.removeChild(ov); }
+    var c = h('div.modal-caja', h('div.bv-lumo.grande.baila', { html: Ar.lumo({ expr: 'feliz', dir: 'S', disfraz: p.disfraz }) }),
+      h('h2', '¡Ya estás listo para la aventura!'),
+      h('p', 'Has aprendido a mover a Lumo, girar y recoger. Ahora empieza la historia: ayúdale a arreglar su brújula y a encender el Faro Mayor.'),
+      M ? h('p.nota', 'Tu primera parada: ' + M.nombre + '.') : null,
+      h('div.res-acciones',
+        sig ? h('button.btn-grande.principal.b-historia', { type: 'button', on: { click: function () { cerrar(); UI.Sonido.sfx('toque'); jugarNivel(sig); } } }, h('span', '¡Empezar la historia!')) : null,
+        h('button.btn-grande.sec.b-mapa-bv', { type: 'button', on: { click: cerrar } }, h('span', 'Ver el mapa'))));
+    ov.appendChild(c); document.body.appendChild(ov);
+    var cf = h('div.confeti-caja'); ov.appendChild(cf); try { UI.confeti ? UI.confeti(cf, 50) : null; } catch (e) {}
+    UI.Sonido.sfx('victoria');
+  }
   function volverTras(n, completado) {
     if (enBienvenida(n.id)) {
       var b = PR.bienvenida(perfil());
-      var vuelta0 = function () { ir('mapa'); if (completado && b.completa && !perfil().bienvenidaFin) { perfil().bienvenidaFin = true; guardar(); toast('¡Aventura de bienvenida completada! Ya conoces las tarjetas de Lumo.', 5000); } };
+      var vuelta0 = function () {
+        ir('mapa');
+        if (completado && b.completa && !perfil().bienvenidaFin) { perfil().bienvenidaFin = true; guardar(); setTimeout(finBienvenida, 350); }
+      };
       if (completado) despuesDe(n.id, vuelta0); else vuelta0();
       return;
     }
@@ -4642,7 +4680,7 @@
     function despues(id, e) { (DISPARO.despues[id] = DISPARO.despues[id] || []).push(e); }
     function primero(niv, fn) { return niv.filter(fn)[0]; }
     var it = CAT.ITINERARIOS;
-    antes(it[3][0], 'C0-01'); despues(it[3][it[3].length - 1], 'C0-02'); despues(it[4][it[4].length - 1], 'C0-03'); despues(it[5][it[5].length - 1], 'C0-04');
+    antes(it[3][0], 'C0-01'); antes(it[3][0], 'BV-01'); antes(it[3][1], 'BV-02'); antes(it[3][3], 'BV-03'); antes(it[3][4], 'BV-04'); despues(it[3][it[3].length - 1], 'BV-05'); despues(it[3][it[3].length - 1], 'C0-02'); despues(it[4][it[4].length - 1], 'C0-03'); despues(it[5][it[5].length - 1], 'C0-04');
     var M = CAT.MUNDOS, x;
     antes(M[1].niveles[0].id, 'C1-01');
     if ((x = primero(M[1].niveles, function (n) { return n.tipo === 'depurar'; }))) antes(x.id, 'C1-02');
@@ -4667,6 +4705,8 @@
   function escenasPendientes(lista, idNivel) {
     var p = perfil(); if (!p || (App.estado.docente && App.estado.docente.vista)) return [];
     return (lista || []).filter(function (e) {
+      if (/^BV-/.test(e) && infantil()) return false;   // la presentación de Lumo para Primaria (Infantil tiene sus escenas C0)
+      if (/^C0-/.test(e) && !infantil()) return false;
       if (/^CF-0[345]$/.test(e) && idNivel && CAT.finalDe(p.curso) !== idNivel) return false;   // el final es el del curso del jugador
       return !p.vistos.escenas[e];
     });

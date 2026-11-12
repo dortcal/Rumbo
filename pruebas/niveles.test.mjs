@@ -43,8 +43,9 @@ test('Infantil no usa bucles, condiciones, funciones ni textos de código', () =
   });
 });
 
-test('Infantil: 3 años ≤ 2 tarjetas; 4 años ≤ 4; 5 años ≤ 7', () => {
-  const tope = { 3: 2, 4: 4, 5: 7 };
+test('Infantil: 3 años ≤ 3 tarjetas (solo el último reto, el de recoger, llega a 3); 4 años ≤ 4; 5 años ≤ 7', () => {
+  const tope = { 3: 3, 4: 4, 5: 7 };
+  C.ITINERARIOS[3].slice(0, 4).forEach(id => assert.ok(I.contarTarjetas(C.POR_ID[id].referencia) <= 2, id));
   C.MUNDOS[0].niveles.forEach(n => assert.ok(I.contarTarjetas(n.referencia) <= tope[n.itinerario], n.id));
   ['3', '4', '5'].forEach(k => assert.equal(C.ITINERARIOS[k].length, 5));
 });

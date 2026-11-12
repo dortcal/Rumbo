@@ -41,9 +41,9 @@
       o: 'Gira y llega hasta la casa.', i: 'La casa está abajo.',
       cur: ['inf14'], ext: ['Primer giro: la dirección cambia con una tarjeta'] }),
     inf({ id: 'i3-05', it: 3, tt: 'La fruta', z: 'jardin', skin: { meta: 'casa', obj: 'fruta' },
-      m: [')G'], c: ['avanzar', 'recoger'], ref: [R, A],
-      o: 'Recoge la fruta y ve a la casa.', i: 'Lumo ha encontrado una fruta.',
-      cur: ['inf11', 'inf15'], ext: ['Orden: primero recoger, luego avanzar'] }),
+      m: ['>oG'], c: ['avanzar', 'recoger'], ref: [A, R, A],
+      o: 'Recoge la fruta del camino y ve a la casa.', i: 'Lumo ha encontrado una fruta.',
+      cur: ['inf11', 'inf15'], ext: ['Orden: avanzar, recoger y seguir avanzando'] }),
 
     // ======== 4 años: Aventureros del camino (dos a cuatro tarjetas) ========
     inf({ id: 'i4-01', it: 4, tt: 'El camino torcido', z: 'granja', skin: { meta: 'casa' },

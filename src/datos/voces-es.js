@@ -29,6 +29,24 @@
     c0_04_a: { quien: 'Lumo', escena: 'C0-04', texto: 'Mira, mi casa.' },
     c0_04_b: { quien: 'Lumo', escena: 'C0-04', texto: 'Tengo que llegar allí.' },
 
+    // ---- Aventura de bienvenida (para Primaria; Infantil usa las escenas C0) ----
+    bv_01_a: { quien: 'Lumo', escena: 'BV-01', texto: '¡Hola! Soy Lumo, una chispa curiosa y muy despistada.' },
+    bv_01_b: { quien: 'Lumo', escena: 'BV-01', texto: 'Mi brújula se ha roto y me he perdido cerca del Faro Mayor.' },
+    bv_01_c: { quien: 'Lumo', escena: 'BV-01', texto: 'Yo solo no sé encontrar el camino. ¡Necesito que me des órdenes!' },
+    bv_01_d: { quien: 'Lumo', escena: 'BV-01', texto: 'Cada tarjeta es una orden. Las pones en fila y yo las sigo.' },
+    bv_01_e: { quien: 'Lumo', escena: 'BV-01', texto: 'Cuando estén listas, pulsa el botón verde.' },
+    bv_01_f: { quien: 'Lumo', escena: 'BV-01', texto: 'Si te atascas, toca la bombilla naranja. ¡Te echaré una mano!' },
+    bv_02_a: { quien: 'Lumo', escena: 'BV-02', texto: '¡Muy bien! Ahora hacen falta dos pasos.' },
+    bv_02_b: { quien: 'Lumo', escena: 'BV-02', texto: 'Las órdenes se cumplen una tras otra, en el mismo orden.' },
+    bv_03_a: { quien: 'Lumo', escena: 'BV-03', texto: 'Mira bajo mis pies: la flecha amarilla indica hacia dónde miro.' },
+    bv_03_b: { quien: 'Lumo', escena: 'BV-03', texto: 'Para cambiar de dirección tengo que girar. ¡Prueba la tarjeta de giro!' },
+    bv_04_a: { quien: 'Lumo', escena: 'BV-04', texto: '¡Una fruta! Está justo en mi camino.' },
+    bv_04_b: { quien: 'Lumo', escena: 'BV-04', texto: 'Primero la recojo y después sigo andando. El orden importa.' },
+    bv_05_a: { quien: 'Lumo', escena: 'BV-05', texto: '¡Lo hemos conseguido! Ya sabes mover, girar y recoger.' },
+    bv_05_b: { quien: 'Lumo', escena: 'BV-05', texto: 'Con estas tarjetas voy a arreglar mi brújula.' },
+    bv_05_c: { quien: 'Lumo', escena: 'BV-05', texto: 'Más allá del bosque me espera el Faro Mayor.' },
+    bv_05_d: { quien: 'Lumo', escena: 'BV-05', texto: 'Toda la aventura empieza ahora. ¿Vienes conmigo?' },
+
     // ---- Campaña 1 ----
     c1_01_a: { quien: 'Búho Bruma', escena: 'C1-01', texto: 'Las luciérnagas hablan en orden. Escucha su luz.' },
     c1_02_a: { quien: 'Bichito', escena: 'C1-02', texto: '¡Ji, ji! ¿Quién ha movido las tarjetas?' },

@@ -343,3 +343,7 @@ body.reducir .lumo-in.giro-w{animation:none!important}body.reducir .lumo-aro{tra
 .modal.bienvenida .res-acciones{justify-content:center;gap:12px;flex-wrap:wrap}
 @media (max-width:640px){.mapa-bienvenida{flex-wrap:wrap}.mapa-bienvenida .b-bienvenida{width:100%}}
 .mapa-bienvenida{--col:#3fae6a}.mapa-bienvenida:not(.hecha){--col:#f2a93b}
+.modal.fin-bienvenida .modal-caja{text-align:center;max-width:560px}
+.modal.fin-bienvenida .res-acciones{justify-content:center;gap:12px;flex-wrap:wrap}
+.modal.fin-bienvenida .bv-lumo.baila svg{animation:baila .6s ease-in-out 4}
+body.reducir .modal.fin-bienvenida .bv-lumo svg{animation:none}
