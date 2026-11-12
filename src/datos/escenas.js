@@ -19,8 +19,8 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  // Se pondrá a true en la fase 4, cuando el Faro del mapa pueda hacer el guiño (corto, corto, largo).
-  var GUINOS_ACTIVOS = false;
+  // Activo desde la fase 4: el Faro del mapa y de la portada hacen el guiño (corto, corto, largo).
+  var GUINOS_ACTIVOS = true;
 
   var ESCENAS = [
   {

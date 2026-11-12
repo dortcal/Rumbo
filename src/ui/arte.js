@@ -403,7 +403,15 @@
       '<text x="280" y="136" fill="url(#gLogo)" stroke="#fff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">RUMBO</text></g></svg>';
   }
 
+  // Insignia Creative Commons BY-NC-ND (local, sin pedir imágenes a Internet).
+  function insigniaCC() {
+    return '<svg viewBox="0 0 88 31" width="88" height="31" role="img" aria-label="CC BY-NC-ND 4.0"><rect width="88" height="31" rx="3" fill="#aab2ab"/><rect x="1.5" y="1.5" width="85" height="28" rx="2" fill="#fff"/>' +
+      '<rect x="1.5" y="1.5" width="26" height="28" rx="2" fill="#aab2ab"/><circle cx="14.5" cy="15.5" r="10" fill="#fff" stroke="#000" stroke-width="2"/><text x="14.5" y="19.5" font-family="Arial,sans-serif" font-weight="700" font-size="11" text-anchor="middle" fill="#000">cc</text>' +
+      '<text x="57" y="13" font-family="Arial,sans-serif" font-weight="700" font-size="9" text-anchor="middle" fill="#000">BY-NC-ND</text><text x="57" y="24" font-family="Arial,sans-serif" font-size="8" text-anchor="middle" fill="#333">4.0</text></svg>';
+  }
+
   UI.Arte = {
+    insigniaCC: insigniaCC,
     TEMAS: TEMAS, NOMBRES_ZONA: NOMBRES_ZONA, celda: celda, objeto: objeto, interruptor: interruptor, puerta: puerta,
     lumo: lumo, exprDe: exprDe, EXPRESIONES: EXPRESIONES, personaje: personaje, PERSONAJES: Object.keys(PERSONAJES).concat(Object.keys(CHISPAS_DISENO), ['Lumo']),
     iconoCarta: iconoCarta, CARTA_COLOR: CARTA_COLOR, CARTA_NOMBRE: CARTA_NOMBRE,

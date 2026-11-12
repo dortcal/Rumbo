@@ -119,10 +119,11 @@
       bs.appendChild(boton('Jugar', 'principal', function () { ir('jugadores'); }, '<svg viewBox="0 0 32 32"><path d="M8 5l18 11L8 27z" fill="#fff"/></svg>'));
     }
     centro.appendChild(bs);
+    cont.appendChild(h('div.portada-faro', { html: UI.Escenas.faroSvg(0) }));
     cont.appendChild(centro);
     cont.appendChild(h('div.portada-licencia',
       h('a.cc-logo', { href: 'https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es', target: '_blank', rel: 'license noopener noreferrer', 'aria-label': 'Licencia Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0' },
-        h('img', { src: 'https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png', alt: 'CC BY-NC-ND 4.0', width: '88', height: '31', loading: 'lazy' })),
+        UI.svgEl(Ar.insigniaCC(), 'cc-ins')),
       h('p', 'Diseñado por David OZC · © 2026 David. Uso gratuito en centros educativos.'),
       h('p.cc-texto', 'Licencia CC BY-NC-ND 4.0: Reconocimiento · NoComercial · SinObraDerivada.')));
     cont.appendChild(h('div.portada-pie',
@@ -321,21 +322,30 @@
           h('span', bv.completa ? 'Repetir' : bv.hechos ? 'Continuar' : '¡Empezar!'))));
       if (PR.debeRecomendarBienvenida(p)) recomendarBienvenida();
     }
-    var grid = h('div.mundos' + (infantil() ? '.uno' : ''));
+    var arch = !infantil();
+    var grid = h('div.mundos' + (infantil() ? '.uno' : '.archipielago'));
     var opc = opcionesDocente();
+    var chispasHalladas = ES.CHISPAS.filter(function (c) { return p.vistos.escenas[c.rescate]; }).length;
+    var sigP = PR.siguientePendiente(p), mundoActual = sigP && CAT.POR_ID[sigP] ? CAT.POR_ID[sigP].mundo : null;
+    var POS = { 1: [16, 66], 2: [45, 79], 3: [75, 60], 4: [50, 29] };
+    if (arch) {
+      grid.appendChild(h('div.mar-fondo', { html: '<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="sendero" vector-effect="non-scaling-stroke" d="M16 66Q30 84 44 76T75 60Q72 40 50 28" fill="none"/></svg>' + '<i class="ola o1"></i><i class="ola o2"></i><i class="barquito"></i>' }));
+    }
     pestanaMundos().forEach(function (m) {
       var M = CAT.MUNDOS[m], abierto = PR.mundoAbierto(p, m, opc);
       var comp = PR.completadosMundo(p, m), tot = M.niveles.length;
       var est = m === 0 ? null : PR.estrellasMundo(p, m);
-      var cls = 'mundo-tarjeta' + (abierto ? '' : '.cerrado') + (comp === tot ? '.completo' : '');
-      var tarj = h('button.' + cls, { type: 'button', style: { '--col': M.color }, 'aria-disabled': String(!abierto), on: { click: function () {
+      var cls = 'mundo-tarjeta' + (arch ? '.isla' : '') + (m === 4 ? '.faro-isla' : '') + (abierto ? '' : '.cerrado') + (comp === tot ? '.completo' : '');
+      var arte = m === 4 ? h('div.mt-arte.faro-arte', { html: UI.Escenas.faroSvg(chispasHalladas) + '<div class="faro-cont">' + chispasHalladas + ' de ' + ES.CHISPAS.length + ' luces</div>' }) : h('div.mt-arte', { html: miniaturaMundo(m) });
+      var tarj = h('button.' + cls, { type: 'button', style: arch ? { '--col': M.color, left: POS[m][0] + '%', top: POS[m][1] + '%' } : { '--col': M.color }, 'aria-disabled': String(!abierto), on: { click: function () {
         if (!abierto) { UI.Sonido.sfx('choque'); toast(m === 4 ? 'El Faro se abre al terminar el Mundo 3.' : 'Termina el mundo anterior para abrir este.'); return; }
         UI.Sonido.sfx('toque'); ir('mundo', { mundo: m }); } } },
-        h('div.mt-arte', { html: miniaturaMundo(m) }),
-        h('div.mt-info', h('div.mt-nombre', M.nombre), h('div.mt-edad', M.edades), h('p.mt-desc', M.descripcion),
+        arte,
+        h('div.mt-info', h('div.mt-nombre', M.nombre), h('div.mt-edad', M.edades), arch ? null : h('p.mt-desc', M.descripcion),
           h('div.barra', h('i', { style: { width: Math.round(comp / tot * 100) + '%' } })),
           h('div.mt-prog', comp + ' de ' + tot + (est != null ? ' · ★ ' + est + '/' + (tot * 3) : ''))),
-        abierto ? null : h('div.mt-candado', UI.svgEl(Ar.candado(), '')));
+        abierto ? null : h('div.mt-candado', UI.svgEl(Ar.candado(), '')),
+        (arch && mundoActual === m) ? h('div.lumo-marca', { html: Ar.lumo({ expr: 'alegre', dir: 'S', disfraz: p.disfraz, pose: 'saludo' }) }) : null);
       grid.appendChild(tarj);
     });
     cont.appendChild(grid);
@@ -389,7 +399,7 @@
     var opc = opcionesDocente();
     cont.style.setProperty('--col', M.color);
     cont.classList.add('zona-' + M.zonas[0]);
-    nubes(cont);
+    cont.appendChild(UI.Escenas.paisaje(M.zonas[0], { reducir: !!datos().ajustes.reducir }));
     UI.Sonido.musica(M.zonas[0]);
     cont.appendChild(cabecera(M.nombre, { atras: function () { ir('mapa'); } }));
     var cuerpo = h('div.niveles-cuerpo');
@@ -437,6 +447,12 @@
       }
     }
     cont.appendChild(cuerpo);
+    // Sendero: une cada nodo con el siguiente; el primero de cada fila no lleva tramo por la izquierda.
+    setTimeout(function () {
+      Array.prototype.forEach.call(cuerpo.querySelectorAll('.ruta'), function (r) {
+        var prev = null; Array.prototype.forEach.call(r.children, function (n) { var t = n.offsetTop; n.classList.toggle('ini-fila', prev === null || t > prev + 4); prev = t; });
+      });
+    }, 0);
   });
 
   // ---------------------------------------------------------------- jugar un nivel

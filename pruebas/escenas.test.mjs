@@ -144,7 +144,7 @@ test('los comentarios del guiño no se ofrecen hasta que exista el guiño visual
   const base = { cuando: 'despues', nivel: 'm1-01', infantil: false, vistas: {}, esFinalDelCurso: false };
   assert.ok(!ES.pendientes({ ...base, guinosActivos: false }).includes('GC-1'));
   assert.ok(ES.pendientes({ ...base, guinosActivos: true }).includes('GC-1'));
-  assert.equal(ES.GUINOS_ACTIVOS, false);
+  assert.equal(ES.GUINOS_ACTIVOS, true);
 });
 
 test('las seis chispas: meta = último reto de su zona, ventanas en orden, anuncio y rescate coherentes', () => {

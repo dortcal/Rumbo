@@ -244,5 +244,42 @@
     return { cerrar: cerrar, el: ov };
   }
 
-  UI.Escenas = { reproducir: reproducir, deducirPasos: deducirPasos, capasDeFondo: capasDeFondo, OBJETOS: OBJ };
+
+  // ---------------------------------------------------------------- paisaje reutilizable (tablero, senderos) y Faro del mapa
+  var FAUNA = {
+    jardin: ['<path d="M0 0q-9-10-12-2 0 7 12 2zM0 0q9-10 12-2 0 7-12 2z" fill="#ff9ac8"/><path d="M0 0v6" stroke="#5a2a4a" stroke-width="2"/>', 'mariposa'],
+    granja: ['<path d="M0 0q-9-10-12-2 0 7 12 2zM0 0q9-10 12-2 0 7-12 2z" fill="#ffd166"/><path d="M0 0v6" stroke="#5a4a2a" stroke-width="2"/>', 'mariposa'],
+    playa: ['<path d="M-14 0q7-9 14 0 7-9 14 0" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/>', 'gaviota'],
+    mar: ['<path d="M-14 0q8-9 18-3l8-5v16l-8-5q-10 6-18-3z" fill="#ffb347"/><circle cx="-8" cy="-1" r="1.6" fill="#2b2140"/>', 'pez'],
+    bosque: ['<circle r="3.2" fill="#fffbc0"/>', 'luciernaga']
+  };
+  /* paisaje(zona, {reducir, nivel}) -> div.paisaje con cielo, capas, suelo, partículas y fauna. Se pone detrás de otro contenido. */
+  function paisaje(zona, op) {
+    op = op || {};
+    var T = Ar().TEMAS[zona] || Ar().TEMAS.jardin, c = capasDeFondo(zona), r = azar(zona.length * 17 + 3);
+    var svg = function (x) { return '<svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">' + x + '</svg>'; };
+    var G = SUELOS[zona] || [T.c1, T.c2];
+    var el = document.createElement('div'); el.className = 'paisaje zona-' + zona;
+    var fauna = '';
+    if (!op.reducir) {
+      var f = FAUNA[zona], col = CIELO_NOCHE[zona] ? '#ffe9a0' : '#fffbe0';
+      for (var i = 0; i < 14; i++) fauna += '<i class="mota" style="left:' + (r() * 100).toFixed(0) + '%;top:' + (35 + r() * 60).toFixed(0) + '%;animation-delay:' + (r() * 6).toFixed(1) + 's;animation-duration:' + (5 + r() * 5).toFixed(1) + 's;background:' + col + '"></i>';
+      if (f) for (var j = 0; j < 3; j++) fauna += '<svg class="fauna ' + f[1] + '" viewBox="-16 -14 32 28" style="top:' + (22 + j * 17 + r() * 8).toFixed(0) + '%;animation-delay:-' + (r() * 14).toFixed(1) + 's;animation-duration:' + (16 + r() * 8).toFixed(0) + 's" aria-hidden="true">' + f[0] + '</svg>';
+    }
+    el.innerHTML = '<div class="pa-cielo" style="background:linear-gradient(' + T.cielo[0] + ',' + T.cielo[1] + ')"></div>' +
+      '<div class="pa-capa">' + svg(c.lejos) + '</div><div class="pa-capa">' + svg(c.medio) + '</div>' +
+      '<div class="pa-suelo" style="background:linear-gradient(' + G[0] + ',' + G[1] + ');' + (CIELO_NOCHE[zona] && !SUELOS[zona] ? 'filter:brightness(.5) saturate(.9)' : '') + '"></div>' +
+      '<div class="pa-capa cerca">' + svg(c.cerca) + '</div>' + fauna;
+    return el;
+  }
+  /* Faro Mayor para el mapa: `encendidas` ventanas iluminadas (0-6). La linterna hace el guiño «corto, corto, largo». */
+  function faroSvg(encendidas) {
+    var v = '';
+    for (var i = 0; i < 6; i++) v += '<rect x="' + (i % 2 ? 52 : 36) + '" y="' + (110 + Math.floor(i / 3) * 0 + (i >> 1) * 34) + '" width="12" height="20" rx="6" class="faro-v' + (i < encendidas ? ' on' : '') + '" fill="' + (i < encendidas ? '#ffe27a' : '#46506f') + '"/>';
+    return '<svg viewBox="0 0 100 260" class="faro-svg" aria-hidden="true"><defs><radialGradient id="gFaroLuz"><stop offset="0" stop-color="#fff3a8" stop-opacity=".95"/><stop offset="1" stop-color="#ffd166" stop-opacity="0"/></radialGradient></defs>' +
+      '<ellipse cx="50" cy="252" rx="44" ry="7" fill="#000" opacity=".2"/><path d="M26 250l8-170h32l8 170z" fill="#f4f1ea"/><path d="M28 215h44l-2 22H30zM31 150h38l-2 22H33zM34 100h32l-1 18H35z" fill="#e8553f"/>' + v +
+      '<circle cx="50" cy="52" r="46" fill="url(#gFaroLuz)" class="faro-halo"/><rect x="30" y="38" width="40" height="40" rx="7" fill="#2b3558"/><rect x="36" y="44" width="28" height="28" rx="5" class="faro-luz" fill="#ffe27a"/><path d="M26 40l24-24 24 24z" fill="#e8553f"/></svg>';
+  }
+
+  UI.Escenas = { paisaje: paisaje, faroSvg: faroSvg, reproducir: reproducir, deducirPasos: deducirPasos, capasDeFondo: capasDeFondo, OBJETOS: OBJ };
 })(typeof self !== 'undefined' ? self : this);

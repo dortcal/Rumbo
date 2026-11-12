@@ -945,8 +945,8 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  // Se pondrá a true en la fase 4, cuando el Faro del mapa pueda hacer el guiño (corto, corto, largo).
-  var GUINOS_ACTIVOS = false;
+  // Activo desde la fase 4: el Faro del mapa y de la portada hacen el guiño (corto, corto, largo).
+  var GUINOS_ACTIVOS = true;
 
   var ESCENAS = [
   {
@@ -4813,7 +4813,15 @@
       '<text x="280" y="136" fill="url(#gLogo)" stroke="#fff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">RUMBO</text></g></svg>';
   }
 
+  // Insignia Creative Commons BY-NC-ND (local, sin pedir imágenes a Internet).
+  function insigniaCC() {
+    return '<svg viewBox="0 0 88 31" width="88" height="31" role="img" aria-label="CC BY-NC-ND 4.0"><rect width="88" height="31" rx="3" fill="#aab2ab"/><rect x="1.5" y="1.5" width="85" height="28" rx="2" fill="#fff"/>' +
+      '<rect x="1.5" y="1.5" width="26" height="28" rx="2" fill="#aab2ab"/><circle cx="14.5" cy="15.5" r="10" fill="#fff" stroke="#000" stroke-width="2"/><text x="14.5" y="19.5" font-family="Arial,sans-serif" font-weight="700" font-size="11" text-anchor="middle" fill="#000">cc</text>' +
+      '<text x="57" y="13" font-family="Arial,sans-serif" font-weight="700" font-size="9" text-anchor="middle" fill="#000">BY-NC-ND</text><text x="57" y="24" font-family="Arial,sans-serif" font-size="8" text-anchor="middle" fill="#333">4.0</text></svg>';
+  }
+
   UI.Arte = {
+    insigniaCC: insigniaCC,
     TEMAS: TEMAS, NOMBRES_ZONA: NOMBRES_ZONA, celda: celda, objeto: objeto, interruptor: interruptor, puerta: puerta,
     lumo: lumo, exprDe: exprDe, EXPRESIONES: EXPRESIONES, personaje: personaje, PERSONAJES: Object.keys(PERSONAJES).concat(Object.keys(CHISPAS_DISENO), ['Lumo']),
     iconoCarta: iconoCarta, CARTA_COLOR: CARTA_COLOR, CARTA_NOMBRE: CARTA_NOMBRE,
@@ -5172,7 +5180,44 @@
     return { cerrar: cerrar, el: ov };
   }
 
-  UI.Escenas = { reproducir: reproducir, deducirPasos: deducirPasos, capasDeFondo: capasDeFondo, OBJETOS: OBJ };
+
+  // ---------------------------------------------------------------- paisaje reutilizable (tablero, senderos) y Faro del mapa
+  var FAUNA = {
+    jardin: ['<path d="M0 0q-9-10-12-2 0 7 12 2zM0 0q9-10 12-2 0 7-12 2z" fill="#ff9ac8"/><path d="M0 0v6" stroke="#5a2a4a" stroke-width="2"/>', 'mariposa'],
+    granja: ['<path d="M0 0q-9-10-12-2 0 7 12 2zM0 0q9-10 12-2 0 7-12 2z" fill="#ffd166"/><path d="M0 0v6" stroke="#5a4a2a" stroke-width="2"/>', 'mariposa'],
+    playa: ['<path d="M-14 0q7-9 14 0 7-9 14 0" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/>', 'gaviota'],
+    mar: ['<path d="M-14 0q8-9 18-3l8-5v16l-8-5q-10 6-18-3z" fill="#ffb347"/><circle cx="-8" cy="-1" r="1.6" fill="#2b2140"/>', 'pez'],
+    bosque: ['<circle r="3.2" fill="#fffbc0"/>', 'luciernaga']
+  };
+  /* paisaje(zona, {reducir, nivel}) -> div.paisaje con cielo, capas, suelo, partículas y fauna. Se pone detrás de otro contenido. */
+  function paisaje(zona, op) {
+    op = op || {};
+    var T = Ar().TEMAS[zona] || Ar().TEMAS.jardin, c = capasDeFondo(zona), r = azar(zona.length * 17 + 3);
+    var svg = function (x) { return '<svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">' + x + '</svg>'; };
+    var G = SUELOS[zona] || [T.c1, T.c2];
+    var el = document.createElement('div'); el.className = 'paisaje zona-' + zona;
+    var fauna = '';
+    if (!op.reducir) {
+      var f = FAUNA[zona], col = CIELO_NOCHE[zona] ? '#ffe9a0' : '#fffbe0';
+      for (var i = 0; i < 14; i++) fauna += '<i class="mota" style="left:' + (r() * 100).toFixed(0) + '%;top:' + (35 + r() * 60).toFixed(0) + '%;animation-delay:' + (r() * 6).toFixed(1) + 's;animation-duration:' + (5 + r() * 5).toFixed(1) + 's;background:' + col + '"></i>';
+      if (f) for (var j = 0; j < 3; j++) fauna += '<svg class="fauna ' + f[1] + '" viewBox="-16 -14 32 28" style="top:' + (22 + j * 17 + r() * 8).toFixed(0) + '%;animation-delay:-' + (r() * 14).toFixed(1) + 's;animation-duration:' + (16 + r() * 8).toFixed(0) + 's" aria-hidden="true">' + f[0] + '</svg>';
+    }
+    el.innerHTML = '<div class="pa-cielo" style="background:linear-gradient(' + T.cielo[0] + ',' + T.cielo[1] + ')"></div>' +
+      '<div class="pa-capa">' + svg(c.lejos) + '</div><div class="pa-capa">' + svg(c.medio) + '</div>' +
+      '<div class="pa-suelo" style="background:linear-gradient(' + G[0] + ',' + G[1] + ');' + (CIELO_NOCHE[zona] && !SUELOS[zona] ? 'filter:brightness(.5) saturate(.9)' : '') + '"></div>' +
+      '<div class="pa-capa cerca">' + svg(c.cerca) + '</div>' + fauna;
+    return el;
+  }
+  /* Faro Mayor para el mapa: `encendidas` ventanas iluminadas (0-6). La linterna hace el guiño «corto, corto, largo». */
+  function faroSvg(encendidas) {
+    var v = '';
+    for (var i = 0; i < 6; i++) v += '<rect x="' + (i % 2 ? 52 : 36) + '" y="' + (110 + Math.floor(i / 3) * 0 + (i >> 1) * 34) + '" width="12" height="20" rx="6" class="faro-v' + (i < encendidas ? ' on' : '') + '" fill="' + (i < encendidas ? '#ffe27a' : '#46506f') + '"/>';
+    return '<svg viewBox="0 0 100 260" class="faro-svg" aria-hidden="true"><defs><radialGradient id="gFaroLuz"><stop offset="0" stop-color="#fff3a8" stop-opacity=".95"/><stop offset="1" stop-color="#ffd166" stop-opacity="0"/></radialGradient></defs>' +
+      '<ellipse cx="50" cy="252" rx="44" ry="7" fill="#000" opacity=".2"/><path d="M26 250l8-170h32l8 170z" fill="#f4f1ea"/><path d="M28 215h44l-2 22H30zM31 150h38l-2 22H33zM34 100h32l-1 18H35z" fill="#e8553f"/>' + v +
+      '<circle cx="50" cy="52" r="46" fill="url(#gFaroLuz)" class="faro-halo"/><rect x="30" y="38" width="40" height="40" rx="7" fill="#2b3558"/><rect x="36" y="44" width="28" height="28" rx="5" class="faro-luz" fill="#ffe27a"/><path d="M26 40l24-24 24 24z" fill="#e8553f"/></svg>';
+  }
+
+  UI.Escenas = { paisaje: paisaje, faroSvg: faroSvg, reproducir: reproducir, deducirPasos: deducirPasos, capasDeFondo: capasDeFondo, OBJETOS: OBJ };
 })(typeof self !== 'undefined' ? self : this);
 
 
@@ -5908,7 +5953,7 @@
     // ----------------------------- escena y editor
     var escenaEl = h('div.j-escena');
     var contObjetos = h('div.j-objetos', { hidden: true });
-    var escenaCaja = h('div.j-escena-caja', escenaEl, contObjetos);
+    var escenaCaja = h('div.j-escena-caja', UI.Escenas.paisaje(zona, { reducir: !!aj.reducir }), escenaEl, contObjetos);
     var progEl = h('div.j-prog');
     var cuenta = h('span.cuenta');
     var aviso = h('div.aviso', { role: 'status', 'aria-live': 'polite' });
@@ -6330,10 +6375,11 @@
       bs.appendChild(boton('Jugar', 'principal', function () { ir('jugadores'); }, '<svg viewBox="0 0 32 32"><path d="M8 5l18 11L8 27z" fill="#fff"/></svg>'));
     }
     centro.appendChild(bs);
+    cont.appendChild(h('div.portada-faro', { html: UI.Escenas.faroSvg(0) }));
     cont.appendChild(centro);
     cont.appendChild(h('div.portada-licencia',
       h('a.cc-logo', { href: 'https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es', target: '_blank', rel: 'license noopener noreferrer', 'aria-label': 'Licencia Creative Commons Reconocimiento-NoComercial-SinObraDerivada 4.0' },
-        h('img', { src: 'https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png', alt: 'CC BY-NC-ND 4.0', width: '88', height: '31', loading: 'lazy' })),
+        UI.svgEl(Ar.insigniaCC(), 'cc-ins')),
       h('p', 'Diseñado por David OZC · © 2026 David. Uso gratuito en centros educativos.'),
       h('p.cc-texto', 'Licencia CC BY-NC-ND 4.0: Reconocimiento · NoComercial · SinObraDerivada.')));
     cont.appendChild(h('div.portada-pie',
@@ -6532,21 +6578,30 @@
           h('span', bv.completa ? 'Repetir' : bv.hechos ? 'Continuar' : '¡Empezar!'))));
       if (PR.debeRecomendarBienvenida(p)) recomendarBienvenida();
     }
-    var grid = h('div.mundos' + (infantil() ? '.uno' : ''));
+    var arch = !infantil();
+    var grid = h('div.mundos' + (infantil() ? '.uno' : '.archipielago'));
     var opc = opcionesDocente();
+    var chispasHalladas = ES.CHISPAS.filter(function (c) { return p.vistos.escenas[c.rescate]; }).length;
+    var sigP = PR.siguientePendiente(p), mundoActual = sigP && CAT.POR_ID[sigP] ? CAT.POR_ID[sigP].mundo : null;
+    var POS = { 1: [16, 66], 2: [45, 79], 3: [75, 60], 4: [50, 29] };
+    if (arch) {
+      grid.appendChild(h('div.mar-fondo', { html: '<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="sendero" vector-effect="non-scaling-stroke" d="M16 66Q30 84 44 76T75 60Q72 40 50 28" fill="none"/></svg>' + '<i class="ola o1"></i><i class="ola o2"></i><i class="barquito"></i>' }));
+    }
     pestanaMundos().forEach(function (m) {
       var M = CAT.MUNDOS[m], abierto = PR.mundoAbierto(p, m, opc);
       var comp = PR.completadosMundo(p, m), tot = M.niveles.length;
       var est = m === 0 ? null : PR.estrellasMundo(p, m);
-      var cls = 'mundo-tarjeta' + (abierto ? '' : '.cerrado') + (comp === tot ? '.completo' : '');
-      var tarj = h('button.' + cls, { type: 'button', style: { '--col': M.color }, 'aria-disabled': String(!abierto), on: { click: function () {
+      var cls = 'mundo-tarjeta' + (arch ? '.isla' : '') + (m === 4 ? '.faro-isla' : '') + (abierto ? '' : '.cerrado') + (comp === tot ? '.completo' : '');
+      var arte = m === 4 ? h('div.mt-arte.faro-arte', { html: UI.Escenas.faroSvg(chispasHalladas) + '<div class="faro-cont">' + chispasHalladas + ' de ' + ES.CHISPAS.length + ' luces</div>' }) : h('div.mt-arte', { html: miniaturaMundo(m) });
+      var tarj = h('button.' + cls, { type: 'button', style: arch ? { '--col': M.color, left: POS[m][0] + '%', top: POS[m][1] + '%' } : { '--col': M.color }, 'aria-disabled': String(!abierto), on: { click: function () {
         if (!abierto) { UI.Sonido.sfx('choque'); toast(m === 4 ? 'El Faro se abre al terminar el Mundo 3.' : 'Termina el mundo anterior para abrir este.'); return; }
         UI.Sonido.sfx('toque'); ir('mundo', { mundo: m }); } } },
-        h('div.mt-arte', { html: miniaturaMundo(m) }),
-        h('div.mt-info', h('div.mt-nombre', M.nombre), h('div.mt-edad', M.edades), h('p.mt-desc', M.descripcion),
+        arte,
+        h('div.mt-info', h('div.mt-nombre', M.nombre), h('div.mt-edad', M.edades), arch ? null : h('p.mt-desc', M.descripcion),
           h('div.barra', h('i', { style: { width: Math.round(comp / tot * 100) + '%' } })),
           h('div.mt-prog', comp + ' de ' + tot + (est != null ? ' · ★ ' + est + '/' + (tot * 3) : ''))),
-        abierto ? null : h('div.mt-candado', UI.svgEl(Ar.candado(), '')));
+        abierto ? null : h('div.mt-candado', UI.svgEl(Ar.candado(), '')),
+        (arch && mundoActual === m) ? h('div.lumo-marca', { html: Ar.lumo({ expr: 'alegre', dir: 'S', disfraz: p.disfraz, pose: 'saludo' }) }) : null);
       grid.appendChild(tarj);
     });
     cont.appendChild(grid);
@@ -6600,7 +6655,7 @@
     var opc = opcionesDocente();
     cont.style.setProperty('--col', M.color);
     cont.classList.add('zona-' + M.zonas[0]);
-    nubes(cont);
+    cont.appendChild(UI.Escenas.paisaje(M.zonas[0], { reducir: !!datos().ajustes.reducir }));
     UI.Sonido.musica(M.zonas[0]);
     cont.appendChild(cabecera(M.nombre, { atras: function () { ir('mapa'); } }));
     var cuerpo = h('div.niveles-cuerpo');
@@ -6648,6 +6703,12 @@
       }
     }
     cont.appendChild(cuerpo);
+    // Sendero: une cada nodo con el siguiente; el primero de cada fila no lleva tramo por la izquierda.
+    setTimeout(function () {
+      Array.prototype.forEach.call(cuerpo.querySelectorAll('.ruta'), function (r) {
+        var prev = null; Array.prototype.forEach.call(r.children, function (n) { var t = n.offsetTop; n.classList.toggle('ini-fila', prev === null || t > prev + 4); prev = t; });
+      });
+    }, 0);
   });
 
   // ---------------------------------------------------------------- jugar un nivel

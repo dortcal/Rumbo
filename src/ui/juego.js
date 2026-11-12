@@ -81,7 +81,7 @@
     // ----------------------------- escena y editor
     var escenaEl = h('div.j-escena');
     var contObjetos = h('div.j-objetos', { hidden: true });
-    var escenaCaja = h('div.j-escena-caja', escenaEl, contObjetos);
+    var escenaCaja = h('div.j-escena-caja', UI.Escenas.paisaje(zona, { reducir: !!aj.reducir }), escenaEl, contObjetos);
     var progEl = h('div.j-prog');
     var cuenta = h('span.cuenta');
     var aviso = h('div.aviso', { role: 'status', 'aria-live': 'polite' });

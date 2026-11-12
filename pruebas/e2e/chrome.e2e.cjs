@@ -227,7 +227,7 @@ async function main() {
   console.log('\n8. Códigos de partida');
   p = await pagina();
   await crearPerfil(p, 'Pepe', 'p1'); await rapido(p);
-  for (const id of ['m1-01', 'm1-02', 'm1-03']) { await ev(p, id => RumboUI.App.estado.docente = { todo: false }, id); await abrirNivel(p, id); await ev(p, () => { const c = RumboUI.App.estado.controlJuego; c.editor.cargar(RumboCatalogo.POR_ID[c.el.dataset.nivel].referencia); }); await p.click('.b-play'); await esperarFin(p, 30000); await esperar(800); await ev(p, () => { const b = document.querySelector('.resultado .b-mapa2'); if (b) b.click(); }); await esperar(300); }
+  for (const id of ['m1-01', 'm1-02', 'm1-03']) { await ev(p, id => RumboUI.App.estado.docente = { todo: false }, id); await abrirNivel(p, id); await ev(p, () => { const c = RumboUI.App.estado.controlJuego; c.editor.cargar(RumboCatalogo.POR_ID[c.el.dataset.nivel].referencia); }); await p.click('.b-play'); await esperarFin(p, 30000); await esperar(800); await ev(p, () => { const b = document.querySelector('.resultado .b-mapa2'); if (b) b.click(); }); await esperar(300); await saltarEscenas(p); }
   const codigo = await ev(p, () => RumboProgreso.aCodigo(RumboUI.App.perfil()).codigo);
   console.log('   código corto:', codigo);
   chequear(/^[0-9A-Z-]{11,14}$/.test(String(codigo)), 'se genera un código corto de partida');
