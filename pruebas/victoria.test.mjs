@@ -67,3 +67,11 @@ test('diario Infantil: sin texto, sin chispas ni abuela', () => {
   assert.ok(pag.length >= 2 && pag.every((x) => x.texto === ''));
   assert.ok(!pag.some((x) => /abuela|titila|bichito|brasa/.test(x.id)));
 });
+
+import VOCES from '../src/datos/voces-es.js';
+test('felicitaciones: seis variantes por cada nivel de estrellas, todas cortas y distintas', () => {
+  ['ok_1', 'ok_2', 'ok_3'].forEach((b) => {
+    const textos = ['', 'b', 'c', 'd', 'e', 'f'].map((s) => { const l = VOCES.lineas[b + s]; assert.ok(l, b + s); assert.ok(palabras(l.texto) <= 14, b + s); return l.texto; });
+    assert.equal(new Set(textos).size, 6, b);
+  });
+});

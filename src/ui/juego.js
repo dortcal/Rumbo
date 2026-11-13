@@ -4,6 +4,7 @@
  */
 (function (root) {
   'use strict';
+  var juego_victorias = 0;   // contador de la sesión para rotar las felicitaciones
   var UI = root.RumboUI = root.RumboUI || {};
   var h = function () { return UI.h.apply(null, arguments); };
 
@@ -248,9 +249,15 @@
         ctx.guardar && ctx.guardar();
       }
       raiz.dataset.ultimo = 'victoria:' + est;
-      var okId = est >= 3 ? 'ok_3' : est === 2 ? 'ok_2' : 'ok_1';
-      hablar(infantil ? 'ok_1' : okId);
+      var okBase = infantil ? 'ok_1' : est >= 3 ? 'ok_3' : est === 2 ? 'ok_2' : 'ok_1';
+      hablar(felicitacion(okBase));
       setTimeout(function () { if (vivo) resultados(est, tarjetas, info, nuevos, nuevosDisf); }, 500);
+    }
+    // Rota las felicitaciones: cada victoria de la sesión usa una distinta (desfasada según el reto), sin repetir seguidas.
+    function felicitacion(base) {
+      var suf = ['', 'b', 'c', 'd', 'e', 'f'];
+      var n = juego_victorias++ % suf.length;
+      return base + suf[n];
     }
     function textoEstrellas() {
       if (!nivel.estrellas) return [];

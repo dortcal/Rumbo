@@ -212,7 +212,23 @@
     // ---- Celebraciones ----
     ok_1: { quien: 'Lumo', texto: '¡Lo conseguimos!' },
     ok_2: { quien: 'Lumo', texto: '¡Qué bien lo has pensado!' },
-    ok_3: { quien: 'Lumo', texto: '¡Increíble! Casi no hacían falta tarjetas.' }
+    ok_3: { quien: 'Lumo', texto: '¡Increíble! Casi no hacían falta tarjetas.' },
+    // Variantes de felicitación (se rotan para que no suene siempre igual).
+    ok_1b: { quien: 'Lumo', texto: '¡Misión cumplida!' },
+    ok_1c: { quien: 'Lumo', texto: '¡Muy bien, seguimos!' },
+    ok_1d: { quien: 'Lumo', texto: '¡Eso es, lo has resuelto!' },
+    ok_1e: { quien: 'Lumo', texto: '¡Bien hecho, equipo!' },
+    ok_1f: { quien: 'Lumo', texto: '¡Lo has logrado!' },
+    ok_2b: { quien: 'Lumo', texto: '¡Buen plan! Ha funcionado de maravilla.' },
+    ok_2c: { quien: 'Lumo', texto: '¡Qué ideas tan buenas tienes!' },
+    ok_2d: { quien: 'Lumo', texto: '¡Muy bien ordenado, programador!' },
+    ok_2e: { quien: 'Lumo', texto: '¡Me encanta cómo lo has resuelto!' },
+    ok_2f: { quien: 'Lumo', texto: '¡Casi perfecto! Vas muy bien.' },
+    ok_3b: { quien: 'Lumo', texto: '¡Perfecto! No sobra ni una tarjeta.' },
+    ok_3c: { quien: 'Lumo', texto: '¡Solución de maestro! Qué limpia.' },
+    ok_3d: { quien: 'Lumo', texto: '¡Qué eficiencia! Lo has hecho con lo justo.' },
+    ok_3e: { quien: 'Lumo', texto: '¡Brillante! Mi brújula está orgullosa.' },
+    ok_3f: { quien: 'Lumo', texto: '¡Ni una tarjeta de más! Genial.' }
   };
 
   return { version: 1, lineas: lineas };
