@@ -6651,7 +6651,7 @@
     App.estado.perfil = act || null;
     aplicarAjustes();
     if (!G.persistente()) setTimeout(function () { toast('Este navegador no deja guardar datos: el progreso se perderá al cerrar. Usa «Mi código».', 6000); }, 800);
-    if (!datos().ajustes.introVista) intro(function () { ir('portada'); }); else ir('portada');
+    ir('portada');
   }
 
   function aplicarAjustes() {
@@ -6725,10 +6725,10 @@
     centro.appendChild(h('div.portada-lumo', lumoAvatar('gigante', 'feliz', p ? p.disfraz : 0)));
     var bs = h('div.portada-botones');
     if (p) {
-      bs.appendChild(boton('Jugar como ' + p.nombre, 'principal', function () { ir('mapa'); }, '<svg viewBox="0 0 32 32"><path d="M8 5l18 11L8 27z" fill="#fff"/></svg>'));
+      bs.appendChild(boton('Jugar como ' + p.nombre, 'principal', function () { conIntro(function () { ir('mapa'); }); }, '<svg viewBox="0 0 32 32"><path d="M8 5l18 11L8 27z" fill="#fff"/></svg>'));
       bs.appendChild(boton('Cambiar de jugador', 'sec', function () { ir('jugadores'); }));
     } else {
-      bs.appendChild(boton('Jugar', 'principal', function () { ir('jugadores'); }, '<svg viewBox="0 0 32 32"><path d="M8 5l18 11L8 27z" fill="#fff"/></svg>'));
+      bs.appendChild(boton('Jugar', 'principal', function () { conIntro(function () { ir('jugadores'); }); }, '<svg viewBox="0 0 32 32"><path d="M8 5l18 11L8 27z" fill="#fff"/></svg>'));
     }
     centro.appendChild(bs);
     cont.appendChild(h('div.portada-faro', { html: UI.Escenas.faroSvg(0) }));
@@ -6793,6 +6793,8 @@
     ov.addEventListener('click', function (ev) { if (ev.target === saltar) return; clearTimeout(tim); paso(); });   // toca para pasar a la siguiente
     paso();
   }
+  // La intro se muestra la primera vez que se pulsa «Jugar» (con botón «Saltar»); después ya no.
+  function conIntro(fn) { if (!datos().ajustes.introVista) { UI.Sonido.iniciar(); intro(fn); } else fn(); }
   App.intro = function () { intro(function () {}); };
 
   // Protección de datos: no se pide ningún nombre. Cada jugador es «Jugador N» y se distingue por un dibujo.

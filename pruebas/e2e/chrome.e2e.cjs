@@ -75,7 +75,7 @@ async function main() {
   let p = await pagina();
   chequear(await ev(p, () => !!document.querySelector('.p-portada .logo-svg')), 'la portada se muestra con el logotipo');
   chequear(await ev(p, () => typeof RumboCatalogo.total === 'function' && RumboCatalogo.TODOS.length === 102), 'el catálogo tiene 102 retos');
-  await p.click('.btn-grande.principal'); await esperar(250); await p.click('.tarjeta-jugador.nuevo'); await esperar(250);
+  await p.click('.btn-grande.principal'); await esperar(300); await ev0(p); await p.click('.tarjeta-jugador.nuevo'); await esperar(250);
   await ev(p, () => [...document.querySelectorAll('.chip-curso')].find(b => b.textContent === '1.º').click()); await p.click('.btn-grande.principal'); await esperar(400);
   chequear(await ev(p, () => document.body.dataset.pantalla === 'mapa'), 'se crea el jugador y aparece el mapa');
   chequear(await ev(p, () => !!document.querySelector('.modal.bienvenida')), 'a un jugador nuevo de Primaria se le recomienda la aventura de bienvenida');
