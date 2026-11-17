@@ -197,6 +197,12 @@
     // ---- Respuesta a errores: positiva y con pistas progresivas ----
     fb_casi: { quien: 'Lumo', texto: '¡Casi lo consigues!' },
     fb_orden: { quien: 'Lumo', texto: '¿Has comprobado el orden de las instrucciones?' },
+    fb_atasco_activar: { quien: 'Lumo', texto: '¡Sigo aquí! El interruptor no desaparece. ¿Qué hago después de activarlo?' },
+    fb_atasco_recoger: { quien: 'Lumo', texto: '¡Sigo aquí! Ya no queda nada que recoger. ¿Qué hago después?' },
+    fb_atasco: { quien: 'Lumo', texto: '¡Sigo aquí! Hago siempre lo mismo y nada cambia. ¿Qué me falta?' },
+    fb_inv_no: { quien: 'Lumo', texto: 'Creo que la condición está al revés. Mira el «NO».' },
+    fb_inv_ramas: { quien: 'Lumo', texto: 'Creo que he elegido al revés. ¿Qué hago cuando se cumple?' },
+    fb_mas_vueltas: { quien: 'Lumo', texto: 'Me he quedado a medias. ¿Repito las vueltas suficientes?' },
     fb_cond: { quien: 'Lumo', texto: 'Mira la condición: ¿se cumple en esta casilla?' },
     fb_cond_no: { quien: 'Lumo', texto: 'El «NO» le da la vuelta a la condición. ¿Es lo que quieres?' },
     fb_giro: { quien: 'Lumo', texto: 'Creo que nos hemos equivocado en este giro.' },

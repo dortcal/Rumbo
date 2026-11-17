@@ -149,6 +149,7 @@
     };
     var traza = [];
     var pasos = 0;
+    var visitasSi = {}, atasco = null;   // detector de atasco: un «Si» que vuelve a verse en un estado idéntico
 
     function snap() { return { x: est.x, y: est.y, dir: est.dir }; }
 
@@ -288,6 +289,13 @@
         case 'si': {
           accion = false;
           var v = condicion(nodo.cond, ruta);
+          var clave = est.x + ',' + est.y + ',' + est.dir + ',' + est.puertas + ',' + est.nRecogidos + ',' + v;
+          var vs = visitasSi[ruta];
+          if (vs && vs.clave === clave) vs.veces++; else vs = visitasSi[ruta] = { clave: clave, veces: 1 };
+          if (vs.veces >= 3 && !atasco) {
+            var tipos = []; recorrer(v ? nodo.entonces : nodo.sino, function (x) { tipos.push(x.t); });
+            atasco = { ruta: ruta, rama: v ? 'entonces' : 'sino', veces: vs.veces, tarjetas: tipos };
+          }
           registrar(ruta, nodo, 'control', de, { valor: v });
           lista(v ? nodo.entonces : nodo.sino, hijo(ruta, v ? 'e' : 's'), prof);
           break;
@@ -335,10 +343,46 @@
       if (!(e instanceof Fin)) throw e;
       resultado = e.resultado;
     }
+    if (atasco && !resultado.ok) resultado.atasco = atasco;
     resultado.pasos = pasos;
     resultado.traza = traza;
     resultado.final = { x: est.x, y: est.y, dir: est.dir, puertas: est.puertas, recogidos: est.nRecogidos };
     return resultado;
+  }
+
+
+  // ---------- diagnóstico de un fallo (para dar la pista adecuada) ----------
+  // Devuelve { causa, ruta? } con causa en: 'atasco' | 'invertida' | 'repeticiones' | null.
+  //  atasco        el robot repite la misma decisión sin que nada cambie (p. ej. el interruptor no desaparece).
+  //  invertida     dando la vuelta a una condición («no» o las dos ramas) el programa sí funcionaría.
+  //  repeticiones  con más vueltas en un bucle el programa sí llegaría a la meta.
+  function diagnosticar(nivel, programa, resultado) {
+    if (!resultado || resultado.ok) return null;
+    if (resultado.motivo === 'programa-vacio' || resultado.motivo === 'programa-invalido') return null;
+    var base = JSON.parse(JSON.stringify(programa));
+    var nodos = [];
+    recorrer(base, function (n) { nodos.push(n); });
+    var permiteNo = JSON.stringify(nivel.referencia || '').indexOf('"no":true') >= 0 || JSON.stringify(programa).indexOf('"no":true') >= 0 || !!(nivel.cartas && nivel.cartas.negacion);
+    var intentos = 0;
+    function prueba(i, cambiar) {
+      if (intentos++ > 30) return false;
+      var copia = JSON.parse(JSON.stringify(programa)), lista = [];
+      recorrer(copia, function (n) { lista.push(n); });
+      cambiar(lista[i]);
+      return ejecutar(nivel, copia).ok;
+    }
+    for (var i = 0; i < nodos.length; i++) {
+      var n = nodos[i];
+      if (n.t === 'si' || n.t === 'mientras') {
+        if (permiteNo && n.cond && prueba(i, function (x) { x.cond.no = !x.cond.no; })) return { causa: 'invertida', via: 'no' };
+        if (n.t === 'si' && prueba(i, function (x) { var t = x.entonces; x.entonces = x.sino; x.sino = t; })) return { causa: 'invertida', via: 'ramas' };
+      }
+    }
+    if (resultado.atasco) return { causa: 'atasco', ruta: resultado.atasco.ruta, tarjetas: resultado.atasco.tarjetas };
+    for (var j = 0; j < nodos.length; j++) {
+      if (nodos[j].t === 'repetir' && nodos[j].n < MAX_REPETIR && prueba(j, function (x) { x.n = MAX_REPETIR; })) return { causa: 'repeticiones' };
+    }
+    return null;
   }
 
   return {
@@ -349,6 +393,7 @@
     MAX_PASOS: MAX_PASOS,
     crearTablero: crearTablero,
     ejecutar: ejecutar,
+    diagnosticar: diagnosticar,
     recorrer: recorrer,
     contarTarjetas: contarTarjetas,
     contarPorTipo: contarPorTipo,

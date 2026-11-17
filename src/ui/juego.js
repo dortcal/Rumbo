@@ -189,9 +189,13 @@
       if (!ctx.sinRegistro && perfil) { PR.registrar(perfil, nivel.id, { ok: false, motivo: resultado.motivo, tarjetas: I.contarTarjetas(prog), programa: prog, pistas: pistaN }, I); ctx.guardar && ctx.guardar(); }
       ed.marcarError(resultado.nodoError);
       var id = FB[resultado.motivo] || 'fb_casi';
+      var diag = infantil ? null : I.diagnosticar(nivel, prog, resultado);
       var condiciona = !infantil && (I.usaTarjeta(prog, 'si') || I.usaTarjeta(prog, 'mientras'));
       var hayNo = JSON.stringify(prog).indexOf('"no":true') >= 0;
-      if (condiciona && ['objetivo-incompleto', 'objeto-olvidado', 'choque', 'caida', 'limite-pasos'].indexOf(resultado.motivo) >= 0 && fallos % 3 !== 0) id = hayNo && fallos % 2 === 0 ? 'fb_cond_no' : 'fb_cond';
+      if (diag && diag.causa === 'atasco') id = diag.tarjetas.indexOf('activar') >= 0 ? 'fb_atasco_activar' : diag.tarjetas.indexOf('recoger') >= 0 ? 'fb_atasco_recoger' : 'fb_atasco';
+      else if (diag && diag.causa === 'invertida') id = diag.via === 'no' ? 'fb_inv_no' : 'fb_inv_ramas';
+      else if (diag && diag.causa === 'repeticiones') id = 'fb_mas_vueltas';
+      else if (condiciona && ['objetivo-incompleto', 'objeto-olvidado', 'choque', 'caida', 'limite-pasos'].indexOf(resultado.motivo) >= 0 && fallos % 3 !== 0) id = hayNo && fallos % 2 === 0 ? 'fb_cond_no' : 'fb_cond';
       else if (fallos % 3 === 0 && (resultado.motivo === 'objetivo-incompleto' || resultado.motivo === 'choque')) id = 'fb_orden';
       else if (fallos % 3 === 2 && I.usaTarjeta(nivel.referencia, 'repetir') && !I.usaTarjeta(prog, 'repetir') && !infantil) id = 'fb_repetir';
       if (UI.Sonido) UI.Sonido.sfx('animo');
@@ -226,6 +230,7 @@
         return;
       }
       var k2 = Math.min(pistaN, nivel.pistas.length);
+      if (nivel.pistaSolucion && k2 === nivel.pistas.length) { hablar('h' + k2 + '_' + nivel.id); ensenar(); return; }
       hablar('h' + k2 + '_' + nivel.id);
       mostrarAviso('Pista ' + k2 + ' de ' + nivel.pistas.length);
     }

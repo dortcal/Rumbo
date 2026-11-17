@@ -161,6 +161,7 @@
         s3: def.usa ? { tipo: 'usa', carta: def.usa } : { tipo: 'referencia' }
       };
       n.pistas = def.p || PISTAS[def.h || 'seq'];
+      if (def.pistaSolucion) n.pistaSolucion = true;
     } else if (def.p) {
       n.pistas = def.p;
     }

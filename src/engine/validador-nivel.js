@@ -144,8 +144,8 @@
 
     // ---- pistas ----
     if (nivel.etapa !== 'infantil') {
-      if (!Array.isArray(nivel.pistas) || nivel.pistas.length !== 3 || !nivel.pistas.every(esTexto)) {
-        error('en Primaria hacen falta exactamente 3 pistas con texto');
+      if (!Array.isArray(nivel.pistas) || nivel.pistas.length !== (nivel.pistaSolucion ? 2 : 3) || !nivel.pistas.every(esTexto)) {
+        error('en Primaria hacen falta exactamente 3 pistas con texto (2 si la última muestra la solución)');
       }
     } else if (nivel.pistas !== undefined && !Array.isArray(nivel.pistas)) {
       error('pistas debe ser una lista');

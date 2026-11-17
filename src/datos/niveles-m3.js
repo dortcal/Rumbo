@@ -23,7 +23,8 @@
   function m3(def, n) {
     def.e = 'primaria-3c';
     def.z = n <= 13 ? 'ciudad' : 'espacio';
-    def.id = 'm3-' + (n < 10 ? '0' : '') + n;
+    def.id = 'm3-' + (typeof n === 'string' ? n : (n < 10 ? '0' : '') + n);
+    if (typeof n === 'string') def.z = 'ciudad';
     return D.nivel(def);
   }
 
@@ -110,10 +111,18 @@
       p: ['Hay luces en sitios distintos y no hace falta contarlos.', 'Si hay una luz aquí, recógela; si no, avanza.', 'Dentro de un bucle largo: Si objeto aquí, recoger; si no, avanzar.'],
       o: 'Si hay una luz, recógela. Si no, avanza.', i: 'Hay baterías esparcidas por la calle. Bit las necesita todas.',
       cur: ['m3_41', 'm3_42'], ext: ['Un algoritmo que funciona sin saber dónde están los objetos'] }, 8),
+    // Antes del interruptor automático: el interruptor NO desaparece al activarlo, así que «Activar» no mueve a Lumo
+    // y hay que seguir avanzando. Sin condicional: así el patrón se entiende antes de combinarlo con «Si».
+    m3({ tt: 'Activa y sigue', b: 2, m: ['>.s.d..G'], c: ['avanzar', 'activar', 'repetir'],
+      ref: [A, A, X, rep(5, A)], lim: { repetir: 1 }, holgura: 1, h: 'mecanismo',
+      p: ['Mira dónde está el interruptor y dónde está la reja.', 'Activar no mueve a Lumo: después hay que seguir avanzando.', 'Avanza hasta el interruptor, actívalo y sigue avanzando hasta la meta.'],
+      o: 'Activa el interruptor y sigue hasta la meta.', i: 'La puerta del taller de Bit solo se abre con un interruptor. Y el interruptor no se va a ningún sitio.',
+      cur: ['m3_41', 'm3_42'], ext: ['Una acción (activar) no cambia la posición: el avance va aparte'] }, '08b'),
     m3({ tt: 'Interruptor automático', b: 2, m: ['>..s..d..G'], c: ['avanzar', 'activar', 'repetir', 'si'], con: ['interruptor-aqui'],
-      ref: [rep(12, si(IN, [X, A], [A]))], lim: { repetir: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
-      o: 'Activa el interruptor si estás encima. Si no, avanza.', i: 'La puerta del taller de Bit solo se abre con un interruptor.',
-      cur: ['m3_41', 'm3_42'], ext: ['Sensor de interruptor'] }, 9),
+      ref: [rep(10, si(IN, [X]), A)], lim: { repetir: 1, si: 1 }, holgura: 2, h: 'cond',
+      p: ['¿Qué pasa en la casilla después de activar el interruptor?', 'Mira cómo queda el programa: Avanzar va después del Si, no dentro.'], pistaSolucion: true,
+      o: 'Fíjate: el interruptor se queda en su sitio. Si solo activo, ¿cómo salgo de aquí?', i: 'Esta vez Bit quiere que Lumo decida solo cuándo activar.',
+      cur: ['m3_41', 'm3_42'], ext: ['La acción de avanzar va aparte del condicional: activar no cambia la casilla'] }, 9),
     m3({ tt: 'Lava o muro', b: 2, m: ['>.~..', '####.', 'G.~..'], c: ['avanzar', 'girar-d', 'saltar', 'repetir', 'si'], con: ['agua-delante', 'obstaculo-delante'],
       ref: [rep(20, si(AG, [S], [si(OB, [G], [A])]))], lim: { repetir: 1, si: 2 }, holgura: 1, usa: 'si', h: 'cond',
       p: ['Hay dos cosas que mirar: agua y muro.', 'Primero pregunta por el agua; si no hay, pregunta por el muro.', 'Si agua: saltar; si no: (si muro: girar; si no: avanzar).'],
