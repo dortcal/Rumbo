@@ -5921,6 +5921,11 @@
       if (infantil && dir === '') {
         for (var k = nodos.length; k < huecos; k++) l.appendChild(h('span.slot-vacio', { 'aria-hidden': 'true' }, String(k + 1)));
       } else if (!nodos.length) l.appendChild(h('span.lista-vacia', opciones.vacia || 'Suelta aquí'));
+      // Si la lista contiene bloques con huecos (repetir, mientras, si), deja una zona clara «después del bloque»
+      // para poder soltar fuera de ellos sin acertar a un borde de unos pocos píxeles.
+      if (!infantil && nodos.some(function (n) { return n.t === 'repetir' || n.t === 'mientras' || n.t === 'si'; })) {
+        l.appendChild(h('div.lista-cola', { 'aria-hidden': 'true' }, dir === '' || /^r\.[A-Za-z]$/.test(dir) ? 'Fuera del bucle: suelta aquí' : 'Después del bloque: suelta aquí'));
+      }
       return l;
     }
     function nodoVista(n, ruta) {
