@@ -4099,6 +4099,16 @@
       if (esInfantil(perfil)) return true;
       return curso.mundos.indexOf(n.mundo) >= 0 || n.mundo === 4 || completadosMundo(perfil, n.mundo) > 0;
     });
+    if (!esInfantil(perfil)) {      // seguir por el mundo más avanzado en el que ya se ha jugado
+      var mw = 0;
+      [1, 2, 3].forEach(function (m) { if (completadosMundo(perfil, m) > 0) mw = m; });
+      if (mw > 0) {
+        var enMundo = candidatos.filter(function (id) { return CAT.POR_ID[id].mundo === mw; });
+        for (var q = 0; q < enMundo.length; q++) {
+          if (!hecho(perfil, enMundo[q]) && estaDesbloqueado(perfil, enMundo[q])) return enMundo[q];
+        }
+      }
+    }
     for (var i = 0; i < candidatos.length; i++) {
       if (!hecho(perfil, candidatos[i]) && estaDesbloqueado(perfil, candidatos[i])) return candidatos[i];
     }
@@ -4290,14 +4300,33 @@
       r = COD.decodificarCorto(texto);
       if (!r.ok) return { ok: false, motivo: r.motivo };
       var e = r.estado;
-      perfil = crearPerfil({ nombre: nombre, curso: e.nivel > 50 ? 'p5' : e.nivel > 25 ? 'p3' : 'p1' });
-      var resto = Math.min(e.nivel, CAT.SEC_PRIMARIA.length);
-      [1, 2, 3, 4].forEach(function (m) {
-        var tam = CAT.MUNDOS[m].niveles.length;
-        var comp = Math.min(tam, resto);
-        resto -= comp;
-        if (comp > 0) repartir(perfil, m, comp, e.estrellasMundo[m - 1]);
-      });
+      var tams = [1, 2, 3, 4].map(function (m) { return CAT.MUNDOS[m].niveles.length; });
+      var est = e.estrellasMundo;
+      var total = Math.min(e.nivel, CAT.SEC_PRIMARIA.length);
+      // Cota por mundo: con E estrellas hay entre ceil(E/3) y min(E, tamaño) retos superados.
+      var bajo = est.map(function (E) { return E > 0 ? Math.ceil(E / 3) : 0; });
+      var alto = est.map(function (E, i) { return E > 0 ? Math.min(E, tams[i]) : 0; });
+      var comp = bajo.slice();
+      var resto = total - comp.reduce(function (a, b) { return a + b; }, 0);
+      var consistente = resto >= 0 && comp.every(function (c, i) { return c <= alto[i]; });
+      if (consistente) {
+        for (var k = 0; k < 4 && resto > 0; k++) {
+          var add = Math.min(resto, alto[k] - comp[k]);
+          comp[k] += add; resto -= add;
+        }
+        consistente = resto === 0;
+      }
+      if (!consistente) {           // código sin estrellas coherentes: reparto secuencial clásico
+        var rs = total;
+        comp = tams.map(function (t) { var c = Math.min(t, rs); rs -= c; return c; });
+      }
+      var curso = total > 50 ? 'p5' : total > 25 ? 'p3' : 'p1';
+      if (consistente) {
+        if (comp[2] + comp[3] > 0 && comp[0] === 0 && comp[1] === 0) curso = 'p5';
+        else if (comp[1] > 0 && comp[0] === 0 && comp[2] === 0 && comp[3] === 0) curso = 'p3';
+      }
+      perfil = crearPerfil({ nombre: nombre, curso: curso });
+      comp.forEach(function (c, i) { if (c > 0) repartir(perfil, i + 1, c, est[i]); });
       CAT.SECRETOS.forEach(function (s, i) { if (e.secretos[i]) marcar(perfil, s.id, 1); });
       perfil.disfraz = e.disfraz;
       return { ok: true, perfil: perfil, tipo: 'corto' };

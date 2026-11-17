@@ -149,6 +149,20 @@ test('código corto: ida y vuelta conserva desbloqueos, totales por mundo, secre
   assert.equal(q.nombre, 'Luis');
 });
 
+test('código corto: restaura el mundo donde se jugó (7MKK-725N-YRW → Mundo 3)', () => {
+  const r = P.desdeCodigo('7MKK-725N-YRW', 'Ana');
+  assert.equal(r.ok, true);
+  const q = r.perfil;
+  assert.equal(q.curso, 'p5');
+  assert.equal(P.completadosMundo(q, 1), 0);
+  assert.equal(P.completadosMundo(q, 2), 0);
+  assert.equal(P.completadosMundo(q, 3), 7);
+  assert.equal(P.estrellasMundo(q, 3), 15);
+  assert.equal(P.mundoAbierto(q, 3), true);
+  const sig = P.siguientePendiente(q);
+  assert.ok(sig && String(sig.id || sig).startsWith('m3'));
+});
+
 test('código pictográfico (Infantil): ida y vuelta', () => {
   const p = P.crearPerfil({ curso: 'inf5' });
   C.SEC_INFANTIL.slice(0, 9).forEach(id => ganar(p, id, 1));
