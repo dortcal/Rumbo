@@ -8,7 +8,7 @@ const nadie = () => false;
 const palabras = (t) => t.replace(/[¡!¿?.,]/g, '').split(/\s+/).filter(Boolean).length;
 
 test('el avance cuenta los retos de la zona sin los calentamientos m3-p1…p5', () => {
-  assert.equal(V.avance('ciudad', nadie).total, 13);
+  assert.equal(V.avance('ciudad', nadie).total, 14);
   assert.ok(!V.retosDeZona('ciudad').some((id) => /m3-p/.test(id)));
   assert.equal(V.avance('bosque', nadie).total, 13);
   assert.equal(V.avance('montanas', nadie).total, 12);

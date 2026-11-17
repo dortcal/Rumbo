@@ -83,8 +83,8 @@ test('número de intervenciones: Infantil 1–3; Primaria 2–6 (salvo la escena
   }
 });
 
-test('las 102 introducciones de nivel son cortas, no mencionan mecánicas inexistentes y no rompen la burbuja del juego', () => {
-  assert.equal(CAT.TODOS.length, 102);
+test('las 103 introducciones de nivel son cortas, no mencionan mecánicas inexistentes y no rompen la burbuja del juego', () => {
+  assert.equal(CAT.TODOS.length, 103);
   for (const n of CAT.TODOS) {
     assert.ok(n.intro && n.intro.length > 10, `${n.id}: sin introducción`);
     const inf = n.mundo === 0;

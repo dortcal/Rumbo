@@ -152,6 +152,7 @@
     };
     var traza = [];
     var pasos = 0;
+    var visitasSi = {}, atasco = null;   // detector de atasco: un «Si» que vuelve a verse en un estado idéntico
 
     function snap() { return { x: est.x, y: est.y, dir: est.dir }; }
 
@@ -291,6 +292,13 @@
         case 'si': {
           accion = false;
           var v = condicion(nodo.cond, ruta);
+          var clave = est.x + ',' + est.y + ',' + est.dir + ',' + est.puertas + ',' + est.nRecogidos + ',' + v;
+          var vs = visitasSi[ruta];
+          if (vs && vs.clave === clave) vs.veces++; else vs = visitasSi[ruta] = { clave: clave, veces: 1 };
+          if (vs.veces >= 3 && !atasco) {
+            var tipos = []; recorrer(v ? nodo.entonces : nodo.sino, function (x) { tipos.push(x.t); });
+            atasco = { ruta: ruta, rama: v ? 'entonces' : 'sino', veces: vs.veces, tarjetas: tipos };
+          }
           registrar(ruta, nodo, 'control', de, { valor: v });
           lista(v ? nodo.entonces : nodo.sino, hijo(ruta, v ? 'e' : 's'), prof);
           break;
@@ -338,10 +346,46 @@
       if (!(e instanceof Fin)) throw e;
       resultado = e.resultado;
     }
+    if (atasco && !resultado.ok) resultado.atasco = atasco;
     resultado.pasos = pasos;
     resultado.traza = traza;
     resultado.final = { x: est.x, y: est.y, dir: est.dir, puertas: est.puertas, recogidos: est.nRecogidos };
     return resultado;
+  }
+
+
+  // ---------- diagnóstico de un fallo (para dar la pista adecuada) ----------
+  // Devuelve { causa, ruta? } con causa en: 'atasco' | 'invertida' | 'repeticiones' | null.
+  //  atasco        el robot repite la misma decisión sin que nada cambie (p. ej. el interruptor no desaparece).
+  //  invertida     dando la vuelta a una condición («no» o las dos ramas) el programa sí funcionaría.
+  //  repeticiones  con más vueltas en un bucle el programa sí llegaría a la meta.
+  function diagnosticar(nivel, programa, resultado) {
+    if (!resultado || resultado.ok) return null;
+    if (resultado.motivo === 'programa-vacio' || resultado.motivo === 'programa-invalido') return null;
+    var base = JSON.parse(JSON.stringify(programa));
+    var nodos = [];
+    recorrer(base, function (n) { nodos.push(n); });
+    var permiteNo = JSON.stringify(nivel.referencia || '').indexOf('"no":true') >= 0 || JSON.stringify(programa).indexOf('"no":true') >= 0 || !!(nivel.cartas && nivel.cartas.negacion);
+    var intentos = 0;
+    function prueba(i, cambiar) {
+      if (intentos++ > 30) return false;
+      var copia = JSON.parse(JSON.stringify(programa)), lista = [];
+      recorrer(copia, function (n) { lista.push(n); });
+      cambiar(lista[i]);
+      return ejecutar(nivel, copia).ok;
+    }
+    for (var i = 0; i < nodos.length; i++) {
+      var n = nodos[i];
+      if (n.t === 'si' || n.t === 'mientras') {
+        if (permiteNo && n.cond && prueba(i, function (x) { x.cond.no = !x.cond.no; })) return { causa: 'invertida', via: 'no' };
+        if (n.t === 'si' && prueba(i, function (x) { var t = x.entonces; x.entonces = x.sino; x.sino = t; })) return { causa: 'invertida', via: 'ramas' };
+      }
+    }
+    if (resultado.atasco) return { causa: 'atasco', ruta: resultado.atasco.ruta, tarjetas: resultado.atasco.tarjetas };
+    for (var j = 0; j < nodos.length; j++) {
+      if (nodos[j].t === 'repetir' && nodos[j].n < MAX_REPETIR && prueba(j, function (x) { x.n = MAX_REPETIR; })) return { causa: 'repeticiones' };
+    }
+    return null;
   }
 
   return {
@@ -352,6 +396,7 @@
     MAX_PASOS: MAX_PASOS,
     crearTablero: crearTablero,
     ejecutar: ejecutar,
+    diagnosticar: diagnosticar,
     recorrer: recorrer,
     contarTarjetas: contarTarjetas,
     contarPorTipo: contarPorTipo,
@@ -901,6 +946,12 @@
     // ---- Respuesta a errores: positiva y con pistas progresivas ----
     fb_casi: { quien: 'Lumo', texto: '¡Casi lo consigues!' },
     fb_orden: { quien: 'Lumo', texto: '¿Has comprobado el orden de las instrucciones?' },
+    fb_atasco_activar: { quien: 'Lumo', texto: '¡Sigo aquí! El interruptor no desaparece. ¿Qué hago después de activarlo?' },
+    fb_atasco_recoger: { quien: 'Lumo', texto: '¡Sigo aquí! Ya no queda nada que recoger. ¿Qué hago después?' },
+    fb_atasco: { quien: 'Lumo', texto: '¡Sigo aquí! Hago siempre lo mismo y nada cambia. ¿Qué me falta?' },
+    fb_inv_no: { quien: 'Lumo', texto: 'Creo que la condición está al revés. Mira el «NO».' },
+    fb_inv_ramas: { quien: 'Lumo', texto: 'Creo que he elegido al revés. ¿Qué hago cuando se cumple?' },
+    fb_mas_vueltas: { quien: 'Lumo', texto: 'Me he quedado a medias. ¿Repito las vueltas suficientes?' },
     fb_cond: { quien: 'Lumo', texto: 'Mira la condición: ¿se cumple en esta casilla?' },
     fb_cond_no: { quien: 'Lumo', texto: 'El «NO» le da la vuelta a la condición. ¿Es lo que quieres?' },
     fb_giro: { quien: 'Lumo', texto: 'Creo que nos hemos equivocado en este giro.' },
@@ -2717,6 +2768,7 @@
         s3: def.usa ? { tipo: 'usa', carta: def.usa } : { tipo: 'referencia' }
       };
       n.pistas = def.p || PISTAS[def.h || 'seq'];
+      if (def.pistaSolucion) n.pistaSolucion = true;
     } else if (def.p) {
       n.pistas = def.p;
     }
@@ -3372,7 +3424,8 @@
   function m3(def, n) {
     def.e = 'primaria-3c';
     def.z = n <= 13 ? 'ciudad' : 'espacio';
-    def.id = 'm3-' + (n < 10 ? '0' : '') + n;
+    def.id = 'm3-' + (typeof n === 'string' ? n : (n < 10 ? '0' : '') + n);
+    if (typeof n === 'string') def.z = 'ciudad';
     return D.nivel(def);
   }
 
@@ -3459,10 +3512,18 @@
       p: ['Hay luces en sitios distintos y no hace falta contarlos.', 'Si hay una luz aquí, recógela; si no, avanza.', 'Dentro de un bucle largo: Si objeto aquí, recoger; si no, avanzar.'],
       o: 'Si hay una luz, recógela. Si no, avanza.', i: 'Hay baterías esparcidas por la calle. Bit las necesita todas.',
       cur: ['m3_41', 'm3_42'], ext: ['Un algoritmo que funciona sin saber dónde están los objetos'] }, 8),
+    // Antes del interruptor automático: el interruptor NO desaparece al activarlo, así que «Activar» no mueve a Lumo
+    // y hay que seguir avanzando. Sin condicional: así el patrón se entiende antes de combinarlo con «Si».
+    m3({ tt: 'Activa y sigue', b: 2, m: ['>.s.d..G'], c: ['avanzar', 'activar', 'repetir'],
+      ref: [A, A, X, rep(5, A)], lim: { repetir: 1 }, holgura: 1, h: 'mecanismo',
+      p: ['Mira dónde está el interruptor y dónde está la reja.', 'Activar no mueve a Lumo: después hay que seguir avanzando.', 'Avanza hasta el interruptor, actívalo y sigue avanzando hasta la meta.'],
+      o: 'Activa el interruptor y sigue hasta la meta.', i: 'La puerta del taller de Bit solo se abre con un interruptor. Y el interruptor no se va a ningún sitio.',
+      cur: ['m3_41', 'm3_42'], ext: ['Una acción (activar) no cambia la posición: el avance va aparte'] }, '08b'),
     m3({ tt: 'Interruptor automático', b: 2, m: ['>..s..d..G'], c: ['avanzar', 'activar', 'repetir', 'si'], con: ['interruptor-aqui'],
-      ref: [rep(12, si(IN, [X, A], [A]))], lim: { repetir: 1, si: 1 }, holgura: 1, usa: 'si', h: 'cond',
-      o: 'Activa el interruptor si estás encima. Si no, avanza.', i: 'La puerta del taller de Bit solo se abre con un interruptor.',
-      cur: ['m3_41', 'm3_42'], ext: ['Sensor de interruptor'] }, 9),
+      ref: [rep(10, si(IN, [X]), A)], lim: { repetir: 1, si: 1 }, holgura: 2, h: 'cond',
+      p: ['¿Qué pasa en la casilla después de activar el interruptor?', 'Mira cómo queda el programa: Avanzar va después del Si, no dentro.'], pistaSolucion: true,
+      o: 'Fíjate: el interruptor se queda en su sitio. Si solo activo, ¿cómo salgo de aquí?', i: 'Esta vez Bit quiere que Lumo decida solo cuándo activar.',
+      cur: ['m3_41', 'm3_42'], ext: ['La acción de avanzar va aparte del condicional: activar no cambia la casilla'] }, 9),
     m3({ tt: 'Lava o muro', b: 2, m: ['>.~..', '####.', 'G.~..'], c: ['avanzar', 'girar-d', 'saltar', 'repetir', 'si'], con: ['agua-delante', 'obstaculo-delante'],
       ref: [rep(20, si(AG, [S], [si(OB, [G], [A])]))], lim: { repetir: 1, si: 2 }, holgura: 1, usa: 'si', h: 'cond',
       p: ['Hay dos cosas que mirar: agua y muro.', 'Primero pregunta por el agua; si no hay, pregunta por el muro.', 'Si agua: saltar; si no: (si muro: girar; si no: avanzar).'],
@@ -6514,9 +6575,13 @@
       if (!ctx.sinRegistro && perfil) { PR.registrar(perfil, nivel.id, { ok: false, motivo: resultado.motivo, tarjetas: I.contarTarjetas(prog), programa: prog, pistas: pistaN }, I); ctx.guardar && ctx.guardar(); }
       ed.marcarError(resultado.nodoError);
       var id = FB[resultado.motivo] || 'fb_casi';
+      var diag = infantil ? null : I.diagnosticar(nivel, prog, resultado);
       var condiciona = !infantil && (I.usaTarjeta(prog, 'si') || I.usaTarjeta(prog, 'mientras'));
       var hayNo = JSON.stringify(prog).indexOf('"no":true') >= 0;
-      if (condiciona && ['objetivo-incompleto', 'objeto-olvidado', 'choque', 'caida', 'limite-pasos'].indexOf(resultado.motivo) >= 0 && fallos % 3 !== 0) id = hayNo && fallos % 2 === 0 ? 'fb_cond_no' : 'fb_cond';
+      if (diag && diag.causa === 'atasco') id = diag.tarjetas.indexOf('activar') >= 0 ? 'fb_atasco_activar' : diag.tarjetas.indexOf('recoger') >= 0 ? 'fb_atasco_recoger' : 'fb_atasco';
+      else if (diag && diag.causa === 'invertida') id = diag.via === 'no' ? 'fb_inv_no' : 'fb_inv_ramas';
+      else if (diag && diag.causa === 'repeticiones') id = 'fb_mas_vueltas';
+      else if (condiciona && ['objetivo-incompleto', 'objeto-olvidado', 'choque', 'caida', 'limite-pasos'].indexOf(resultado.motivo) >= 0 && fallos % 3 !== 0) id = hayNo && fallos % 2 === 0 ? 'fb_cond_no' : 'fb_cond';
       else if (fallos % 3 === 0 && (resultado.motivo === 'objetivo-incompleto' || resultado.motivo === 'choque')) id = 'fb_orden';
       else if (fallos % 3 === 2 && I.usaTarjeta(nivel.referencia, 'repetir') && !I.usaTarjeta(prog, 'repetir') && !infantil) id = 'fb_repetir';
       if (UI.Sonido) UI.Sonido.sfx('animo');
@@ -6551,6 +6616,7 @@
         return;
       }
       var k2 = Math.min(pistaN, nivel.pistas.length);
+      if (nivel.pistaSolucion && k2 === nivel.pistas.length) { hablar('h' + k2 + '_' + nivel.id); ensenar(); return; }
       hablar('h' + k2 + '_' + nivel.id);
       mostrarAviso('Pista ' + k2 + ' de ' + nivel.pistas.length);
     }
