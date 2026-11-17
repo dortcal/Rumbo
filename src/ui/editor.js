@@ -85,16 +85,26 @@
       return h('span.carta.c-' + tipo + (grande ? '.grande' : ''), { data: { tipo: tipo }, style: { '--c': Ar.CARTA_COLOR[tipo] } },
         UI.svgEl(Ar.iconoCarta(tipo, 48), 'ic'), infantil ? null : h('span.carta-nombre', Ar.CARTA_NOMBRE[tipo]));
     }
+    // «no» solo cuando el reto lo necesita (o ya viene puesto en un programa por arreglar).
+    var puedeNegar = !infantil && (nivel.cartas.negacion === true || !nivel.referencia || JSON.stringify(nivel.referencia).indexOf('"no":true') >= 0);
     function pildoraCond(nodo, ruta) {
-      var c = nodo.cond;
-      var no = h('button.btn-no' + (c.no ? '.on' : ''), { type: 'button', 'data-accion': 'no', 'aria-pressed': String(!!c.no), title: 'No', on: {
-        click: function (e) { e.stopPropagation(); if (bloqueado) return; guardarHistorial(); c.no = !c.no; cambio('toque'); } } }, 'no');
-      var pil = h('button.pil-cond', { type: 'button', 'data-accion': 'cond', title: 'Cambiar condición', on: {
+      var c = nodo.cond, nombre = Ar.COND_NOMBRE[c.t] || c.t;
+      var partes = [];
+      // Interruptor de negación: apagado no dice «no» (solo un símbolo); encendido dice «NO» en rojo.
+      if (puedeNegar || c.no) {
+        partes.push(h('button.btn-no' + (c.no ? '.on' : '.off'), { type: 'button', 'data-accion': 'no', 'aria-pressed': String(!!c.no),
+          'aria-label': c.no ? 'Quitar el «no» de la condición' : 'Poner «no» a la condición',
+          title: c.no ? 'Quitar el «no»' : 'Poner «no» (darle la vuelta a la condición)', on: {
+            click: function (e) { e.stopPropagation(); if (bloqueado) return; guardarHistorial(); c.no = !c.no; cambio('toque'); } } }, c.no ? 'NO' : '⊘'));
+      }
+      var pil = h('button.pil-cond' + (c.no ? '.negada' : ''), { type: 'button', 'data-accion': 'cond', title: 'Cambiar condición',
+        'aria-label': (c.no ? 'NO ' : '') + nombre, on: {
         click: function (e) {
           e.stopPropagation(); if (bloqueado || conds.length < 2) return;
           guardarHistorial(); c.t = conds[(conds.indexOf(c.t) + 1) % conds.length]; cambio('toque');
-        } } }, UI.svgEl(Ar.iconoCond(c.t, false, 30), 'ic'), h('span', Ar.COND_NOMBRE[c.t] || c.t));
-      return h('span.cond', no, pil);
+        } } }, UI.svgEl(Ar.iconoCond(c.t, false, 30), 'ic'), h('span', nombre));
+      partes.push(pil);
+      return h.apply(null, ['span.cond' + (c.no ? '.con-no' : '')].concat(partes));
     }
     function stepper(nodo) {
       function mover(d) { return function (e) { e.stopPropagation(); if (bloqueado) return; var v = UI.clamp(nodo.n + d, 1, 30); if (v === nodo.n) return; guardarHistorial(); nodo.n = v; cambio('toque'); }; }
@@ -432,7 +442,16 @@
       if (bloqueado || !historial.length) return false;
       prog = JSON.parse(historial.pop()); seleccion = null; marcadas = []; ultimaMarca = null; render(); if (op.alCambiar) op.alCambiar(); if (UI.Sonido) UI.Sonido.sfx('quitar'); return true;
     }
+    // Destello verde/rojo en la condición del bloque «Si»/«Mientras» según se cumpla o no en ese paso.
+    function destello(ruta, valor) {
+      var c = el.querySelector('.carta-prog[data-ruta="' + ruta + '"] .pil-cond'); if (!c) return;
+      c.classList.remove('cumple', 'nocumple'); void c.offsetWidth;
+      c.classList.add(valor ? 'cumple' : 'nocumple');
+      var marca = c.querySelector('.res-cond'); if (marca) marca.remove();
+      c.appendChild(h('b.res-cond', { 'aria-hidden': 'true' }, valor ? '✔' : '✘'));
+    }
     function resaltar(ruta) {
+      el.querySelectorAll('.pil-cond.cumple,.pil-cond.nocumple').forEach(function (e) { if (ruta == null) { e.classList.remove('cumple', 'nocumple'); var m = e.querySelector('.res-cond'); if (m) m.remove(); } });
       el.querySelectorAll('.carta-prog.activa').forEach(function (e) { e.classList.remove('activa'); });
       if (ruta == null) return;
       var c = el.querySelector('.carta-prog[data-ruta="' + ruta + '"]');
@@ -447,7 +466,7 @@
 
     render();
     return {
-      el: el, obtener: programa, cargar: cargar, limpiar: limpiar, deshacer: deshacer, resaltar: resaltar, marcarError: marcarError,
+      el: el, obtener: programa, cargar: cargar, limpiar: limpiar, deshacer: deshacer, resaltar: resaltar, destello: destello, marcarError: marcarError,
       bloquear: bloquear, vacio: function () { return contar() === 0; }, contar: contar, puedeDeshacer: function () { return historial.length > 0; },
       anadir: anadirPorToque, huecos: huecos
     };

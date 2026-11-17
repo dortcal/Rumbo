@@ -174,7 +174,7 @@
       corriendo = true; ejecutado = true; ed.bloquear(true); botones(true); pintarObjetos(0);
       if (ctx.voz) ctx.voz.parar();
       var fin = await esc.reproducir(resultado, {
-        alPaso: function (p) { ed.resaltar(p.ruta); },
+        alPaso: function (p) { ed.resaltar(p.ruta); if (p.evento === 'control' && (p.t === 'si' || p.t === 'mientras') && p.valor !== undefined && ed.destello) ed.destello(p.ruta, p.valor); },
         alRecoger: function (n) { pintarObjetos(n); }
       });
       if (!vivo) return;
@@ -189,7 +189,10 @@
       if (!ctx.sinRegistro && perfil) { PR.registrar(perfil, nivel.id, { ok: false, motivo: resultado.motivo, tarjetas: I.contarTarjetas(prog), programa: prog, pistas: pistaN }, I); ctx.guardar && ctx.guardar(); }
       ed.marcarError(resultado.nodoError);
       var id = FB[resultado.motivo] || 'fb_casi';
-      if (fallos % 3 === 0 && (resultado.motivo === 'objetivo-incompleto' || resultado.motivo === 'choque')) id = 'fb_orden';
+      var condiciona = !infantil && (I.usaTarjeta(prog, 'si') || I.usaTarjeta(prog, 'mientras'));
+      var hayNo = JSON.stringify(prog).indexOf('"no":true') >= 0;
+      if (condiciona && ['objetivo-incompleto', 'objeto-olvidado', 'choque', 'caida', 'limite-pasos'].indexOf(resultado.motivo) >= 0 && fallos % 3 !== 0) id = hayNo && fallos % 2 === 0 ? 'fb_cond_no' : 'fb_cond';
+      else if (fallos % 3 === 0 && (resultado.motivo === 'objetivo-incompleto' || resultado.motivo === 'choque')) id = 'fb_orden';
       else if (fallos % 3 === 2 && I.usaTarjeta(nivel.referencia, 'repetir') && !I.usaTarjeta(prog, 'repetir') && !infantil) id = 'fb_repetir';
       if (UI.Sonido) UI.Sonido.sfx('animo');
       hablar(id);

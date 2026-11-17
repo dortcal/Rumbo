@@ -901,6 +901,8 @@
     // ---- Respuesta a errores: positiva y con pistas progresivas ----
     fb_casi: { quien: 'Lumo', texto: '¡Casi lo consigues!' },
     fb_orden: { quien: 'Lumo', texto: '¿Has comprobado el orden de las instrucciones?' },
+    fb_cond: { quien: 'Lumo', texto: 'Mira la condición: ¿se cumple en esta casilla?' },
+    fb_cond_no: { quien: 'Lumo', texto: 'El «NO» le da la vuelta a la condición. ¿Es lo que quieres?' },
     fb_giro: { quien: 'Lumo', texto: 'Creo que nos hemos equivocado en este giro.' },
     fb_repetir: { quien: 'Lumo', texto: '¿Y si repetimos esta secuencia?' },
     fb_choque: { quien: 'Lumo', texto: '¡Ups! Ahí hay algo. Probemos otro camino.' },
@@ -5929,16 +5931,26 @@
       return h('span.carta.c-' + tipo + (grande ? '.grande' : ''), { data: { tipo: tipo }, style: { '--c': Ar.CARTA_COLOR[tipo] } },
         UI.svgEl(Ar.iconoCarta(tipo, 48), 'ic'), infantil ? null : h('span.carta-nombre', Ar.CARTA_NOMBRE[tipo]));
     }
+    // «no» solo cuando el reto lo necesita (o ya viene puesto en un programa por arreglar).
+    var puedeNegar = !infantil && (nivel.cartas.negacion === true || !nivel.referencia || JSON.stringify(nivel.referencia).indexOf('"no":true') >= 0);
     function pildoraCond(nodo, ruta) {
-      var c = nodo.cond;
-      var no = h('button.btn-no' + (c.no ? '.on' : ''), { type: 'button', 'data-accion': 'no', 'aria-pressed': String(!!c.no), title: 'No', on: {
-        click: function (e) { e.stopPropagation(); if (bloqueado) return; guardarHistorial(); c.no = !c.no; cambio('toque'); } } }, 'no');
-      var pil = h('button.pil-cond', { type: 'button', 'data-accion': 'cond', title: 'Cambiar condición', on: {
+      var c = nodo.cond, nombre = Ar.COND_NOMBRE[c.t] || c.t;
+      var partes = [];
+      // Interruptor de negación: apagado no dice «no» (solo un símbolo); encendido dice «NO» en rojo.
+      if (puedeNegar || c.no) {
+        partes.push(h('button.btn-no' + (c.no ? '.on' : '.off'), { type: 'button', 'data-accion': 'no', 'aria-pressed': String(!!c.no),
+          'aria-label': c.no ? 'Quitar el «no» de la condición' : 'Poner «no» a la condición',
+          title: c.no ? 'Quitar el «no»' : 'Poner «no» (darle la vuelta a la condición)', on: {
+            click: function (e) { e.stopPropagation(); if (bloqueado) return; guardarHistorial(); c.no = !c.no; cambio('toque'); } } }, c.no ? 'NO' : '⊘'));
+      }
+      var pil = h('button.pil-cond' + (c.no ? '.negada' : ''), { type: 'button', 'data-accion': 'cond', title: 'Cambiar condición',
+        'aria-label': (c.no ? 'NO ' : '') + nombre, on: {
         click: function (e) {
           e.stopPropagation(); if (bloqueado || conds.length < 2) return;
           guardarHistorial(); c.t = conds[(conds.indexOf(c.t) + 1) % conds.length]; cambio('toque');
-        } } }, UI.svgEl(Ar.iconoCond(c.t, false, 30), 'ic'), h('span', Ar.COND_NOMBRE[c.t] || c.t));
-      return h('span.cond', no, pil);
+        } } }, UI.svgEl(Ar.iconoCond(c.t, false, 30), 'ic'), h('span', nombre));
+      partes.push(pil);
+      return h.apply(null, ['span.cond' + (c.no ? '.con-no' : '')].concat(partes));
     }
     function stepper(nodo) {
       function mover(d) { return function (e) { e.stopPropagation(); if (bloqueado) return; var v = UI.clamp(nodo.n + d, 1, 30); if (v === nodo.n) return; guardarHistorial(); nodo.n = v; cambio('toque'); }; }
@@ -6276,7 +6288,16 @@
       if (bloqueado || !historial.length) return false;
       prog = JSON.parse(historial.pop()); seleccion = null; marcadas = []; ultimaMarca = null; render(); if (op.alCambiar) op.alCambiar(); if (UI.Sonido) UI.Sonido.sfx('quitar'); return true;
     }
+    // Destello verde/rojo en la condición del bloque «Si»/«Mientras» según se cumpla o no en ese paso.
+    function destello(ruta, valor) {
+      var c = el.querySelector('.carta-prog[data-ruta="' + ruta + '"] .pil-cond'); if (!c) return;
+      c.classList.remove('cumple', 'nocumple'); void c.offsetWidth;
+      c.classList.add(valor ? 'cumple' : 'nocumple');
+      var marca = c.querySelector('.res-cond'); if (marca) marca.remove();
+      c.appendChild(h('b.res-cond', { 'aria-hidden': 'true' }, valor ? '✔' : '✘'));
+    }
     function resaltar(ruta) {
+      el.querySelectorAll('.pil-cond.cumple,.pil-cond.nocumple').forEach(function (e) { if (ruta == null) { e.classList.remove('cumple', 'nocumple'); var m = e.querySelector('.res-cond'); if (m) m.remove(); } });
       el.querySelectorAll('.carta-prog.activa').forEach(function (e) { e.classList.remove('activa'); });
       if (ruta == null) return;
       var c = el.querySelector('.carta-prog[data-ruta="' + ruta + '"]');
@@ -6291,7 +6312,7 @@
 
     render();
     return {
-      el: el, obtener: programa, cargar: cargar, limpiar: limpiar, deshacer: deshacer, resaltar: resaltar, marcarError: marcarError,
+      el: el, obtener: programa, cargar: cargar, limpiar: limpiar, deshacer: deshacer, resaltar: resaltar, destello: destello, marcarError: marcarError,
       bloquear: bloquear, vacio: function () { return contar() === 0; }, contar: contar, puedeDeshacer: function () { return historial.length > 0; },
       anadir: anadirPorToque, huecos: huecos
     };
@@ -6478,7 +6499,7 @@
       corriendo = true; ejecutado = true; ed.bloquear(true); botones(true); pintarObjetos(0);
       if (ctx.voz) ctx.voz.parar();
       var fin = await esc.reproducir(resultado, {
-        alPaso: function (p) { ed.resaltar(p.ruta); },
+        alPaso: function (p) { ed.resaltar(p.ruta); if (p.evento === 'control' && (p.t === 'si' || p.t === 'mientras') && p.valor !== undefined && ed.destello) ed.destello(p.ruta, p.valor); },
         alRecoger: function (n) { pintarObjetos(n); }
       });
       if (!vivo) return;
@@ -6493,7 +6514,10 @@
       if (!ctx.sinRegistro && perfil) { PR.registrar(perfil, nivel.id, { ok: false, motivo: resultado.motivo, tarjetas: I.contarTarjetas(prog), programa: prog, pistas: pistaN }, I); ctx.guardar && ctx.guardar(); }
       ed.marcarError(resultado.nodoError);
       var id = FB[resultado.motivo] || 'fb_casi';
-      if (fallos % 3 === 0 && (resultado.motivo === 'objetivo-incompleto' || resultado.motivo === 'choque')) id = 'fb_orden';
+      var condiciona = !infantil && (I.usaTarjeta(prog, 'si') || I.usaTarjeta(prog, 'mientras'));
+      var hayNo = JSON.stringify(prog).indexOf('"no":true') >= 0;
+      if (condiciona && ['objetivo-incompleto', 'objeto-olvidado', 'choque', 'caida', 'limite-pasos'].indexOf(resultado.motivo) >= 0 && fallos % 3 !== 0) id = hayNo && fallos % 2 === 0 ? 'fb_cond_no' : 'fb_cond';
+      else if (fallos % 3 === 0 && (resultado.motivo === 'objetivo-incompleto' || resultado.motivo === 'choque')) id = 'fb_orden';
       else if (fallos % 3 === 2 && I.usaTarjeta(nivel.referencia, 'repetir') && !I.usaTarjeta(prog, 'repetir') && !infantil) id = 'fb_repetir';
       if (UI.Sonido) UI.Sonido.sfx('animo');
       hablar(id);
