@@ -197,6 +197,8 @@
     // ---- Respuesta a errores: positiva y con pistas progresivas ----
     fb_casi: { quien: 'Lumo', texto: '¡Casi lo consigues!' },
     fb_orden: { quien: 'Lumo', texto: '¿Has comprobado el orden de las instrucciones?' },
+    fb_cond: { quien: 'Lumo', texto: 'Mira la condición: ¿se cumple en esta casilla?' },
+    fb_cond_no: { quien: 'Lumo', texto: 'El «NO» le da la vuelta a la condición. ¿Es lo que quieres?' },
     fb_giro: { quien: 'Lumo', texto: 'Creo que nos hemos equivocado en este giro.' },
     fb_repetir: { quien: 'Lumo', texto: '¿Y si repetimos esta secuencia?' },
     fb_choque: { quien: 'Lumo', texto: '¡Ups! Ahí hay algo. Probemos otro camino.' },

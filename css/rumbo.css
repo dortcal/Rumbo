@@ -154,7 +154,7 @@ body.contraste .btn-grande,body.contraste .btn-ic{outline:3px solid #000}
 .j-burbuja{display:flex;align-items:center;gap:10px;background:#fff;border-radius:22px;padding:6px 14px 6px 8px;box-shadow:var(--sombra);min-height:64px}
 .j-burbuja .avatar{width:56px;height:56px;flex:none}.j-burbuja .avatar svg{width:100%;height:100%;overflow:visible}.j-burbuja .txt{font-weight:800;font-size:1.05rem;white-space:pre-line}
 .j-burbuja.habla .avatar{animation:habla .5s ease-in-out 3}.j-burbuja.sin-texto{justify-content:center;min-height:0;padding-top:2px;padding-bottom:2px}.j-burbuja.sin-texto .txt{display:none}
-@keyframes habla{50%{transform:scale(1.12) rotate(-4deg)}}
+@keyframes habla{50%{transform:scale(1.04) rotate(-4deg)}}
 .j-cuerpo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:12px;min-height:0}
 .j-escena-caja{position:relative;display:flex;flex-direction:column;min-height:0;background:rgba(255,255,255,.35);border-radius:22px;padding:8px;box-shadow:inset 0 0 0 4px rgba(255,255,255,.6)}
 .j-escena{flex:1;min-height:0;display:grid;place-items:center}.j-escena svg.tablero{width:100%;height:100%;display:block;filter:drop-shadow(0 6px 6px rgba(0,0,0,.25))}
@@ -233,7 +233,7 @@ body.contraste .btn-grande,body.contraste .btn-ic{outline:3px solid #000}
 .fx .chispa{animation:chispa .8s ease-out forwards}@keyframes chispa{to{transform:translate(var(--dx),var(--dy));opacity:0}}
 .fx .onda{transform-box:fill-box;transform-origin:center;animation:onda .9s ease-out forwards}@keyframes onda{to{transform:scale(5);opacity:0}}
 @keyframes pop{0%{transform:scale(.3)}70%{transform:scale(1.3)}}
-body.reducir .nube,body.reducir .estrellita,body.reducir .ola,body.reducir .gira,body.reducir .brillo,body.reducir .obj-in,body.reducir .llama,body.reducir .portada-lumo,body.reducir .confeti,body.reducir .nodo.abierto{animation:none!important}
+body.reducir .pil-cond.cumple,body.reducir .pil-cond.nocumple{animation:none!important}body.reducir .nube,body.reducir .estrellita,body.reducir .ola,body.reducir .gira,body.reducir .brillo,body.reducir .obj-in,body.reducir .llama,body.reducir .portada-lumo,body.reducir .confeti,body.reducir .nodo.abierto{animation:none!important}
 
 /* ----- resultado ----- */
 .resultado,.nueva-carta{position:absolute;inset:0;background:rgba(43,33,64,.6);display:grid;place-items:center;z-index:30;padding:12px;overflow:auto}
@@ -323,7 +323,7 @@ details.doc-caja>summary{font:800 1.2rem var(--titulo);cursor:pointer;color:var(
 .intro-capa.on .mov-a{animation:intro-a 5.5s ease-out forwards}.intro-capa.on .mov-b{animation:intro-b 7s ease-out forwards}.intro-capa.on .mov-c{animation:intro-c 6s ease-out forwards}
 @keyframes intro-a{from{transform:scale(1.02)}to{transform:scale(1.14) translateY(-1%)}}
 @keyframes intro-b{from{transform:scale(1.15) translateX(3%)}to{transform:scale(1.02) translateX(-1%)}}
-@keyframes intro-c{from{transform:scale(1.02) translateX(-2%)}to{transform:scale(1.12) translateX(2%)}}
+@keyframes intro-c{from{transform:scale(1.02) translateX(-2%)}to{transform:scale(1.04) translateX(2%)}}
 .intro-brillos i{position:absolute;bottom:-20px;width:10px;height:10px;border-radius:50%;background:#fff7c2;box-shadow:0 0 12px 4px rgba(255,230,120,.8);opacity:0;animation:brillo 6s linear infinite}
 .intro-brillos .b1{left:8%;animation-delay:0s}.intro-brillos .b2{left:20%;animation-delay:1.3s}.intro-brillos .b3{left:33%;animation-delay:2.6s}.intro-brillos .b4{left:46%;animation-delay:.7s}.intro-brillos .b5{left:60%;animation-delay:3.4s}.intro-brillos .b6{left:72%;animation-delay:1.9s}.intro-brillos .b7{left:84%;animation-delay:4.2s}.intro-brillos .b8{left:93%;animation-delay:2.2s}
 @keyframes brillo{0%{opacity:0;transform:translateY(0) scale(.6)}15%{opacity:.9}100%{opacity:0;transform:translateY(-70vh) scale(1.2)}}
@@ -501,3 +501,12 @@ body.reducir .res-bichito{display:none}
 
 /* Selección múltiple (Primaria) */
 .btn-sel:disabled{opacity:.45}.btn-sel.s-varias,.btn-sel.s-fin-varias{background:#6b3fd4}.btn-sel.s-dup-n{background:#1f6feb}.btn-sel.s-borrar-n{background:#d6232d}.sel-ayuda{flex:1 1 100%;text-align:center;font:700 .8rem var(--titulo);color:var(--suave)}
+
+/* Condición: negación legible y destello de resultado */
+.btn-no.off{border-color:#9aa3b2;color:#6b7385;background:#fff;opacity:.85;padding:2px 9px}.btn-no.on{background:#d6232d;color:#fff;border-color:#d6232d;letter-spacing:.04em}
+.pil-cond.negada{box-shadow:0 0 0 3px #d6232d inset}.pil-cond.negada .ic{filter:grayscale(.3)}
+.pil-cond.cumple{animation:condSi .9s ease-out both}.pil-cond.nocumple{animation:condNo .9s ease-out both}
+.pil-cond .res-cond{margin-left:4px;font:900 1rem var(--titulo)}.pil-cond.cumple .res-cond{color:#0a7d33}.pil-cond.nocumple .res-cond{color:#c4171f}
+@keyframes condSi{0%{background:#7ee29a;transform:scale(1.04)}100%{background:#d9f7e2;transform:scale(1)}}
+@keyframes condNo{0%{background:#ff9ea3;transform:scale(1.04)}100%{background:#ffe0e1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.pil-cond.cumple,.pil-cond.nocumple{animation:none}.pil-cond.cumple{background:#d9f7e2}.pil-cond.nocumple{background:#ffe0e1}}
