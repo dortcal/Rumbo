@@ -5869,6 +5869,7 @@
     var prog = { principal: [], recetas: {} };
     recetasDisp.forEach(function (r) { prog.recetas[r] = []; });
     var historial = [], seleccion = null, activa = '', bloqueado = false;
+    var modoVarias = false, marcadas = [], ultimaMarca = null;   // selección múltiple (solo Primaria)
 
     var el = h('div.editor' + (infantil ? '.infantil' : ''));
     var paleta = h('div.paleta', { 'aria-label': 'Tarjetas' });
@@ -5912,6 +5913,7 @@
     function guardarHistorial() { historial.push(JSON.stringify(prog)); if (historial.length > 60) historial.shift(); }
     function cambio(sonido) {
       if (sonido && UI.Sonido) UI.Sonido.sfx(sonido);
+      marcadas = []; ultimaMarca = null;
       render();
       if (op.alCambiar) op.alCambiar();
     }
@@ -5958,7 +5960,7 @@
       return l;
     }
     function nodoVista(n, ruta) {
-      var cls = 'carta-prog.c-' + n.t + (ruta === seleccion ? '.sel' : '');
+      var cls = 'carta-prog.c-' + n.t + (ruta === seleccion || marcadas.indexOf(ruta) >= 0 ? '.sel' : '');
       var base = { data: { ruta: ruta, tipo: n.t }, style: { '--c': Ar.CARTA_COLOR[n.t] } };
       if (n.t === 'repetir') {
         if (!n.cuerpo) n.cuerpo = [];
@@ -6017,15 +6019,83 @@
         paleta.appendChild(b);
       });
       // barra de selección (solo Primaria)
-      var sel = seleccion != null && !infantil ? nodoPorRuta(seleccion) : null;
-      if (!sel || !sel.nodo) { seleccion = null; barra.hidden = true; barra.innerHTML = ''; }
-      else {
-        barra.hidden = false; barra.innerHTML = '';
-        [['dup', 'Duplicar', '⧉'], ['izq', 'Mover antes', '◀'], ['der', 'Mover después', '▶'], ['borrar', 'Borrar', '🗑']].forEach(function (a) {
-          barra.appendChild(h('button.btn-sel.s-' + a[0], { type: 'button', 'data-sel': a[0], on: { click: function () { accionSeleccion(a[0]); } } }, h('span.ic', a[2]), h('span', a[1])));
-        });
+      var sel = seleccion != null && !infantil && !modoVarias ? nodoPorRuta(seleccion) : null;
+      if (sel && !sel.nodo) { seleccion = null; sel = null; }
+      barra.innerHTML = '';
+      function btnBarra(clave, texto, icono, fn, extra) {
+        barra.appendChild(h('button.btn-sel.s-' + clave, { type: 'button', 'data-sel': clave, disabled: !!extra, on: { click: fn } }, h('span.ic', icono), h('span', texto)));
       }
+      if (infantil) { barra.hidden = true; }
+      else if (modoVarias) {
+        barra.hidden = false;
+        var nm = marcadas.length;
+        btnBarra('dup-n', nm ? 'Duplicar (' + nm + ')' : 'Duplicar', '⧉', function () { accionVarias('dup'); }, !nm);
+        btnBarra('borrar-n', nm ? 'Borrar (' + nm + ')' : 'Borrar', '🗑', function () { accionVarias('borrar'); }, !nm);
+        btnBarra('fin-varias', 'Terminar', '✔', function () { alternarVarias(false); });
+        barra.appendChild(h('span.sel-ayuda', nm ? 'Toca otra tarjeta de la misma lista para marcar todas las del medio.' : 'Toca las tarjetas que quieras marcar.'));
+      } else if (sel) {
+        barra.hidden = false;
+        [['dup', 'Duplicar', '⧉'], ['izq', 'Mover antes', '◀'], ['der', 'Mover después', '▶'], ['borrar', 'Borrar', '🗑']].forEach(function (a) {
+          btnBarra(a[0], a[1], a[2], function () { accionSeleccion(a[0]); });
+        });
+        btnBarra('varias', 'Varias', '☑', function () { alternarVarias(true); });
+      } else if (contar() >= 2) {
+        barra.hidden = false;
+        btnBarra('varias', 'Seleccionar varias', '☑', function () { alternarVarias(true); });
+      } else barra.hidden = true;
       marcar();
+    }
+
+    function alternarVarias(on) {
+      if (bloqueado || infantil) return;
+      modoVarias = !!on; marcadas = []; ultimaMarca = null; seleccion = null;
+      if (UI.Sonido) UI.Sonido.sfx('toque');
+      render();
+    }
+    function marcarVaria(ruta) {
+      var i = marcadas.indexOf(ruta);
+      var p = ruta.split('.'), dir = p.slice(0, -1).join('.'), idx = +p[p.length - 1];
+      if (i >= 0) { marcadas.splice(i, 1); ultimaMarca = marcadas.length ? marcadas[marcadas.length - 1] : null; }
+      else {
+        var q = ultimaMarca ? ultimaMarca.split('.') : null;
+        if (q && q.slice(0, -1).join('.') === dir && Math.abs(+q[q.length - 1] - idx) > 1) {   // tramo en la misma lista
+          var a = Math.min(+q[q.length - 1], idx), b = Math.max(+q[q.length - 1], idx);
+          for (var k = a; k <= b; k++) { var r = (dir === '' ? '' : dir + '.') + k; if (marcadas.indexOf(r) < 0) marcadas.push(r); }
+        } else marcadas.push(ruta);
+        ultimaMarca = ruta;
+      }
+      if (UI.Sonido) UI.Sonido.sfx('toque');
+      render();
+    }
+    // Rutas marcadas sin las que ya están dentro de otra marcada (un bucle marcado se lleva su contenido).
+    function marcadasEfectivas() {
+      return marcadas.filter(function (r) { return !marcadas.some(function (o) { return o !== r && r.indexOf(o + '.') === 0; }); })
+        .map(nodoPorRuta).filter(function (x) { return x && x.nodo; });
+    }
+    function accionVarias(a) {
+      if (bloqueado || !marcadas.length) return;
+      var items = marcadasEfectivas(); if (!items.length) return;
+      if (a === 'borrar') {
+        guardarHistorial();
+        items.forEach(function (x) { var i = x.lista.indexOf(x.nodo); if (i >= 0) x.lista.splice(i, 1); });
+        cambio('quitar'); return;
+      }
+      var cnt = {}, copias = items.map(function (x) {
+        var c = UI.clon(x.nodo);
+        (function rec(n) { cnt[n.t] = (cnt[n.t] || 0) + 1; (n.cuerpo || []).concat(n.entonces || [], n.sino || []).forEach(rec); })(c);
+        return c;
+      });
+      var ok = true;
+      Object.keys(cnt).forEach(function (t) { if (limites[t] != null && usados(t) + cnt[t] > limites[t]) ok = false; });
+      if (!ok) { aviso('No quedan tarjetas suficientes para duplicar.'); if (UI.Sonido) UI.Sonido.sfx('choque'); return; }
+      guardarHistorial();
+      var listas = [];
+      items.forEach(function (x, i) { var g = listas.filter(function (l) { return l.lista === x.lista; })[0]; if (!g) { g = { lista: x.lista, nodos: [], copias: [] }; listas.push(g); } g.nodos.push(x.nodo); g.copias.push(copias[i]); });
+      listas.forEach(function (g) {
+        var ult = Math.max.apply(null, g.nodos.map(function (n) { return g.lista.indexOf(n); }));
+        Array.prototype.splice.apply(g.lista, [ult + 1, 0].concat(g.copias));
+      });
+      cambio('poner');
     }
 
     function accionSeleccion(a) {
@@ -6176,6 +6246,7 @@
     area.addEventListener('pointerdown', function (e) {
       if (e.target.closest('[data-accion]')) return;
       var c = e.target.closest('.carta-prog');
+      if (c && modoVarias && !bloqueado) { marcarVaria(c.dataset.ruta); e.stopPropagation(); e.preventDefault(); return; }
       if (c) { iniciarArrastre(e, false, c.dataset.tipo, c.dataset.ruta, c); e.stopPropagation(); return; }
       var l = e.target.closest('.lista');
       if (l && !bloqueado) { var d = l.dataset.dir; if (activa !== d) { activa = d; render(); } }
@@ -6198,12 +6269,12 @@
       guardarHistorial();
       if (Array.isArray(p)) { prog.principal = UI.clon(p); }
       else { prog.principal = UI.clon(p.principal || []); Object.keys(prog.recetas).forEach(function (k) { prog.recetas[k] = UI.clon((p.recetas || {})[k] || []); }); }
-      seleccion = null; activa = ''; render();
+      seleccion = null; marcadas = []; activa = ''; render();
     }
     function limpiar() { if (!contar()) return; guardarHistorial(); prog.principal = []; Object.keys(prog.recetas).forEach(function (k) { prog.recetas[k] = []; }); seleccion = null; activa = ''; cambio('quitar'); }
     function deshacer() {
       if (bloqueado || !historial.length) return false;
-      prog = JSON.parse(historial.pop()); seleccion = null; render(); if (op.alCambiar) op.alCambiar(); if (UI.Sonido) UI.Sonido.sfx('quitar'); return true;
+      prog = JSON.parse(historial.pop()); seleccion = null; marcadas = []; ultimaMarca = null; render(); if (op.alCambiar) op.alCambiar(); if (UI.Sonido) UI.Sonido.sfx('quitar'); return true;
     }
     function resaltar(ruta) {
       el.querySelectorAll('.carta-prog.activa').forEach(function (e) { e.classList.remove('activa'); });

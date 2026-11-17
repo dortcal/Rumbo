@@ -498,3 +498,6 @@ body.reducir .res-bichito{display:none}
 .carta-prog.ctrl .rama{gap:0}
 .lista-cola{min-height:40px}
 @media (max-height:820px){.area-prog{padding:8px;gap:8px}.carta-prog.ctrl>.lista,.carta-prog.ctrl>.rama>.lista{min-height:56px;padding:6px}.j-burbuja{min-height:54px}.j-burbuja .avatar{width:46px;height:46px}.paleta{min-height:68px;padding:6px}}
+
+/* Selección múltiple (Primaria) */
+.btn-sel:disabled{opacity:.45}.btn-sel.s-varias,.btn-sel.s-fin-varias{background:#6b3fd4}.btn-sel.s-dup-n{background:#1f6feb}.btn-sel.s-borrar-n{background:#d6232d}.sel-ayuda{flex:1 1 100%;text-align:center;font:700 .8rem var(--titulo);color:var(--suave)}
